@@ -1,10 +1,17 @@
 {
-  "name": "PosterCraft",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:web": "pnpm -F web dev",
+    "server:start": "pnpm -F server start"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.14.5"
+  },
+  "dependencies": {
+    "eslint": "^9.6.0",
+    "typescript": "^5.5.3"
+  }
 }
