@@ -1,13 +1,15 @@
 {
+  "name": "poster-craft",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Poster editor",
+  "license": "MIT",
   "scripts": {
+    "schema:build": "pnpm -F  @poster-craft/schema build",
+    "db:init": "pnpm schema:build && pnpm -F @poster-craft/db init",
     "prepare": "simple-git-hooks",
     "dev:web": "pnpm -F web dev",
     "server:start": "pnpm -F server start"
   },
-  "license": "MIT",
   "dependencies": {
     "@t3-oss/env-core": "^0.7.1",
     "drizzle-orm": "^0.30.8",
