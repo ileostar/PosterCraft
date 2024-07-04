@@ -1,0 +1,8 @@
+{
+  "name": "@poster-craft/tsconfig",
+  "version": "1.0.0",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}
