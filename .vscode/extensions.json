@@ -1,5 +1,20 @@
 {
   "recommendations": [
-    "seatonjiang.gitmoji-vscode"
+    "imgildev.vscode-drizzle-snippets",
+    "pulkitgangwar.nextjs-snippets",
+    "antfu.unocss",
+    "streetsidesoftware.code-spell-checker",
+    "mikestead.dotenv",
+    "editorconfig.editorconfig",
+    "usernamehw.errorlens",
+    "antfu.file-nesting",
+    "dbaeumer.vscode-eslint",
+    "lokalise.i18n-ally",
+    "orta.vscode-jest",
+    "fabiospampinato.vscode-open-in-github",
+    "esbenp.prettier-vscode",
+    "gruntfuggly.todo-tree",
+    "antfu.vite",
+    "deinsoftware.vitest-snippets"
   ]
 }
