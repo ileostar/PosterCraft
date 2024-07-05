@@ -11,6 +11,7 @@
     "picocolors",
     "planetscale",
     "usehooks",
-    "Woohoo"
+    "Woohoo",
+    "vercel"
   ]
 }

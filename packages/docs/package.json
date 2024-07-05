@@ -5,5 +5,8 @@
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview"
+  },
+  "dependencies": {
+    "vitepress": "^1.2.3"
   }
 }
