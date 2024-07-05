@@ -6,10 +6,11 @@ import mysql from "mysql2/promise";
 
 dotenv.config({ path: path.resolve(__dirname, "../../../apps/server/.env") });
 
+console.log("process.env.MYSQL_DATABASE:", process.env.MYSQL_DATABASE);
+
 const connection = await mysql.createConnection({
   host: process.env.MYSQL_DATABASE_HOST,
   user: process.env.MYSQL_DATABASE_USERNAME,
-  password: process.env.MYSQL_DATABASE_PASSWORD,
   database: process.env.MYSQL_DATABASE,
 });
 

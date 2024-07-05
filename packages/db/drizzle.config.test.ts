@@ -3,7 +3,7 @@ import type { Config } from "drizzle-kit";
 
 import * as dotenv from "dotenv";
 
-dotenv.config({ path: path.resolve(__dirname, "../../apps/server/.env") });
+dotenv.config({ path: path.resolve(__dirname, "../../apps/server/.env.test") });
 
 if (!process.env.MYSQL_DATABASE) {
   throw new Error("MYSQL_DATABASE is missing");

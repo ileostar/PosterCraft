@@ -4,7 +4,7 @@ export const user = mysqlTable("user", {
   id: serial("id").primaryKey(),
   username: varchar("username", { length: 256 }),
   password: int("country_id"),
-  email: varchar("email", { length: 256 }),
+  email: varchar("email", { length: 256 }).notNull(),
   phoneNumber: varchar("email", { length: 256 }),
   oauthUid: varchar("oauth_uid", { length: 256 }).unique(),
   oauthAccessToken: text("oauth_access_token"),

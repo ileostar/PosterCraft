@@ -1,7 +1,6 @@
 {
   "name": "@poster-craft/db",
   "version": "1.0.0",
-  "description": "",
   "main": "src/index.ts",
   "scripts": {
     "init:ci": "tsx src/migrate.ts",
@@ -11,14 +10,11 @@
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "drizzle-kit": "^0.21.2"
+    "drizzle-kit": "^0.22.8"
   },
   "dependencies": {
     "mysql2": "^3.10.2",
-    "postgres": "^3.4.4"
+    "mysql2-promise": "^0.1.4"
   }
 }
