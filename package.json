@@ -14,7 +14,7 @@
     "format-check": "prettier --check --cache .",
     "test": "pnpm -F api test && pnpm -F client test",
     "test:ci": "pnpm -F api test && pnpm -F client test:ci",
-    "version": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s && git add CHANGELOG.md",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "docs:dev": "pnpm -F docs docs:dev",
     "build:docs": "pnpm -F docs docs:build"
   },

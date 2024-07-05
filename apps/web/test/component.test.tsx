@@ -1,21 +1,22 @@
-import { cleanup, fireEvent, render } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
-import Counter from '../components/Counter'
+import { cleanup, fireEvent, render } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
 
-describe('Counter', () => {
-  afterEach(cleanup)
+import Counter from "../components/Counter";
 
-  it('should render', () => {
-    const { getByText } = render(<Counter initial={10}/>)
-    expect(getByText('10')).toBeDefined()
-  })
+describe("Counter", () => {
+  afterEach(cleanup);
 
-  it('should be interactive', () => {
-    const { getByText } = render(<Counter initial={0}/>)
-    expect(getByText('0')).toBeDefined()
+  it("should render", () => {
+    const { getByText } = render(<Counter initial={10} />);
+    expect(getByText("10")).toBeDefined();
+  });
 
-    fireEvent.click(getByText('+'))
+  it("should be interactive", () => {
+    const { getByText } = render(<Counter initial={0} />);
+    expect(getByText("0")).toBeDefined();
 
-    expect(getByText('1')).toBeDefined()
-  })
-})
+    fireEvent.click(getByText("+"));
+
+    expect(getByText("1")).toBeDefined();
+  });
+});

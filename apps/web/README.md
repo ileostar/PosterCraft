@@ -6,7 +6,6 @@
 <a href="https://github.com/antfu/vitesse">Vitesse</a> for Next.js
 </h2><br>
 
-
 <p align="center">
 <br>
 <a href="https://vitesse-next.netlify.app/">🖥 Online Preview</a>
@@ -54,7 +53,6 @@ We recommend using [VS Code](https://code.visualstudio.com/) with [Volar](https:
 - [vitesse-webext](https://github.com/antfu/vitesse-webext) - WebExtension Vite starter template
 
 ## Try it now!
-
 
 ### GitHub Template
 
