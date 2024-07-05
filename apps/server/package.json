@@ -2,7 +2,6 @@
   "name": "server",
   "version": "0.0.1",
   "private": true,
-  "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -39,7 +38,6 @@
     "superagent": "^8.1.2"
   },
   "devDependencies": {
-    "@electric-sql/pglite": "^0.1.2",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
