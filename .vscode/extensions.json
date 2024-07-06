@@ -15,6 +15,7 @@
     "esbenp.prettier-vscode",
     "gruntfuggly.todo-tree",
     "antfu.vite",
-    "deinsoftware.vitest-snippets"
+    "deinsoftware.vitest-snippets",
+    "seatonjiang.gitmoji-vscode"
   ]
 }

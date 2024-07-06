@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+.yarn/install-state.gz
 
 # testing
 /coverage
@@ -23,8 +24,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
-pnpm-lock.yaml
 
 # local env files
 .env*.local
@@ -34,6 +33,4 @@ pnpm-lock.yaml
 
 # typescript
 *.tsbuildinfo
-
-# build
-/dist
+next-env.d.ts
