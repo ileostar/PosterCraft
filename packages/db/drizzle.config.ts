@@ -5,8 +5,8 @@ import * as dotenv from "dotenv";
 
 dotenv.config({ path: path.resolve(__dirname, "../../apps/server/.env") });
 
-if (!process.env.MYSQL_DATABASE) {
-  throw new Error("MYSQL_DATABASE is missing");
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL is missing");
 }
 
 export default {
@@ -14,11 +14,7 @@ export default {
   out: "./drizzle",
   dialect: "mysql",
   dbCredentials: {
-    host: process.env.MYSQL_DATABASE_HOST || "localhost",
-    port: Number(process.env.MYSQL_DATABASE_PORT) || 3306,
-    user: process.env.MYSQL_DATABASE_USERNAME || "root",
-    password: process.env.MYSQL_DATABASE_PASSWORD || "root",
-    database: process.env.MYSQL_DATABASE || "poster_craft",
+    url: process.env.DATABASE_URL || "",
   },
   verbose: true,
   strict: true,
