@@ -16,7 +16,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex-1 bg-gradient-to-r from-red-600 to-red-500 bg-design">
           <div className="h-full flex flex-col justify-between p-5 text-white font-serif">
             <p className="text-3xl">Detheroc</p>
-            <p className="text-5xl">Let's Kick Now！</p>
+            <p className="text-5xl">Lets Kick Now！</p>
             <Link href="/">&lt; Home</Link>
           </div>
         </div>
