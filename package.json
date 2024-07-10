@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "description": "Poster editor",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ileostar/PosterCraft/issues"
+  },
+  "homepage": "https://github.com/ileostar/PosterCraft",
+  "engines": {
+    "node": ">=20.12.2"
+  },
   "scripts": {
     "prepare": "simple-git-hooks",
     "schema:build": "pnpm -F  @poster-craft/schema build",
@@ -10,16 +17,13 @@
     "db:init:test": "pnpm -F @poster-craft/db run init:test",
     "dev:web": "pnpm -F web dev",
     "dev:server": "pnpm -F server start",
+    "lint": "turbo lint --no-daemon",
     "format": "prettier --write --cache .",
     "format-check": "prettier --check --cache .",
-    "test": "pnpm -F api test && pnpm -F client test",
     "test:ci": "pnpm -F api test && pnpm -F client test:ci",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "docs:dev": "pnpm -F docs docs:dev",
     "build:docs": "pnpm -F docs docs:build"
-  },
-  "engines": {
-    "node": ">=20.12.2"
   },
   "dependencies": {
     "@t3-oss/env-core": "^0.10.1",
@@ -39,6 +43,7 @@
     "simple-git-hooks": "^2.11.1",
     "tsup": "^8.1.0",
     "tsx": "^4.16.2",
+    "turbo": "^2.0.6",
     "typescript": "^5.5.3"
   }
 }

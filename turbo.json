@@ -1,0 +1,7 @@
+{
+  "pipeline": {
+    "lint": {
+      "cache": true
+    }
+  }
+}
