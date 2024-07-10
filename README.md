@@ -23,8 +23,8 @@
 
 ### server端
 
-- [Nestjs](<[.](https://docs.nestjs.com/)>)
-- [drizzle-orm](<[.](https://orm.drizzle.team/)>)
+- [Nestjs](https://docs.nestjs.com/)
+- [drizzle-orm](https://orm.drizzle.team/)
 - [Mysql](https://www.mysql.com/cn/)
 - [Redis](https://redis.io/)
 - [jest](https://jestjs.io/)
