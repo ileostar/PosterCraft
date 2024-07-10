@@ -18,7 +18,6 @@
     "dev:web": "pnpm -F web dev",
     "dev:server": "pnpm -F server start",
     "lint": "turbo lint --no-daemon",
-    "test": "turbo test --no-daemon",
     "format": "prettier --write --cache .",
     "format-check": "prettier --check --cache .",
     "test:ci": "pnpm -F api test && pnpm -F client test:ci",
