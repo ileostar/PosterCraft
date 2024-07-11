@@ -12,7 +12,7 @@
     "node": ">=20.12.2"
   },
   "scripts": {
-    "schema:build": "pnpm -F  @poster-craft/schema build",
+    "schema:build": "pnpm -F @poster-craft/schema build",
     "db:init": "pnpm schema:build && pnpm -F @poster-craft/db run init",
     "db:init:test": "pnpm -F @poster-craft/db run init:test",
     "dev:web": "pnpm -F web dev",
