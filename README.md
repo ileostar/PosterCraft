@@ -1,9 +1,12 @@
 # PosterCraft
 
-低代码全栈海报编辑器
-
-[👀在线预览](https://poster-craft.leostar.top) |
-[📃在线文档](https://poster-craft-docs.vercel.app/)
+<div align="center">
+  <img src="./public/assets/logo.png" width="50%"/>
+  <p>低代码全栈海报编辑器</p>
+  <a href="https://poster-craft.leostar.top" >👀在线预览</a>&nbsp;&nbsp;
+  |&nbsp;&nbsp;
+  <a href="https://poster-craft-docs.vercel.app/">📃在线文档</a>
+</div>
 
 ## 🎯 技术栈
 
@@ -65,7 +68,7 @@ Swagger地址：`localhost:3001/swagger`
 #### Web 端
 
 ```bash
-pnpm dev:server
+pnpm dev:web
 ```
 
 启动后访问 `localhost:3000` 即可
