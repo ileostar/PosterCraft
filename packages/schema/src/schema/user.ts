@@ -1,9 +1,12 @@
-import { mysqlTable, serial, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { mysqlEnum, mysqlTable, serial, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 export const user = mysqlTable("user", {
   id: serial("id").primaryKey(),
-  username: text("username").notNull(),
-  password: text("password").notNull(),
+  username: text("username").notNull().unique(),
+  password: text("password"),
+  nickname: text("nickname"),
+  avatar: varchar("avatar", { length: 256 }),
+  role: mysqlEnum("role", ["admin", "normal"]).default("normal"),
   email: varchar("email", { length: 256 }).notNull(),
   phoneNumber: varchar("phone_number", { length: 256 }),
   oauthUid: varchar("oauth_uid", { length: 256 }).unique(),

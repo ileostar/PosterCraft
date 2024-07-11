@@ -15,13 +15,5 @@
     "resolveJsonModule": true,
     "types": ["node"]
   },
-  "exclude": [
-    "**/dist/**",
-    "**/.next/**",
-    "**/next.d.ts",
-    "**/examples/**",
-    "**/docs/**",
-    "**/playground/**",
-    "**/test/**"
-  ]
+  "exclude": ["**/dist/**", "**/.next/**", "**/next.d.ts", "**/docs/**", "**/test/**"]
 }

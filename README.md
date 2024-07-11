@@ -1,11 +1,11 @@
 # PosterCraft
 
 <div align="center">
-  <img src="./public/assets/logo.png" width="50%"/>
+  <img src="./public/assets/logo.png" width="40%"/>
   <p>低代码全栈海报编辑器</p>
-  <a href="https://poster-craft.leostar.top" >👀在线预览</a>&nbsp;&nbsp;
+  <a href="https://poster-craft.leostar.top" style="text-decoration: none;">👀在线预览</a>&nbsp;&nbsp;
   |&nbsp;&nbsp;
-  <a href="https://poster-craft-docs.vercel.app/">📃在线文档</a>
+  <a href="https://poster-craft-docs.vercel.app/" style="text-decoration: none;">📃在线文档</a>
 </div>
 
 ## 🎯 技术栈
