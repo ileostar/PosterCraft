@@ -16,7 +16,7 @@ export class CreateUserDto {
   })
   @IsNotEmpty({ message: '手机号码不能为空' })
   @Length(6, 20, { message: '手机号码长度应在6到20位之间' })
-  phone: string;
+  phoneNumber: string;
 
   @ApiProperty({
     example: '123456',
@@ -26,6 +26,13 @@ export class CreateUserDto {
   @Length(6, 20, { message: '密码长度为6-20位' })
   password: string;
 
+  @ApiProperty({
+    example: 'hi@leostar.top',
+    description: '邮箱不能为空',
+  })
+  @IsNotEmpty({ message: '邮箱不能为空' })
+  email: string;
+
   avatar: string;
 }
 
@@ -33,7 +40,7 @@ export class FindUserDto {
   @ApiProperty()
   @IsNotEmpty({ message: '手机号码不能为空' })
   @Length(6, 20, { message: '手机号码长度应在6到20位之间' })
-  phone: string;
+  phoneNumber: string;
 }
 
 export class UpdateUserDto extends PickType(CreateUserDto, [

@@ -16,6 +16,7 @@
     "gruntfuggly.todo-tree",
     "antfu.vite",
     "deinsoftware.vitest-snippets",
-    "seatonjiang.gitmoji-vscode"
+    "seatonjiang.gitmoji-vscode",
+    "github.vscode-pull-request-github"
   ]
 }

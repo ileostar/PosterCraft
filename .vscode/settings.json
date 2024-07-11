@@ -10,8 +10,11 @@
     "pico",
     "picocolors",
     "planetscale",
+    "shacdn",
+    "shacdnui",
     "usehooks",
-    "Woohoo",
-    "vercel"
+    "vercel",
+    "webp",
+    "Woohoo"
   ]
 }
