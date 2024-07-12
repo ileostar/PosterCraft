@@ -1,14 +1,14 @@
-import { boolean, int, mysqlTable, serial, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, int, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 import { user } from "./user";
 
-interface ChannelProps {
+type ChannelProps = {
   name: string;
   id: string;
-}
+};
 
 export const work = mysqlTable("work", {
-  id: serial("id").primaryKey(),
+  id: int("id").primaryKey().autoincrement(),
   title: text("title").notNull(),
   desc: text("title"),
   coverImg: varchar("cover_img", { length: 256 }),
