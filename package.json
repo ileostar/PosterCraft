@@ -16,7 +16,7 @@
     "schema:build": "pnpm -F @poster-craft/schema build",
     "db:init": "pnpm schema:build && pnpm -F @poster-craft/db run init",
     "db:init:test": "pnpm schema:build && pnpm -F @poster-craft/db run init:test",
-    "db:init:test:ci": "pnpm -F @poster-craft/db run init:ci",
+    "db:init:test:ci": "pnpm schema:build && pnpm -F @poster-craft/db run init:ci",
     "dev:web": "pnpm -F web dev",
     "dev:server": "pnpm -F server start",
     "lint": "turbo lint --no-daemon",

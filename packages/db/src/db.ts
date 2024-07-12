@@ -1,13 +1,17 @@
 import path from "node:path";
+import url from "node:url";
 
 import dotenv from "dotenv";
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
 
-dotenv.config({ path: path.resolve(__dirname, "../../../apps/server/.env") });
+const envName = process.env.NODE_ENV === "production" ? ".env.prod" : ".env";
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-console.log("process.env.MYSQL_DATABASE:", process.env.MYSQL_DATABASE);
-
+dotenv.config({
+  path: path.resolve(__dirname, `../../../apps/server/${envName}`),
+});
 const connection = await mysql.createConnection({
   uri: process.env.DATABASE_URL,
   multipleStatements: true,

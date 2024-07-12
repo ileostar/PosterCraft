@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { appGlobalMiddleware } from 'src/app/useGlobal';
+import { appGlobalMiddleware } from '../src/app/useGlobal';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;

@@ -4,7 +4,7 @@ import { work } from "./schema/work";
 export * from "./schema/user";
 export * from "./schema/work";
 
-const schemas = {
+export const schemas = {
   user,
   work,
 };

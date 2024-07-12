@@ -1,6 +1,7 @@
 {
   "name": "@poster-craft/db",
   "version": "1.0.0",
+  "type": "module",
   "main": "src/index.ts",
   "scripts": {
     "init:ci": "tsx src/migrate.ts",
@@ -15,6 +16,7 @@
   },
   "dependencies": {
     "mysql2": "^3.10.2",
-    "mysql2-promise": "^0.1.4"
+    "mysql2-promise": "^0.1.4",
+    "@poster-craft/schema": "workspace:^"
   }
 }
