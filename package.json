@@ -4,6 +4,7 @@
   "description": "Poster editor",
   "type": "module",
   "license": "MIT",
+  "packageManager": "pnpm@9.3.0",
   "bugs": {
     "url": "https://github.com/ileostar/PosterCraft/issues"
   },
@@ -19,6 +20,7 @@
     "dev:web": "pnpm -F web dev",
     "dev:server": "pnpm -F server start",
     "lint": "turbo lint --no-daemon",
+    "test": "turbo test --no-daemon",
     "format": "prettier --write --cache .",
     "format-check": "prettier --check --cache .",
     "build": "pnpm schema:build && turbo build --no-daemon",
@@ -38,7 +40,6 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.3.0",
-    "@poster-craft/tsconfig": "workspace:^",
     "@types/node": "^20.14.9",
     "conventional-changelog-cli": "^4.1.0",
     "dotenv": "^16.4.5",
@@ -50,6 +51,7 @@
     "tsup": "^8.1.0",
     "tsx": "^4.16.2",
     "turbo": "^2.0.6",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vitest": "^2.0.2"
   }
 }

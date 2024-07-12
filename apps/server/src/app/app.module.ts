@@ -1,9 +1,9 @@
 import { RedisModule } from '@nestjs-modules/ioredis';
 import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
-import { GlobalModule } from 'src/global/global.module';
-import { UserModule } from 'src/user/user.module';
-import { AuthModule } from 'src/auth/auth.module';
+import { GlobalModule } from '../global/global.module';
+import { UserModule } from '../user/user.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
