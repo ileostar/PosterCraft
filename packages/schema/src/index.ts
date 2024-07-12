@@ -1,12 +1,12 @@
-import { poster } from "./schema/poster";
 import { user } from "./schema/user";
+import { work } from "./schema/work";
 
 export * from "./schema/user";
-export * from "./schema/poster";
+export * from "./schema/work";
 
 export const schemas = {
   user,
-  poster,
+  work,
 };
 
 export type SchemaType = typeof schemas;
