@@ -3,6 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { appGlobalMiddleware } from 'src/app/useGlobal';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -13,6 +14,13 @@ describe('AppController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.enableCors({
+      origin: [
+        /^http:\/\/localhost(:\d+)?$/,
+        /^http:\/\/poster-craft\.leostar\.top(:81)?$/,
+      ],
+    });
+    appGlobalMiddleware(app);
     const config = new DocumentBuilder()
       .setTitle('PosterCraft Swagger')
       .setDescription('The PosterCraft API description')
