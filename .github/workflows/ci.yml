@@ -30,7 +30,11 @@ jobs:
       - name: Lint
         run: pnpm lint
   db-test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+        os: [ubuntu-latest]
     env:
       DATABASE_URL: mysql://test:password@localhost:3306/poster_craft_test
       SECRET: sjldk92#sd903mnc./xklsjdf9sdfj
