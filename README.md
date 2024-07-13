@@ -42,8 +42,8 @@
 首先复制 `./apps/server/.env.example` 改成 `.env` 并更改里面配置，
 
 ```bash
-mysql://root:root@127.0.0.1:3306/<your-database>
-SECRET=<your-secret>
+DATABASE_URL="mysql://root:root@127.0.0.1:3306/<your-database>"
+SECRET="<your-secret>"
 REDIS_URL="redis://127.0.0.1:6379"
 ```
 
