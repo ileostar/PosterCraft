@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 import "../style/card.css";
 import  "../style/scrollAnimate.css"
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useScrollAnimate } from "@/hooks/useScrollAnimate";
 
 function Card() {
@@ -13,29 +13,7 @@ function Card() {
     router.push("/edit-template");
   };
 
-
-  // const boxRef = useRef<HTMLDivElement>(null); // 指定ref的类型为HTMLDivElement
-  // useEffect(() => {  
-  //   const handleScroll = () => {  
-  //     const box = boxRef.current;  
-  //     if (box) {  
-  //       const isBoxVisible = box.getBoundingClientRect().top+100 < window.innerHeight;  
-  //       if (isBoxVisible && !box.classList.contains('isVisible')) {  
-  //         console.log(111)
-  //         box.classList.add('isVisible');  
-  //       }  
-  //       if (!isBoxVisible && box.classList.contains('isVisible')) {  
-  //         box.classList.remove('isVisible');  
-  //       }  
-  //     }  
-  //   };  
-  
-  //   window.addEventListener('scroll', handleScroll);  
-  
-  //   return () => {  
-  //     window.removeEventListener('scroll', handleScroll);  
-  //   };  
-  // }, []); 
+ 
   const boxRef = useRef<HTMLDivElement>(null); // 指定ref的类型为HTMLDivElement
   useScrollAnimate(boxRef);
 
