@@ -2,7 +2,7 @@
 
 function Index(props: any) {
   return (
-    <div className="hero bg-base-200 h-4/6">
+    <div className="hero bg-base-200 h-full">
       <div className="hero-content flex-col lg:flex-row-reverse">
         {/* <img
         src="/num.jpg"

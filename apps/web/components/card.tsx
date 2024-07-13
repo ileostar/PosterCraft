@@ -3,6 +3,9 @@
 import { useRouter } from "next/navigation";
 
 import "../style/card.css";
+import  "../style/scrollAnimate.css"
+import { useRef } from "react";
+import { useScrollAnimate } from "@/hooks/useScrollAnimate";
 
 function Card() {
   const router = useRouter();
@@ -10,10 +13,15 @@ function Card() {
     router.push("/edit-template");
   };
 
+ 
+  const boxRef = useRef<HTMLDivElement>(null); // 指定ref的类型为HTMLDivElement
+  useScrollAnimate(boxRef);
+
   return (
     <div
-      className="card bg-base-100 w-80 shadow-xl mb-7 mt-7 hover-zoom"
+      className="card bg-base-100 w-80 shadow-xl mb-7 mt-7 hover-zoom ml-14 box"
       onClick={handleClick}
+         ref={boxRef}  
     >
       <figure>
         <img
