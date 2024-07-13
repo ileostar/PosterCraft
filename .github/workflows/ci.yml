@@ -1,0 +1,98 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [20.x]
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install
+
+      - name: Lint
+        run: pnpm lint
+  db-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [18x, 20.x]
+        os: [ubuntu-latest]
+    env:
+      DATABASE_URL: mysql://test:password@localhost:3306/poster_craft_test
+      SECRET: sjldk92#sd903mnc./xklsjdf9sdfj
+      REDIS_URL: redis://127.0.0.1:6379
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_USER: test
+          MYSQL_PASSWORD: password
+          MYSQL_DATABASE: poster_craft_test
+        ports:
+          - 3306:3306
+      redis:
+        image: redis:6.2.5
+        ports:
+          - 6379:6379
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20.12.0"
+
+      - name: Setup pnpm
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run database initialization command
+        run: pnpm db:init:test:ci
+
+      - name: Run build schema
+        run: pnpm schema:build
+
+  # test:
+  #   runs-on: ${{ matrix.os }}
+
+  #   strategy:
+  #     matrix:
+  #       node-version: [18.x, 20.x]
+  #       os: [ubuntu-latest]
+  #     fail-fast: false
+
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: pnpm/action-setup@v3
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #         registry-url: https://registry.npmjs.org/
+  #         cache: pnpm
+
+  #     - run: pnpm install
+  #     - run: pnpm test

@@ -1,7 +1,16 @@
 {
-  "pipeline": {
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "test": {
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"],
+      "cache": true
+    },
     "lint": {
       "cache": true
+    },
+    "build": {
+      "cache": false,
+      "dependsOn": ["^build"]
     }
   }
 }
