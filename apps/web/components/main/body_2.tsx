@@ -1,8 +1,15 @@
 "use client";
 
+import { useScrollAnimate } from "@/hooks/useScrollAnimate";
+import { useRef } from "react";
+
 function Index(props: any) {
+
+  const boxRef = useRef<HTMLDivElement>(null); // 指定ref的类型为HTMLDivElement
+  useScrollAnimate(boxRef);
+
   return (
-    <div className="mt-8 mb-8 flex w-2/3 mx-auto flex-col lg:flex-row">
+    <div className="mt-8 mb-8 flex w-2/3 mx-auto flex-col lg:flex-row box" ref={boxRef}>
       <div className="card bg-base-300 rounded-box grid h-32 flex-grow place-items-center ">
         <img
           src="./余额.png"

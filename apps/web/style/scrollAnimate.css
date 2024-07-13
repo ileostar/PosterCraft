@@ -1,0 +1,23 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.box {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.9s ease-in-out, transform 0.9s ease-in-out;
+    will-change: opacity, transform;
+    /* 初始状态模拟动画开始前的状态 */
+}
+
+.isVisible {
+    animation: fadeIn 0.9s forwards;
+    /* 当添加is-visible类时，触发fadeIn动画 */
+}

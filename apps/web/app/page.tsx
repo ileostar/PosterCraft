@@ -7,6 +7,7 @@ import Footer from "../components/main/footer";
 import Head from "../components/main/head";
 
 function Main() {
+   
   return (
     <div className="h-screen">
       <Head />

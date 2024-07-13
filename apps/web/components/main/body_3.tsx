@@ -16,8 +16,8 @@ function Index(props: any) {
         <div className="absolute right-8 top-0">
           <Search searchMessage={"查找热门海报"} />
         </div>
-        <div className="flex flex-wrap justify-around items-center">
-          {Array.from({ length: 8 }, (_, index) => (
+        <div className="flex flex-wrap justify-start items-center">
+          {Array.from({ length: 7 }, (_, index) => (
             <Card key={index} />
           ))}
         </div>
@@ -40,7 +40,7 @@ function Index(props: any) {
         <div className="absolute right-8 top-0">
           <Search searchMessage={"查找我的作品"} />
         </div>
-        <div className="flex flex-wrap justify-around items-center">
+        <div className="flex flex-wrap  items-center justify-start">
           {Array.from({ length: 4 }, (_, index) => (
             <Card key={index} />
           ))}
