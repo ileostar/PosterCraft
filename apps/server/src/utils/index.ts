@@ -1,8 +1,13 @@
 import crypto from 'crypto';
 
 /** 生成随机验证码 */
-export function generateVerificationCode(): string {
-  return crypto.randomInt(100000, 1000000).toString().slice(0, 6);
+export function generateVerificationCode() {
+  let code = '';
+  for (let i = 0; i < 6; i++) {
+    // 生成 0-9 之间的数字，并将其转换为字符串后追加到 code
+    code += Math.floor(Math.random() * 10);
+  }
+  return code;
 }
 
 /** 生成随机用户名 */

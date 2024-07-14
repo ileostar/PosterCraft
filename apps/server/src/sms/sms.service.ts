@@ -1,9 +1,11 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import SMSClient from '@alicloud/sms-sdk';
-import { SMSClientConfig, SMSSendConfig } from '../config/sms';
+import { Injectable } from '@nestjs/common';
 import { SendCodeBySMSDto } from './dto/sms.dto';
 import { generateVerificationCode } from 'src/utils';
 import { CacheService } from 'src/cache/cache.service';
+import { ResponseData } from 'src/response/ResponseFormat';
+import Client from 'src/common/sms';
+import * as $Dysmsapi20170525 from '@alicloud/dysmsapi20170525';
+import * as $Util from '@alicloud/tea-util';
 
 @Injectable()
 export class SmsService {
@@ -11,20 +13,19 @@ export class SmsService {
   async sendCodeBySMS(dto: SendCodeBySMSDto) {
     try {
       const code = generateVerificationCode();
-      const smsClient = new SMSClient(SMSClientConfig);
       this.cacheService.setCache(dto.phone, code);
-      const res = smsClient.sendSMS(
-        {
-          PhoneNumbers: dto.phone,
-          SignName: SMSSendConfig.SignName,
-          TemplateCode: SMSSendConfig.TemplateCode,
-          TemplateParam: JSON.stringify({ code }),
-        },
-        { method: 'POST' },
-      );
-      return res.Code === 'OK' ? res : false;
+      let client = Client.createClient();
+      let sendSmsRequest = new $Dysmsapi20170525.SendSmsRequest({
+        signName: process.env.SignName,
+        templateCode: process.env.TemplateCode,
+        phoneNumbers: dto.phone,
+        templateParam: JSON.stringify({ code }),
+      });
+      let runtime = new $Util.RuntimeOptions({});
+      await client.sendSmsWithOptions(sendSmsRequest, runtime);
+      return ResponseData.ok(null, '短信发送成功');
     } catch (error) {
-      new HttpException('sendCodeBySMS error', HttpStatus.BAD_REQUEST);
+      return ResponseData.fail(error.message);
     }
   }
 }
