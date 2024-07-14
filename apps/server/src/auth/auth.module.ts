@@ -3,10 +3,14 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from '../user/user.module';
+import { SmsModule } from '../sms/sms.module';
+import { CacheModule } from 'src/cache/cache.modules';
 
 @Module({
   imports: [
+    SmsModule,
     UserModule,
+    CacheModule,
     JwtModule.register({
       global: true,
       secret: process.env.SECRET,

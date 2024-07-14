@@ -8,6 +8,10 @@
   <a href="https://poster-craft-docs.vercel.app/" style="text-decoration: none;">📃在线文档</a>
 </div>
 
+## 🎈 项目介绍
+
+海报编辑器
+
 ## 🎯 技术栈
 
 ![techStack](/public/screenshot/techStack.jpg)
