@@ -3,7 +3,6 @@ import * as THREE from 'three';
   
 function Index(props: any) {   
 
-// import * as THREE from 'three';
 let renderer:any, scene:any, camera:any, inside:any, outside:any, particle:any;
 
 
