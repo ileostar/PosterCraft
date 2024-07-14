@@ -102,6 +102,7 @@ function animate() {
 
 const [initialized, setInitialized] = useState(false);
 
+// eslint-disable-next-line 
 const threeDivRef = useCallback(
     (node: HTMLDivElement | null) => {
       if (node !== null && !initialized) {
@@ -110,6 +111,7 @@ const threeDivRef = useCallback(
         setInitialized(true);
       }
     },
+    // eslint-disable-next-line 
     [initialized]
   );
 
