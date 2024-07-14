@@ -4,12 +4,14 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { GlobalModule } from '../global/global.module';
 import { UserModule } from '../user/user.module';
 import { AuthModule } from '../auth/auth.module';
+import { SmsModule } from 'src/sms/sms.module';
 
 @Module({
   imports: [
     GlobalModule,
     UserModule,
     AuthModule,
+    SmsModule,
     RedisModule.forRootAsync({
       useFactory: () => ({
         type: 'single',
