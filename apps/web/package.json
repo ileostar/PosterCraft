@@ -24,12 +24,14 @@
     "react-hook-form": "^7.52.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.166.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/three": "^0.166.0",
     "css-types": "^1.1.0",
     "daisyui": "^4.12.10",
     "eslint": "^8",
