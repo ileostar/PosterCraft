@@ -9,6 +9,7 @@ import {
   createOAuth2ServerProviders,
   OAuth2ServerInstanceProvider,
 } from './oauth2.providers';
+import { Oauth2Controller } from './oauth2.controller';
 
 @Global()
 @Module({
