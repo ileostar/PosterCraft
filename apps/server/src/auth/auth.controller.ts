@@ -2,7 +2,6 @@ import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 import { DefaultLoginDto, PhoneOtpLoginDto, RegisterDto } from './dto/auth.dto';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
-import { CreateUserDto } from '../user/dto/user.dto';
 import { UserEntity, User } from '../user/user.decorators';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
@@ -31,12 +30,6 @@ export class AuthController {
   signup(@Body() dto: RegisterDto) {
     return this.authService.signup(dto);
   }
-
-  // @Get('sendCodeByEmail')
-  // @ApiOperation({ summary: '发送邮箱验证码', description: '发送邮箱验证码并返回' })
-  // sendCodeByEmail(@Body() dto: PhoneOtpLoginDto) {
-  //   return this.authService.phoneOtpLogin(dto);
-  // }
 
   @UseGuards(AuthGuard)
   @Get('userInfo')
