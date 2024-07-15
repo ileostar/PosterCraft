@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 
-import Head from "../../components/main/head";
+import Head from "../../components/page-components/index/Head";
 
 function Index(props: any) {
   return (
     <div>
       <Head />
-      123
+      456
     </div>
   );
 }

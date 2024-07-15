@@ -1,21 +1,21 @@
 "use client";
 
-import Body_1 from "../components/main/body_1";
-import Body_2 from "../components/main/body_2";
-import Body_3 from "../components/main/body_3";
-import Footer from "../components/main/footer";
-import Head from "../components/main/head";
+import Banner from "../components/page-components/index/Banner";
+import DataBox from "../components/page-components/index/DataBox";
+import TemplateList from "../components/page-components/index/TemplateList";
+import Foot from "../components/page-components/index/Foot";
+import Head from "../components/page-components/index/Head";
 
 function Main() {
    
   return (
     <div className="h-screen">
       <Head />
-      <Body_1 />
-      <Body_2 />
+      <Banner />
+      <DataBox />
       <div className="divider w-4/5 mx-auto"></div>
-      <Body_3 />
-      <Footer />
+      <TemplateList />
+      <Foot />
     </div>
   );
 }

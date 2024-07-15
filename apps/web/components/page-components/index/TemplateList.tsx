@@ -1,7 +1,7 @@
 "use client";
 
-import Card from "../card";
-import Search from "../search";
+import Card from "../../base/card";
+import Search from "../../base/search";
 
 function Index(props: any) {
   return (

@@ -2,15 +2,15 @@
 
 import { useRouter } from "next/navigation";
 
-import "../style/card.css";
-import  "../style/scrollAnimate.css"
+import "../../style/card.css";
+import  "../../style/scrollAnimate.css"
 import { useRef } from "react";
 import { useScrollAnimate } from "@/hooks/useScrollAnimate";
 
 function Card() {
   const router = useRouter();
   const handleClick = () => {
-    router.push("/edit-template");
+    router.push("/work");
   };
 
  
@@ -29,11 +29,6 @@ function Card() {
           src="/num.jpg"
           alt="Shoes"
         />
-        {/* <img
-          className="h-96 object-cover img"
-          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-          alt="Shoes"
-        /> */}
       </figure>
       <div className="card-body">
         <h2 className="card-title">
