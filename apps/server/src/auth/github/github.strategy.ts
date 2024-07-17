@@ -1,13 +1,13 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy } from 'passport-GITHUB-oauth20';
+import { Strategy } from 'passport-github-oauth20';
 
 import { UserService } from '../../user/user.service';
 
 @Injectable()
-export class GITHUBStrategy extends PassportStrategy(Strategy) {
-  private readonly logger = new Logger(GITHUBStrategy.name);
+export class GithubStrategy extends PassportStrategy(Strategy) {
+  private readonly logger = new Logger(GithubStrategy.name);
 
   constructor(
     private readonly configService: ConfigService,
@@ -24,7 +24,6 @@ export class GITHUBStrategy extends PassportStrategy(Strategy) {
     const {
       id: providerId,
       displayName,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       name: { familyName, givenName },
       emails,
       photos,
@@ -32,17 +31,11 @@ export class GITHUBStrategy extends PassportStrategy(Strategy) {
     } = profile;
 
     this.logger.verbose(JSON.stringify({ ...profile }));
-    const user = await this.usersService.findOne({
-      provider_providerId: {
-        provider,
-        providerId,
-      },
-    });
+    const user = await this.usersService.findUserByProvider(providerId);
     if (user) {
       return cb(null, user);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [{ value: email, verified }] = emails;
     const [{ value: photo }] = photos;
     const userData = {
@@ -51,12 +44,12 @@ export class GITHUBStrategy extends PassportStrategy(Strategy) {
       username: displayName,
       email: email,
       nickname: undefined,
-      profileImage: photo,
-      thumbnailImage: undefined,
+      avatar: photo,
       accessToken,
       refreshToken,
+      phone: null,
     };
-    await this.usersService.create(userData);
+    await this.usersService.createUser(userData);
     cb(null, userData);
   }
 }
