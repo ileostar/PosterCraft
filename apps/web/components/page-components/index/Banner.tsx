@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import "../../style/3d.css"
-import ThreeD from "../3d/3d"
+import "../../../style/3d.css"
+import ThreeD from "../../model/MyModel"
 
 function Index(props: any) {
 
