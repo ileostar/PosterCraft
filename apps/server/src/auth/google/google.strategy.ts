@@ -24,7 +24,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
     const {
       id: providerId,
       displayName,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       name: { familyName, givenName },
       emails,
       photos,
@@ -32,17 +31,11 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
     } = profile;
 
     this.logger.verbose(JSON.stringify({ ...profile }));
-    const user = await this.usersService.findOne({
-      provider_providerId: {
-        provider,
-        providerId,
-      },
-    });
+    const user = await this.usersService.findUserByProvider(providerId);
     if (user) {
       return cb(null, user);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [{ value: email, verified }] = emails;
     const [{ value: photo }] = photos;
     const userData = {
@@ -55,8 +48,9 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
       thumbnailImage: undefined,
       accessToken,
       refreshToken,
+      phone: null,
     };
-    await this.usersService.create(userData);
+    await this.usersService.createUser(userData);
     cb(null, userData);
   }
 }

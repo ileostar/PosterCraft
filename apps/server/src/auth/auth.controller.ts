@@ -1,13 +1,22 @@
-import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Res } from '@nestjs/common';
 import { DefaultLoginDto, PhoneOtpLoginDto, RegisterDto } from './dto/auth.dto';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { UserEntity, User } from '../user/user.decorators';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiExcludeEndpoint,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import { CallbackUserDataDto } from './dto/oauth2.dto';
+import { GoogleAuthGuard } from './google/google.auth.guard';
+import { CallbackUserData } from './decorator/callbackUserData.decorator';
 
 @ApiTags('用户鉴权接口🤖')
 @Controller('auth')
 export class AuthController {
+  configService: any;
   constructor(private readonly authService: AuthService) {}
 
   @Post('defaultLogin')
@@ -29,6 +38,16 @@ export class AuthController {
   @ApiOperation({ summary: '注册', description: '注册' })
   signup(@Body() dto: RegisterDto) {
     return this.authService.signup(dto);
+  }
+
+  @ApiExcludeEndpoint()
+  @Get('google/callback')
+  @UseGuards(GoogleAuthGuard)
+  async googleCallback(
+    @CallbackUserData() userData: CallbackUserDataDto,
+    @Res() res: Response,
+  ) {
+    const { access_token } = await this.authService.oauthLogin(userData);
   }
 
   @UseGuards(AuthGuard)

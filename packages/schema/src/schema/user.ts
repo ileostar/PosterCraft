@@ -28,6 +28,6 @@ export const user = mysqlTable(
     updatedAt: timestamp("updated_at").onUpdateNow(),
   },
   (t) => ({
-    oauthId: unique("provider_providerId").on(t.provider, t.providerId),
+    oauthId: unique("oauth_id").on(t.provider, t.providerId),
   }),
 );
