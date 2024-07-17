@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import Head from "../../components/page-components/index/Head";
-import Search from "@/components/base/Search";
+import Search from "@/components/base/MySearch";
 import Card from "@/components/base/MyCard";
 
 function Index(props: any) {
