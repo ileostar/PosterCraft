@@ -1,6 +1,6 @@
 "use client";
 
-import { Icons } from "@/components/base/Icon";
+import { Icons } from "@/components/base/Icons";
 import { Button } from "@/components/ui/button";
 import {
   Form,

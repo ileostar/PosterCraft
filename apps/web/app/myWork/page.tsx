@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import Head from "../../components/page-components/index/Head";
 import Search from "@/components/base/Search";
-import Card from "@/components/base/Card";
+import Card from "@/components/base/MyCard";
 
 function Index(props: any) {
   return (

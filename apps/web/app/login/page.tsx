@@ -1,6 +1,6 @@
 "use client";
 
-import { Icons } from "@/components/base/Icon";
+import { Icons } from "@/components/base/Icons";
 import Layout from "@/components/page-components/login/LoginBackGround";
 import { Button } from "@/components/ui/button";
 import {
