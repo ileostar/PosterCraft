@@ -1,7 +1,7 @@
 "use client";
 
+import { Icons } from "@/components/base/Icon";
 import Layout from "@/components/page-components/login/LoginBackGround";
-import { Icons } from "@/components/base/icon";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -24,9 +24,16 @@ const loginFormSchema = z.object({
   email: z.string().email({
     message: "无效的邮箱格式",
   }),
+  phone: z
+    .string()
+    .length(11, { message: "无效的手机号码" })
+    .regex(/^[0-9]+$/, {
+      message: "无效的手机号码",
+    }),
   password: z.string().min(1, {
     message: "不能为空",
   }),
+  code:z.string() .length(4, { message: "无效的验证码" })
 });
 
 export type loginFormSchemaType = z.infer<typeof loginFormSchema>;
@@ -37,11 +44,96 @@ export default function Login() {
     defaultValues: {
       email: "",
       password: "",
+      phone: "",
+      code:""
     },
   });
   async function onSubmit(values: loginFormSchemaType) {
     console.log(values);
   }
+
+  const [isPhoneMode, setPhoneMode] = useState(false);
+
+  const RenderForm = () => {
+    if (isPhoneMode) {
+      return (
+        <div>
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>手机号码</FormLabel>
+                <FormControl>
+                  <Input
+                    className="input-bordered"
+                    {...field}
+                    placeholder="手机号码"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="form-control mt-[5px]">
+                <FormLabel className="label">验证码</FormLabel>
+                <FormControl>
+                  <Input
+                    className="input-bordered border-red-500/30"
+                    type="code"
+                    placeholder="验证码"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
+      );
+    }
+    return (
+      <div>
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input
+                  className="input-bordered"
+                  {...field}
+                  placeholder="email"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem className="form-control mt-[5px]">
+              <FormLabel className="label">Password</FormLabel>
+              <FormControl>
+                <Input
+                  className="input-bordered border-red-500/30"
+                  type="password"
+                  placeholder="password"
+                  {...field}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+      </div>
+    );
+  };
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -65,48 +157,20 @@ export default function Login() {
               <div className="flex justify-center items-center card-title">
                 <p className="text-center text-red-500 text-2xl">Sign In</p>
               </div>
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        className="input-bordered"
-                        {...field}
-                        placeholder="email"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem className="form-control mt-[5px]">
-                    <FormLabel className="label">Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        className="input-bordered border-red-500/30"
-                        type="password"
-                        placeholder="password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <label className="label">
-                      <Link
-                        href="#"
-                        className="label-text-alt link link-hover text-[#EF4444]"
-                      >
-                        Forgot password?
-                      </Link>
-                    </label>
-                  </FormItem>
-                )}
-              />
+
+              {RenderForm()}
+
+              <label className="label justify-end">
+                <Link
+                  href="#"
+                  onClick={() => {
+                    setPhoneMode(!isPhoneMode);
+                  }}
+                  className="label-text-alt link link-hover text-[#EF4444] "
+                >
+                  {isPhoneMode?'使用邮箱登录':'使用短信登录'}
+                </Link>
+              </label>
               <div className="flex justify-between mt-[5px]">
                 <Button
                   className="btn w-full hover:bg-red-600 bg-[#EF4444] text-white"
