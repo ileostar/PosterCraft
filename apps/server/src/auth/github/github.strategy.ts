@@ -47,7 +47,6 @@ export class GithubStrategy extends PassportStrategy(Strategy) {
       avatar: photo,
       accessToken,
       refreshToken,
-      phone: null,
     };
     await this.usersService.createUser(userData);
     cb(null, userData);

@@ -3,16 +3,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app/app.module';
 import { appGlobalMiddleware } from './app/useGlobal';
-import {
-  NestFastifyApplication,
-  FastifyAdapter,
-} from '@nestjs/platform-fastify';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter(),
-  );
+  const app = await NestFactory.create(AppModule);
   app.enableCors({
     origin: [
       /^http:\/\/localhost(:\d+)?$/,
@@ -32,4 +25,6 @@ async function bootstrap() {
   await app.listen(process.env.PORT || 3001);
 }
 
-bootstrap();
+bootstrap().then(() =>
+  console.log('Server Started Swagger: http://localhost:3001/swagger'),
+);
