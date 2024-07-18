@@ -48,7 +48,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
       thumbnailImage: undefined,
       accessToken,
       refreshToken,
-      phone: null,
     };
     await this.usersService.createUser(userData);
     cb(null, userData);
