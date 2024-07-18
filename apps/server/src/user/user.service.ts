@@ -1,13 +1,19 @@
 import { user } from '@poster-craft/schema';
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import * as argon2 from 'argon2';
 import { eq } from 'drizzle-orm';
 import { DB, DbType } from '../global/providers/db.provider';
-import { CreateUserDto } from './dto/user.dto';
+import { CreateUserDto, BindPhoneDto } from './dto/user.dto';
+import { ResponseData } from 'src/response/ResponseFormat';
+import { CacheService } from 'src/cache/cache.service';
+import { PhoneOtpLoginDto, RegisterDto } from 'src/auth/dto/auth.dto';
 
 @Injectable()
 export class UserService {
-  constructor(@Inject(DB) private db: DbType) {}
+  constructor(
+    @Inject(DB) private db: DbType,
+    private cacheService: CacheService,
+  ) {}
 
   async createUser(dto: CreateUserDto) {
     let newUsers;
@@ -33,6 +39,12 @@ export class UserService {
     });
   }
 
+  findUserByProvider(providerId: string) {
+    return this.db.query.user.findFirst({
+      where: eq(user.providerId, providerId),
+    });
+  }
+
   async findUserByEmail(email: string): Promise<any> {
     return this.db.query.user.findFirst({
       where: eq(user.email, email),
@@ -45,9 +57,28 @@ export class UserService {
     });
   }
 
+  /** 校验验证码是否正确 */
+  async checkVerificationCode(
+    dto: RegisterDto | PhoneOtpLoginDto,
+  ): Promise<Boolean> {
+    const correctCode = await this.cacheService.getCache(dto.phone);
+    return correctCode === dto.otp;
+  }
+
+  async findUserByUserId(userId: number) {
+    return this.db.query.user.findFirst({
+      where: eq(user.id, userId),
+    });
+  }
+
   /** 如果用户存在，则返回true；否则返回false */
   async checkUsernameExists(username: string): Promise<boolean> {
     const user = await this.findUserByUsername(username);
+    return !!user;
+  }
+
+  async checkUserIdExists(userId: number) {
+    const user = await this.findUserByUserId(userId);
     return !!user;
   }
 
@@ -55,5 +86,26 @@ export class UserService {
   async checkEmailExists(email: string): Promise<boolean> {
     const user = await this.findUserByEmail(email);
     return !!user;
+  }
+
+  /** 用户添加手机号 */
+  async bindPhoneDto(dto: BindPhoneDto) {
+    try {
+      const verify = this.checkVerificationCode(dto);
+      if (!verify) {
+        return ResponseData.fail('验证码错误');
+      }
+      const _user = this.checkUserIdExists(dto.userId);
+      if (_user) {
+        await this.db.update(user).set({
+          phone: dto.phone,
+        });
+        return ResponseData.ok('手机号绑定成功');
+      } else {
+        return ResponseData.fail('用户ID不存在');
+      }
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
+    }
   }
 }

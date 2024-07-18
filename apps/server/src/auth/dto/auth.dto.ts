@@ -1,7 +1,7 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
 import '@nestjs/common';
 import { IsNotEmpty, IsString, Length, Matches } from 'class-validator';
-import { CreateUserDto } from 'src/user/dto/user.dto';
+import { BindPhoneDto, CreateUserDto } from 'src/user/dto/user.dto';
 
 /** 默认登录：用户名/邮箱 + 密码 */
 export class DefaultLoginDto {
@@ -23,25 +23,10 @@ export class DefaultLoginDto {
 }
 
 /** 手机号登录 */
-export class PhoneOtpLoginDto {
-  @ApiProperty({
-    example: '14709723891',
-    description: '手机号码不能为空,长度应在6-20位之间',
-  })
-  @IsNotEmpty({ message: '手机号码不能为空' })
-  @Length(11, 11, { message: '手机号码应为11位数字' })
-  @Matches(/^1[3-9]\d{9}$/, { message: '手机号码格式不正确' })
-  phone: string;
-
-  @ApiProperty({
-    example: '123456',
-    description: '一次性验证码，从短信中获取',
-  })
-  @IsNotEmpty({ message: '验证码不能为空' })
-  @IsString({ message: '验证码必须是字符串类型' })
-  @Length(6, 6, { message: '验证码应为6位数字' })
-  otp: string;
-}
+export class PhoneOtpLoginDto extends PickType(BindPhoneDto, [
+  'phone',
+  'otp',
+]) {}
 
 /** 注册DTO */
 export class RegisterDto extends OmitType(CreateUserDto, [
@@ -59,6 +44,3 @@ export class RegisterDto extends OmitType(CreateUserDto, [
   @Length(6, 6, { message: '验证码应为6位数字' })
   otp: string;
 }
-
-/** 绑定手机号 */
-export class BindPhoneDto extends PhoneOtpLoginDto {}

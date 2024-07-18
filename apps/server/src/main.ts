@@ -25,4 +25,6 @@ async function bootstrap() {
   await app.listen(process.env.PORT || 3001);
 }
 
-bootstrap();
+bootstrap().then(() =>
+  console.log('Server Started Swagger: http://localhost:3001/swagger'),
+);
