@@ -1,6 +1,13 @@
 "use client";
 
-import { defaultSignIn, defaultSignUp, loginBySMS, sendBySMS,googleSignIn,githubSignIn } from "@/api/api";
+import {
+  defaultSignIn,
+  defaultSignUp,
+  githubSignIn,
+  googleSignIn,
+  loginBySMS,
+  sendBySMS,
+} from "@/api/api";
 import { Icons } from "@/components/base/Icons";
 import Layout from "@/components/page-components/login/LoginBackGround";
 import { Button } from "@/components/ui/button";
@@ -98,15 +105,18 @@ export default function Login() {
         let res = await loginBySMS(form.getValues("phone"), form.getValues("code"));
         window.localStorage.setItem("token", res.token); //存入本地
         console.log(res.token);
-      }
-      else{
+      } else {
         let res = await defaultSignIn(form.getValues("username"), form.getValues("password"));
         window.localStorage.setItem("token", res.token); //存入本地
         console.log(res.token);
       }
-    }
-    else{
-      let res = await  defaultSignUp(form.getValues("username"),form.getValues("password"),form.getValues("phone"), form.getValues("code"));
+    } else {
+      let res = await defaultSignUp(
+        form.getValues("username"),
+        form.getValues("password"),
+        form.getValues("phone"),
+        form.getValues("code"),
+      );
       console.log(res);
     }
   };
@@ -343,17 +353,17 @@ export default function Login() {
                 </label>
                 <span className="text-xs font-serif">其他登录方式：</span>
                 <div
-                  className="cursor-pointer hover:animate-pulse"
+                  className="text-gray cursor-pointer hover:animate-pulse"
                   onClick={() => googleSignIn()}
                 >
                   <Icons.google />
                 </div>
-                <div
-                  className="text-gray cursor-pointer hover:animate-pulse"
-                  onClick={() => githubSignIn()}
+                <Link
+                  className="cursor-pointer hover:animate-pulse"
+                  href="https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http://127.0.0.1:3001/auth/github/callback&client_id=Ov23lixhpaewn7euEM55"
                 >
                   <Icons.gitHub />
-                </div>
+                </Link>
               </div>
             </form>
           </div>

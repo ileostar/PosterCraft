@@ -14,12 +14,6 @@ import { CallbackUserDataDto } from './dto/oauth2.dto';
 
 @Injectable()
 export class AuthService {
-  /** 校验验证码是否正确 */
-  login(
-    userData: CallbackUserDataDto,
-  ): { access_token: any } | PromiseLike<{ access_token: any }> {
-    throw new Error('Method not implemented.');
-  }
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
@@ -45,7 +39,11 @@ export class AuthService {
       role: user.role,
       email: user.email,
     };
-    return ResponseData.ok(payload, '手机号登录成功', this.jwtService);
+    return ResponseData.ok(
+      payload,
+      '手机号登录成功',
+      this.jwtService.signAsync(payload),
+    );
   }
 
   /** 短信登录 */
@@ -82,12 +80,14 @@ export class AuthService {
 
   /** Oauth2 */
   async oauthLogin(userData: CallbackUserDataDto) {
-    const { provider, providerId, email } = userData;
-
-    const payload = { provider, providerId };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    return ResponseData.ok(
+      {
+        userData,
+        isSignUp: userData.phone ? false : true,
+      },
+      'Oauth2获取用户信息成功',
+      this.jwtService.signAsync(userData),
+    );
   }
 
   /** 默认注册 */

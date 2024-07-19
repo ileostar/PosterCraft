@@ -48,7 +48,6 @@ export class GithubStrategy extends PassportStrategy(Strategy) {
       accessToken,
       refreshToken,
     };
-    await this.usersService.createUser(userData);
     cb(null, userData);
   }
 }

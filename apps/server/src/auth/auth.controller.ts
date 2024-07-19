@@ -12,8 +12,9 @@ import {
 import { CallbackUserDataDto } from './dto/oauth2.dto';
 import { GoogleAuthGuard } from './google/google.auth.guard';
 import { CallbackUserData } from './decorator/callbackUserData.decorator';
-import { Response } from 'express';
 import { GithubAuthGuard } from './github/github.auth.guard';
+import { UserService } from 'src/user/user.service';
+import { ResponseData } from 'src/response/ResponseFormat';
 
 @ApiTags('用户鉴权接口🤖')
 @Controller('auth')
@@ -46,24 +47,16 @@ export class AuthController {
   @Get('google/callback')
   @ApiOperation({ summary: 'Google登录', description: 'Google登录' })
   @UseGuards(GoogleAuthGuard)
-  async googleCallback(
-    @CallbackUserData() userData: CallbackUserDataDto,
-    @Res() res: Response,
-  ) {
-    const { access_token } = await this.authService.oauthLogin(userData);
-    res.cookie(access_token, { httpOnly: true });
+  async googleCallback(@CallbackUserData() userData: CallbackUserDataDto) {
+    return await this.authService.oauthLogin(userData);
   }
 
   @ApiExcludeEndpoint()
   @Get('github/callback')
   @ApiOperation({ summary: 'Github登录', description: 'Github登录' })
   @UseGuards(GithubAuthGuard)
-  async githubCallback(
-    @CallbackUserData() userData: CallbackUserDataDto,
-    @Res() res: Response,
-  ) {
-    const { access_token } = await this.authService.oauthLogin(userData);
-    res.cookie(access_token, { httpOnly: true });
+  async githubCallback(@CallbackUserData() userData: CallbackUserDataDto) {
+    return await this.authService.oauthLogin(userData);
   }
 
   @UseGuards(AuthGuard)

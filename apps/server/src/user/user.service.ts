@@ -87,25 +87,4 @@ export class UserService {
     const user = await this.findUserByEmail(email);
     return !!user;
   }
-
-  /** 用户添加手机号 */
-  async bindPhoneDto(dto: BindPhoneDto) {
-    try {
-      const verify = this.checkVerificationCode(dto);
-      if (!verify) {
-        return ResponseData.fail('验证码错误');
-      }
-      const _user = this.checkUserIdExists(dto.userId);
-      if (_user) {
-        await this.db.update(user).set({
-          phone: dto.phone,
-        });
-        return ResponseData.ok('手机号绑定成功');
-      } else {
-        return ResponseData.fail('用户ID不存在');
-      }
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.BAD_REQUEST);
-    }
-  }
 }
