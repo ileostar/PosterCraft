@@ -1,5 +1,6 @@
 import { url } from "inspector";
 
+import { openCenteredOAuthPopup } from "@/utils/popup";
 import axios, { AxiosResponse } from "axios";
 
 import { request } from "./request";
@@ -80,10 +81,25 @@ export function googleSignIn(): Promise<CustomAxiosResponse> {
 /**
  * github登录
  */
-export function githubSignIn(): Promise<CustomAxiosResponse> {
+export function githubSignIn(): any {
+  window.addEventListener("message", receiveMessage, false);
+
+  function receiveMessage(event: { origin: any }) {
+    // For Chrome, the origin property is in the event.originalEvent
+    // object.
+    // 这里不准确，chrome 没有这个属性
+    // var origin = event.origin || event.originalEvent.origin;
+    var origin = event.origin;
+    // if (origin !== "http://example.org:8080") return;
+
+    // ...
+    console.log(event);
+    window.close();
+  }
+  openCenteredOAuthPopup("http://127.0.0.1:3001/auth/github/callback", 600, 500);
   // return request({
   //   url: '/auth/github/callback',
   //   method: 'get',
   // })
-  return axios.get("");
+  // return axios.get("");
 }

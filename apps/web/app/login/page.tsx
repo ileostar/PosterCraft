@@ -358,12 +358,13 @@ export default function Login() {
                 >
                   <Icons.google />
                 </div>
-                <Link
+                <div
                   className="cursor-pointer hover:animate-pulse"
-                  href="https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http://127.0.0.1:3001/auth/github/callback&client_id=Ov23lixhpaewn7euEM55"
+                  // href="https://github.com/login/oauth/authorize?client_id=Ov23lixhpaewn7euEM55&redirect_uri=http://127.0.0.1:3000/auth/github/callback"
+                  onClick={() => githubSignIn()}
                 >
                   <Icons.gitHub />
-                </Link>
+                </div>
               </div>
             </form>
           </div>

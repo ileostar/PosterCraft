@@ -21,14 +21,7 @@ export class GithubStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(accessToken, refreshToken, profile, cb) {
-    const {
-      id: providerId,
-      displayName,
-      name: { familyName, givenName },
-      emails,
-      photos,
-      provider,
-    } = profile;
+    const { id: providerId, displayName, emails, photos, provider } = profile;
 
     this.logger.verbose(JSON.stringify({ ...profile }));
     const user = await this.usersService.findUserByProvider(providerId);
