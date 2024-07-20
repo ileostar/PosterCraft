@@ -22,9 +22,8 @@ export class CreateUserDto {
 
   @ApiProperty({
     example: 'user@example.com',
-    description: '电子邮件地址不能为空',
+    description: '电子邮件地址',
   })
-  @IsNotEmpty({ message: '电子邮件地址不能为空' })
   @IsEmail({}, { message: '电子邮件地址格式不正确' })
   email?: string;
 
@@ -41,7 +40,6 @@ export class CreateUserDto {
     example: '123456',
     description: '密码不能为空,长度应在6-20位之间',
   })
-  @IsNotEmpty({ message: '密码不能为空' })
   @Length(6, 20, { message: '密码长度为6-20位' })
   password?: string;
 
@@ -80,6 +78,13 @@ export class UpdateUserDto extends PickType(CreateUserDto, [
 
 export class BindPhoneDto {
   @ApiProperty({
+    example: 13,
+    description: '用户ID不能为空',
+  })
+  @IsNotEmpty({ message: '用户ID不能为空' })
+  userId: number;
+
+  @ApiProperty({
     example: '14709723891',
     description: '手机号码不能为空,长度应在6-20位之间',
   })
@@ -96,11 +101,4 @@ export class BindPhoneDto {
   @IsString({ message: '验证码必须是字符串类型' })
   @Length(6, 6, { message: '验证码应为6位数字' })
   otp: string;
-
-  @ApiProperty({
-    example: 13,
-    description: '用户ID不能为空',
-  })
-  @IsNotEmpty({ message: '用户ID不能为空' })
-  userId: number;
 }

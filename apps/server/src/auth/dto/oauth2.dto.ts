@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString, IsUrl } from 'class-validator';
+import {
+  IsEmail,
+  IsMobilePhone,
+  IsNotEmpty,
+  IsString,
+  IsUrl,
+} from 'class-validator';
 
 export class CallbackUserDataDto {
   @IsString()
@@ -76,4 +82,13 @@ export class CallbackUserDataDto {
     required: true,
   })
   public refreshToken: string;
+
+  @ApiProperty({
+    example: '14709723891',
+    description: '手机号码',
+  })
+  @IsNotEmpty({ message: '手机号码不能为空' })
+  @IsString({ message: '手机号码必须是字符串类型' })
+  @IsMobilePhone('zh-CN')
+  public phone?: string;
 }

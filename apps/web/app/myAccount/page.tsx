@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import Head from "../../components/page-components/index/Head";
-
+import {useRouterIntercept} from "../../hooks/useRouterIntercept";
 
 
 const loginFormSchema = z.object({
@@ -43,6 +43,9 @@ const loginFormSchema = z.object({
 export type loginFormSchemaType = z.infer<typeof loginFormSchema>;
 
 function Index(props: any) {
+
+  useRouterIntercept()
+
   const form = useForm<loginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
