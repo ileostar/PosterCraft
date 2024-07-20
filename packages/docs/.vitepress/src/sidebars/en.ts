@@ -1,12 +1,12 @@
-import { getFirstLevelFiles } from '../utils'
+// import { getFirstLevelFiles } from '../utils'
 
-const directoryPath = './en/directives'
-const subdirectories = getFirstLevelFiles(directoryPath).map((dirs: string) => {
-  return {
-    text: dirs.slice(0, -3),
-    link: `/en/directives/${dirs.slice(0, -3)}`,
-  }
-})
+// const directoryPath = './en/directives'
+// const subdirectories = getFirstLevelFiles(directoryPath).map((dirs: string) => {
+//   return {
+//     text: dirs.slice(0, -3),
+//     link: `/en/directives/${dirs.slice(0, -3)}`,
+//   }
+// })
 
 export const sidebar = {
   '/en/': [

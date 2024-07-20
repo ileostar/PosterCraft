@@ -3,33 +3,33 @@
 layout: home
 
 hero:
-  name: "V3-Directives"
-  text: "Custom Vue3 directives"
-  tagline: Simplify your Vue3 development with custom directives
+  name: "PosterCraft"
+  text: "可视化海报编辑器"
+  tagline: 快速高效创建心仪海报
   actions:
     - theme: brand
-      text: Quick Start
-      link: /en/guide/start
+      text: 项目介绍
+      link: /zh/introduce/introduce
     - theme: alt
-      text: Directives Preview
-      link: /en/guide/directives.html#all-directives
+      text: 开发历程
+      link: /zh/problem/problem-1
     - theme: alt
-      text: View on Github
-      link: https://github.com/ileostar/v3-directives
+      text: 前往 Github
+      link: https://github.com/ileostar/PosterCraft
   image:
     src: /logo.png
-    alt: v3-directives
+    alt: PosterCraft
 
 features:
-  - title: Vue3 Support
+  - title: Vue3 支持
     icon: <svg xmlns="http://www.w3.org/2000/svg" width="1.16em" height="1em" viewBox="0 0 256 221"><path fill="#41B883" d="M204.8 0H256L128 220.8L0 0h97.92L128 51.2L157.44 0z"/><path fill="#41B883" d="m0 0l128 220.8L256 0h-51.2L128 132.48L50.56 0z"/><path fill="#35495E" d="M50.56 0L128 133.12L204.8 0h-47.36L128 51.2L97.92 0z"/></svg>
-    details: Support for the latest Vue3.
-  - title: Interactive demos
+    details: 支持最新的Vue3。
+  - title: 可交互样例
     icon: 🎪
-    details: Interactive presentations reduce understanding costs.
-  - title: Fully tree shakeable
+    details: 交互式演示降低理解成本
+  - title: 完全可树摇
     icon: ⚡
-    details: Only take what you want
+    details: 只用你想要
 ---
 
 <style>
@@ -39,16 +39,16 @@ features:
 }
 
 @media (min-width: 640px) {
-.image-src[alt="v3-directives"] {
-    max-width: 200px;
-    max-height: 200px;
-}
+  .image-src[alt="v3-directives"] {
+      max-width: 200px;
+      max-height: 200px;
+  }
 }
 
 @media (min-width: 960px) {
-.image-src[alt="v3-directives"] {
-    max-width: 340px;
-    max-height: 340px;
-}
+  .image-src[alt="v3-directives"] {
+      max-width: 340px;
+      max-height: 340px;
+  }
 }
 </style>
