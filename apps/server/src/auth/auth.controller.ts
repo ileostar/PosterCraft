@@ -14,12 +14,16 @@ import { GoogleAuthGuard } from './google/google.auth.guard';
 import { CallbackUserData } from './decorator/callbackUserData.decorator';
 import { GithubAuthGuard } from './github/github.auth.guard';
 import { Response } from 'express';
+import { EventGateway } from 'src/gateway/event.gateway';
 
 @ApiTags('用户鉴权接口🤖')
 @Controller('auth')
 export class AuthController {
   configService: any;
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly eventGateway: EventGateway,
+  ) {}
 
   @Post('defaultLogin')
   @ApiBody({ type: DefaultLoginDto })
@@ -54,17 +58,9 @@ export class AuthController {
   @Get('github/callback')
   @ApiOperation({ summary: 'Github登录', description: 'Github登录' })
   @UseGuards(GithubAuthGuard)
-  async githubCallback(
-    @CallbackUserData() userData: CallbackUserDataDto,
-    @Res() res: Response,
-  ) {
+  async githubCallback(@CallbackUserData() userData: CallbackUserDataDto) {
     const resData = await this.authService.oauthLogin(userData);
-    res.cookie('token', resData.token, {
-      httpOnly: true,
-    });
-
-    // (window as any).opener.postMessage(resData, 'http://127.0.0.1:3000');
-    // (window as any).close()
+    this.eventGateway.sendMessageToAll(JSON.stringify(resData));
   }
 
   @UseGuards(AuthGuard)

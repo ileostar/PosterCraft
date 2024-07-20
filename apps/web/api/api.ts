@@ -1,7 +1,6 @@
-import { url } from "inspector";
-
 import { openCenteredOAuthPopup } from "@/utils/popup";
 import axios, { AxiosResponse } from "axios";
+import io from "socket.io-client";
 
 import { request } from "./request";
 
@@ -71,35 +70,33 @@ export function defaultSignIn(identifier: string, password: string): Promise<Cus
 /**
  * 谷歌登录
  */
-export function googleSignIn(): Promise<CustomAxiosResponse> {
-  return request({
-    url: "/auth/google/callback",
-    method: "get",
+export function googleSignIn() {
+  const socket = io("http://localhost:3001"); // 连接到你的NestJS WebSocket服务器
+
+  const authWindow = openCenteredOAuthPopup("http://127.0.0.1:3001/auth/google/callback", 600, 500);
+  socket.on("connect", () => {
+    console.log("Connected to the server!");
+  });
+  socket.on("messageToAll", (data: any) => {
+    console.log("Received message from server:", JSON.parse(data));
+    authWindow!.close();
+    socket.close();
   });
 }
 
 /**
  * github登录
  */
-export function githubSignIn(): any {
-  window.addEventListener("message", receiveMessage, false);
+export function githubSignIn() {
+  const socket = io("http://localhost:3001"); // 连接到你的NestJS WebSocket服务器
 
-  function receiveMessage(event: { origin: any }) {
-    // For Chrome, the origin property is in the event.originalEvent
-    // object.
-    // 这里不准确，chrome 没有这个属性
-    // var origin = event.origin || event.originalEvent.origin;
-    var origin = event.origin;
-    // if (origin !== "http://example.org:8080") return;
-
-    // ...
-    console.log(event);
-    window.close();
-  }
-  openCenteredOAuthPopup("http://127.0.0.1:3001/auth/github/callback", 600, 500);
-  // return request({
-  //   url: '/auth/github/callback',
-  //   method: 'get',
-  // })
-  // return axios.get("");
+  const authWindow = openCenteredOAuthPopup("http://127.0.0.1:3001/auth/github/callback", 600, 500);
+  socket.on("connect", () => {
+    console.log("Connected to the server!");
+  });
+  socket.on("messageToAll", (data: any) => {
+    console.log("Received message from server:", JSON.parse(data));
+    authWindow!.close();
+    socket.close();
+  });
 }

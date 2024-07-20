@@ -11,6 +11,7 @@ import { GithubStrategy } from './github/github.strategy';
 import { GoogleAuthGuard } from './google/google.auth.guard';
 import { PassportModule } from '@nestjs/passport';
 import { HttpModule } from '@nestjs/axios';
+import { GatewayModule } from 'src/gateway/gateway.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { HttpModule } from '@nestjs/axios';
     HttpModule,
     SmsModule,
     UserModule,
+    GatewayModule,
     JwtModule.register({
       global: true,
       secret: process.env.SECRET,
