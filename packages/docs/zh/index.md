@@ -3,22 +3,22 @@
 layout: home
 
 hero:
-  name: "PosterCraft"
-  text: "可视化海报编辑器"
-  tagline: 快速高效创建心仪海报
+  name: "V3-Directives"
+  text: "Vue3 自定义指令库"
+  tagline: 使 Vue3 开发过程更加简单和高效
   actions:
     - theme: brand
-      text: 项目介绍
-      link: /zh/introduce/introduce
+      text: 起步
+      link: /zh/guide/start
     - theme: alt
-      text: 开发历程
-      link: /zh/problem/problem-1
+      text: 指令预览
+      link: /zh/guide/directives.html#所有指令
     - theme: alt
       text: 前往 Github
-      link: https://github.com/ileostar/PosterCraft
+      link: https://github.com/ileostar/v3-directives
   image:
     src: /logo.png
-    alt: PosterCraft
+    alt: v3-directives
 
 features:
   - title: Vue3 支持
@@ -26,7 +26,7 @@ features:
     details: 支持最新的Vue3。
   - title: 可交互样例
     icon: 🎪
-    details: 交互式演示降低理解成本
+    details: 交互式演示使用更加容易。
   - title: 完全可树摇
     icon: ⚡
     details: 只用你想要
