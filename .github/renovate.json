@@ -35,7 +35,6 @@
   ],
   "ignoreDeps": [],
   "npmrc": ".npmrc",
-  "packageManager": "pnpm",
   "baseBranches": ["main"],
   "lockFileMaintenance": {
     "enabled": true,
