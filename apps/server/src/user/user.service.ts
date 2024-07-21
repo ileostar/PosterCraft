@@ -1,4 +1,4 @@
-import { user } from '@poster-craft/schema';
+import { user } from '../../../../packages/schema/src';
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import * as argon2 from 'argon2';
 import { eq } from 'drizzle-orm';

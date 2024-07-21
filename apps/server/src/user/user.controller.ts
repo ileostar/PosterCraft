@@ -12,7 +12,7 @@ import { ApiBody, ApiOperation } from '@nestjs/swagger';
 import { DefaultLoginDto } from 'src/auth/dto/auth.dto';
 import { CreateUserDto } from './dto/user.dto';
 import { DB, DbType } from 'src/global/providers/db.provider';
-import { user } from '@poster-craft/schema';
+import { user } from '../../../../packages/schema/src';
 import { ResponseData } from 'src/response/ResponseFormat';
 
 @Controller('user')
