@@ -1,0 +1,44 @@
+{
+  "extends": [
+    "config:base",
+    ":disableDependencyDashboard",
+    ":automergeMinor",
+    ":separateMajorReleases",
+    ":separatePatchReleases",
+    ":pinVersions",
+    ":rebaseStalePrs",
+    ":prHourlyLimitNone",
+    ":ignoreModulesAndTests",
+    ":updateNotScheduled",
+    ":automergeRequireAllStatusChecks",
+    ":maintainLockFilesDisabled",
+    "group:monorepos",
+    "group:recommended"
+  ],
+  "packageRules": [
+    {
+      "depTypeList": ["devDependencies"],
+      "automerge": true
+    },
+    {
+      "packagePatterns": ["^@poster-craft/"],
+      "enabled": false
+    },
+    {
+      "paths": ["apps/server/**/*"],
+      "automerge": false
+    },
+    {
+      "paths": ["apps/web/**/*"],
+      "automerge": true
+    }
+  ],
+  "ignoreDeps": [],
+  "npmrc": ".npmrc",
+  "packageManager": "pnpm",
+  "baseBranches": ["main"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "extends": ["schedule:weekly", "group:allNonMajor"]
+  }
+}
