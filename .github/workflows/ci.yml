@@ -74,6 +74,20 @@ jobs:
 
       - name: Run build schema
         run: pnpm schema:build
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://poster-craft.leostar.top/
+            https://poster-craft.leostar.top/login
+          budgetPath: ./.github/budget.json # test performance budgets
+          uploadArtifacts: true # save results as an action artifacts
+          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
+
 
   # test:
   #   runs-on: ${{ matrix.os }}
