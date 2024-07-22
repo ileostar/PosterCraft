@@ -36,7 +36,7 @@
   "dependencies": {
     "@t3-oss/env-core": "0.10.1",
     "axios": "1.7.2",
-    "drizzle-orm": "0.31.4",
+    "drizzle-orm": "0.32.0",
     "zod": "3.23.8"
   },
   "devDependencies": {
