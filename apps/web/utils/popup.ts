@@ -3,6 +3,7 @@ export function openCenteredOAuthPopup(
   width: number,
   height: number,
 ) {
+  if (typeof window !== "undefined") {
   // 尝试获取屏幕宽度和高度（但注意这可能不可靠，特别是跨浏览器）
   var screenWidth = window.screen.width;
   var screenHeight = window.screen.height;
@@ -14,11 +15,14 @@ export function openCenteredOAuthPopup(
   console.log(screenWidth, screenHeight);
 
   // 打开新窗口，并尝试设置位置和大小
+  
   var popup = window.open(
     authUrl,
     "_blank",
     `width=${width},height=${height},left=${left},top=${top}`,
   );
 
+
   return popup;
+}
 }

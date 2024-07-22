@@ -11,6 +11,7 @@ import {
 import { Icons } from "@/components/base/Icons";
 import Layout from "@/components/page-components/login/LoginBackGround";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import {
   Form,
   FormControl,
@@ -25,8 +26,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRouterNameStore } from '../../store/state';
 
-const loginFormSchema = z.object({
+export const loginFormSchema = z.object({
   email: z.string().email({
     message: "无效的邮箱格式",
   }),
@@ -55,6 +57,7 @@ const loginFormSchema = z.object({
 export type loginFormSchemaType = z.infer<typeof loginFormSchema>;
 
 export default function Login() {
+  const router = useRouter();
   const form = useForm<loginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -99,16 +102,21 @@ export default function Login() {
     }
   }, [countdown]);
 
+  // const {currentRouterName,setCurrentRouterName}=useRouterNameStore();
+
+
   const handleSign = async () => {
     if (isLogin) {
       if (isPhoneMode) {
         let res = await loginBySMS(form.getValues("phone"), form.getValues("code"));
         window.localStorage.setItem("token", res.token); //存入本地
         console.log(res.token);
+          router.back();
       } else {
         let res = await defaultSignIn(form.getValues("username"), form.getValues("password"));
         window.localStorage.setItem("token", res.token); //存入本地
         console.log(res.token);
+        router.back();
       }
     } else {
       let res = await defaultSignUp(
@@ -121,7 +129,47 @@ export default function Login() {
     }
   };
 
-  const RenderForm = () => {
+  const [usernameByGithub, setUsernameByGithub] = useState('');
+  const handleGithubSignIn = async () => {
+      const res=await githubSignIn();
+      console.log(res);
+      if(res.data.isSignUp){
+        window.localStorage.setItem("token", res.token); //存入本地
+        router.back();
+      }
+      else{
+        res.data.userData.username?setUsernameByGithub(res.data.userData.username):setUsernameByGithub('momo');
+        showModal() 
+      }
+  };
+
+  const addPhoneByGithub=async()=>{
+    let res = await defaultSignUp(
+       usernameByGithub,
+       '123456',//默认密码
+      form.getValues("phone"),
+      form.getValues("code"),
+    );
+    console.log(res);
+    CloseModal()
+    router.back();
+  }
+
+  const showModal = () => {
+    const modalElement = document.getElementById('my_modal_1') as HTMLDialogElement | null;
+    if (modalElement) {
+      modalElement.showModal();
+    }
+  };
+
+  const CloseModal=()=>{
+    const modalElement = document.getElementById('my_modal_1') as HTMLDialogElement | null;
+    if (modalElement) {
+      modalElement.close();
+    }
+  }
+
+  const RenderForm_SignIn = () => {
     if (isPhoneMode) {
       return (
         <div>
@@ -135,7 +183,7 @@ export default function Login() {
                   <Input
                     className="input-bordered"
                     {...field}
-                    placeholder="手机号码"
+                    placeholder="请输入手机号码"
                   />
                 </FormControl>
                 <FormMessage />
@@ -152,7 +200,7 @@ export default function Login() {
                   <Input
                     className="input-bordered border-red-500/30"
                     type="code"
-                    placeholder="验证码"
+                    placeholder="请输入验证码"
                     {...field}
                   />
                 </FormControl>
@@ -187,12 +235,12 @@ export default function Login() {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username/Email</FormLabel>
+              <FormLabel>用户名/邮箱</FormLabel>
               <FormControl>
                 <Input
                   className="input-bordered"
                   {...field}
-                  placeholder="username/email"
+                  placeholder="请输入用户名/邮箱"
                 />
               </FormControl>
               <FormMessage />
@@ -204,12 +252,12 @@ export default function Login() {
           name="password"
           render={({ field }) => (
             <FormItem className="form-control mt-[5px]">
-              <FormLabel className="label">Password</FormLabel>
+              <FormLabel className="label">密码</FormLabel>
               <FormControl>
                 <Input
                   className="input-bordered border-red-500/30"
                   type="password"
-                  placeholder="password"
+                  placeholder="请输入密码"
                   {...field}
                 />
               </FormControl>
@@ -231,7 +279,7 @@ export default function Login() {
     );
   };
 
-  const RenderForm_l = () => {
+  const RenderForm_SignUp = () => {
     return (
       <div>
         <FormField
@@ -315,6 +363,7 @@ export default function Login() {
 
   return (
     <Layout>
+      {/* <button className="btn" onClick={()=>showModal() }>open modal</button> */}
       <div className="w-[92vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] xl:w-[25vw] min-w-[320px] card shrink-0 max-w-sm shadow-2xl bg-base-100 font-serif rounded-2xl">
         <Form {...form}>
           <div>
@@ -328,7 +377,7 @@ export default function Login() {
                 </p>
               </div>
 
-              {isLogin ? RenderForm() : RenderForm_l()}
+              {isLogin ? RenderForm_SignIn() : RenderForm_SignUp()}
 
               <div className="flex justify-between mt-[5px]">
                 <Button
@@ -360,8 +409,7 @@ export default function Login() {
                 </div>
                 <div
                   className="cursor-pointer hover:animate-pulse"
-                  // href="https://github.com/login/oauth/authorize?client_id=Ov23lixhpaewn7euEM55&redirect_uri=http://127.0.0.1:3000/auth/github/callback"
-                  onClick={() => githubSignIn()}
+                  onClick={() => handleGithubSignIn()}
                 >
                   <Icons.gitHub />
                 </div>
@@ -370,6 +418,72 @@ export default function Login() {
           </div>
         </Form>
       </div>
+       
+
+ 
+      <dialog
+        id="my_modal_1"
+        className="modal"
+      >
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">请绑定手机号!</h3>
+          {/* <p className="py-4">Press ESC key or click the button below to close</p> */}
+          <Form {...form}>
+          <FormField
+            control={form.control}
+            name="phone"                            
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>手机号码</FormLabel>
+                <FormControl>
+                  <Input
+                    className="input-bordered"
+                    {...field}
+                    placeholder="手机号码"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="code"
+            render={({ field }) => (
+              <FormItem className="form-control mt-[5px]">
+                <FormLabel className="label">验证码</FormLabel>
+                <FormControl>
+                  <Input
+                    className="input-bordered border-red-500/30"
+                    type="code"
+                    placeholder="验证码"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <button
+            className={`btn btn-outline btn-error mt-4`}
+            onClick={handleClick}
+            disabled={isDisabled}
+          >
+            {!isDisabled ? "发送验证码" : `${countdown}s后再试`}
+          </button>
+        </Form>
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <div className="btn" onClick={()=>{addPhoneByGithub()}}> 绑定</div>
+            </form>
+          </div>
+        </div>
+      </dialog> 
+    
+
+
+
+
     </Layout>
   );
 }
