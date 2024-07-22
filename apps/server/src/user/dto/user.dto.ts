@@ -9,7 +9,6 @@ import {
   Length,
   Matches,
 } from 'class-validator';
-import { PhoneOtpLoginDto } from '../../auth/dto/auth.dto';
 
 export class CreateUserDto {
   @ApiProperty({

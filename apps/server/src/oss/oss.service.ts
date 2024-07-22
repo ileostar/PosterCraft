@@ -1,4 +1,3 @@
-// src/oss/oss.service.ts
 import { Injectable } from '@nestjs/common';
 import * as OSS from 'ali-oss';
 import { ConfigService } from '@nestjs/config';
