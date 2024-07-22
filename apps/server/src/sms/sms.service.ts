@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { SendCodeBySMSDto } from './dto/sms.dto';
 import { generateVerificationCode } from 'src/utils';
 import { CacheService } from 'src/cache/cache.service';
-import { ResponseData } from 'src/response/ResponseFormat';
+import { ResponseData } from '../response/ResponseFormat';
 import Client from 'src/common/sms';
 import * as $Dysmsapi20170525 from '@alicloud/dysmsapi20170525';
 import * as $Util from '@alicloud/tea-util';

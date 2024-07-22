@@ -13,7 +13,7 @@ import { DefaultLoginDto } from 'src/auth/dto/auth.dto';
 import { CreateUserDto } from './dto/user.dto';
 import { DB, DbType } from 'src/global/providers/db.provider';
 import { user } from '@poster-craft/schema';
-import { ResponseData } from 'src/response/ResponseFormat';
+import { ResponseData } from '../response/ResponseFormat';
 
 @Controller('user')
 export class UserController {
