@@ -134,7 +134,7 @@ export async function githubSignIn(): Promise<GithubSignInResponse> {
         resolve(parsedData); 
       } catch (error) {
         console.error("Error parsing message:", error);
-        reject(error); 
+        reject(new Error('Something went wrong'));
       }
     });
   });

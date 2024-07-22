@@ -101,8 +101,6 @@ export default function Login() {
     }
   }, [countdown]);
 
-  // const {currentRouterName,setCurrentRouterName}=useRouterNameStore();
-
 
   const handleSign = async () => {
     if (isLogin) {
@@ -473,7 +471,7 @@ export default function Login() {
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <div className="btn" onClick={()=>{addPhoneByGithub()}}> 绑定</div>
+              <div className="btn" role="button" onClick={()=>{addPhoneByGithub()}}> 绑定</div>
             </form>
           </div>
         </div>
