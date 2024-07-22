@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { ApiOperation } from '@nestjs/swagger';
 import { DB, DbType } from 'src/global/providers/db.provider';
 import { user } from '@poster-craft/schema';
-import { ResponseData } from '../response/ResponseFormat';
+import { ResponseData } from '../response/responseFormat';
 
 @Controller('user')
 export class UserController {
