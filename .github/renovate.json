@@ -15,8 +15,8 @@
     "group:monorepos",
     "group:recommended"
   ],
-  "prHourlyLimit": 2,
-  "prConcurrentLimit": 5,
+  "prHourlyLimit": 1,
+  "prConcurrentLimit": 3,
   "packageRules": [
     {
       "depTypeList": ["devDependencies"],

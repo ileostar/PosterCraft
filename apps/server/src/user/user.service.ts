@@ -1,10 +1,9 @@
-import { user } from '../../../../packages/schema/src';
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { user } from '@poster-craft/schema';
+import { Inject, Injectable } from '@nestjs/common';
 import * as argon2 from 'argon2';
 import { eq } from 'drizzle-orm';
 import { DB, DbType } from '../global/providers/db.provider';
-import { CreateUserDto, BindPhoneDto } from './dto/user.dto';
-import { ResponseData } from 'src/response/ResponseFormat';
+import { CreateUserDto } from './dto/user.dto';
 import { CacheService } from 'src/cache/cache.service';
 import { PhoneOtpLoginDto, RegisterDto } from 'src/auth/dto/auth.dto';
 
