@@ -26,9 +26,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useRouterNameStore } from '../../store/state';
 
-export const loginFormSchema = z.object({
+const loginFormSchema = z.object({
   email: z.string().email({
     message: "无效的邮箱格式",
   }),
@@ -61,11 +60,11 @@ export default function Login() {
   const form = useForm<loginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
-      username: "",
       email: "",
-      password: "",
       phone: "",
+      password: "",
       code: "",
+      username: "",
     },
   });
   async function onSubmit(values: loginFormSchemaType) {

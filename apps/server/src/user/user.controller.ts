@@ -1,19 +1,9 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  Patch,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Inject, Post } from '@nestjs/common';
 import { UserService } from './user.service';
-import { ApiBody, ApiOperation } from '@nestjs/swagger';
-import { DefaultLoginDto } from 'src/auth/dto/auth.dto';
-import { CreateUserDto } from './dto/user.dto';
+import { ApiOperation } from '@nestjs/swagger';
 import { DB, DbType } from 'src/global/providers/db.provider';
-import { user } from '../../../../packages/schema/src';
-import { ResponseData } from 'src/response/ResponseFormat';
+import { user } from '@poster-craft/schema';
+import { ResponseData } from '../response/responseFormat';
 
 @Controller('user')
 export class UserController {

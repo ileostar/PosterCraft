@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  lint:
+  lint-build-test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -29,6 +29,9 @@ jobs:
 
       - name: Lint
         run: pnpm lint
+
+      - name: Build
+        run: pnpm build
   db-test:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -87,7 +90,6 @@ jobs:
           budgetPath: ./.github/budget.json # test performance budgets
           uploadArtifacts: true # save results as an action artifacts
           temporaryPublicStorage: true # upload lighthouse report to the temporary storage
-
 
   # test:
   #   runs-on: ${{ matrix.os }}
