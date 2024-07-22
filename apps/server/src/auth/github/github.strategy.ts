@@ -31,7 +31,7 @@ export class GithubStrategy extends PassportStrategy(Strategy) {
 
     let userData;
     const [{ value: photo }] = photos;
-    if (emails[0].verified) {
+    if (emails[0]?.verified) {
       userData = {
         provider,
         providerId,
