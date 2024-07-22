@@ -17,11 +17,6 @@
   ],
   "prHourlyLimit": 2,
   "prConcurrentLimit": 5,
-  "automerge": {
-    "enabled": true,
-    "minor": false,
-    "major": false
-  },
   "packageRules": [
     {
       "depTypeList": ["devDependencies"],
