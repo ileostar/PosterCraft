@@ -6,7 +6,7 @@ import { DB, DbType } from '../global/providers/db.provider';
 import { CreateUserDto, DeleteUserDto, UpdateUserDto } from './dto/user.dto';
 import { CacheService } from 'src/cache/cache.service';
 import { PhoneOtpLoginDto, RegisterDto } from 'src/auth/dto/auth.dto';
-import { ResponseData } from 'src/response/ResponseFormat';
+import { ResponseData } from '../response/responseFormat';
 
 @Injectable()
 export class UserService {

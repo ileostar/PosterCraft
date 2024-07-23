@@ -11,7 +11,7 @@ import { UserService } from './user.service';
 import { ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { DeleteUserDto, UpdateUserDto } from './dto/user.dto';
 import { number } from 'zod';
-import { ResponseData } from 'src/response/ResponseFormat';
+import { ResponseData } from '../response/responseFormat';
 import { AuthGuard } from '../guards/auth.guards';
 
 @Controller('user')
