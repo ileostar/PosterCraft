@@ -33,7 +33,7 @@ function AuthLayout({
                 <button
                   className="btn"
                   onClick={() => {
-                    router.push("/login");
+                    router.push("/auth");
                   }}
                 >
                   确认

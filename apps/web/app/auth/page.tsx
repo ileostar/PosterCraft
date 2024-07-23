@@ -9,7 +9,7 @@ import {
   sendBySMS,
 } from "@/api/api";
 import { Icons } from "@/components/base/Icons";
-import Layout from "@/components/page-components/login/LoginBackGround";
+import Layout from "@/components/page-components/auth/LoginBackGround";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import {
@@ -26,8 +26,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import renderSignIn from "@/components/page-components/login/SignIn";
-import renderSignUp from "@/components/page-components/login/SignUp";
+import renderSignIn from "@/components/page-components/auth/SignIn";
+import renderSignUp from "@/components/page-components/auth/SignUp";
 
 const loginFormSchema = z.object({
   email: z.string().email({
@@ -145,7 +145,7 @@ export default function Login() {
   const addPhoneByGithub=async()=>{
     let res = await defaultSignUp(
        usernameByGithub,
-       '123456',//默认密码
+       '',
       form.getValues("phone"),
       form.getValues("code"),
     );

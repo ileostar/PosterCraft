@@ -1,4 +1,4 @@
-import { SchemaType } from '../../../../../packages/schema/src';
+import { SchemaType } from '@poster-craft/schema';
 import { FactoryProvider } from '@nestjs/common';
 import type { MySql2Database } from 'drizzle-orm/mysql2';
 import { setupDB } from '../../common/db';

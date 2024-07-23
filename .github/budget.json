@@ -1,20 +1,15 @@
-[
-  {
-    "path": "/*",
-    "resourceSizes": [
-      {
-        "resourceType": "total",
-        "budget": 1000
-      }
-    ]
-  },
-  {
-    "path": "/login",
-    "resourceSizes": [
-      {
-        "resourceType": "total",
-        "budget": 500
-      }
-    ]
-  }
+[{
+        "path": "/*",
+        "resourceSizes": [{
+            "resourceType": "total",
+            "budget": 1000
+        }]
+    },
+    {
+        "path": "/auth",
+        "resourceSizes": [{
+            "resourceType": "total",
+            "budget": 500
+        }]
+    }
 ]
