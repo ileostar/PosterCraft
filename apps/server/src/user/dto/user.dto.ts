@@ -81,6 +81,13 @@ export class FindUserDto extends PickType(CreateUserDto, ['phone']) {}
 
 export class UpdateUserDto extends OmitType(CreateUserDto, ['username']) {
   @ApiProperty({
+    example: 13,
+    description: '用户ID不能为空',
+  })
+  @IsNotEmpty({ message: '用户ID不能为空' })
+  userId: number;
+
+  @ApiProperty({
     example: 'admin',
     description: '用户名长度为2-20位',
   })

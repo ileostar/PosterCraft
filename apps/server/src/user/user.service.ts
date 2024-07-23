@@ -44,7 +44,12 @@ export class UserService {
 
   async updateUserInfos(dto: UpdateUserDto) {
     try {
-      const res = await this.db.update(user).set(dto);
+      const old = await this.findUserByUserId(dto.userId);
+      if (!old) {
+        return ResponseData.fail('用户ID不存在');
+      }
+      const updateData = Object.assign({}, old, dto);
+      const res = await this.db.update(user).set(updateData);
       return ResponseData.ok(res, '更新成功');
     } catch (error) {
       return ResponseData.fail('更新用户失败：' + error);

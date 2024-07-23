@@ -40,6 +40,7 @@
     "passport": "0.7.0",
     "passport-github-oauth20": "1.0.4",
     "passport-google-oauth20": "2.0.0",
+    "passport-jwt": "^4.0.1",
     "reflect-metadata": "0.1.14",
     "rxjs": "7.8.1",
     "start": "5.1.0",

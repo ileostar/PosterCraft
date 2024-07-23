@@ -10,9 +10,9 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CallbackUserDataDto } from './dto/oauth2.dto';
-import { GoogleAuthGuard } from './google/google.auth.guard';
+import { GoogleAuthGuard } from './providers/google/google.auth.guard';
 import { CallbackUserData } from './decorator/callbackUserData.decorator';
-import { GithubAuthGuard } from './github/github.auth.guard';
+import { GithubAuthGuard } from './providers/github/github.auth.guard';
 import { Response } from 'express';
 import { EventGateway } from 'src/gateway/event.gateway';
 
