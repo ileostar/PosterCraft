@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import Head from "../../components/page-components/index/Head";
-import {useRouterIntercept} from "../../hooks/useRouterIntercept";
+import AuthLayout from "@/components/base/AuthLayout";
 
 
 const loginFormSchema = z.object({
@@ -43,8 +43,6 @@ const loginFormSchema = z.object({
 export type loginFormSchemaType = z.infer<typeof loginFormSchema>;
 
 function Index(props: any) {
-
-  useRouterIntercept()
 
   const form = useForm<loginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
@@ -71,6 +69,7 @@ function Index(props: any) {
   };
 
   return (
+    <AuthLayout>
     <div>
       <Head />
       <div
@@ -125,7 +124,7 @@ function Index(props: any) {
                       <FormLabel className="label">Password</FormLabel>
                       <FormControl>
                         <Input
-                          className="input-bordered border-red-500/30"
+                          className="input-bordered "
                           type="password"
                           placeholder="password"
                           {...field}
@@ -142,7 +141,7 @@ function Index(props: any) {
                       <FormLabel className="label">Password</FormLabel>
                       <FormControl>
                         <Input
-                          className="input-bordered border-red-500/30"
+                          className="input-bordered"
                           placeholder="phone"
                           {...field}
                         />
@@ -158,7 +157,7 @@ function Index(props: any) {
                       <FormLabel className="label">Nickname</FormLabel>
                       <FormControl>
                         <Input
-                          className="input-bordered border-red-500/30"
+                          className="input-bordered "
                           placeholder="nickname"
                           {...field}
                         />
@@ -174,7 +173,7 @@ function Index(props: any) {
                       <FormLabel className="label">Email</FormLabel>
                       <FormControl>
                         <Input
-                          className="input-bordered border-red-500/30"
+                          className="input-bordered"
                           placeholder="email"
                           {...field}
                         />
@@ -200,6 +199,7 @@ function Index(props: any) {
 
       
     </div>
+    </AuthLayout>
   );
 }
 
