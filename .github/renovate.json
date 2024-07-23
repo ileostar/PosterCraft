@@ -5,6 +5,8 @@
     ":automergeMinor",
     ":separateMajorReleases",
     ":separatePatchReleases",
+    ":semanticCommitTypeAll(📦)",
+    ":semanticCommitScopeDisabled",
     ":pinVersions",
     ":rebaseStalePrs",
     ":prHourlyLimitNone",
@@ -35,7 +37,6 @@
       "automerge": true
     }
   ],
-  "ignoreDeps": [],
   "npmrc": ".npmrc",
   "baseBranches": ["main"],
   "lockFileMaintenance": {
