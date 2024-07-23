@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-
 import Head from "../../components/page-components/index/Head";
 import AuthLayout from "@/components/base/AuthLayout";
 

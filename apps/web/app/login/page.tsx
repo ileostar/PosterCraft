@@ -471,7 +471,7 @@ export default function Login() {
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <div className="btn" role="button" onClick={()=>{addPhoneByGithub()}}> 绑定</div>
+              <button className="btn" onClick={()=>{addPhoneByGithub()}}> 绑定</button>
             </form>
           </div>
         </div>
