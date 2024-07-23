@@ -4,7 +4,7 @@
   "description": "Poster editor",
   "type": "module",
   "license": "MIT",
-  "packageManager": "pnpm@9.6.0",
+  "packageManager": "pnpm@9.3.0",
   "bugs": {
     "url": "https://github.com/ileostar/PosterCraft/issues"
   },
