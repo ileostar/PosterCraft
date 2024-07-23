@@ -31,7 +31,7 @@ export class UserController {
     description: '根据用户ID获取用户信息',
   })
   async getUserInfosByUserId(@Query() userId: number) {
-    const user = this.userService.findUserByUserId(userId);
+    const user = await this.userService.findUserByUserId(userId);
     if (!user) {
       return ResponseData.fail('用户查询失败');
     } else {
