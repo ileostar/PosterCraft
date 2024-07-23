@@ -37,6 +37,9 @@
       "automerge": true
     }
   ],
+  "commitMessageAction": "📦",
+  "commitMessageTopic": "{{{depName}}}",
+  "commitMessage": "📦 update {{{depName}}} to v{{{newVersion}}}",
   "npmrc": ".npmrc",
   "baseBranches": ["main"],
   "lockFileMaintenance": {
