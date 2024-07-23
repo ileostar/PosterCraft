@@ -8,17 +8,24 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { DeleteUserDto, UpdateUserDto } from './dto/user.dto';
 import { number } from 'zod';
 import { ResponseData } from '../response/responseFormat';
-import { AuthGuard } from '../guards/auth.guards';
+import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
 
+@ApiTags('用户信息模块😀')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('getUserInfosByUserId')
   @ApiQuery({
     name: 'userId',
@@ -39,7 +46,7 @@ export class UserController {
     }
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post('updateUserInfos')
   @ApiBody({ type: UpdateUserDto })
   @ApiOperation({ summary: '更新用户信息', description: '测试' })
@@ -47,7 +54,7 @@ export class UserController {
     return this.userService.updateUserInfos(dto);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Delete('deleteUserById')
   @ApiBody({ type: DeleteUserDto })
   @ApiOperation({ summary: '注销当前用户', description: '根据用户ID删除用户' })

@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-github-oauth20';
 
-import { UserService } from '../../user/user.service';
+import { UserService } from '../../../user/user.service';
 
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy) {
