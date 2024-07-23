@@ -5,9 +5,11 @@ import Link from "next/link";
 import Head from "../../components/page-components/index/Head";
 import Search from "@/components/base/MySearch";
 import Card from "@/components/base/MyCard";
+import AuthLayout from "@/components/base/AuthLayout";
 
 function Index(props: any) {
   return (
+    <AuthLayout>
     <div>
       <Head />
       <div
@@ -35,6 +37,7 @@ function Index(props: any) {
         </div>
       </div>
     </div>
+    </AuthLayout>
   );
 }
 
