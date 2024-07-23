@@ -7,7 +7,7 @@ function Head(props: any) {
     // <div className="flex flex-row  bg-[#f2f2f2] pb-4 pt-4 border-b-8  border-red-500">
     <div className="flex flex-row   bg-red-500 pb-4 pt-4 sticky top-0 w-full z-10  bg-opacity-90 hover:bg-opacity-100">
       <div className="basis-1/2 ml-8 text-[#f2f2f2]  font-bold text-3xl leading-loose">
-        <Link href="/">POSTERCRAFT</Link>
+        <Link href="/">PosterCraft</Link>
       </div>
       <div className="basis-1/6"></div>
       <div className="basis-1/6"></div>

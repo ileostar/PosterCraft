@@ -124,7 +124,7 @@ function Index(props: any) {
                       <FormLabel className="label">Password</FormLabel>
                       <FormControl>
                         <Input
-                          className="input-bordered border-red-500/30"
+                          className="input-bordered "
                           type="password"
                           placeholder="password"
                           {...field}
@@ -141,7 +141,7 @@ function Index(props: any) {
                       <FormLabel className="label">Password</FormLabel>
                       <FormControl>
                         <Input
-                          className="input-bordered border-red-500/30"
+                          className="input-bordered"
                           placeholder="phone"
                           {...field}
                         />
@@ -157,7 +157,7 @@ function Index(props: any) {
                       <FormLabel className="label">Nickname</FormLabel>
                       <FormControl>
                         <Input
-                          className="input-bordered border-red-500/30"
+                          className="input-bordered "
                           placeholder="nickname"
                           {...field}
                         />
@@ -173,7 +173,7 @@ function Index(props: any) {
                       <FormLabel className="label">Email</FormLabel>
                       <FormControl>
                         <Input
-                          className="input-bordered border-red-500/30"
+                          className="input-bordered"
                           placeholder="email"
                           {...field}
                         />
