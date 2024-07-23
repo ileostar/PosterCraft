@@ -14,7 +14,7 @@ function renderSignIn({
   isDisabled,
   form,
   handleClick,
-  countdown
+  countdown,
 }: {
   isPhoneMode: boolean;
   setPhoneMode: (value: boolean) => void;
@@ -80,56 +80,57 @@ function renderSignIn({
         </label>
       </div>
     );
+  } else {
+    return (
+      <div>
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>用户名/邮箱</FormLabel>
+              <FormControl>
+                <Input
+                  className="input-bordered"
+                  {...field}
+                  placeholder="请输入用户名/邮箱"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem className="form-control mt-[5px]">
+              <FormLabel className="label">密码</FormLabel>
+              <FormControl>
+                <Input
+                  className="input-bordered"
+                  type="password"
+                  placeholder="请输入密码"
+                  {...field}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <label className="label justify-end">
+          <Link
+            href="#"
+            onClick={() => {
+              setPhoneMode(!isPhoneMode);
+            }}
+            className="label-text-alt link link-hover text-[#EF4444] "
+          >
+            使用短信登录
+          </Link>
+        </label>
+      </div>
+    );
   }
-  return (
-    <div>
-      <FormField
-        control={form.control}
-        name="username"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>用户名/邮箱</FormLabel>
-            <FormControl>
-              <Input
-                className="input-bordered"
-                {...field}
-                placeholder="请输入用户名/邮箱"
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="password"
-        render={({ field }) => (
-          <FormItem className="form-control mt-[5px]">
-            <FormLabel className="label">密码</FormLabel>
-            <FormControl>
-              <Input
-                className="input-bordered"
-                type="password"
-                placeholder="请输入密码"
-                {...field}
-              />
-            </FormControl>
-          </FormItem>
-        )}
-      />
-      <label className="label justify-end">
-        <Link
-          href="#"
-          onClick={() => {
-            setPhoneMode(!isPhoneMode);
-          }}
-          className="label-text-alt link link-hover text-[#EF4444] "
-        >
-          使用短信登录
-        </Link>
-      </label>
-    </div>
-  );
 }
 
 export default renderSignIn;
