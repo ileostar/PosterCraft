@@ -16,7 +16,7 @@
     "group:recommended"
   ],
   "prHourlyLimit": 1,
-  "prConcurrentLimit": 3,
+  "prConcurrentLimit": 2,
   "packageRules": [
     {
       "depTypeList": ["devDependencies"],
