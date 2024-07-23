@@ -15,7 +15,7 @@
     "@radix-ui/react-slot": "1.1.0",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
-    "lucide-react": "0.400.0",
+    "lucide-react": "0.414.0",
     "next": "14.2.4",
     "next-auth": "4.24.7",
     "next-themes": "0.3.0",
@@ -30,7 +30,6 @@
     "zustand": "^4.5.4"
   },
   "devDependencies": {
-    "@types/node": "20.14.11",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "@types/three": "0.166.0",
@@ -39,7 +38,6 @@
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.4",
     "postcss": "8.4.39",
-    "tailwindcss": "3.4.6",
-    "typescript": "5.5.3"
+    "tailwindcss": "3.4.6"
   }
 }

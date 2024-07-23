@@ -10,7 +10,7 @@
   },
   "homepage": "https://github.com/ileostar/PosterCraft",
   "engines": {
-    "node": "22.5.1"
+    "node": "20.15.1"
   },
   "scripts": {
     "schema:build": "pnpm -F @poster-craft/schema build",
@@ -49,10 +49,10 @@
     "picocolors": "1.0.1",
     "prettier": "3.3.3",
     "simple-git-hooks": "2.11.1",
-    "tsup": "8.1.0",
+    "tsup": "8.2.2",
     "tsx": "4.16.2",
     "turbo": "2.0.6",
     "typescript": "5.5.3",
-    "vitest": "2.0.3"
+    "vitest": "2.0.4"
   }
 }
