@@ -3,9 +3,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import * as argon2 from 'argon2';
 import { eq } from 'drizzle-orm';
 import { DB, DbType } from '../global/providers/db.provider';
-import { CreateUserDto } from './dto/user.dto';
+import { CreateUserDto, DeleteUserDto, UpdateUserDto } from './dto/user.dto';
 import { CacheService } from 'src/cache/cache.service';
 import { PhoneOtpLoginDto, RegisterDto } from 'src/auth/dto/auth.dto';
+import { ResponseData } from 'src/response/ResponseFormat';
 
 @Injectable()
 export class UserService {
@@ -32,6 +33,24 @@ export class UserService {
     };
   }
 
+  async deleteUser(dto: DeleteUserDto) {
+    try {
+      const res = await this.db.delete(user).where(eq(user.id, dto.userId));
+      return ResponseData.ok(res, '删除成功');
+    } catch (error) {
+      return ResponseData.fail('删除失败：' + error);
+    }
+  }
+
+  async updateUserInfos(dto: UpdateUserDto) {
+    try {
+      const res = await this.db.update(user).set(dto);
+      return ResponseData.ok(res, '更新成功');
+    } catch (error) {
+      return ResponseData.fail('更新用户失败：' + error);
+    }
+  }
+
   async findUserByUsername(username: string): Promise<any> {
     return this.db.query.user.findFirst({
       where: eq(user.username, username),
@@ -56,7 +75,6 @@ export class UserService {
     });
   }
 
-  /** 校验验证码是否正确 */
   async checkVerificationCode(
     dto: RegisterDto | PhoneOtpLoginDto,
   ): Promise<Boolean> {
@@ -70,7 +88,6 @@ export class UserService {
     });
   }
 
-  /** 如果用户存在，则返回true；否则返回false */
   async checkUsernameExists(username: string): Promise<boolean> {
     const user = await this.findUserByUsername(username);
     return !!user;
@@ -81,7 +98,6 @@ export class UserService {
     return !!user;
   }
 
-  /** 如果用户存在，则返回true；否则返回false */
   async checkEmailExists(email: string): Promise<boolean> {
     const user = await this.findUserByEmail(email);
     return !!user;
