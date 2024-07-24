@@ -54,7 +54,7 @@ jobs:
         ports:
           - 3306:3306
       redis:
-        image: redis:6.2.5
+        image: redis:6.2.14
         ports:
           - 6379:6379
 
