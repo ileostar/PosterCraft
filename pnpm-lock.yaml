@@ -15,8 +15,8 @@ importers:
         specifier: 1.7.2
         version: 1.7.2
       drizzle-orm:
-        specifier: 0.32.0
-        version: 0.32.0(@types/react@18.3.3)(mysql2@3.10.3)(react@18.3.1)
+        specifier: 0.32.1
+        version: 0.32.1(@types/react@18.3.3)(mysql2@3.10.3)(react@18.3.1)
       zod:
         specifier: 3.23.8
         version: 3.23.8
@@ -3282,8 +3282,8 @@ packages:
     resolution: {integrity: sha512-VjI4wsJjk3hSqHSa3TwBf+uvH6M6pRHyxyoVbt935GUzP9tUR/BRZ+MhEJNgryqbzN2Za1KP0eJMTgKEPsalYQ==}
     hasBin: true
 
-  drizzle-orm@0.32.0:
-    resolution: {integrity: sha512-99IlfVGPNHzOFEXo9Phyu5At5TALLsY2t6WxFFy68rYd9Ej4cHX/7WjdPOn7JNRW69MNeNtP8XrDQg43SppuAA==}
+  drizzle-orm@0.32.1:
+    resolution: {integrity: sha512-Wq1J+lL8PzwR5K3a1FfoWsbs8powjr3pGA4+5+2ueN1VTLDNFYEolUyUWFtqy8DVRvYbL2n7sXZkgVmK9dQkng==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=3'
@@ -9761,7 +9761,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.32.0(@types/react@18.3.3)(mysql2@3.10.3)(react@18.3.1):
+  drizzle-orm@0.32.1(@types/react@18.3.3)(mysql2@3.10.3)(react@18.3.1):
     optionalDependencies:
       '@types/react': 18.3.3
       mysql2: 3.10.3
