@@ -9,14 +9,14 @@ interface FormType {
 
 function renderSignIn({
   isPhoneMode,
-  setPhoneMode,
+  setIsPhoneMode,
   isDisabled,
   form,
   handleClick,
   countdown,
 }: {
   isPhoneMode: boolean;
-  setPhoneMode: (value: boolean) => void;
+  setIsPhoneMode: (value: boolean) => void;
   isDisabled: boolean;
   form: FormType;
   handleClick: () => void;
@@ -38,7 +38,7 @@ function renderSignIn({
           <Link
             href="#"
             onClick={() => {
-              setPhoneMode(!isPhoneMode);
+              setIsPhoneMode(!isPhoneMode);
             }}
             className="label-text-alt link link-hover text-[#EF4444] "
           >
@@ -57,7 +57,7 @@ function renderSignIn({
           <Link
             href="#"
             onClick={() => {
-              setPhoneMode(!isPhoneMode);
+              setIsPhoneMode(!isPhoneMode);
             }}
             className="label-text-alt link link-hover text-[#EF4444] "
           >

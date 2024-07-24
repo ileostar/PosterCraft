@@ -29,7 +29,7 @@ const loginFormSchema = z.object({
   phone: z
     .string()
     .length(11, { message: "无效的手机号码" })
-    .regex(/^[0-9]+$/, {
+    .regex(/^\d+$/, {
       message: "无效的手机号码",
     }),
   password: z.string().min(1, {
@@ -38,7 +38,7 @@ const loginFormSchema = z.object({
   code: z
     .string()
     .length(6, { message: "无效的验证码" })
-    .regex(/^[0-9]+$/, {
+    .regex(/^\d+$/, {
       message: "无效的验证码",
     }),
   username: z
@@ -66,7 +66,7 @@ export default function Login() {
   }
 
   //登录模式
-  const [isPhoneMode, setPhoneMode] = useState(false);
+  const [isPhoneMode, setIsPhoneMode] = useState(false);
   //按钮禁用
   const [isDisabled, setIsDisabled] = useState(false);
   //倒计时
@@ -161,7 +161,7 @@ export default function Login() {
 
               {renderSignIn({
                 isPhoneMode,
-                setPhoneMode,
+                setIsPhoneMode,
                 isDisabled,
                 form,
                 handleClick,

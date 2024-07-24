@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  defaultSignUp,
-  googleSignIn,
-  sendBySMS,
-} from "@/api/api";
-import { Icons } from "@/components/base/Icons";
+import {defaultSignUp,sendBySMS} from "@/api/api";
 import MyFormField from "@/components/base/MyFormField";
 import Layout from "@/components/page-components/auth/LoginBackGround";
 import Oauth2 from "@/components/page-components/auth/Oauth2";
@@ -25,7 +20,7 @@ const loginFormSchema = z.object({
   phone: z
     .string()
     .length(11, { message: "无效的手机号码" })
-    .regex(/^[0-9]+$/, {
+    .regex(/^\d+$/, {
       message: "无效的手机号码",
     }),
   password: z.string().min(1, {
@@ -34,7 +29,7 @@ const loginFormSchema = z.object({
   code: z
     .string()
     .length(6, { message: "无效的验证码" })
-    .regex(/^[0-9]+$/, {
+    .regex(/^\d+$/, {
       message: "无效的验证码",
     }),
   username: z
@@ -95,6 +90,7 @@ export default function Login() {
       form.getValues("code"),
     );
     console.log(res);
+    router.push("/auth/login");
   };
 
   return (

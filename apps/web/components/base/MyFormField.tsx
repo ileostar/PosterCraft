@@ -3,14 +3,16 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 
-
 interface FormType {
   [key: string]: any;
 }
 
-
-function MyFormField({form,name,placeholder,label}: {form: FormType;name: string,placeholder: string;label: string}) {
-
+function MyFormField({
+  form,
+  name,
+  placeholder,
+  label,
+}: Readonly<{ form: FormType; name: string; placeholder: string; label: string }>) {
   return (
     <FormField
       control={form.control}
@@ -22,7 +24,7 @@ function MyFormField({form,name,placeholder,label}: {form: FormType;name: string
             <Input
               className="input-bordered"
               {...field}
-              placeholder= {placeholder}
+              placeholder={placeholder}
             />
           </FormControl>
           <FormMessage />

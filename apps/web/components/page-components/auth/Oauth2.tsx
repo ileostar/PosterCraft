@@ -1,9 +1,9 @@
 "use client";
 
 import { githubSignIn, googleSignIn } from "@/api/api";
-import { Icons } from "@/components/base/Icons";
+import GithubIcon from "@/components/base/GithubIcon";
+import GoogleIcon from "@/components/base/GoogleIcon";
 import { useRouter } from "next/navigation";
-
 import { useGithubUsername, useOauth2Dialog } from "../../../store/state";
 
 function Oauth2() {
@@ -29,21 +29,21 @@ function Oauth2() {
   return (
     <div className="flex items-center ">
       <span className="text-xs font-serif">其他登录方式：</span>
-      <div
+      <button
         className="text-gray cursor-pointer mr-1 hover:animate-pulse"
         onClick={() => googleSignIn()}
       >
-        <Icons.google />
-      </div>
-      <div
+        <GoogleIcon/>
+      </button>
+      <button
         className="cursor-pointer hover:animate-pulse"
         onClick={() => {
           router.push("/auth/login");
           handleGithubSignIn();
         }}
       >
-        <Icons.gitHub />
-      </div>
+        <GithubIcon/>
+      </button>
     </div>
   );
 }
