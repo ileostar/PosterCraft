@@ -16,5 +16,14 @@
         "budget": 500
       }
     ]
+  },
+  {
+    "path": "/auth/register",
+    "resourceSizes": [
+      {
+        "resourceType": "total",
+        "budget": 500
+      }
+    ]
   }
 ]

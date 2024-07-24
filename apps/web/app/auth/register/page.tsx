@@ -1,14 +1,11 @@
 "use client";
 
-import {defaultSignUp,sendBySMS} from "@/api/api";
+import { defaultSignUp, sendBySMS } from "@/api/api";
 import MyFormField from "@/components/base/MyFormField";
-import Layout from "@/components/page-components/auth/LoginBackGround";
+import Layout from "@/components/page-components/auth/AuthBackGround";
 import Oauth2 from "@/components/page-components/auth/Oauth2";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-} from "@/components/ui/form";
-
+import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -16,34 +13,28 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const loginFormSchema = z.object({
-  phone: z
-    .string()
-    .length(11, { message: "无效的手机号码" })
-    .regex(/^\d+$/, {
-      message: "无效的手机号码",
-    }),
+const registerFormSchema = z.object({
+  phone: z.string().length(11, { message: "无效的手机号码" }).regex(/^\d+$/, {
+    message: "无效的手机号码",
+  }),
   password: z.string().min(1, {
     message: "不能为空",
   }),
-  code: z
-    .string()
-    .length(6, { message: "无效的验证码" })
-    .regex(/^\d+$/, {
-      message: "无效的验证码",
-    }),
+  code: z.string().length(6, { message: "无效的验证码" }).regex(/^\d+$/, {
+    message: "无效的验证码",
+  }),
   username: z
     .string()
     .min(4, { message: "用户名长度不能少于4个字符" })
     .max(12, { message: "用户名长度不能超过20个字符" }),
 });
 
-export type loginFormSchemaType = z.infer<typeof loginFormSchema>;
+export type loginFormSchemaType = z.infer<typeof registerFormSchema>;
 
-export default function Login() {
+export default function Register() {
   const router = useRouter();
   const form = useForm<loginFormSchemaType>({
-    resolver: zodResolver(loginFormSchema),
+    resolver: zodResolver(registerFormSchema),
     defaultValues: {
       phone: "",
       password: "",
@@ -105,7 +96,6 @@ export default function Login() {
               <div className="flex justify-center items-center ">
                 <p className="text-red-500 text-2xl card-title">Sign Up</p>
               </div>
-
               <div>
                 <MyFormField
                   form={form}
@@ -131,7 +121,6 @@ export default function Login() {
                   placeholder={"请输入验证码"}
                   label={"验证码"}
                 />
-
                 <button
                   className={`btn btn-outline btn-error mt-2`}
                   onClick={handleClick}
@@ -140,7 +129,6 @@ export default function Login() {
                   {!isDisabled ? "发送验证码" : `${countdown}s后再试`}
                 </button>
               </div>
-
               <div className="flex justify-between mt-[5px]">
                 <Button
                   className="btn w-full hover:bg-red-600 bg-[#EF4444] text-white"
@@ -159,15 +147,12 @@ export default function Login() {
                     点此登录
                   </Link>
                 </label>
-                <Oauth2/>
-                
+                <Oauth2 />
               </div>
             </form>
           </div>
         </Form>
       </div>
-
-
     </Layout>
   );
 }
