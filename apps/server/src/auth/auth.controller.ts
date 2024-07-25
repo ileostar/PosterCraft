@@ -1,8 +1,6 @@
 import { Controller, Post, Body, Get, UseGuards, Res } from '@nestjs/common';
 import { DefaultLoginDto, PhoneOtpLoginDto, RegisterDto } from './dto/auth.dto';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
-import { UserEntity, User } from '../user/user.decorators';
 import {
   ApiBody,
   ApiExcludeEndpoint,
@@ -13,7 +11,6 @@ import { CallbackUserDataDto } from './dto/oauth2.dto';
 import { GoogleAuthGuard } from './providers/google/google.auth.guard';
 import { CallbackUserData } from './decorator/callbackUserData.decorator';
 import { GithubAuthGuard } from './providers/github/github.auth.guard';
-import { Response } from 'express';
 import { EventGateway } from 'src/gateway/event.gateway';
 
 @ApiTags('用户鉴权接口🤖')
@@ -61,12 +58,5 @@ export class AuthController {
   async githubCallback(@CallbackUserData() userData: CallbackUserDataDto) {
     const resData = await this.authService.oauthLogin(userData);
     this.eventGateway.sendMessageToAll(JSON.stringify(resData));
-  }
-
-  @UseGuards(AuthGuard)
-  @Get('userInfo')
-  @ApiOperation({ summary: '获取用户信息', description: '获取用户信息' })
-  userInfo(@User() user: UserEntity) {
-    return user;
   }
 }
