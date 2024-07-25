@@ -15,6 +15,7 @@ export function request(config:any) {
     let token:any
     if (window.localStorage.getItem("token")) {
         token = window.localStorage.getItem("token")
+        token='bearer '+token 
     }
 
     
