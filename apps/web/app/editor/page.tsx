@@ -2,13 +2,20 @@
 
 import Head from "../../components/page-components/index/Head";
 import AuthLayout from "@/components/base/AuthLayout";
+import Left from "@/components/page-components/editor/Left";
+import Right from "@/components/page-components/editor/Right";
+import Middle from "@/components/page-components/editor/Middle";
 
 function Index(props: any) {
   return (
     <AuthLayout> 
-    <div>
+    <div className="w-screen h-screen flex flex-col">
       <Head />
-      这里是编辑器
+      <div className="flex flex-1">
+      <Left/>
+      <Middle/>
+      <Right/>
+      </div>
     </div>
     </AuthLayout>
   );

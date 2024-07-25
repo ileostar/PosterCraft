@@ -17,10 +17,10 @@ function Head(props: any) {
         <Link href="/myWork">我的作品</Link>
       </div>
       <div className="basis-1/6 pt-2 pb-2 mr-8 text-center leading-loose text-lg hover:bg-red-600 font-medium text-[#f2f2f2] rounded-full">
-      <Link href="/myAccount">我的账号</Link>
+      <Link href="/account">我的账号</Link>
       </div>
       <div className="basis-1/6 mr-8 pt-2 pb-2 text-center leading-loose text-lg hover:bg-red-600 font-medium text-[#f2f2f2] rounded-full  ">
-        <span>创建设计</span>
+      <Link href="/editor">创建设计</Link>
       </div>
     </div>
   );

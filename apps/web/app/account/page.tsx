@@ -30,7 +30,7 @@ const loginFormSchema = z.object({
 
 export type loginFormSchemaType = z.infer<typeof loginFormSchema>;
 
-function Index(props: any) {
+function Account(props: any) {
 
   const form = useForm<loginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
@@ -142,4 +142,4 @@ function Index(props: any) {
   );
 }
 
-export default Index;
+export default Account;
