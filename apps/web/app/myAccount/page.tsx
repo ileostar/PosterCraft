@@ -1,26 +1,14 @@
 "use client";
 
-import { Icons } from "@/components/base/Icons";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import {Form} from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import Head from "../../components/page-components/index/Head";
 import AuthLayout from "@/components/base/AuthLayout";
-
+import MyFormField from "@/components/base/MyFormField";
 
 const loginFormSchema = z.object({
   email: z.string().email({
@@ -58,14 +46,8 @@ function Index(props: any) {
     console.log(values);
   }
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSignIn = (provider: string) => {
-    setIsLoading(true);
-
-    signIn(provider).then(() => {
-      setIsLoading(false);
-    });
+  const handleUpdate = () => {
+    
   };
 
   return (
@@ -83,7 +65,7 @@ function Index(props: any) {
           个人中心
         </div>
 
-<div className="flex justify-center"> 
+<div className="flex justify-center mb-8"> 
         {/* //表单 */}
         <div className="w-[92vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] xl:w-[25vw] min-w-[320px] card shrink-0 max-w-sm shadow-2xl bg-base-100 font-serif rounded-2xl">
           <Form {...form}>
@@ -92,104 +74,61 @@ function Index(props: any) {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="flex flex-col gap-2 p-8 bg-slate-100 rounded-2xl"
               >
+                {/* 头像 */}
                 <div className="flex justify-center items-center card-title">
-                  {/* //头像 */}
                   <div className="p-3 animate-spin drop-shadow-2xl bg-gradient-to-bl from-pink-400 via-purple-400 to-indigo-600 md:w-48 md:h-48 h-32 w-32 aspect-square rounded-full">
                     <div className="rounded-full h-full w-full bg-slate-100 dark:bg-zinc-900 background-blur-md"></div>
                   </div>
                 </div>
 
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Username</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="input-bordered"
-                          {...field}
-                          placeholder="username"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                 
+                <MyFormField
+                  form={form}
+                  name={"username"}
+                  placeholder={""}
+                  label={"用户名"}
                 />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem className="form-control mt-[5px]">
-                      <FormLabel className="label">Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="input-bordered "
-                          type="password"
-                          placeholder="password"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
+                <MyFormField
+                  form={form}
+                  name={"password"}
+                  placeholder={""}
+                  label={"密码"}
                 />
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem className="form-control mt-[5px]">
-                      <FormLabel className="label">Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="input-bordered"
-                          placeholder="phone"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
+                 <MyFormField
+                  form={form}
+                  name={"phone"}
+                  placeholder={""}
+                  label={"手机号"}
                 />
-                <FormField
-                  control={form.control}
-                  name="nickname"
-                  render={({ field }) => (
-                    <FormItem className="form-control mt-[5px]">
-                      <FormLabel className="label">Nickname</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="input-bordered "
-                          placeholder="nickname"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
+               <MyFormField
+                  form={form}
+                  name={"nickname"}
+                  placeholder={""}
+                  label={"昵称"}
                 />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem className="form-control mt-[5px]">
-                      <FormLabel className="label">Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="input-bordered"
-                          placeholder="email"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
+                <MyFormField
+                  form={form}
+                  name={"email"}
+                  placeholder={""}
+                  label={"电子邮箱"}
                 />
                 <div className="flex justify-between mt-[5px]">
                   <Button
                     className="btn w-full hover:bg-red-600 bg-[#EF4444] text-white"
-                    onClick={() => handleSignIn("email")}
+                    onClick={() => handleUpdate()}
                     type="submit"
                   >
-                    Update
+                    更新信息
                   </Button>
                 </div>
+                <label className="label flex justify-end">
+                  <Link
+                    href="/auth/login"
+                    className="label-text-alt link link-hover text-[#EF4444] "
+                  >
+                    注销账号
+                  </Link>
+                </label>
               </form>
             </div>
           </Form>

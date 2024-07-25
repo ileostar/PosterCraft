@@ -1,6 +1,6 @@
 "use client";
 
-import { githubSignIn, googleSignIn } from "@/api/api";
+import { githubSignIn, googleSignIn } from "@/api/auth";
 import GithubIcon from "@/components/base/GithubIcon";
 import GoogleIcon from "@/components/base/GoogleIcon";
 import { useRouter } from "next/navigation";
