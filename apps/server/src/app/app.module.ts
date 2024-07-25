@@ -7,6 +7,8 @@ import { AuthModule } from '../auth/auth.module';
 import { SmsModule } from '../sms/sms.module';
 import { ConfigModule } from '@nestjs/config';
 import { GatewayModule } from 'src/gateway/gateway.module';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -18,6 +20,12 @@ import { GatewayModule } from 'src/gateway/gateway.module';
     UserModule,
     SmsModule,
     GatewayModule,
+    PassportModule.register({ secret: process.env.JWT_SERECT }),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '3d' },
+    }),
     RedisModule.forRootAsync({
       useFactory: () => ({
         type: 'single',

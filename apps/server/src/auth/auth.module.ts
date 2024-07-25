@@ -14,18 +14,7 @@ import { HttpModule } from '@nestjs/axios';
 import { GatewayModule } from 'src/gateway/gateway.module';
 
 @Module({
-  imports: [
-    PassportModule,
-    HttpModule,
-    SmsModule,
-    UserModule,
-    GatewayModule,
-    JwtModule.register({
-      global: true,
-      secret: process.env.SECRET,
-      signOptions: { expiresIn: '7d' },
-    }),
-  ],
+  imports: [PassportModule, HttpModule, SmsModule, UserModule, GatewayModule],
   providers: [
     AuthService,
     GoogleStrategy,

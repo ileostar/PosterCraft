@@ -1,23 +1,27 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const router = useRouter();
+  const[token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    setToken(window.localStorage.getItem("token"));
+  }, []);
   useEffect(() => {
     const modalElement = document.getElementById("my_modal_0") as HTMLDialogElement | null;
     if (modalElement) {
       modalElement.showModal();
     }
   }, []);
-
-  const router = useRouter();
-  if (typeof window !== "undefined") {
-    const token = window.localStorage.getItem("token");
+     
     if (!token) {
       return (
         <dialog
@@ -46,7 +50,6 @@ function AuthLayout({
     } else {
       return <>{children}</>;
     }
-  }
 }
 
 export default AuthLayout;

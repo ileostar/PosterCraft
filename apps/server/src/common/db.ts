@@ -39,7 +39,7 @@ export async function setupDB() {
   }
 
   logger.debug(`Connecting to ${process.env.DATABASE_URL}`);
-  logger.debug(`SECRET: ${process.env.SECRET}`);
+  logger.debug(`SECRET: ${process.env.JWT_SECRET}`);
 
   connection = await createConnection();
 

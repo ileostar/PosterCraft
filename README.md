@@ -47,7 +47,7 @@
 
 ```bash
 DATABASE_URL="mysql://root:root@127.0.0.1:3306/<your-database>"
-SECRET="<your-secret>"
+JWT_SECRET="<your-secret>"
 REDIS_URL="redis://127.0.0.1:6379"
 ```
 
