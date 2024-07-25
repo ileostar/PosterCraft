@@ -6,6 +6,7 @@ import { UserModule } from '../user/user.module';
 import { AuthModule } from '../auth/auth.module';
 import { SmsModule } from '../sms/sms.module';
 import { ConfigModule } from '@nestjs/config';
+import { GatewayModule } from 'src/gateway/gateway.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ConfigModule } from '@nestjs/config';
     AuthModule,
     UserModule,
     SmsModule,
+    GatewayModule,
     RedisModule.forRootAsync({
       useFactory: () => ({
         type: 'single',

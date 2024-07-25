@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  lint:
+  lint-build-test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -29,6 +29,9 @@ jobs:
 
       - name: Lint
         run: pnpm lint
+
+      - name: Build
+        run: pnpm build
   db-test:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -42,7 +45,7 @@ jobs:
 
     services:
       mysql:
-        image: mysql:8.0
+        image: mysql:8.4
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_USER: test
@@ -51,7 +54,7 @@ jobs:
         ports:
           - 3306:3306
       redis:
-        image: redis:6.2.5
+        image: redis:6.2.14
         ports:
           - 6379:6379
 
@@ -74,6 +77,20 @@ jobs:
 
       - name: Run build schema
         run: pnpm schema:build
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://poster-craft.leostar.top/
+            https://poster-craft.leostar.top/auth/login
+            https://poster-craft.leostar.top/auth/register
+          budgetPath: ./.github/budget.json # test performance budgets
+          uploadArtifacts: true # save results as an action artifacts
+          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
 
   # test:
   #   runs-on: ${{ matrix.os }}

@@ -1,8 +1,5 @@
-// This file is auto-generated, don't edit it
-// 依赖的模块可通过下载工程中的模块依赖文件或右上角的获取 SDK 依赖信息查看
 import Dysmsapi20170525, * as $Dysmsapi20170525 from '@alicloud/dysmsapi20170525';
 import * as $OpenApi from '@alicloud/openapi-client';
-import * as $Util from '@alicloud/tea-util';
 
 export default class Client {
   /**

@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-github-oauth20';
 
-import { UserService } from '../../user/user.service';
+import { UserService } from '../../../user/user.service';
 
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy) {
@@ -21,14 +21,7 @@ export class GithubStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(accessToken, refreshToken, profile, cb) {
-    const {
-      id: providerId,
-      displayName,
-      name: { familyName, givenName },
-      emails,
-      photos,
-      provider,
-    } = profile;
+    const { id: providerId, displayName, emails, photos, provider } = profile;
 
     this.logger.verbose(JSON.stringify({ ...profile }));
     const user = await this.usersService.findUserByProvider(providerId);
@@ -36,18 +29,30 @@ export class GithubStrategy extends PassportStrategy(Strategy) {
       return cb(null, user);
     }
 
-    const [{ value: email, verified }] = emails;
+    let userData;
     const [{ value: photo }] = photos;
-    const userData = {
-      provider,
-      providerId,
-      username: displayName,
-      email: email,
-      nickname: undefined,
-      avatar: photo,
-      accessToken,
-      refreshToken,
-    };
+    if (emails[0]?.verified) {
+      userData = {
+        provider,
+        providerId,
+        username: displayName,
+        email: emails[0].value,
+        nickname: undefined,
+        avatar: photo,
+        accessToken,
+        refreshToken,
+      };
+    } else {
+      userData = {
+        provider,
+        providerId,
+        username: displayName,
+        nickname: undefined,
+        avatar: photo,
+        accessToken,
+        refreshToken,
+      };
+    }
     cb(null, userData);
   }
 }

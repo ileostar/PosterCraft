@@ -1,0 +1,49 @@
+{
+  "extends": [
+    "config:base",
+    ":disableDependencyDashboard",
+    ":automergeMinor",
+    ":separateMajorReleases",
+    ":separatePatchReleases",
+    ":semanticCommitTypeAll(📦)",
+    ":semanticCommitScopeDisabled",
+    ":pinVersions",
+    ":rebaseStalePrs",
+    ":prHourlyLimitNone",
+    ":ignoreModulesAndTests",
+    ":updateNotScheduled",
+    ":automergeRequireAllStatusChecks",
+    ":maintainLockFilesDisabled",
+    "group:monorepos",
+    "group:recommended"
+  ],
+  "prHourlyLimit": 1,
+  "prConcurrentLimit": 2,
+  "packageRules": [
+    {
+      "depTypeList": ["devDependencies"],
+      "automerge": true
+    },
+    {
+      "packagePatterns": ["^@poster-craft/"],
+      "enabled": false
+    },
+    {
+      "paths": ["apps/server/**/*"],
+      "automerge": false
+    },
+    {
+      "paths": ["apps/web/**/*"],
+      "automerge": true
+    }
+  ],
+  "commitMessageAction": "📦",
+  "commitMessageTopic": "{{{depName}}}",
+  "commitMessage": "📦 update {{{depName}}} to v{{{newVersion}}}",
+  "npmrc": ".npmrc",
+  "baseBranches": ["main"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "extends": ["schedule:weekly", "group:allNonMajor"]
+  }
+}

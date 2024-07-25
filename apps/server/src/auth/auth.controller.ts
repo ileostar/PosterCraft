@@ -10,17 +10,20 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CallbackUserDataDto } from './dto/oauth2.dto';
-import { GoogleAuthGuard } from './google/google.auth.guard';
+import { GoogleAuthGuard } from './providers/google/google.auth.guard';
 import { CallbackUserData } from './decorator/callbackUserData.decorator';
-import { GithubAuthGuard } from './github/github.auth.guard';
-import { UserService } from 'src/user/user.service';
-import { ResponseData } from 'src/response/ResponseFormat';
+import { GithubAuthGuard } from './providers/github/github.auth.guard';
+import { Response } from 'express';
+import { EventGateway } from 'src/gateway/event.gateway';
 
 @ApiTags('用户鉴权接口🤖')
 @Controller('auth')
 export class AuthController {
   configService: any;
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly eventGateway: EventGateway,
+  ) {}
 
   @Post('defaultLogin')
   @ApiBody({ type: DefaultLoginDto })
@@ -56,7 +59,8 @@ export class AuthController {
   @ApiOperation({ summary: 'Github登录', description: 'Github登录' })
   @UseGuards(GithubAuthGuard)
   async githubCallback(@CallbackUserData() userData: CallbackUserDataDto) {
-    return await this.authService.oauthLogin(userData);
+    const resData = await this.authService.oauthLogin(userData);
+    this.eventGateway.sendMessageToAll(JSON.stringify(resData));
   }
 
   @UseGuards(AuthGuard)

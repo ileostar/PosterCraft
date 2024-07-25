@@ -10,7 +10,7 @@ import { useScrollAnimate } from "@/hooks/useScrollAnimate";
 function Card() {
   const router = useRouter();
   const handleClick = () => {
-    router.push("/work");
+    router.push("/editor");
   };
 
  

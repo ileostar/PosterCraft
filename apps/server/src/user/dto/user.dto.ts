@@ -1,4 +1,4 @@
-import { ApiProperty, PickType } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
 import {
   IsEmail,
   IsEnum,
@@ -9,7 +9,6 @@ import {
   Length,
   Matches,
 } from 'class-validator';
-import { PhoneOtpLoginDto } from '../../auth/dto/auth.dto';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -69,12 +68,32 @@ export class CreateUserDto {
   role?: 'admin' | 'normal';
 }
 
+export class DeleteUserDto {
+  @ApiProperty({
+    example: 13,
+    description: '用户ID不能为空',
+  })
+  @IsNotEmpty({ message: '用户ID不能为空' })
+  userId: number;
+}
+
 export class FindUserDto extends PickType(CreateUserDto, ['phone']) {}
 
-export class UpdateUserDto extends PickType(CreateUserDto, [
-  'username',
-  'avatar',
-]) {}
+export class UpdateUserDto extends OmitType(CreateUserDto, ['username']) {
+  @ApiProperty({
+    example: 13,
+    description: '用户ID不能为空',
+  })
+  @IsNotEmpty({ message: '用户ID不能为空' })
+  userId: number;
+
+  @ApiProperty({
+    example: 'admin',
+    description: '用户名长度为2-20位',
+  })
+  @Length(2, 20, { message: '用户名长度为2-20位' })
+  username?: string;
+}
 
 export class BindPhoneDto {
   @ApiProperty({
