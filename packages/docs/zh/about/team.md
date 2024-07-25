@@ -21,7 +21,7 @@ const members = [
     ]
   },
    {
-    avatar: 'https://avatars.githubusercontent.com/u/108746194?s=96&v=4',
+    avatar: 'https://avatars.githubusercontent.com/u/101611942?v=4',
     name: 'kkkang',
     title: 'Noob Coder',
     links: [
