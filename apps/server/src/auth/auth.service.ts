@@ -42,7 +42,7 @@ export class AuthService {
     return ResponseData.ok(
       payload,
       '手机号登录成功',
-      this.jwtService.signAsync(payload),
+      this.jwtService.sign(payload),
     );
   }
 
@@ -65,7 +65,7 @@ export class AuthService {
           phone: dto.phone,
           role: 'normal',
         };
-        const jwtToken = await this.jwtService.signAsync(payload);
+        const jwtToken = await this.jwtService.sign(payload);
 
         return ResponseData.ok(payload, '手机号注册并登录成功', jwtToken);
       }
@@ -86,7 +86,7 @@ export class AuthService {
         isSignUp: userData.phone ? false : true,
       },
       'Oauth2获取用户信息成功',
-      this.jwtService.signAsync(userData),
+      this.jwtService.sign(userData),
     );
   }
 
@@ -101,7 +101,7 @@ export class AuthService {
       this.userService.checkVerificationCode(dto);
 
       const res = await this.userService.createUser(dto);
-      const jwtToken = this.jwtService.signAsync(res);
+      const jwtToken = this.jwtService.sign(res);
       return ResponseData.ok(res, '注册成功', jwtToken);
     } catch (error) {
       throw new Error(error);

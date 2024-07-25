@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -20,6 +21,7 @@ import { number } from 'zod';
 import { ResponseData } from '../response/responseFormat';
 import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
 
+@ApiBearerAuth()
 @ApiTags('用户信息模块😀')
 @Controller('user')
 export class UserController {
@@ -37,8 +39,8 @@ export class UserController {
     summary: '获取用户信息',
     description: '根据用户ID获取用户信息',
   })
-  async getUserInfosByUserId(@Query() userId: number) {
-    const user = await this.userService.findUserByUserId(userId);
+  async getUserInfosByUserId(@Query() query: { userId: string }) {
+    const user = await this.userService.findUserByUserId(Number(query.userId));
     if (!user) {
       return ResponseData.fail('用户查询失败');
     } else {
