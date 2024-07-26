@@ -6,9 +6,11 @@ import { UserModule } from '../user/user.module';
 import { AuthModule } from '../auth/auth.module';
 import { SmsModule } from '../sms/sms.module';
 import { ConfigModule } from '@nestjs/config';
-import { GatewayModule } from 'src/gateway/gateway.module';
+import { GatewayModule } from '../gateway/gateway.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
+import { EmailModule } from '../email/email.module';
+import { OssModule } from 'src/oss/oss.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { JwtModule } from '@nestjs/jwt';
     UserModule,
     SmsModule,
     GatewayModule,
+    EmailModule,
+    OssModule,
     PassportModule.register({ secret: process.env.JWT_SERECT }),
     JwtModule.register({
       global: true,

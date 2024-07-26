@@ -7,4 +7,4 @@ import { OssService } from './oss.service';
   providers: [OssService],
   exports: [OssService],
 })
-export class OSSModule {}
+export class OssModule {}
