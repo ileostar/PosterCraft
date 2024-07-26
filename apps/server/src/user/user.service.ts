@@ -16,17 +16,12 @@ export class UserService {
   ) {}
 
   async createUser(dto: CreateUserDto) {
-    let newUsers;
-    if (dto.password) {
-      newUsers = {
-        ...dto,
-        password: await argon2.hash(dto.password),
-      };
-    } else {
-      newUsers = {
-        ...dto,
-      };
-    }
+    const newUsers = dto.password
+      ? {
+          ...dto,
+          password: await argon2.hash(dto.password),
+        }
+      : dto;
     const [res] = await this.db.insert(user).values(newUsers);
     return {
       userId: res.insertId,
@@ -48,9 +43,8 @@ export class UserService {
       if (!old) {
         return ResponseData.fail('用户ID不存在');
       }
-      const updateData = Object.assign({}, old, dto);
-      const res = await this.db.update(user).set(updateData);
-      return ResponseData.ok(res, '更新成功');
+      await this.db.update(user).set(dto).where(eq(user.id, dto.userId));
+      return ResponseData.ok(null, '更新成功');
     } catch (error) {
       return ResponseData.fail('更新用户失败：' + error);
     }
