@@ -10,7 +10,7 @@
   },
   "homepage": "https://github.com/ileostar/PosterCraft",
   "engines": {
-    "node": "20.15.1"
+    "node": "20.16.0"
   },
   "scripts": {
     "schema:build": "pnpm -F @poster-craft/schema build",
