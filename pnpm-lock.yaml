@@ -196,7 +196,7 @@ importers:
         specifier: 1.4.11
         version: 1.4.11
       '@types/passport-jwt':
-        specifier: ^4.0.1
+        specifier: 4.0.1
         version: 4.0.1
       '@types/supertest':
         specifier: 6.0.2
