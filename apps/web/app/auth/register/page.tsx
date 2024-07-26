@@ -1,6 +1,6 @@
 "use client";
 
-import { defaultSignUp, sendBySMS } from "@/api/api";
+import { defaultSignUp, sendBySMS } from "@/api/auth";
 import MyFormField from "@/components/base/MyFormField";
 import Layout from "@/components/page-components/auth/AuthBackGround";
 import Oauth2 from "@/components/page-components/auth/Oauth2";

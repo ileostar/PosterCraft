@@ -1,7 +1,6 @@
 import { openCenteredOAuthPopup } from "@/utils/popup";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import io from "socket.io-client";
-
 import { request } from "./request";
 
 interface CustomAxiosResponse<T = any> extends AxiosResponse<T> {
