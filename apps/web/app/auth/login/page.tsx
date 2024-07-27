@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { useGithubUsername, useOauth2Dialog } from "../../../store/state";
+import { useGithubUsername, useOauth2Dialog } from "../../../store/auth";
 
 const loginFormSchema = z.object({
   email: z.string().email({
