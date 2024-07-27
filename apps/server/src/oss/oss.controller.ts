@@ -5,18 +5,28 @@ import {
   UseInterceptors,
   HttpStatus,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { OssService } from './oss.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
+import { UpdateUploadDto } from './dto/oss.dto';
 
-@ApiTags('OSS存储🛢')
+@ApiTags('OSS对象存储📦')
 @Controller('oss')
 export class OssController {
   constructor(private readonly ossService: OssService) {}
 
   @Post('upload')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '上传文件' })
   @UseInterceptors(FileInterceptor('file'))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'Upload file',
+    type: UpdateUploadDto,
+  })
   async uploadFile(@UploadedFile() file: Express.Multer.File, @Res() res) {
     try {
       const key = `${Date.now()}-${file.originalname}`; // 自定义文件key

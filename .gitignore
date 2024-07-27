@@ -78,6 +78,8 @@ web_modules/
 .env.test.local
 .env.production.local
 .env.local
+.env.prod
+.env.test
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -130,3 +132,5 @@ dist
 .pnp.*
 
 .turbo/
+apps/server/.env.prod
+apps/server/.env.test
