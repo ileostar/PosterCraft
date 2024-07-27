@@ -21,6 +21,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     example: 'user@example.com',
+    required: false,
     description: '电子邮件地址',
   })
   @IsEmail({}, { message: '电子邮件地址格式不正确' })
@@ -33,10 +34,11 @@ export class CreateUserDto {
   @IsNotEmpty({ message: '手机号码不能为空' })
   @IsString({ message: '手机号码必须是字符串类型' })
   @IsMobilePhone('zh-CN')
-  phone?: string;
+  phone: string;
 
   @ApiProperty({
     example: '123456',
+    required: false,
     description: '密码不能为空,长度应在6-20位之间',
   })
   @Length(6, 20, { message: '密码长度为6-20位' })
@@ -44,6 +46,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     example: 'https://example.com/avatar.jpg',
+    required: false,
     description: '用户头像URL（可选）',
   })
   @IsOptional()
@@ -52,6 +55,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     example: 'LeoStar',
+    required: false,
     description: '用户昵称（可选）',
   })
   @IsOptional()
@@ -61,6 +65,7 @@ export class CreateUserDto {
   @ApiProperty({
     enum: ['admin', 'normal'],
     example: 'normal',
+    required: false,
     description: '用户角色（可选，默认为normal）',
   })
   @IsOptional()
@@ -79,7 +84,12 @@ export class DeleteUserDto {
 
 export class FindUserDto extends PickType(CreateUserDto, ['phone']) {}
 
-export class UpdateUserDto extends OmitType(CreateUserDto, ['username']) {
+export class UpdateUserDto extends OmitType(CreateUserDto, [
+  'username',
+  'phone',
+  'password',
+  'role',
+]) {
   @ApiProperty({
     example: 13,
     description: '用户ID不能为空',
@@ -89,13 +99,14 @@ export class UpdateUserDto extends OmitType(CreateUserDto, ['username']) {
 
   @ApiProperty({
     example: 'admin',
+    required: false,
     description: '用户名长度为2-20位',
   })
   @Length(2, 20, { message: '用户名长度为2-20位' })
   username?: string;
 }
 
-export class BindPhoneDto {
+export class VerifyPhoneDto {
   @ApiProperty({
     example: 13,
     description: '用户ID不能为空',
