@@ -13,6 +13,7 @@ import { MailModule } from '../mail/mail.module';
 import { OssModule } from 'src/oss/oss.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { TestModule } from 'src/test/test.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
       },
     }),
     OssModule,
+    TestModule,
     PassportModule.register({ secret: process.env.JWT_SERECT }),
     JwtModule.register({
       global: true,

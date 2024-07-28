@@ -10,12 +10,13 @@ import {
 } from '@nestjs/common';
 import { DB, DbType } from '../global/providers/db.provider';
 import { user } from '@poster-craft/schema';
-import { ApiBody, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/user/dto/user.dto';
 import { eq } from 'drizzle-orm';
 import { number } from 'zod';
 import { UpdateTestUserDto } from './dto/test.dto';
 
+@ApiTags('测试接口🚧')
 @Controller('test')
 export class TestController {
   constructor(@Inject(DB) private db: DbType) {}
