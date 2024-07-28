@@ -61,4 +61,4 @@ pnpm dev:web
 
 ## 💖 贡献
 
-欢迎各位大佬提 `PR/ISSUE` 贡献
+欢迎各位大佬提 `PR/ISSUE` 贡献，提`PR`前可以阅读[贡献指南](./CONTRIBUTING.md)
