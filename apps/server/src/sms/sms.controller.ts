@@ -18,7 +18,7 @@ import { CallbackUserData } from '../auth/decorator/callback.decorator';
 import { string } from 'zod';
 
 @ApiBearerAuth()
-@ApiTags('SMS短信接口📞')
+@ApiTags('SMS短信模块📞')
 @Controller('sms')
 export class SmsController {
   constructor(private readonly smsService: SmsService) {}

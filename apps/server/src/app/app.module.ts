@@ -14,6 +14,7 @@ import { OssModule } from 'src/oss/oss.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { TestModule } from 'src/test/test.module';
+import { WorkModule } from 'src/work/work.module';
 
 @Module({
   imports: [
@@ -26,28 +27,8 @@ import { TestModule } from 'src/test/test.module';
     SmsModule,
     GatewayModule,
     MailModule,
-    MailerModule.forRoot({
-      transport: {
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
-        secure: false,
-        auth: {
-          user: process.env.EMAIL_ID,
-          pass: process.env.EMAIL_PASS,
-        },
-      },
-      defaults: {
-        from: '"PosterCraft" liuxinghao030@163.com',
-      },
-      template: {
-        dir: __dirname + '/template/',
-        adapter: new HandlebarsAdapter(),
-        options: {
-          strict: true,
-        },
-      },
-    }),
     OssModule,
+    WorkModule,
     TestModule,
     PassportModule.register({ secret: process.env.JWT_SERECT }),
     JwtModule.register({
