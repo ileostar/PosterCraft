@@ -53,7 +53,7 @@ export default function Login() {
     console.log(values);
   }
 
-  //登录模式
+  //登录模式(是否为手机短信登录)
   const [isPhoneMode, setIsPhoneMode] = useState(false);
   //按钮禁用
   const [isDisabled, setIsDisabled] = useState(false);
@@ -82,18 +82,17 @@ export default function Login() {
     }
   }, [countdown]);
 
-  const handleSign = async () => {
-    if (isPhoneMode) {
-      let res = await loginBySMS(form.getValues("phone"), form.getValues("code"));
-      window.localStorage.setItem("token", res.token); //存入本地
-      console.log(res.token);
-      router.push("/");
-    } else {
-      let res = await defaultSignIn(form.getValues("username"), form.getValues("password"));
-      window.localStorage.setItem("token", res.token); //存入本地
-      console.log(res.token);
-      router.push("/");
+  const handleSign = async () => { 
+    let res= isPhoneMode?await loginBySMS(form.getValues("phone"), form.getValues("code")):await defaultSignIn(form.getValues("username"), form.getValues("password"));
+    window.localStorage.setItem("token", res.token); //存入本地
+    if(isPhoneMode) {
+      window.localStorage.setItem("userId", res.data.id); 
     }
+    else{
+      window.localStorage.setItem("userId", res.data.userId); 
+    }
+    console.log(res.token);
+    router.push("/");
   };
 
   const { githubUsername } = useGithubUsername();
