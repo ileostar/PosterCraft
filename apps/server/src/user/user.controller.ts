@@ -20,18 +20,12 @@ import { DeleteUserDto, UpdateUserDto } from './dto/user.dto';
 import { number } from 'zod';
 import { ResponseData } from '../response/responseFormat';
 import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
-import { user } from '@poster-craft/schema';
-import { DB, DbType } from 'src/global/providers/db.provider';
-import { eq } from 'drizzle-orm';
 
 @ApiBearerAuth()
 @ApiTags('用户信息模块😀')
 @Controller('user')
 export class UserController {
-  constructor(
-    @Inject(DB) private db: DbType,
-    private readonly userService: UserService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('getUserInfosByUserId')
