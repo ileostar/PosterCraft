@@ -11,6 +11,7 @@ import { UserService } from 'src/user/user.service';
 import { generateRandomUsername } from 'src/utils';
 import { ResponseData } from '../response/responseFormat';
 import { CallbackUserDataDto } from './dto/oauth2.dto';
+import { JwtPayloadDto } from './dto/jwt.dto';
 
 @Injectable()
 export class AuthService {
@@ -51,6 +52,7 @@ export class AuthService {
     try {
       const user = await this.userService.findWithPhone(dto.phone);
 
+      let payload;
       if (!user) {
         const randomName = generateRandomUsername();
         const userId = this.userService.createUser({
@@ -59,7 +61,7 @@ export class AuthService {
         });
         this.userService.checkVerificationCode(dto);
 
-        const payload = {
+        payload = {
           userId: userId,
           username: randomName,
           phone: dto.phone,
@@ -70,6 +72,16 @@ export class AuthService {
         return ResponseData.ok(payload, '手机号注册并登录成功', jwtToken);
       }
       this.userService.checkVerificationCode(dto);
+
+      payload = {
+        userId: user.id,
+        username: user.username,
+        nickname: user.nickname,
+        avatar: user.avatar,
+        phone: user.phone,
+        role: user.role,
+        email: user.email,
+      };
 
       const jwtToken = this.jwtService.sign(user);
       return ResponseData.ok(user, '手机号登录成功', jwtToken);

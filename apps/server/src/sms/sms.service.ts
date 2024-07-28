@@ -1,15 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { SendCodeBySMSDto } from './dto/sms.dto';
+import {
+  SendCodeBySMSDto,
+  UpdatePhoneDto,
+  VerifyPhoneDto,
+} from './dto/sms.dto';
 import { generateVerificationCode } from 'src/utils';
 import { CacheService } from 'src/cache/cache.service';
 import { ResponseData } from '../response/responseFormat';
 import Client from 'src/common/sms';
 import * as $Dysmsapi20170525 from '@alicloud/dysmsapi20170525';
 import * as $Util from '@alicloud/tea-util';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class SmsService {
-  constructor(private cacheService: CacheService) {}
+  constructor(
+    private readonly cacheService: CacheService,
+    private readonly userService: UserService,
+  ) {}
   async sendCodeBySMS(dto: SendCodeBySMSDto) {
     try {
       const code = generateVerificationCode();
@@ -26,6 +34,33 @@ export class SmsService {
       return ResponseData.ok(null, '短信发送成功');
     } catch (error) {
       return ResponseData.fail(error.message);
+    }
+  }
+
+  async verifyPhone(id: number, dto: VerifyPhoneDto) {
+    try {
+      if (!this.userService.findUserByPhone(dto.phone))
+        return ResponseData.ok(null, '手机号错误');
+      const currentCode = await this.cacheService.getCache(dto.phone);
+      if (dto.otp === currentCode) return ResponseData.ok(null, '手机验证成功');
+      else return ResponseData.ok(null, '手机验证失败：验证码错误或超时');
+    } catch (error) {
+      return ResponseData.fail('校验失败：' + error);
+    }
+  }
+
+  async updatePhone(id: number, dto: UpdatePhoneDto) {
+    try {
+      const currentCode = await this.cacheService.getCache(dto.phone);
+      if (dto.otp === currentCode) {
+        this.userService.updateUserInfos({
+          ...dto,
+          userId: id,
+        });
+        return ResponseData.ok(null, '手机号更换成功');
+      } else return ResponseData.ok(null, '手机号更换失败：验证码错误或超时');
+    } catch (error) {
+      return ResponseData.fail('校验失败：' + error);
     }
   }
 }

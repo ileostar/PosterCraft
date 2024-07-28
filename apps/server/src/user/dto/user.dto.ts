@@ -7,7 +7,6 @@ import {
   IsOptional,
   IsString,
   Length,
-  Matches,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -104,31 +103,4 @@ export class UpdateUserDto extends OmitType(CreateUserDto, [
   })
   @Length(2, 20, { message: '用户名长度为2-20位' })
   username?: string;
-}
-
-export class VerifyPhoneDto {
-  @ApiProperty({
-    example: 13,
-    description: '用户ID不能为空',
-  })
-  @IsNotEmpty({ message: '用户ID不能为空' })
-  userId: number;
-
-  @ApiProperty({
-    example: '14709723891',
-    description: '手机号码不能为空,长度应在6-20位之间',
-  })
-  @IsNotEmpty({ message: '手机号码不能为空' })
-  @Length(11, 11, { message: '手机号码应为11位数字' })
-  @Matches(/^1[3-9]\d{9}$/, { message: '手机号码格式不正确' })
-  phone: string;
-
-  @ApiProperty({
-    example: '123456',
-    description: '一次性验证码，从短信中获取',
-  })
-  @IsNotEmpty({ message: '验证码不能为空' })
-  @IsString({ message: '验证码必须是字符串类型' })
-  @Length(6, 6, { message: '验证码应为6位数字' })
-  otp: string;
 }

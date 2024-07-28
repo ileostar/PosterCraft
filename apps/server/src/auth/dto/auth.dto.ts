@@ -1,7 +1,8 @@
 import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
 import '@nestjs/common';
 import { IsNotEmpty, IsString, Length, Matches } from 'class-validator';
-import { CreateUserDto, VerifyPhoneDto } from 'src/user/dto/user.dto';
+import { CreateUserDto } from 'src/user/dto/user.dto';
+import { VerifyPhoneDto } from 'src/sms/dto/sms.dto';
 
 /** 默认登录：用户名/邮箱 + 密码 */
 export class DefaultLoginDto {
@@ -23,10 +24,7 @@ export class DefaultLoginDto {
 }
 
 /** 手机号登录 */
-export class PhoneOtpLoginDto extends PickType(VerifyPhoneDto, [
-  'phone',
-  'otp',
-]) {}
+export class PhoneOtpLoginDto extends VerifyPhoneDto {}
 
 /** 注册DTO */
 export class RegisterDto extends OmitType(CreateUserDto, [

@@ -55,6 +55,11 @@ export class UserService {
       where: eq(user.username, username),
     });
   }
+  async findUserByPhone(phone: string): Promise<any> {
+    return this.db.query.user.findFirst({
+      where: eq(user.phone, phone),
+    });
+  }
 
   findUserByProvider(providerId: string) {
     return this.db.query.user.findFirst({

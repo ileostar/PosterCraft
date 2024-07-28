@@ -9,7 +9,7 @@ import {
 } from '@nestjs/swagger';
 import { CallbackUserDataDto } from './dto/oauth2.dto';
 import { GoogleAuthGuard } from './providers/google/google.auth.guard';
-import { CallbackUserData } from './decorator/callbackUserData.decorator';
+import { CallbackUserData } from './decorator/CallbackUserData.decorator';
 import { GithubAuthGuard } from './providers/github/github.auth.guard';
 import { EventGateway } from 'src/gateway/event.gateway';
 
