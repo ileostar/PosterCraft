@@ -51,6 +51,8 @@ export class SmsService {
 
   async updatePhone(id: number, dto: UpdatePhoneDto) {
     try {
+      if (await this.userService.checkPhoneExists(dto.phone))
+        return ResponseData.fail('手机号已被绑定');
       const currentCode = await this.cacheService.getCache(dto.phone);
       if (dto.otp === currentCode) {
         this.userService.updateUserInfos({

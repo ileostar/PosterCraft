@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { SendCodeByEmailDto, BindEmailDto } from './dto/mail.dto';
+import {
+  SendCodeByEmailDto,
+  BindEmailDto,
+  VerifyEmailDto,
+} from './dto/mail.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { generateVerificationCode } from '../utils';
 import { ResponseData } from 'src/response/responseFormat';
@@ -32,7 +36,6 @@ export class MailService {
     });
   }
 
-  /** 发送邮箱验证码 */
   async sendCodeByMail(dto: SendCodeByEmailDto) {
     try {
       const code = generateVerificationCode();
@@ -44,9 +47,9 @@ export class MailService {
     }
   }
 
-  async bindMail(dto: BindEmailDto) {
+  async bindMail(id: number, dto: BindEmailDto) {
     try {
-      if (!this.userService.findUserByUserId(dto.userId))
+      if (!this.userService.findUserByUserId(id))
         return ResponseData.ok(null, '用户ID不存在');
 
       const currentCode = await this.cacheService.getCache(dto.email);
@@ -56,7 +59,10 @@ export class MailService {
         if (this.userService.findUserByEmail(dto.email))
           return ResponseData.ok(null, '邮箱已存在');
 
-        this.userService.updateUserInfos(dto);
+        this.userService.updateUserInfos({
+          ...dto,
+          userId: id,
+        });
         return ResponseData.ok(null, '邮箱绑定成功');
       } else return ResponseData.ok(null, '邮箱绑定失败：验证码错误或超时');
     } catch (error) {
@@ -64,19 +70,35 @@ export class MailService {
     }
   }
 
-  async updateEmail(dto: BindEmailDto) {
+  async updateEmail(id: number, dto: BindEmailDto) {
     try {
-      if (!this.userService.findUserByUserId(dto.userId))
-        return ResponseData.ok(null, '用户ID不存在');
-
+      if (await this.userService.checkEmailExists(dto.email))
+        return ResponseData.fail('邮箱已被绑定');
       const currentCode = await this.cacheService.getCache(dto.email);
-
       if (dto.otp === currentCode) {
         this.cacheService.delCache(dto.email);
         if (!this.userService.findUserByEmail(dto.email))
           return ResponseData.ok(null, '用户未绑定邮箱');
 
-        this.userService.updateUserInfos(dto);
+        this.userService.updateUserInfos({
+          ...dto,
+          userId: id,
+        });
+        return ResponseData.ok(null, '邮箱绑定成功');
+      } else return ResponseData.ok(null, '邮箱绑定失败：验证码错误或超时');
+    } catch (error) {
+      return ResponseData.fail('邮箱绑定失败：' + error);
+    }
+  }
+
+  async verifyEmail(dto: VerifyEmailDto) {
+    try {
+      if (this.userService.checkEmailExists(dto.email))
+        return ResponseData.fail('用户邮箱不存在');
+      const currentCode = await this.cacheService.getCache(dto.email);
+
+      if (dto.otp === currentCode) {
+        this.cacheService.delCache(dto.email);
         return ResponseData.ok(null, '邮箱绑定成功');
       } else return ResponseData.ok(null, '邮箱绑定失败：验证码错误或超时');
     } catch (error) {

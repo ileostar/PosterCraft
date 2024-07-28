@@ -23,7 +23,6 @@ export class CreateUserDto {
     required: false,
     description: '电子邮件地址',
   })
-  @IsEmail({}, { message: '电子邮件地址格式不正确' })
   email?: string;
 
   @ApiProperty({
@@ -88,6 +87,7 @@ export class UpdateUserDto extends OmitType(CreateUserDto, [
   'phone',
   'password',
   'role',
+  'email',
 ]) {
   @ApiProperty({
     example: 13,

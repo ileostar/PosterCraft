@@ -14,7 +14,7 @@ import {
 } from './dto/sms.dto';
 import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
 import { JwtPayloadDto } from '../auth/dto/jwt.dto';
-import { CallbackUserData } from '../auth/decorator/CallbackUserData.decorator';
+import { CallbackUserData } from '../auth/decorator/callback.decorator';
 import { string } from 'zod';
 
 @ApiBearerAuth()

@@ -11,7 +11,6 @@ import { UserService } from 'src/user/user.service';
 import { generateRandomUsername } from 'src/utils';
 import { ResponseData } from '../response/responseFormat';
 import { CallbackUserDataDto } from './dto/oauth2.dto';
-import { JwtPayloadDto } from './dto/jwt.dto';
 
 @Injectable()
 export class AuthService {

@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { IsNotEmpty, IsEmail, IsString, Length } from 'class-validator';
 
 export class SendCodeByEmailDto {
@@ -13,13 +13,6 @@ export class SendCodeByEmailDto {
 
 export class BindEmailDto extends SendCodeByEmailDto {
   @ApiProperty({
-    example: 13,
-    description: '用户ID不能为空',
-  })
-  @IsNotEmpty({ message: '用户ID不能为空' })
-  userId: number;
-
-  @ApiProperty({
     example: '123456',
     description: '一次性验证码，从邮箱中获取',
   })
@@ -28,3 +21,5 @@ export class BindEmailDto extends SendCodeByEmailDto {
   @Length(6, 6, { message: '验证码应为6位数字' })
   otp: string;
 }
+
+export class VerifyEmailDto extends BindEmailDto {}
