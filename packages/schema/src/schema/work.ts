@@ -1,4 +1,4 @@
-import { boolean, int, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, int, json, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 import { user } from "./user";
 
@@ -9,10 +9,11 @@ type ChannelProps = {
 
 export const work = mysqlTable("work", {
   id: int("id").primaryKey().autoincrement(),
+  uuid: varchar("uuid", { length: 256 }).unique(),
   title: text("title").notNull(),
-  desc: text("title"),
+  desc: text("desc"),
   coverImg: varchar("cover_img", { length: 256 }),
-  content: text("title"),
+  content: json("content").default({}),
   isTemplate: boolean("is_template"),
   isPublic: boolean("is_public"),
   isHot: boolean("is_hot"),
