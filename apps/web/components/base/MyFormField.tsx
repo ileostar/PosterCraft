@@ -12,7 +12,7 @@ function MyFormField({
   name,
   placeholder,
   label,
-}: Readonly<{ form: FormType; name: string; placeholder: string; label: string }>) {
+}: Readonly<{ form: FormType; name: string; placeholder: string; label?: string }>) {
   return (
     <FormField
       control={form.control}

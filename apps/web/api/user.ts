@@ -1,4 +1,4 @@
-import { request } from "./request";
+import { request } from "../utils/request";
 
 export function getUserInfo(userId: number) {
   return request({
@@ -14,13 +14,16 @@ export function updateUserInfo(data: any) {
   return request({
     url: "/user/updateUserInfos",
     data:data,
-    method: "post",
+    method: "put",
   });
 }
 
-export function deleteUser() {
+export function deleteUser(userId: number) {
   return request({
     url: "/user/deleteUserById",
+    data: {
+      userId: userId,
+    },
     method: "delete",
   });
 }
