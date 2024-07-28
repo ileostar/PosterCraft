@@ -41,7 +41,7 @@ export class UserService {
     try {
       const old = await this.findUserByUserId(dto.userId);
       if (!old) return ResponseData.fail('用户ID不存在');
-      if (dto.username && this.checkUsernameExists(dto.username))
+      if (dto.username && (await this.checkUsernameExists(dto.username)))
         return ResponseData.fail('用户名已存在');
       await this.db.update(user).set(dto).where(eq(user.id, dto.userId));
       return ResponseData.ok(null, '更新成功');
