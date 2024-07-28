@@ -18,7 +18,7 @@
   "dependencies": {
     "@fastify/static": "7.0.4",
     "@nestjs-modules/ioredis": "2.0.2",
-    "@nestjs-modules/mailer": "^2.0.2",
+    "@nestjs-modules/mailer": "2.0.2",
     "@nestjs/axios": "3.0.2",
     "@nestjs/common": "10.3.10",
     "@nestjs/config": "3.2.3",

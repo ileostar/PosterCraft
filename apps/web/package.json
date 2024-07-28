@@ -9,12 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ant-design/nextjs-registry": "^1.0.0",
+    "@ant-design/nextjs-registry": "1.0.0",
     "@hookform/resolvers": "3.9.0",
     "@radix-ui/react-label": "2.1.0",
     "@radix-ui/react-separator": "1.1.0",
     "@radix-ui/react-slot": "1.1.0",
-    "antd": "^5.19.3",
+    "antd": "5.19.3",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
     "lucide-react": "0.416.0",
