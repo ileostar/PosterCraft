@@ -1,23 +1,29 @@
-import { request } from "./request";
+import { request } from "../utils/request";
 
-export function getUserInfo() {
+export function getUserInfo(userId: number) {
   return request({
     url: "/user/getUserInfosByUserId",
-    method: "get"
+    params: {
+      userId: userId,
+    },
+    method: "get",
   });
 }
 
-export function updateUserInfo() {
+export function updateUserInfo(data: any) {
   return request({
     url: "/user/updateUserInfos",
-    method: "post"
+    data:data,
+    method: "put",
   });
 }
 
-export function deleteUser() {
-    return request({
-      url: "/user/deleteUserById",
-      method: "delete"
-    });
-  }
-  
+export function deleteUser(userId: number) {
+  return request({
+    url: "/user/deleteUserById",
+    data: {
+      userId: userId,
+    },
+    method: "delete",
+  });
+}
