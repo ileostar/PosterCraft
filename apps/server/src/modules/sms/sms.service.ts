@@ -39,7 +39,7 @@ export class SmsService {
 
   async verifyPhone(id: number, dto: VerifyPhoneDto) {
     try {
-      if (!this.userService.findUserByPhone(dto.phone))
+      if (!(await this.userService.findUserByPhone(dto.phone)))
         return ResponseData.ok(null, '手机号错误');
       const currentCode = await this.cacheService.getCache(dto.phone);
       if (dto.otp === currentCode) return ResponseData.ok(null, '手机验证成功');
@@ -55,7 +55,7 @@ export class SmsService {
         return ResponseData.fail('手机号已被绑定');
       const currentCode = await this.cacheService.getCache(dto.phone);
       if (dto.otp === currentCode) {
-        this.userService.updateUserInfos({
+        await this.userService.updateUserInfos({
           ...dto,
           userId: id,
         });

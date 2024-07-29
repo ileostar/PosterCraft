@@ -30,29 +30,18 @@ export class GithubStrategy extends PassportStrategy(Strategy) {
     }
 
     let userData;
-    const [{ value: photo }] = photos;
-    if (emails[0]?.verified) {
-      userData = {
-        provider,
-        providerId,
-        username: displayName,
-        email: emails[0].value,
-        nickname: undefined,
-        avatar: photo,
-        accessToken,
-        refreshToken,
-      };
-    } else {
-      userData = {
-        provider,
-        providerId,
-        username: displayName,
-        nickname: undefined,
-        avatar: photo,
-        accessToken,
-        refreshToken,
-      };
-    }
+    const photo = photos[0]?.value;
+    const isEmailVerified = emails[0]?.verified;
+    userData = {
+      provider,
+      providerId,
+      username: displayName,
+      nickname: undefined,
+      avatar: photo,
+      accessToken,
+      refreshToken,
+      ...(isEmailVerified ? { email: emails[0].value } : {}),
+    };
     cb(null, userData);
   }
 }

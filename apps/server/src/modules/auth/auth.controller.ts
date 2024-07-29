@@ -48,7 +48,8 @@ export class AuthController {
   @ApiOperation({ summary: 'Google登录', description: 'Google登录' })
   @UseGuards(GoogleAuthGuard)
   async googleCallback(@CallbackUserData() userData: CallbackUserDataDto) {
-    return await this.authService.oauthLogin(userData);
+    const resData = await this.authService.oauthLogin(userData);
+    this.eventGateway.sendMessageToAll(JSON.stringify(resData));
   }
 
   @ApiExcludeEndpoint()

@@ -39,7 +39,7 @@ export class MailService {
   async sendCodeByMail(dto: SendCodeByEmailDto) {
     try {
       const code = generateVerificationCode();
-      this.cacheService.setCache(dto.email, code);
+      await this.cacheService.setCache(dto.email, code);
       const res = await this.sendMail(dto.email, code);
       return ResponseData.ok(res, '邮箱验证码发送成功');
     } catch (error) {
@@ -49,17 +49,17 @@ export class MailService {
 
   async bindMail(id: number, dto: BindEmailDto) {
     try {
-      if (!this.userService.findUserByUserId(id))
+      if (!(await this.userService.findUserByUserId(id)))
         return ResponseData.ok(null, '用户ID不存在');
 
       const currentCode = await this.cacheService.getCache(dto.email);
 
       if (dto.otp === currentCode) {
-        this.cacheService.delCache(dto.email);
-        if (this.userService.findUserByEmail(dto.email))
+        await this.cacheService.delCache(dto.email);
+        if (await this.userService.findUserByEmail(dto.email))
           return ResponseData.ok(null, '邮箱已存在');
 
-        this.userService.updateUserInfos({
+        await this.userService.updateUserInfos({
           ...dto,
           userId: id,
         });
@@ -76,11 +76,11 @@ export class MailService {
         return ResponseData.fail('邮箱已被绑定');
       const currentCode = await this.cacheService.getCache(dto.email);
       if (dto.otp === currentCode) {
-        this.cacheService.delCache(dto.email);
-        if (!this.userService.findUserByEmail(dto.email))
+        await this.cacheService.delCache(dto.email);
+        if (!(await this.userService.findUserByEmail(dto.email)))
           return ResponseData.ok(null, '用户未绑定邮箱');
 
-        this.userService.updateUserInfos({
+        await this.userService.updateUserInfos({
           ...dto,
           userId: id,
         });
@@ -93,12 +93,12 @@ export class MailService {
 
   async verifyEmail(dto: VerifyEmailDto) {
     try {
-      if (this.userService.checkEmailExists(dto.email))
+      if (await this.userService.checkEmailExists(dto.email))
         return ResponseData.fail('用户邮箱不存在');
       const currentCode = await this.cacheService.getCache(dto.email);
 
       if (dto.otp === currentCode) {
-        this.cacheService.delCache(dto.email);
+        await this.cacheService.delCache(dto.email);
         return ResponseData.ok(null, '邮箱绑定成功');
       } else return ResponseData.ok(null, '邮箱绑定失败：验证码错误或超时');
     } catch (error) {

@@ -54,11 +54,11 @@ export class AuthService {
       let payload;
       if (!user) {
         const randomName = generateRandomUsername();
-        const userId = this.userService.createUser({
+        const userId = await this.userService.createUser({
           username: randomName,
           phone: dto.phone,
         });
-        this.userService.checkVerificationCode(dto);
+        await this.userService.checkVerificationCode(dto);
 
         payload = {
           userId: userId,
@@ -70,7 +70,7 @@ export class AuthService {
 
         return ResponseData.ok(payload, '手机号注册并登录成功', jwtToken);
       }
-      this.userService.checkVerificationCode(dto);
+      await this.userService.checkVerificationCode(dto);
 
       payload = {
         userId: user.id,
@@ -109,7 +109,7 @@ export class AuthService {
         return ResponseData.fail('用户名已存在');
       }
 
-      this.userService.checkVerificationCode(dto);
+      await this.userService.checkVerificationCode(dto);
 
       const res = await this.userService.createUser(dto);
       const jwtToken = this.jwtService.sign(res);

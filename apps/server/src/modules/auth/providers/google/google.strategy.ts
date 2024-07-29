@@ -29,18 +29,18 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
       return cb(null, user);
     }
 
-    const [{ value: email, verified }] = emails;
-    const [{ value: photo }] = photos;
-    const userData = {
+    let userData;
+    const photo = photos[0]?.value;
+    const isEmailVerified = emails[0]?.verified;
+    userData = {
       provider,
       providerId,
       username: displayName,
-      email: email,
       nickname: undefined,
-      profileImage: photo,
-      thumbnailImage: undefined,
+      avatar: photo,
       accessToken,
       refreshToken,
+      ...(isEmailVerified ? { email: emails[0].value } : {}),
     };
     cb(null, userData);
   }
