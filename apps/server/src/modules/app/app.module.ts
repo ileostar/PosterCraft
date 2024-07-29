@@ -22,6 +22,7 @@ import { PageModule } from '../page/page.module';
       isGlobal: true,
     }),
     GlobalModule,
+    TestModule,
     AuthModule,
     UserModule,
     SmsModule,
@@ -31,7 +32,6 @@ import { PageModule } from '../page/page.module';
     WorkModule,
     ChannelModule,
     PageModule,
-    TestModule,
     PassportModule.register({ secret: process.env.JWT_SERECT }),
     JwtModule.register({
       global: true,

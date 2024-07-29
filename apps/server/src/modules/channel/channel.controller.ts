@@ -1,6 +1,15 @@
-import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { ChannelService } from './channel.service';
-import { Controller, Delete, Get, Put, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { string } from 'zod';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
 
@@ -26,7 +35,7 @@ export class ChannelController {
   @UseGuards(JwtAuthGuard)
   getWorkChannels(@Query() id: string) {}
 
-  // TODO 获取工作区通道
+  // TODO 更新通道名称
   @Put('updateName')
   @ApiQuery({
     name: 'id',
@@ -34,17 +43,18 @@ export class ChannelController {
     description: '模板ID',
     type: string,
   })
+  @ApiBody({})
   @UseGuards(JwtAuthGuard)
-  updateName(@Query() id: string) {}
+  updateName(@Query() id: string, @Body() dto) {}
 
-  // TODO 获取工作区通道
-  @Delete()
+  // TODO 删除通道
+  @Delete(':id')
   @ApiQuery({
     name: 'id',
     required: true,
-    description: '模板ID',
+    description: '通道ID',
     type: string,
   })
   @UseGuards(JwtAuthGuard)
-  deleteChannel(@Query() id: string) {}
+  deleteChannel(@Param('id') id: string) {}
 }
