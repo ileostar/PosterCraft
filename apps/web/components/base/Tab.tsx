@@ -27,7 +27,7 @@ function Tabs({ tabs }: TabsProps) {
   };
 
   return (
-    <div>
+    <div className='flex flex-col flex-1'>
       <div role="tablist" className="tabs tabs-bordered">
         {tabs.map((tab) => (
           <a
@@ -40,7 +40,7 @@ function Tabs({ tabs }: TabsProps) {
           </a>
         ))}
       </div>
-      <div className="">
+      <div className="flex-1">
         {/* 根据当前活动的标签页索引渲染对应的内容 */}
         {tabs[activeTabIndex]?.content && (
           <div className="">
