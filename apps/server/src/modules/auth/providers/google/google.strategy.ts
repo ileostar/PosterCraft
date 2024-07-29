@@ -4,6 +4,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-google-oauth20';
 
 import { UserService } from '../../../user/user.service';
+import validateOauth2 from '../common/validateOauth2';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy) {
@@ -21,27 +22,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(accessToken, refreshToken, profile, cb) {
-    const { id: providerId, displayName, emails, photos, provider } = profile;
-
-    this.logger.verbose(JSON.stringify({ ...profile }));
-    const user = await this.usersService.findUserByProvider(providerId);
-    if (user) {
-      return cb(null, user);
-    }
-
-    let userData;
-    const photo = photos[0]?.value;
-    const isEmailVerified = emails[0]?.verified;
-    userData = {
-      provider,
-      providerId,
-      username: displayName,
-      nickname: undefined,
-      avatar: photo,
-      accessToken,
-      refreshToken,
-      ...(isEmailVerified ? { email: emails[0].value } : {}),
-    };
-    cb(null, userData);
+    return validateOauth2(accessToken, refreshToken, profile, cb);
   }
 }

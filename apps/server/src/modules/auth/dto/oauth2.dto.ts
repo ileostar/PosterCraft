@@ -51,16 +51,14 @@ export class CallbackUserDataDto {
 
   @IsUrl()
   @ApiProperty({
-    example:
-      'http://k.githubcdn.net/dn/V9DTr/btrBqDCsBrN/7vEQ5nEPRdYAdBiQQE2z5K/img_640x640.jpg',
+    example: 'https://xxx.net/img_640x640.jpg',
     description: 'Profile Image URL of OAuth provider',
   })
   public profileImage: string;
 
   @IsUrl()
   @ApiProperty({
-    example:
-      'http://k.githubcdn.net/dn/V9DTr/btrBqDCsBrN/7vEQ5nEPRdYAdBiQQE2z5K/img_110x110.jpg',
+    example: 'https://xxx.net/img_640x640.jpg',
     description: 'Thumbnail Image URL of OAuth provider',
   })
   public thumbnailImage: string;

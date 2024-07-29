@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-github-oauth20';
-
+import validateOauth2 from '../common/validateOauth2';
 import { UserService } from '../../../user/user.service';
 
 @Injectable()
@@ -21,27 +21,6 @@ export class GithubStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(accessToken, refreshToken, profile, cb) {
-    const { id: providerId, displayName, emails, photos, provider } = profile;
-
-    this.logger.verbose(JSON.stringify({ ...profile }));
-    const user = await this.usersService.findUserByProvider(providerId);
-    if (user) {
-      return cb(null, user);
-    }
-
-    let userData;
-    const photo = photos[0]?.value;
-    const isEmailVerified = emails[0]?.verified;
-    userData = {
-      provider,
-      providerId,
-      username: displayName,
-      nickname: undefined,
-      avatar: photo,
-      accessToken,
-      refreshToken,
-      ...(isEmailVerified ? { email: emails[0].value } : {}),
-    };
-    cb(null, userData);
+    return validateOauth2(accessToken, refreshToken, profile, cb);
   }
 }
