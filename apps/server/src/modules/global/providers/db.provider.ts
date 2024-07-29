@@ -1,7 +1,7 @@
 import { SchemaType } from '@poster-craft/schema';
 import { FactoryProvider } from '@nestjs/common';
 import type { MySql2Database } from 'drizzle-orm/mysql2';
-import { setupDB } from '../../db';
+import { setupDB } from '../../../factories/db';
 
 export const DB = Symbol('DB_SERVICE');
 export type DbType = MySql2Database<SchemaType>;

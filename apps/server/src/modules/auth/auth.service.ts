@@ -9,7 +9,7 @@ import { DefaultLoginDto, PhoneOtpLoginDto, RegisterDto } from './dto/auth.dto';
 import * as argon2 from 'argon2';
 import { UserService } from '../user/user.service';
 import { generateRandomUsername } from 'src/common/utils';
-import { ResponseData } from 'src/response/responseFormat';
+import { ResponseData } from 'src/interceptor/responseData';
 import { CallbackUserDataDto } from './dto/oauth2.dto';
 
 @Injectable()

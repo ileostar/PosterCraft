@@ -2,11 +2,11 @@ import { user } from '@poster-craft/schema';
 import { Inject, Injectable } from '@nestjs/common';
 import * as argon2 from 'argon2';
 import { eq } from 'drizzle-orm';
-import { DB, DbType } from 'src/common/global/providers/db.provider';
+import { DB, DbType } from 'src/modules/global/providers/db.provider';
 import { CreateUserDto, DeleteUserDto, UpdateUserDto } from './dto/user.dto';
 import { CacheService } from '../cache/cache.service';
 import { PhoneOtpLoginDto, RegisterDto } from '../auth/dto/auth.dto';
-import { ResponseData } from 'src/response/responseFormat';
+import { ResponseData } from 'src/interceptor/responseData';
 
 @Injectable()
 export class UserService {

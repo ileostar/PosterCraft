@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { CacheModule } from '../cache/cache.modules';
-import { JwtStrategy } from '../auth/jwt/jwt.strategy';
-import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
+import { JwtStrategy } from '../../guards/jwt.strategy';
+import { JwtAuthGuard } from '../../guards/jwt.guard';
 
 @Module({
   imports: [CacheModule],
