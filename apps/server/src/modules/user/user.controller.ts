@@ -17,8 +17,8 @@ import {
 } from '@nestjs/swagger';
 import { DeleteUserDto, UpdateUserDto } from './dto/user.dto';
 import { number } from 'zod';
-import { ResponseData } from 'src/response/responseFormat';
-import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
+import { ResponseData } from 'src/interceptor/response';
+import { JwtAuthGuard } from '../../guards/jwtAuth.guard';
 
 @ApiBearerAuth()
 @ApiTags('用户信息模块😀')

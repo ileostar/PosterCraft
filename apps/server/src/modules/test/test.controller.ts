@@ -8,7 +8,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { DB, DbType } from 'src/common/global/providers/db.provider';
+import { DB, DbType } from 'src/modules/global/providers/db.provider';
 import { user } from '@poster-craft/schema';
 import { ApiBody, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from '../user/dto/user.dto';

@@ -6,7 +6,7 @@ import {
 } from './dto/mail.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { generateVerificationCode } from 'src/common/utils';
-import { ResponseData } from 'src/response/responseFormat';
+import { ResponseData } from 'src/interceptor/response';
 import { CacheService } from '../cache/cache.service';
 import { UserService } from '../user/user.service';
 

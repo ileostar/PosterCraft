@@ -21,7 +21,7 @@ import {
   VerifyEmailDto,
 } from './dto/mail.dto';
 import { string } from 'zod';
-import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
+import { JwtAuthGuard } from '../../guards/jwt.guard';
 import { CallbackUserData } from '../auth/decorator/callback.decorator';
 import { JwtPayloadDto } from '../auth/dto/jwt.dto';
 

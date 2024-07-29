@@ -6,8 +6,8 @@ import {
 } from './dto/sms.dto';
 import { generateVerificationCode } from 'src/common/utils';
 import { CacheService } from '../cache/cache.service';
-import { ResponseData } from 'src/response/responseFormat';
-import Client from 'src/common/sms';
+import { ResponseData } from 'src/interceptor/response';
+import Client from 'src/factories/sms';
 import * as $Dysmsapi20170525 from '@alicloud/dysmsapi20170525';
 import * as $Util from '@alicloud/tea-util';
 import { UserService } from '../user/user.service';
