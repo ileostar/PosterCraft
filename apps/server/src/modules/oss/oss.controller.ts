@@ -10,7 +10,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { OssService } from './oss.service';
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../../guards/jwtAuth.guard';
+import { JwtAuthGuard } from '../../guards/jwt.guard';
 import { UpdateUploadDto } from './dto/oss.dto';
 
 @ApiTags('OSS对象存储模块📦')

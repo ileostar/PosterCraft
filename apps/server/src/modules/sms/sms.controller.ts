@@ -12,7 +12,7 @@ import {
   UpdatePhoneDto,
   VerifyPhoneDto,
 } from './dto/sms.dto';
-import { JwtAuthGuard } from '../../guards/jwtAuth.guard';
+import { JwtAuthGuard } from '../../guards/jwt.guard';
 import { JwtPayloadDto } from '../auth/dto/jwt.dto';
 import { CallbackUserData } from '../auth/decorator/callback.decorator';
 import { string } from 'zod';
