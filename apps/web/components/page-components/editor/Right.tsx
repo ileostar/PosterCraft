@@ -13,7 +13,7 @@ const tabs = [
 
 function Right(props: any) {
   return (
-  <div className="bg-[#ffffff] w-1/5  mt-3 mb-3 flex">
+  <div className="bg-[#ffffff] w-1/5 h-full pt-3 pb-3 flex">
      <Tab tabs={tabs} />
   </div>
   );

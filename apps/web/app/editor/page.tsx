@@ -12,7 +12,7 @@ function Index(props: any) {
     <AuthLayout>
       <div className="w-screen h-screen flex flex-col">
         <Head />
-        <div className="flex flex-1">
+        <div className="flex h-full">
           <Left />
           <Middle />
           <Right />

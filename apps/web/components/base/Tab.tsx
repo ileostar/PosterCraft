@@ -43,7 +43,7 @@ function Tabs({ tabs }: TabsProps) {
       <div className="flex-1">
         {/* 根据当前活动的标签页索引渲染对应的内容 */}
         {tabs[activeTabIndex]?.content && (
-          <div className="">
+          <div className="h-full">
             {tabs[activeTabIndex].content}
           </div>
         )} 
