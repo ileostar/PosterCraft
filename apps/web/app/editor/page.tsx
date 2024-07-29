@@ -1,15 +1,23 @@
 "use client";
 
-import Head from "../../components/page-components/index/Head";
 import AuthLayout from "@/components/base/AuthLayout";
+import Left from "@/components/page-components/editor/Left";
+import Middle from "@/components/page-components/editor/Middle";
+import Right from "@/components/page-components/editor/Right";
+
+import Head from "../../components/page-components/index/Head";
 
 function Index(props: any) {
   return (
-    <AuthLayout> 
-    <div>
-      <Head />
-      这里是编辑器
-    </div>
+    <AuthLayout>
+      <div className="w-screen h-screen flex flex-col">
+        <Head />
+        <div className="flex flex-1">
+          <Left />
+          <Middle />
+          <Right />
+        </div>
+      </div>
     </AuthLayout>
   );
 }
