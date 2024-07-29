@@ -9,6 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { DB, DbType } from 'src/modules/global/providers/db.provider';
+import * as argon2 from 'argon2';
 import { user } from '@poster-craft/schema';
 import { ApiBody, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto, DeleteUserDto } from '../user/dto/user.dto';
@@ -30,7 +31,10 @@ export class TestController {
   @ApiBody({ type: CreateUserDto })
   async addUser(@Body() dto: CreateUserDto) {
     try {
-      await this.db.insert(user).values(dto);
+      await this.db.insert(user).values({
+        ...dto,
+        password: await argon2.hash(dto.password),
+      });
       return {
         code: 200,
         msg: '执行成功',

@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 
 /** 生成随机验证码 */
 export function generateVerificationCode() {
