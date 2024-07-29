@@ -52,14 +52,14 @@ function TextList() {
 
   return (
     <div className="flex justify-center items-center flex-col">
-      {textTemplate.map((item: any, index: number) => (
-        <div
-          key={index}
+      {textTemplate.map((item: any) => (
+        <button
+          key={item.id}
           onClick={(e) => handleClick(e)}
           style={item.style}
         >
           {item.text}
-        </div>
+        </button>
       ))}
     </div>
   );

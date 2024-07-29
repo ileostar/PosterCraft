@@ -41,12 +41,12 @@ function SetProps() {
     <div className="h-full"  ref={parentRef}>
       <div style={childStyle}>
       <div>
-        <div
+        <button
           onClick={() => toggleDropDown("base")}
-          className="pl-4 py-3 border border-1"
+          className="w-full py-3 border"
         >
           基本属性
-        </div>
+        </button>
         <div className={` bg-white dropdown-content ${isExpandedBase ? "expanded-base" : ""}`}>
           <p>这里是基本属性的详细信息...</p>
           <p>这里是基本属性的详细信息...</p>
@@ -59,12 +59,12 @@ function SetProps() {
         </div>
       </div>
       <div>
-        <div
+      <button
           onClick={() => toggleDropDown("size")}
-          className="pl-4 py-3 border border-1"
+          className="w-full py-3  border"
         >
           尺寸
-        </div>
+        </button>
         <div className={` bg-white dropdown-content ${isExpandedSize ? "expanded-size" : ""}`}>
           <div className="pt-2">
             <p>这里是基本属性的详细信息...</p>
@@ -75,12 +75,12 @@ function SetProps() {
         </div>
       </div>
       <div>
-        <div
+      <button
           onClick={() => toggleDropDown("border")}
-          className="pl-4 py-3 border border-1"
+          className="w-full py-3  border"
         >
           边框
-        </div>
+        </button>
         <div className={` bg-white dropdown-content ${isExpandedBorder ? "expanded-border" : ""}`}>
           <p>这里是基本属性的详细信息...</p>
           <p>这里是基本属性的详细信息...</p>
@@ -89,12 +89,12 @@ function SetProps() {
         </div>
       </div>
       <div>
-        <div
+      <button
           onClick={() => toggleDropDown("position")}
-          className="pl-4 py-3 border border-1"
+          className="w-full py-3  border"
         >
           位置
-        </div>
+        </button>
         <div className={` bg-white dropdown-content ${isExpandedPosition ? "expanded-position" : ""}`}>
           <p>这里是基本属性的详细信息...</p>
           <p>这里是基本属性的详细信息...</p>
@@ -103,12 +103,12 @@ function SetProps() {
         </div>
       </div>
       <div>
-        <div
+      <button
           onClick={() => toggleDropDown("shadow")}
-          className="pl-4 py-3 border border-1"
+          className="w-full py-3  border"
         >
           阴影与透明度
-        </div>
+        </button>
         <div className={` bg-white dropdown-content ${isExpandedShadow ? "expanded-shadow" : ""}`}>
           <p>这里是基本属性的详细信息...</p>
           <p>这里是基本属性的详细信息...</p>
@@ -117,12 +117,12 @@ function SetProps() {
         </div>
       </div>
       <div>
-        <div
+      <button
           onClick={() => toggleDropDown("event")}
-          className="pl-4 py-3 border border-1"
+          className="w-full py-3 border "
         >
           事件功能
-        </div>
+        </button>
         <div className={` bg-white dropdown-content ${isExpandedEvent ? "expanded-event" : ""}`}>
           <p>这里是基本属性的详细信息...</p>
           <p>这里是基本属性的详细信息...</p>

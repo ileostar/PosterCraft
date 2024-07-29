@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import Tab from "@/components/base/Tab";
 import TextList from "./Left/TextList";
 import ImgList from "./Left/ImgList";

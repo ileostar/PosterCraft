@@ -1,11 +1,4 @@
- // Tabs.tsx
 import React, { useState } from 'react';
-
-// const tabs: Tab[] = [
-//     { id: 0, label: '文本', content: '这是文本标签页的内容。' },
-//     { id: 1, label: '图片', content: <img src="path/to/image.jpg" alt="示例图片" /> },
-//     { id: 2, label: '形状', content: '这是形状标签页的内容，可以展示不同的形状。' },
-//   ];
 
 interface Tab {
     id: number;
@@ -14,7 +7,7 @@ interface Tab {
   }
 
 interface TabsProps {
-  tabs: Tab[]; // 定义接收的props类型
+  readonly tabs: ReadonlyArray<Tab>; // 定义接收的props类型
 }
 
 function Tabs({ tabs }: TabsProps) {
@@ -29,15 +22,15 @@ function Tabs({ tabs }: TabsProps) {
   return (
     <div className='flex flex-col flex-1'>
       <div role="tablist" className="tabs tabs-bordered">
-        {tabs.map((tab) => (
-          <a
+        {tabs.map((tab:any) => (
+          <button
             key={tab.id}
             role="tab"
             className={`tab ${tab.id === activeTabIndex ? 'tab-active' : ''}`}
             onClick={() => handleTabClick(tab.id)}
           >
             {tab.label}
-          </a>
+          </button>
         ))}
       </div>
       <div className="flex-1">
