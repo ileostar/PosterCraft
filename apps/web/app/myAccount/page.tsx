@@ -39,9 +39,9 @@ export type loginFormSchemaType = z.infer<typeof loginFormSchema>;
 export type loginFormSchemaType_l = z.infer<typeof loginFormSchema_l>;
 
 function Index(props: any) {
-  const [userId, setUserId] = useState(0);
-  const [avatar, setAvatar] = useState("");
-  const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState<string>("0");
+  const [avatar, setAvatar] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const router = useRouter();
   const form = useForm<loginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
@@ -130,8 +130,8 @@ function Index(props: any) {
   useEffect(() => {
     const userId = window.localStorage.getItem("userId");
     if (userId !== null) {
-      setUserId(parseInt(userId));
-      getUserData(parseInt(userId));
+      setUserId(userId);
+      getUserData(userId);
     }
   }, [avatar]);
 
