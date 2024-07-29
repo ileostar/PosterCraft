@@ -12,14 +12,7 @@ export function generateRandomUsername(
   prefix: string = '用户',
   length: number = 10,
 ): string {
-  const characters =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let randomString = '';
-  const charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-    randomString += characters.charAt(
-      Math.floor(Math.random() * charactersLength),
-    );
-  }
+  const randomBytes = crypto.randomBytes(Math.ceil(length / 2));
+  const randomString = randomBytes.toString('hex').slice(0, length);
   return prefix + randomString;
 }
