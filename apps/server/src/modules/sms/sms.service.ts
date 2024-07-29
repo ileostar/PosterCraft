@@ -37,7 +37,7 @@ export class SmsService {
     }
   }
 
-  async verifyPhone(id: number, dto: VerifyPhoneDto) {
+  async verifyPhone(id: string, dto: VerifyPhoneDto) {
     try {
       if (!(await this.userService.findUserByPhone(dto.phone)))
         return ResponseData.ok(null, '手机号错误');
@@ -49,7 +49,7 @@ export class SmsService {
     }
   }
 
-  async updatePhone(id: number, dto: UpdatePhoneDto) {
+  async updatePhone(id: string, dto: UpdatePhoneDto) {
     try {
       if (await this.userService.checkPhoneExists(dto.phone))
         return ResponseData.fail('手机号已被绑定');

@@ -13,7 +13,7 @@ import { CallbackUserData } from './decorator/callback.decorator';
 import { GithubAuthGuard } from './providers/github/github.auth.guard';
 import { EventGateway } from '../gateway/event.gateway';
 
-@ApiTags('用户鉴权模块🤖')
+@ApiTags('🤖用户鉴权模块')
 @Controller('auth')
 export class AuthController {
   configService: any;

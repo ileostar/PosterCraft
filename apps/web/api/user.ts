@@ -1,6 +1,6 @@
 import { request } from "../utils/request";
 
-export function getUserInfo(userId: number) {
+export function getUserInfo(userId: string) {
   return request({
     url: "/user/getUserInfosByUserId",
     params: {
@@ -13,12 +13,12 @@ export function getUserInfo(userId: number) {
 export function updateUserInfo(data: any) {
   return request({
     url: "/user/updateUserInfos",
-    data:data,
+    data: data,
     method: "put",
   });
 }
 
-export function deleteUser(userId: number) {
+export function deleteUser(userId: string) {
   return request({
     url: "/user/deleteUserById",
     data: {

@@ -47,7 +47,7 @@ export class MailService {
     }
   }
 
-  async bindMail(id: number, dto: BindEmailDto) {
+  async bindMail(id: string, dto: BindEmailDto) {
     try {
       if (!(await this.userService.findUserByUserId(id)))
         return ResponseData.ok(null, '用户ID不存在');
@@ -70,7 +70,7 @@ export class MailService {
     }
   }
 
-  async updateEmail(id: number, dto: BindEmailDto) {
+  async updateEmail(id: string, dto: BindEmailDto) {
     try {
       if (await this.userService.checkEmailExists(dto.email))
         return ResponseData.fail('邮箱已被绑定');

@@ -8,5 +8,5 @@ export class UpdateTestUserDto extends UpdateUserDto {
     description: '用户ID不能为空',
   })
   @IsNotEmpty({ message: '用户ID不能为空' })
-  userId: number;
+  userId: string;
 }

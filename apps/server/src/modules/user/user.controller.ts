@@ -14,14 +14,22 @@ import {
   ApiOperation,
   ApiQuery,
   ApiTags,
+  OmitType,
 } from '@nestjs/swagger';
-import { DeleteUserDto, UpdateUserDto } from './dto/user.dto';
+import {
+  CreateUserDto,
+  DeleteUserDto,
+  FindUserDto,
+  UpdateUserDto,
+} from './dto/user.dto';
 import { number } from 'zod';
-import { ResponseData } from 'src/interceptor/responseData';
 import { JwtAuthGuard } from '../../guards/jwt.guard';
+import { APIResponse } from 'src/decorators/apiResponse.decorators';
+import { DbType } from 'src/modules/global/providers/db.provider';
+import { schemas } from '@poster-craft/schema';
 
 @ApiBearerAuth()
-@ApiTags('用户信息模块😀')
+@ApiTags('😀用户信息模块')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -38,12 +46,24 @@ export class UserController {
     summary: '获取用户信息',
     description: '根据用户ID获取用户信息',
   })
+  @APIResponse(OmitType(CreateUserDto, ['password']))
   async getUserInfosByUserId(@Query() query: { userId: string }) {
-    const user = await this.userService.findUserByUserId(Number(query.userId));
+    const user = await this.userService.findUserByUserId(query.userId);
     if (!user) {
-      return ResponseData.fail('用户查询失败');
+      return {
+        msg: '用户查询失败',
+      };
     } else {
-      return ResponseData.ok(user, '获取用户信息成功');
+      return {
+        data: {
+          username: user.username,
+          email: user.email,
+          phone: user.phone,
+          avatar: user.avatar,
+          nickname: user.nickname,
+          role: user.role,
+        },
+      };
     }
   }
 
@@ -51,6 +71,7 @@ export class UserController {
   @Put('updateUserInfos')
   @ApiBody({ type: UpdateUserDto })
   @ApiOperation({ summary: '更新用户信息', description: '测试' })
+  @APIResponse()
   async updateUserInfos(@Body() dto: UpdateUserDto) {
     return this.userService.updateUserInfos(dto);
   }
@@ -59,6 +80,7 @@ export class UserController {
   @Delete('deleteUserById')
   @ApiBody({ type: DeleteUserDto })
   @ApiOperation({ summary: '注销当前用户', description: '根据用户ID删除用户' })
+  @APIResponse()
   async deleteUserById(@Body() dto: DeleteUserDto) {
     return this.userService.deleteUser(dto);
   }

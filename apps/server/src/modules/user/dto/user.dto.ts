@@ -77,7 +77,7 @@ export class DeleteUserDto {
     description: '用户ID不能为空',
   })
   @IsNotEmpty({ message: '用户ID不能为空' })
-  userId: number;
+  userId: string;
 }
 
 export class FindUserDto extends PickType(CreateUserDto, ['phone']) {}
@@ -94,7 +94,7 @@ export class UpdateUserDto extends OmitType(CreateUserDto, [
     description: '用户ID不能为空',
   })
   @IsNotEmpty({ message: '用户ID不能为空' })
-  userId: number;
+  userId: string;
 
   @ApiProperty({
     example: 'admin',

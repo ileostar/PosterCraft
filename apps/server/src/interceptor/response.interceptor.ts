@@ -10,7 +10,7 @@ import { ResponseData } from './responseData';
 
 @Injectable()
 export class ResponseInterceptor<T> implements NestInterceptor {
-  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+  intercept(_context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
       map((response) => {
         const { code, msg, data, token } = response;

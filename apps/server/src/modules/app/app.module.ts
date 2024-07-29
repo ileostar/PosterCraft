@@ -13,6 +13,8 @@ import { MailModule } from '../mail/mail.module';
 import { OssModule } from '../oss/oss.module';
 import { TestModule } from '../test/test.module';
 import { WorkModule } from '../work/work.module';
+import { ChannelModule } from '../channel/channel.module';
+import { PageModule } from '../page/page.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { WorkModule } from '../work/work.module';
     MailModule,
     OssModule,
     WorkModule,
+    ChannelModule,
+    PageModule,
     TestModule,
     PassportModule.register({ secret: process.env.JWT_SERECT }),
     JwtModule.register({

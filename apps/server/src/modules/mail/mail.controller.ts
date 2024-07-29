@@ -26,7 +26,7 @@ import { CallbackUserData } from '../auth/decorator/callback.decorator';
 import { JwtPayloadDto } from '../auth/dto/jwt.dto';
 
 @ApiBearerAuth()
-@ApiTags('邮箱模块📧')
+@ApiTags('📧邮箱模块')
 @Controller('/mail')
 export class MailController {
   constructor(private mailService: MailService) {}

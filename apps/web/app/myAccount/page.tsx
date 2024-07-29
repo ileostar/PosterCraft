@@ -84,7 +84,7 @@ function Index(props: any) {
   const handleUpdate = async () => {
     let data: {
       [key: string]: string | number | undefined; // 添加索引签名以允许使用字符串作为键
-      userId: number;
+      userId: string;
       username?: string;
       phone?: string;
       email?: string;
@@ -115,7 +115,7 @@ function Index(props: any) {
     window.localStorage.removeItem("token");
   };
 
-  const getUserData = async (userId: number) => {
+  const getUserData = async (userId: string) => {
     const res = await getUserInfo(userId);
     form.setValue("username", res?.data?.username);
     form.setValue("phone", res?.data?.phone);

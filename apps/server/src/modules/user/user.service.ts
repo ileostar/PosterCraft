@@ -91,7 +91,7 @@ export class UserService {
     return correctCode === dto.otp;
   }
 
-  async findUserByUserId(userId: number) {
+  async findUserByUserId(userId: string) {
     return this.db.query.user.findFirst({
       where: eq(user.id, userId),
     });
@@ -102,7 +102,7 @@ export class UserService {
     return !!user;
   }
 
-  async checkUserIdExists(userId: number) {
+  async checkUserIdExists(userId: string) {
     const user = await this.findUserByUserId(userId);
     return !!user;
   }

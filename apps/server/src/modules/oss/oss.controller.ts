@@ -13,7 +13,7 @@ import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../guards/jwt.guard';
 import { UpdateUploadDto } from './dto/oss.dto';
 
-@ApiTags('OSS对象存储模块📦')
+@ApiTags('📦OSS对象存储模块')
 @Controller('oss')
 export class OssController {
   constructor(private readonly ossService: OssService) {}

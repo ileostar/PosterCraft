@@ -11,12 +11,12 @@ import {
 import { DB, DbType } from 'src/modules/global/providers/db.provider';
 import { user } from '@poster-craft/schema';
 import { ApiBody, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { CreateUserDto } from '../user/dto/user.dto';
+import { CreateUserDto, DeleteUserDto } from '../user/dto/user.dto';
 import { eq } from 'drizzle-orm';
 import { number } from 'zod';
 import { UpdateTestUserDto } from './dto/test.dto';
 
-@ApiTags('测试接口🚧')
+@ApiTags('🚧测试模块')
 @Controller('test')
 export class TestController {
   constructor(@Inject(DB) private db: DbType) {}
@@ -28,33 +28,39 @@ export class TestController {
     description: '添加用户',
   })
   @ApiBody({ type: CreateUserDto })
-  async addUser(dto: CreateUserDto) {
+  async addUser(@Body() dto: CreateUserDto) {
     try {
       await this.db.insert(user).values(dto);
-      return '执行成功';
+      return {
+        code: 200,
+        msg: '执行成功',
+      };
     } catch (error) {
-      return '执行失败' + error;
+      return {
+        msg: '执行失败' + error,
+      };
     }
   }
 
   // TODO 删除用户
   @Delete('delUser')
-  @ApiQuery({
-    name: 'userId',
-    description: '用户Id',
-    type: number,
-    required: true,
-  })
+  @ApiQuery({ type: DeleteUserDto })
   @ApiOperation({
     summary: '删除用户',
     description: '删除用户',
   })
-  async delUser(@Query() userId: number) {
+  async delUser(@Body() dto: DeleteUserDto) {
     try {
-      await this.db.delete(user).where(eq(user.id, userId));
-      return '执行成功';
+      const res = await this.db.delete(user).where(eq(user.id, dto.userId));
+      return {
+        code: 200,
+        msg: '执行成功',
+        data: res,
+      };
     } catch (error) {
-      return '执行失败' + error;
+      return {
+        msg: '执行失败' + error,
+      };
     }
   }
 
@@ -86,7 +92,7 @@ export class TestController {
     type: number,
     required: true,
   })
-  getUser(@Query() userId: number) {
+  getUser(@Query() userId: string) {
     try {
       this.db.query.user.findFirst({
         where: eq(user.id, userId),
@@ -96,20 +102,4 @@ export class TestController {
       return '执行失败' + error;
     }
   }
-
-  // TODO 添加工作区
-  @Post('addWork')
-  addWork() {}
-
-  // TODO 删除工作区
-  @Delete('delWork')
-  delWork() {}
-
-  // TODO 修改工作区
-  @Put('updateWork')
-  updateWork() {}
-
-  // TODO 查找工作区
-  @Get('getWork')
-  getWork() {}
 }
