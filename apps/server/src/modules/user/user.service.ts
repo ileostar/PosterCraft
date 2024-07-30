@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import * as argon2 from 'argon2';
 import { eq } from 'drizzle-orm';
 import { DB, DbType } from 'src/modules/global/providers/db.provider';
-import { CreateUserDto, DeleteUserDto, UpdateUserDto } from './dto/user.dto';
+import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { CacheService } from '../cache/cache.service';
 import { PhoneOtpLoginDto, RegisterDto } from '../auth/dto/auth.dto';
 import { ResponseData } from 'src/interceptor/responseData';
@@ -28,10 +28,10 @@ export class UserService {
     };
   }
 
-  async deleteUser(dto: DeleteUserDto) {
+  async deleteUser(userId: string) {
     try {
-      const res = await this.db.delete(user).where(eq(user.id, dto.userId));
-      return ResponseData.ok(res, '删除成功');
+      await this.db.delete(user).where(eq(user.id, userId));
+      return ResponseData.ok(null, '删除成功');
     } catch (error) {
       return ResponseData.fail('删除失败：' + error);
     }

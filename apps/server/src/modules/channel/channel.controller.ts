@@ -1,4 +1,10 @@
-import { ApiBearerAuth, ApiBody, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ChannelService } from './channel.service';
 import {
   Body,
@@ -22,39 +28,55 @@ export class ChannelController {
   // TODO 获取通道
   @Get()
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    summary: '获取通道',
+    description: '获取通道',
+  })
   getChannel() {}
 
   // TODO 获取工作区通道
-  @Get('getWorkChannels')
+  @Get('getWorkChannels/:channelId')
   @ApiQuery({
-    name: 'id',
+    name: 'channelId',
     required: true,
     description: '模板ID',
     type: string,
   })
   @UseGuards(JwtAuthGuard)
-  getWorkChannels(@Query() id: string) {}
+  @ApiOperation({
+    summary: '获取工作区通道',
+    description: '根据通道Id获取工作区通道',
+  })
+  getWorkChannels(@Param('channelId') channelId: string) {}
 
   // TODO 更新通道名称
-  @Put('updateName')
+  @Put('updateName/:channelId')
   @ApiQuery({
-    name: 'id',
+    name: 'channelId',
     required: true,
     description: '模板ID',
     type: string,
   })
   @ApiBody({})
   @UseGuards(JwtAuthGuard)
-  updateName(@Query() id: string, @Body() dto) {}
+  @ApiOperation({
+    summary: '更新通道名称',
+    description: '根据通道Id更新通道名称',
+  })
+  updateName(@Param('channelId') channelId: string, @Body() dto) {}
 
   // TODO 删除通道
-  @Delete(':id')
+  @Delete(':channelId')
   @ApiQuery({
-    name: 'id',
+    name: 'channelId',
     required: true,
     description: '通道ID',
     type: string,
   })
   @UseGuards(JwtAuthGuard)
-  deleteChannel(@Param('id') id: string) {}
+  @ApiOperation({
+    summary: '删除通道',
+    description: '根据通道Id删除通道',
+  })
+  deleteChannel(@Param('channelId') channelId: string) {}
 }

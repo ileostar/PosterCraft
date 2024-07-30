@@ -1,4 +1,6 @@
-export const projectConfig = {
+import { SwaggerUiOptions } from '@nestjs/swagger/dist/interfaces/swagger-ui-options.interface';
+
+export const projectConfig: SwaggerUiOptions = {
   Project: 'PosterCraft Server',
   swaggerConfig: {
     customSiteTitle: 'PosterCraft API接口文档',

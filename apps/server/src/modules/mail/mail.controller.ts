@@ -25,15 +25,15 @@ import { JwtAuthGuard } from '../../guards/jwt.guard';
 import { CallbackUserData } from '../auth/decorator/callback.decorator';
 import { JwtPayloadDto } from '../auth/dto/jwt.dto';
 
-@ApiBearerAuth()
 @ApiTags('📧邮箱模块')
 @Controller('/mail')
 export class MailController {
   constructor(private mailService: MailService) {}
 
-  @Post('bindEmail')
+  @Post('bind')
   @UseGuards(JwtAuthGuard)
   @ApiBody({ type: BindEmailDto })
+  @ApiBearerAuth()
   @ApiOperation({
     summary: '绑定邮箱',
     description: '输入邮箱和验证码绑定邮箱',
@@ -45,14 +45,9 @@ export class MailController {
     return this.mailService.bindMail(userData.userId, dto);
   }
 
-  @Get('sendCodeByEmail')
+  @Post('sendCode')
   @UseGuards(JwtAuthGuard)
-  @ApiQuery({
-    name: 'email',
-    description: '用户邮箱',
-    type: string,
-    required: true,
-  })
+  @ApiBody({ type: SendCodeByEmailDto })
   @ApiOperation({
     summary: '发送邮箱验证码',
     description: '发送邮箱验证码并返回',
@@ -61,8 +56,9 @@ export class MailController {
     return this.mailService.sendCodeByMail(dto);
   }
 
-  @Put('updateEmail')
+  @Put()
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiBody({ type: BindEmailDto })
   @ApiOperation({
     summary: '更换邮箱',
@@ -75,8 +71,9 @@ export class MailController {
     return this.mailService.updateEmail(userData.userId, dto);
   }
 
-  @Post('verifyEmail')
+  @Post('verify')
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: '邮箱验证',
     description: '用于邮箱更换或者手机号更换前的验证',

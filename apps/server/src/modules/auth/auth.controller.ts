@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import {
   ApiBody,
   ApiExcludeEndpoint,
+  ApiOAuth2,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
@@ -22,7 +23,7 @@ export class AuthController {
     private readonly eventGateway: EventGateway,
   ) {}
 
-  @Post('defaultLogin')
+  @Post('login')
   @ApiBody({ type: DefaultLoginDto })
   @ApiOperation({ summary: '默认登陆', description: '使用用户名/邮箱登陆' })
   defaultLogin(@Body() dto: DefaultLoginDto) {
@@ -43,7 +44,8 @@ export class AuthController {
     return this.authService.signup(dto);
   }
 
-  @ApiExcludeEndpoint()
+  // @ApiExcludeEndpoint()
+  @ApiOAuth2([])
   @Get('google/callback')
   @ApiOperation({ summary: 'Google登录', description: 'Google登录' })
   @UseGuards(GoogleAuthGuard)
@@ -52,7 +54,8 @@ export class AuthController {
     this.eventGateway.sendMessageToAll(JSON.stringify(resData));
   }
 
-  @ApiExcludeEndpoint()
+  // @ApiExcludeEndpoint()
+  @ApiOAuth2([])
   @Get('github/callback')
   @ApiOperation({ summary: 'Github登录', description: 'Github登录' })
   @UseGuards(GithubAuthGuard)

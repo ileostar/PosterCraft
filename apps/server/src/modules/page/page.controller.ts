@@ -1,6 +1,12 @@
-import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PageService } from './page.service';
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { string } from 'zod';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
 
@@ -11,13 +17,17 @@ export class PageController {
   constructor(private readonly pageService: PageService) {}
 
   // TODO 渲染H5页面
-  @Get()
+  @Get(':pageId')
   @UseGuards(JwtAuthGuard)
-  @ApiQuery({
-    name: 'workId',
+  @ApiParam({
+    name: 'pageId',
     description: '渲染页面ID',
     required: true,
     type: string,
   })
-  renderH5Page(@Query() workId: string) {}
+  @ApiOperation({
+    summary: '获取渲染H5',
+    description: '获取渲染H5',
+  })
+  renderH5Page(@Param('pageId') pageId: string) {}
 }

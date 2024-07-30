@@ -1,10 +1,21 @@
-import { Body, Controller, Get, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiBody,
   ApiOperation,
+  ApiParam,
   ApiQuery,
   ApiTags,
+  PickType,
 } from '@nestjs/swagger';
 import { SmsService } from './sms.service';
 import {
@@ -16,20 +27,15 @@ import { JwtAuthGuard } from '../../guards/jwt.guard';
 import { JwtPayloadDto } from '../auth/dto/jwt.dto';
 import { CallbackUserData } from '../auth/decorator/callback.decorator';
 import { string } from 'zod';
+import { PhoneOtpLoginDto } from '../auth/dto/auth.dto';
 
-@ApiBearerAuth()
 @ApiTags('📞SMS短信模块')
 @Controller('sms')
 export class SmsController {
   constructor(private readonly smsService: SmsService) {}
 
-  @Get('sendCodeBySMS')
-  @ApiQuery({
-    name: 'phone',
-    description: '用户手机号',
-    type: string,
-    required: true,
-  })
+  @Post('sendCode')
+  @ApiBody({ type: SendCodeBySMSDto })
   @ApiOperation({
     summary: '发送手机验证码',
     description: '发送手机验证码并返回',
@@ -38,7 +44,8 @@ export class SmsController {
     return this.smsService.sendCodeBySMS(dto);
   }
 
-  @Post('verifyPhone')
+  @Post('verify')
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: '手机号验证',
@@ -52,7 +59,8 @@ export class SmsController {
     return this.smsService.verifyPhone(userData.userId, dto);
   }
 
-  @Put('updatePhone')
+  @Put()
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiBody({ type: UpdatePhoneDto })
   @ApiOperation({
