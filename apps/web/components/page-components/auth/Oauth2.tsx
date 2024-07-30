@@ -4,7 +4,7 @@ import { githubSignIn, googleSignIn } from "@/api/auth";
 import GithubIcon from "@/components/base/GithubIcon";
 import GoogleIcon from "@/components/base/GoogleIcon";
 import { useRouter } from "next/navigation";
-import { useGithubUsername, useOauth2Dialog } from "../../../store/state";
+import { useGithubUsername, useOauth2Dialog } from "../../../store/auth";
 
 function Oauth2() {
   const router = useRouter();

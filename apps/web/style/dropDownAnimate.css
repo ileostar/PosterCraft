@@ -1,0 +1,37 @@
+ .dropdown-content {
+     max-height: 0;
+     /* 初始高度为0 */
+     overflow: hidden;
+     /* 隐藏超出部分 */
+     transition: max-height 0.6s linear;
+ }
+ 
+ .dropdown-content.expanded-base {
+     max-height: 1200px;
+     /* 足够大的高度以容纳内容，根据实际需要调整 */
+ }
+ 
+ .dropdown-content.expanded-size {
+     max-height: 220px;
+     /* 足够大的高度以容纳内容，根据实际需要调整 */
+ }
+ 
+ .dropdown-content.expanded-position {
+     max-height: 220px;
+     /* 足够大的高度以容纳内容，根据实际需要调整 */
+ }
+ 
+ .dropdown-content.expanded-border {
+     max-height: 220px;
+     /* 足够大的高度以容纳内容，根据实际需要调整 */
+ }
+ 
+ .dropdown-content.expanded-shadow {
+     max-height: 220px;
+     /* 足够大的高度以容纳内容，根据实际需要调整 */
+ }
+ 
+ .dropdown-content.expanded-event {
+     max-height: 220px;
+     /* 足够大的高度以容纳内容，根据实际需要调整 */
+ }
