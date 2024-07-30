@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -17,6 +18,10 @@ import {
 } from '@nestjs/swagger';
 import { WorkService } from './work.service';
 import { string } from 'zod';
+import { CreateWorkDto } from './dto/work.dto';
+import { CallbackUserData } from '../auth/decorator/callback.decorator';
+import { JwtAuthGuard } from 'src/guards/jwt.guard';
+import { JwtPayloadDto } from '../auth/dto/jwt.dto';
 
 @ApiTags('🔧工作区模块')
 @ApiBearerAuth()
@@ -26,11 +31,32 @@ export class WorkController {
 
   // TODO 添加工作区
   @Post()
+  @UseGuards(JwtAuthGuard)
+  @ApiBody({ type: CreateWorkDto })
   @ApiOperation({
     summary: '创建工作区',
     description: '创建工作区',
   })
-  createWork() {}
+  async createWork(
+    @Body() dto: CreateWorkDto,
+    @CallbackUserData() userInfo: JwtPayloadDto,
+  ) {
+    try {
+      const data = await this.workService.createEmptyWork({
+        ...dto,
+        userId: userInfo.userId,
+      });
+      return {
+        code: 200,
+        data,
+      };
+    } catch (error) {
+      return {
+        code: -1,
+        msg: error,
+      };
+    }
+  }
 
   // TODO 复制工作区
   @Post('copy/:workId')
