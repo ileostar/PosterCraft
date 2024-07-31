@@ -2,6 +2,8 @@ import { SwaggerUiOptions } from '@nestjs/swagger/dist/interfaces/swagger-ui-opt
 
 export const projectConfig: SwaggerUiOptions = {
   Project: 'PosterCraft Server',
+  port: process.env.PORT || 3001,
+  StartLog: `[PosterCraft] Nest Service Started Successfully🎉🎉🎉\n[PosterCraft]  Server URL: \x1b[34mhttp://localhost:3001\x1b[0m \x1b[32m\n[PosterCraft] Swagger URL:\x1b[0m \x1b[35mhttp://localhost:3001/swagger\x1b[0m`,
   swaggerConfig: {
     customSiteTitle: 'PosterCraft API接口文档',
     customfavIcon:
