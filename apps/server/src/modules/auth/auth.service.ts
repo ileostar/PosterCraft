@@ -39,11 +39,7 @@ export class AuthService {
       role: user.role,
       email: user.email,
     };
-    return ResponseData.ok(
-      payload,
-      '手机号登录成功',
-      this.jwtService.sign(payload),
-    );
+    return ResponseData.ok(payload, '登录成功', this.jwtService.sign(payload));
   }
 
   /** 短信登录 */

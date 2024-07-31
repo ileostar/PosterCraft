@@ -29,6 +29,7 @@ export class WorkDto {
 
   @ApiProperty({
     type: Object,
+    required: false,
     description: '工作区内容',
     default: {},
   })
@@ -39,7 +40,7 @@ export class WorkDto {
     required: false,
     description: '是否是模板',
   })
-  isTemplate?: boolean;
+  isTemplate: boolean;
 
   @ApiProperty({
     type: Boolean,
@@ -64,37 +65,94 @@ export class WorkDto {
 
   @ApiProperty({
     type: Number,
+    required: false,
     description: '工作区状态',
     default: 1,
   })
-  status: number;
+  status?: number;
 
   @ApiProperty({
     type: String,
+    required: false,
     description: '作者',
   })
-  author: string;
+  author?: string;
 
   @ApiProperty({
     type: String,
+    required: false,
     description: '用户ID',
   })
-  userId: string;
+  userId?: string;
 
   @ApiProperty({
     type: Array<ChannelProps>,
+    required: false,
     description: '通道信息',
   })
-  channels: Array<ChannelProps>;
+  channels?: Array<ChannelProps>;
 }
 
-export class CreateWorkDto extends OmitType(WorkDto, ['userId']) {}
-
-export class GetMyWorksListDto extends PickType(WorkDto, ['isPublic']) {
+export class UpdateWorkDto extends OmitType(WorkDto, [
+  'title',
+  'copiedCount',
+  'author',
+  'userId',
+  'channels',
+]) {
   @ApiProperty({
     type: String,
     required: false,
     description: '工作区标题',
+  })
+  title?: string;
+}
+
+export class ResponseWorksListDto {
+  @ApiProperty({
+    type: Number,
+    description: '总条数',
+  })
+  count: number;
+
+  @ApiProperty({
+    type: Array<ResponseWorkInfo>,
+    description: '工作区列表数据',
+  })
+  list: Array<ResponseWorkInfo>;
+
+  @ApiProperty({
+    type: Number,
+    description: '当前页数',
+  })
+  pageIndex: number;
+
+  @ApiProperty({
+    type: Number,
+    description: '每页条数',
+  })
+  pageSize: number;
+}
+
+export class ResponseWorkInfo extends WorkDto {
+  @ApiProperty({
+    type: String,
+    description: '工作区标题',
+  })
+  workId: string;
+}
+
+export class CreateWorkDto extends OmitType(WorkDto, [
+  'userId',
+  'author',
+  'userId',
+]) {}
+
+export class GetMyWorksListDto extends PickType(WorkDto, ['isTemplate']) {
+  @ApiProperty({
+    type: String,
+    required: false,
+    description: '工作区标题（模糊查询）',
   })
   title?: string;
   @ApiProperty({
@@ -102,7 +160,6 @@ export class GetMyWorksListDto extends PickType(WorkDto, ['isPublic']) {
     required: false,
     description: '当前页数',
   })
-  @IsNumber()
   pageIndex?: number;
 
   @ApiProperty({
@@ -110,6 +167,5 @@ export class GetMyWorksListDto extends PickType(WorkDto, ['isPublic']) {
     required: false,
     description: '每页条数',
   })
-  @IsNumber()
   pageSize?: number;
 }
