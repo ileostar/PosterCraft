@@ -12,7 +12,7 @@
     "migrate": "drizzle-kit migrate"
   },
   "devDependencies": {
-    "drizzle-kit": "0.23.0"
+    "drizzle-kit": "0.23.1"
   },
   "dependencies": {
     "mysql2": "3.11.0",
