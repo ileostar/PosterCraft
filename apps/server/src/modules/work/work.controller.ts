@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -13,12 +14,11 @@ import {
   ApiBody,
   ApiOperation,
   ApiParam,
-  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { WorkService } from './work.service';
 import { string } from 'zod';
-import { CreateWorkDto } from './dto/work.dto';
+import { CreateWorkDto, GetMyWorksListDto } from './dto/work.dto';
 import { CallbackUserData } from '../auth/decorator/callback.decorator';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { JwtPayloadDto } from '../auth/dto/jwt.dto';
@@ -29,7 +29,6 @@ import { JwtPayloadDto } from '../auth/dto/jwt.dto';
 export class WorkController {
   constructor(private readonly workService: WorkService) {}
 
-  // TODO 添加工作区
   @Post()
   @UseGuards(JwtAuthGuard)
   @ApiBody({ type: CreateWorkDto })
@@ -41,25 +40,14 @@ export class WorkController {
     @Body() dto: CreateWorkDto,
     @CallbackUserData() userInfo: JwtPayloadDto,
   ) {
-    try {
-      const data = await this.workService.createEmptyWork({
-        ...dto,
-        userId: userInfo.userId,
-      });
-      return {
-        code: 200,
-        data,
-      };
-    } catch (error) {
-      return {
-        code: -1,
-        msg: error,
-      };
-    }
+    return this.workService.createEmptyWork({
+      ...dto,
+      userId: userInfo.userId,
+    });
   }
 
-  // TODO 复制工作区
   @Post('copy/:workId')
+  @UseGuards(JwtAuthGuard)
   @ApiParam({
     name: 'workId',
     required: false,
@@ -70,18 +58,28 @@ export class WorkController {
     summary: '复制工作区',
     description: '复制工作区',
   })
-  copyWork(@Param('workId') workId: string) {}
+  copyWork(
+    @Param('workId') workId: string,
+    @CallbackUserData() userInfo: JwtPayloadDto,
+  ) {
+    return this.workService.copyWork(workId, userInfo);
+  }
 
-  // TODO 获取工作区列表
+  // TODO 获取我的工作区列表
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
-    summary: '获取工作区列表',
-    description: '获取工作区列表',
+    summary: '获取我的工作区列表',
+    description: '获取我的工作区列表',
   })
-  getWorksInfos() {}
+  getMyWorksListInfos(
+    @Query() query: GetMyWorksListDto,
+    @CallbackUserData() userInfo: JwtPayloadDto,
+  ) {}
 
   // TODO 获取单个工作区
   @Get(':workId')
+  @UseGuards(JwtAuthGuard)
   @ApiParam({
     name: 'workId',
     required: false,
@@ -92,7 +90,10 @@ export class WorkController {
     summary: '获取单个工作区',
     description: '获取单个工作区',
   })
-  getWorkInfos(@Param('workId') workId: string) {}
+  getWorkInfos(
+    @Param('workId') workId: string,
+    @CallbackUserData() userInfo: JwtPayloadDto,
+  ) {}
 
   // TODO 更新工作区
   @Put(':workId')

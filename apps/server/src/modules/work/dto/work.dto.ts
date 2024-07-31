@@ -1,4 +1,5 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
+import { IsNumber } from 'class-validator';
 
 type ChannelProps = {
   name: string;
@@ -8,57 +9,62 @@ type ChannelProps = {
 export class WorkDto {
   @ApiProperty({
     type: String,
-    description: 'Title of the work',
-    required: true,
+    description: '工作区标题',
   })
   title: string;
 
   @ApiProperty({
     type: String,
+    required: false,
     description: '工作区域',
   })
   desc?: string;
 
   @ApiProperty({
     type: String,
+    required: false,
     description: '封面图片URL',
   })
   coverImg?: string;
 
   @ApiProperty({
     type: Object,
-    description: 'Content of the work',
+    description: '工作区内容',
     default: {},
   })
   content: Record<string, any>;
 
   @ApiProperty({
     type: Boolean,
+    required: false,
     description: '是否是模板',
   })
   isTemplate?: boolean;
 
   @ApiProperty({
     type: Boolean,
+    required: false,
     description: '是否公开',
   })
   isPublic?: boolean;
 
   @ApiProperty({
     type: Boolean,
+    required: false,
     description: '是否是热门',
   })
   isHot?: boolean;
 
   @ApiProperty({
     type: Number,
+    required: false,
     description: '被使用量',
   })
   copiedCount?: number;
 
   @ApiProperty({
     type: Number,
-    description: 'Status of the work',
+    description: '工作区状态',
     default: 1,
   })
   status: number;
@@ -77,9 +83,33 @@ export class WorkDto {
 
   @ApiProperty({
     type: Array<ChannelProps>,
-    description: 'Array of channel IDs',
+    description: '通道信息',
   })
   channels: Array<ChannelProps>;
 }
 
 export class CreateWorkDto extends OmitType(WorkDto, ['userId']) {}
+
+export class GetMyWorksListDto extends PickType(WorkDto, ['isPublic']) {
+  @ApiProperty({
+    type: String,
+    required: false,
+    description: '工作区标题',
+  })
+  title?: string;
+  @ApiProperty({
+    type: Number,
+    required: false,
+    description: '当前页数',
+  })
+  @IsNumber()
+  pageIndex?: number;
+
+  @ApiProperty({
+    type: Number,
+    required: false,
+    description: '每页条数',
+  })
+  @IsNumber()
+  pageSize?: number;
+}
