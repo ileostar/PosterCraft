@@ -27,7 +27,7 @@
         "socket.io-client": "4.7.5",
         "tailwind-merge": "2.4.0",
         "tailwindcss-animate": "1.0.7",
-        "three": "0.167.0",
+        "three": "0.167.1",
         "uuid": "10.0.0",
         "zod": "3.23.8",
         "zustand": "4.5.4"
