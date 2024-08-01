@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { DB, DbType } from '../global/providers/db.provider';
-import { GetMyWorksListDto, WorkDto } from './dto/work.dto';
+import { GetMyWorksListDto, PublishDto, WorkDto } from './dto/work.dto';
 import { work } from '@poster-craft/schema';
 import { and, eq } from 'drizzle-orm';
 import { JwtPayloadDto } from '../auth/dto/jwt.dto';
@@ -110,6 +110,8 @@ export class WorkService {
       .delete(work)
       .where(and(eq(work.uuid, workId), eq(work.userId, userId)));
   }
+
+  async publish(userId: string, dto: PublishDto) {}
 
   private getPagingWorksList(
     userId: string,
