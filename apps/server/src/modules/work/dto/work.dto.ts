@@ -169,5 +169,3 @@ export class GetMyWorksListDto extends PickType(WorkDto, ['isTemplate']) {
   })
   pageSize?: number;
 }
-
-export class PublishDto extends PickType(WorkDto, ['isTemplate']) {}

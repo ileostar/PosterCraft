@@ -1,10 +1,11 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { DB, DbType } from '../global/providers/db.provider';
-import { GetMyWorksListDto, PublishDto, WorkDto } from './dto/work.dto';
+import { GetMyWorksListDto, WorkDto } from './dto/work.dto';
 import { work } from '@poster-craft/schema';
 import { and, eq } from 'drizzle-orm';
 import { JwtPayloadDto } from '../auth/dto/jwt.dto';
 import { ResponseData } from 'src/interceptor/responseData';
+import { projectConfig } from 'src/config';
 
 @Injectable()
 export class WorkService {
@@ -111,7 +112,21 @@ export class WorkService {
       .where(and(eq(work.uuid, workId), eq(work.userId, userId)));
   }
 
-  async publish(userId: string, dto: PublishDto) {}
+  async publish(userId: string, isTemplate: boolean) {
+    const url = projectConfig.url;
+    const res = await this.db
+      .update(work)
+      .set({
+        status: 2,
+        latestPublishAt: new Date(),
+        ...(isTemplate && { isTemplate: true }),
+      })
+      .where(eq(work.userId, userId));
+    const workInfo = await this.db.query.work.findFirst({
+      where: eq(work.id, res[0].insertId),
+    });
+    return `${url}/p/${userId}-${workInfo.uuid}`;
+  }
 
   private getPagingWorksList(
     userId: string,

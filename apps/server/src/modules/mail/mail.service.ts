@@ -9,6 +9,7 @@ import { generateVerificationCode } from 'src/common/utils';
 import { ResponseData } from 'src/interceptor/responseData';
 import { CacheService } from '../cache/cache.service';
 import { UserService } from '../user/user.service';
+import { projectConfig } from 'src/config';
 
 @Injectable()
 export class MailService {
@@ -23,7 +24,7 @@ export class MailService {
     code: number | string,
     subject: string = 'PosterCraft Email',
     template: string = 'index',
-    url: string = process.env.Project_URL,
+    url: string = projectConfig.projectName,
   ) {
     return this.mailerService.sendMail({
       to: email,

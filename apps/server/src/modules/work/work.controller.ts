@@ -209,9 +209,22 @@ export class WorkController {
     summary: '发布工作区',
     description: '根据工作区Id发布工作区',
   })
-  publishWork(@Param('workId') workId: string) {}
+  async publishWork(@Param('workId') workId: string) {
+    try {
+      const data = await this.workService.publish(workId, false);
+      return {
+        msg: '发布工作区成功',
+        data,
+      };
+    } catch (error) {
+      return {
+        code: -1,
+        msg: '发布工作区' + error,
+      };
+    }
+  }
 
-  @Post('publish/template/:workId')
+  @Post('template/publish/:workId')
   @UseGuards(JwtAuthGuard)
   @ApiParam({
     name: 'workId',
@@ -220,8 +233,21 @@ export class WorkController {
     type: string,
   })
   @ApiOperation({
-    summary: '发布工作区模版',
-    description: '根据工作区Id发布工作区模版',
+    summary: '发布为工作区模版',
+    description: '根据工作区Id发布为工作区模版',
   })
-  publishWorkTemplate(@Param('workId') workId: string) {}
+  async publishWorkTemplate(@Param('workId') workId: string) {
+    try {
+      const data = await this.workService.publish(workId, true);
+      return {
+        msg: '发布工作区成功',
+        data,
+      };
+    } catch (error) {
+      return {
+        code: -1,
+        msg: '发布工作区' + error,
+      };
+    }
+  }
 }
