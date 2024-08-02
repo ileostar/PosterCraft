@@ -36,9 +36,8 @@ export class OssController {
   })
   async uploadFile(@UploadedFile() file: Express.Multer.File, @Res() res) {
     try {
-      const key = `${Date.now()}-${file.originalname}`; // 自定义文件key
+      const key = `${Date.now()}-${file.originalname}`;
       const result = await this.ossService.uploadFile(file, key);
-      // 假设返回文件的URL
       return res.status(HttpStatus.OK).json({ url: result.url });
     } catch (error) {
       return res

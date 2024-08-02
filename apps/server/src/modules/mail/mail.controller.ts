@@ -1,34 +1,42 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Put,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiOperation,
-  ApiQuery,
-  ApiTags,
-} from '@nestjs/swagger';
+import { Body, Controller, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { MailService } from './mail.service';
 import {
   BindEmailDto,
   SendCodeByEmailDto,
   VerifyEmailDto,
 } from './dto/mail.dto';
-import { string } from 'zod';
 import { JwtAuthGuard } from '../../guards/jwt.guard';
 import { CallbackUserData } from '../auth/decorator/callback.decorator';
 import { JwtPayloadDto } from '../auth/dto/jwt.dto';
+import { APIResponse } from 'src/decorators/apiResponse.decorators';
 
 @ApiTags('📧邮箱模块')
 @Controller('/mail')
 export class MailController {
   constructor(private mailService: MailService) {}
+
+  @Post('sendCode')
+  @UseGuards(JwtAuthGuard)
+  @ApiBody({ type: SendCodeByEmailDto })
+  @ApiOperation({
+    summary: '发送邮箱验证码',
+    description: '发送邮箱验证码并返回',
+  })
+  @APIResponse()
+  async sendCodeByEmail(@Query() dto: SendCodeByEmailDto) {
+    try {
+      await this.mailService.sendCodeByMail(dto);
+      return {
+        code: 200,
+        msg: '邮箱发送成功',
+      };
+    } catch (error) {
+      return {
+        msg: '邮箱发送失败：' + error,
+      };
+    }
+  }
 
   @Post('bind')
   @UseGuards(JwtAuthGuard)
@@ -38,22 +46,22 @@ export class MailController {
     summary: '绑定邮箱',
     description: '输入邮箱和验证码绑定邮箱',
   })
-  bindOrUpdateMail(
+  @APIResponse()
+  async bindOrUpdateMail(
     @Body() dto: BindEmailDto,
     @CallbackUserData() userData: JwtPayloadDto,
   ) {
-    return this.mailService.bindMail(userData.userId, dto);
-  }
-
-  @Post('sendCode')
-  @UseGuards(JwtAuthGuard)
-  @ApiBody({ type: SendCodeByEmailDto })
-  @ApiOperation({
-    summary: '发送邮箱验证码',
-    description: '发送邮箱验证码并返回',
-  })
-  sendCodeByEmail(@Query() dto: SendCodeByEmailDto) {
-    return this.mailService.sendCodeByMail(dto);
+    try {
+      await this.mailService.bindMail(userData.userId, dto);
+      return {
+        code: 200,
+        msg: '邮箱绑定成功',
+      };
+    } catch (error) {
+      return {
+        msg: '邮箱绑定失败：' + error,
+      };
+    }
   }
 
   @Put()
@@ -64,11 +72,21 @@ export class MailController {
     summary: '更换邮箱',
     description: '更换邮箱(更新前请先进行邮箱校验)',
   })
-  updateEmail(
+  async updateEmail(
     @Body() dto: BindEmailDto,
     @CallbackUserData() userData: JwtPayloadDto,
   ) {
-    return this.mailService.updateEmail(userData.userId, dto);
+    try {
+      await this.mailService.updateEmail(userData.userId, dto);
+      return {
+        code: 200,
+        msg: '邮箱更新成功',
+      };
+    } catch (error) {
+      return {
+        msg: '邮箱更新失败：' + error,
+      };
+    }
   }
 
   @Post('verify')
@@ -79,7 +97,16 @@ export class MailController {
     description: '用于邮箱更换或者手机号更换前的验证',
   })
   @ApiBody({ type: VerifyEmailDto })
-  verifyEmail(@Body() dto: VerifyEmailDto) {
-    return this.mailService.verifyEmail(dto);
+  @APIResponse()
+  async verifyEmail(@Body() dto: VerifyEmailDto) {
+    try {
+      await this.mailService.verifyEmail(dto);
+      return {
+        code: 200,
+        msg: '邮箱验证成功',
+      };
+    } catch (error) {
+      return '邮箱验证失败：' + error;
+    }
   }
 }

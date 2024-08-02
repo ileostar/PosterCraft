@@ -23,6 +23,4 @@ export class OssService {
       throw new Error(`Upload failed: ${error.message}`);
     }
   }
-
-  // 可以添加更多方法，如删除文件、获取文件URL等
 }

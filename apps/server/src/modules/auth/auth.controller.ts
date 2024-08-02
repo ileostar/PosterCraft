@@ -1,13 +1,7 @@
-import { Controller, Post, Body, Get, UseGuards, Res } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 import { DefaultLoginDto, PhoneOtpLoginDto, RegisterDto } from './dto/auth.dto';
 import { AuthService } from './auth.service';
-import {
-  ApiBody,
-  ApiExcludeEndpoint,
-  ApiOAuth2,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBody, ApiOAuth2, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CallbackUserDataDto } from './dto/oauth2.dto';
 import { GoogleAuthGuard } from './providers/google/google.auth.guard';
 import { CallbackUserData } from './decorator/callback.decorator';
@@ -27,40 +21,82 @@ export class AuthController {
   @ApiBody({ type: DefaultLoginDto })
   @ApiOperation({ summary: '默认登陆', description: '使用用户名/邮箱登陆' })
   defaultLogin(@Body() dto: DefaultLoginDto) {
-    return this.authService.defaultLogin(dto);
+    try {
+      return this.authService.defaultLogin(dto);
+    } catch (error) {
+      return {
+        msg: '登录失败：' + error,
+      };
+    }
   }
 
   @Post('phoneOtpLogin')
   @ApiBody({ type: PhoneOtpLoginDto })
   @ApiOperation({ summary: '短信登陆', description: '短信登陆' })
-  phoneOtpLogin(@Body() dto: PhoneOtpLoginDto) {
-    return this.authService.phoneOtpLogin(dto);
+  async phoneOtpLogin(@Body() dto: PhoneOtpLoginDto) {
+    try {
+      const res = await this.authService.phoneOtpLogin(dto);
+      return {
+        code: 200,
+        ...res,
+      };
+    } catch (error) {
+      return {
+        msg: '手机号登录失败' + error,
+      };
+    }
   }
 
   @Post('signup')
   @ApiBody({ type: RegisterDto })
   @ApiOperation({ summary: '注册', description: '注册' })
-  signup(@Body() dto: RegisterDto) {
-    return this.authService.signup(dto);
+  async signup(@Body() dto: RegisterDto) {
+    try {
+      const res = await this.authService.signup(dto);
+      return {
+        code: 200,
+        msg: '注册成功',
+      };
+    } catch (error) {
+      return {
+        msg: '注册失败：' + error,
+      };
+    }
   }
 
-  // @ApiExcludeEndpoint()
   @ApiOAuth2([])
   @Get('google/callback')
   @ApiOperation({ summary: 'Google登录', description: 'Google登录' })
   @UseGuards(GoogleAuthGuard)
   async googleCallback(@CallbackUserData() userData: CallbackUserDataDto) {
-    const resData = await this.authService.oauthLogin(userData);
-    this.eventGateway.sendMessageToAll(JSON.stringify(resData));
+    try {
+      const resData = await this.authService.oauthLogin(userData);
+      this.eventGateway.sendMessageToAll(JSON.stringify(resData));
+    } catch (error) {
+      this.eventGateway.sendMessageToAll(
+        JSON.stringify({
+          code: -1,
+          msg: error,
+        }),
+      );
+    }
   }
 
-  // @ApiExcludeEndpoint()
   @ApiOAuth2([])
   @Get('github/callback')
   @ApiOperation({ summary: 'Github登录', description: 'Github登录' })
   @UseGuards(GithubAuthGuard)
   async githubCallback(@CallbackUserData() userData: CallbackUserDataDto) {
-    const resData = await this.authService.oauthLogin(userData);
-    this.eventGateway.sendMessageToAll(JSON.stringify(resData));
+    try {
+      const resData = await this.authService.oauthLogin(userData);
+      this.eventGateway.sendMessageToAll(JSON.stringify(resData));
+    } catch (error) {
+      this.eventGateway.sendMessageToAll(
+        JSON.stringify({
+          code: -1,
+          msg: error,
+        }),
+      );
+    }
   }
 }
