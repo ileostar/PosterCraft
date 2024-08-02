@@ -84,13 +84,6 @@ export class WorkDto {
     description: '用户ID',
   })
   userId?: string;
-
-  @ApiProperty({
-    type: Array<ChannelProps>,
-    required: false,
-    description: '通道信息',
-  })
-  channels?: Array<ChannelProps>;
 }
 
 export class UpdateWorkDto extends OmitType(WorkDto, [
@@ -98,7 +91,6 @@ export class UpdateWorkDto extends OmitType(WorkDto, [
   'copiedCount',
   'author',
   'userId',
-  'channels',
 ]) {
   @ApiProperty({
     type: String,

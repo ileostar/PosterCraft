@@ -5,7 +5,7 @@ import { user } from "./user";
 
 type ChannelProps = {
   name: string;
-  id: string;
+  channelId: string;
 };
 
 export const work = mysqlTable("work", {
@@ -24,7 +24,7 @@ export const work = mysqlTable("work", {
   copiedCount: int("copied_count").default(0),
   status: int("status").default(1),
   userId: varchar("user_id", { length: 128 }).references(() => user.id),
-  channels: json("channels").$type<Array<ChannelProps>>(),
+  channels: json("channels").$type<Array<ChannelProps>>().notNull().default([]),
   latestPublishAt: timestamp("latest_publishAt"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").onUpdateNow(),

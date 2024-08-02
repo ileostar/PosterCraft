@@ -30,7 +30,6 @@ import { eq } from 'drizzle-orm';
 export class TestController {
   constructor(@Inject(DB) private db: DbType) {}
 
-  // TODO 添加用户
   @Post()
   @ApiOperation({
     summary: '添加用户',
@@ -54,7 +53,6 @@ export class TestController {
     }
   }
 
-  // TODO 删除用户
   @Delete(':userId')
   @ApiParam({
     name: 'userId',
@@ -81,7 +79,6 @@ export class TestController {
     }
   }
 
-  // TODO 修改用户
   @Put(':userId')
   @ApiOperation({
     summary: '修改用户',
@@ -100,7 +97,6 @@ export class TestController {
     }
   }
 
-  // TODO 查找用户
   @Get(':userId')
   @ApiParam({
     name: 'userId',

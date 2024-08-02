@@ -82,7 +82,6 @@ export class WorkController {
     return this.workService.copyWork(workId, userInfo);
   }
 
-  // TODO 获取工作区列表
   @Get()
   @UseGuards(JwtAuthGuard)
   @ApiOperation({
@@ -113,7 +112,6 @@ export class WorkController {
     }
   }
 
-  // TODO 获取单个工作区
   @Get(':workId')
   @UseGuards(JwtAuthGuard)
   @ApiParam({
@@ -149,7 +147,6 @@ export class WorkController {
     }
   }
 
-  // TODO 更新工作区
   @Put(':workId')
   @UseGuards(JwtAuthGuard)
   @ApiParam({
@@ -179,7 +176,6 @@ export class WorkController {
     }
   }
 
-  // TODO 删除工作区
   @Delete(':workId')
   @UseGuards(JwtAuthGuard)
   @ApiParam({
