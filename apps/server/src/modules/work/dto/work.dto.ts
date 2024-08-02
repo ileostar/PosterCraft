@@ -40,7 +40,7 @@ export class WorkDto {
     required: false,
     description: '是否是模板',
   })
-  isTemplate: boolean;
+  isTemplate?: boolean;
 
   @ApiProperty({
     type: Boolean,

@@ -87,6 +87,8 @@ export class WorkService {
     const count = await this.getPagingWorksList(userId, dto, false);
     return {
       count: count.length,
+      pageIndex: dto.pageIndex,
+      pageSize: dto.pageSize,
       list: result.map((i) => ({
         ...i,
         id: void 0,
@@ -95,8 +97,6 @@ export class WorkService {
         updatedAt: void 0,
         workId: i.uuid,
       })),
-      pageIndex: dto.pageIndex,
-      pageSize: dto.pageSize,
     };
   }
 
@@ -128,26 +128,36 @@ export class WorkService {
     return `${url}/p/${userId}-${workInfo.uuid}`;
   }
 
-  private getPagingWorksList(
+  async getPagingWorksList(
     userId: string,
     dto: GetMyWorksListDto,
     isPaging = true,
+    isTemplateList = false,
   ) {
     return this.db.query.work.findMany({
-      where: (work, { like, eq }) =>
-        dto.title
-          ? dto.isTemplate
-            ? and(
-                eq(work.userId, userId),
-                like(work.title, `%${dto.title}%`),
-                eq(work.isTemplate, dto.isTemplate),
-              )
-            : and(eq(work.userId, userId), like(work.title, `%${dto.title}%`))
-          : dto.isTemplate
-            ? and(eq(work.userId, userId), eq(work.isTemplate, dto.isTemplate))
-            : eq(work.userId, userId),
+      where: !isTemplateList
+        ? (work, { like, eq }) =>
+            dto.title
+              ? dto.isTemplate
+                ? and(
+                    eq(work.userId, userId),
+                    like(work.title, `%${dto.title}%`),
+                    eq(work.isTemplate, dto.isTemplate),
+                  )
+                : and(
+                    eq(work.userId, userId),
+                    like(work.title, `%${dto.title}%`),
+                  )
+              : dto.isTemplate
+                ? and(
+                    eq(work.userId, userId),
+                    eq(work.isTemplate, dto.isTemplate),
+                  )
+                : eq(work.userId, userId)
+        : (work, { eq }) =>
+            and(eq(work.isPublic, true), eq(work.isTemplate, true)),
       orderBy: (work, { asc }) => asc(work.createdAt),
-      ...(isPaging && { limit: dto.pageSize }),
+      ...(isPaging && { limit: Number(dto.pageSize) }),
       ...(isPaging && { offset: (dto.pageIndex - 1) * dto.pageSize }),
     });
   }
