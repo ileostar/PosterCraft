@@ -49,7 +49,7 @@
     "picocolors": "1.0.1",
     "prettier": "3.3.3",
     "simple-git-hooks": "2.11.1",
-    "tsup": "8.2.3",
+    "tsup": "8.2.4",
     "tsx": "4.16.5",
     "turbo": "2.0.11",
     "typescript": "5.5.4",
