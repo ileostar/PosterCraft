@@ -40,10 +40,8 @@ export class WorkService {
       const copiedWork = await this.db.query.work.findFirst({
         where: eq(work.uuid, workId),
       });
-      if (!copiedWork || !copiedWork.isPublic) {
-        throw new Error('can not be copied');
-      }
-      const newWork = {
+      if (!copiedWork || !copiedWork.isPublic) throw '改工作区不存在或不公开';
+      const res = await this.db.insert(work).values({
         ...copiedWork,
         id: void 0,
         uuid: void 0,
@@ -53,8 +51,7 @@ export class WorkService {
         author: callback.username,
         title: `${copiedWork.title}-复制`,
         isTemplate: false,
-      };
-      const res = await this.db.insert(work).values(newWork);
+      });
       await this.db
         .update(work)
         .set({
@@ -110,6 +107,14 @@ export class WorkService {
     return this.db
       .delete(work)
       .where(and(eq(work.uuid, workId), eq(work.userId, userId)));
+  }
+
+  async updateWork(workId: string, dto: WorkDto) {
+    await this.db.update(work).set(dto).where(eq(work.uuid, workId));
+    return {
+      workId: workId,
+      ...dto,
+    };
   }
 
   async publish(userId: string, isTemplate: boolean) {

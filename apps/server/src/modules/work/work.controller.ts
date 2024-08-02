@@ -25,6 +25,7 @@ import {
   ResponseWorkInfo,
   ResponseWorksListDto,
   UpdateWorkDto,
+  WorkDto,
 } from './dto/work.dto';
 import { CallbackUserData } from '../auth/decorator/callback.decorator';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
@@ -163,7 +164,20 @@ export class WorkController {
     description: '更新工作区',
   })
   @APIResponse(ResponseWorkInfo)
-  updateWorkInfos(@Param('workId') workId: string, @Body() dto) {}
+  async updateWorkInfos(@Param('workId') workId: string, @Body() dto: WorkDto) {
+    try {
+      const data = await this.workService.updateWork(workId, dto);
+      return {
+        code: 200,
+        msg: '工作区更新成功',
+        data,
+      };
+    } catch (error) {
+      return {
+        msg: '工作区更新失败' + error,
+      };
+    }
+  }
 
   // TODO 删除工作区
   @Delete(':workId')
@@ -184,8 +198,7 @@ export class WorkController {
     @CallbackUserData() userInfo: JwtPayloadDto,
   ) {
     try {
-      const data = await this.workService.deleteWork(userInfo.userId, workId);
-      if (!data[0].affectedRows) throw new Error('影响行数未变');
+      await this.workService.deleteWork(userInfo.userId, workId);
       return {
         code: 200,
         msg: '删除成功',
@@ -213,6 +226,7 @@ export class WorkController {
     try {
       const data = await this.workService.publish(workId, false);
       return {
+        code: 200,
         msg: '发布工作区成功',
         data,
       };
@@ -240,13 +254,13 @@ export class WorkController {
     try {
       const data = await this.workService.publish(workId, true);
       return {
+        code: 200,
         msg: '发布工作区成功',
         data,
       };
     } catch (error) {
       return {
-        code: -1,
-        msg: '发布工作区' + error,
+        msg: '发布工作区失败' + error,
       };
     }
   }
