@@ -20,9 +20,9 @@ export class AuthController {
   @Post('login')
   @ApiBody({ type: DefaultLoginDto })
   @ApiOperation({ summary: '默认登陆', description: '使用用户名/邮箱登陆' })
-  defaultLogin(@Body() dto: DefaultLoginDto) {
+  async defaultLogin(@Body() dto: DefaultLoginDto) {
     try {
-      return this.authService.defaultLogin(dto);
+      return await this.authService.defaultLogin(dto);
     } catch (error) {
       return {
         msg: '登录失败：' + error,
@@ -52,7 +52,7 @@ export class AuthController {
   @ApiOperation({ summary: '注册', description: '注册' })
   async signup(@Body() dto: RegisterDto) {
     try {
-      const res = await this.authService.signup(dto);
+      await this.authService.signup(dto);
       return {
         code: 200,
         msg: '注册成功',
