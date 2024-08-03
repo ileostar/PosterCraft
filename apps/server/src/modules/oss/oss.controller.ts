@@ -2,12 +2,10 @@ import {
   Controller,
   Post,
   UploadedFile,
-  UseInterceptors,
   HttpStatus,
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { OssService } from './oss.service';
 import {
   ApiBearerAuth,
@@ -28,7 +26,6 @@ export class OssController {
   @Post('upload')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '上传文件' })
-  @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'Upload file',

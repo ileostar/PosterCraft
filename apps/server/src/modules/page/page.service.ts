@@ -65,23 +65,23 @@ export class PageService {
     if (!currentWork) throw '工作区不存在';
     if (!currentWork.isPublic) throw '工作区未发布';
     const { title, desc, content } = currentWork;
-    this.px2vw(content && content.components);
+    this.px2vw(content && content?.components);
     const vueApp = createSSRApp({
       data: () => {
         return {
-          components: (content && content.components) || [],
+          components: (content && content?.components) || [],
         };
       },
       template: '<final-page :components="components"></final-page>',
     });
     vueApp.use(LegoComponents);
     const html = await renderToString(vueApp);
-    const bodyStyle = this.propsToStyle(content && content.props);
+    const bodyStyle = this.propsToStyle(content && content?.props);
     const result = {
       html,
       title,
       desc,
-      components: JSON.stringify((content && content.components) || []),
+      components: JSON.stringify((content && content?.components) || []),
       bodyStyle,
     };
     return result;

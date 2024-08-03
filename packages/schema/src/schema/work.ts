@@ -8,6 +8,11 @@ type ChannelProps = {
   channelId: string;
 };
 
+type Content = {
+  components?: Array<any>;
+  props?: any;
+};
+
 export const work = mysqlTable("work", {
   id: int("id").primaryKey().autoincrement(),
   uuid: varchar("uuid", { length: 128 })
@@ -16,7 +21,7 @@ export const work = mysqlTable("work", {
   title: text("title").notNull(),
   desc: text("desc"),
   coverImg: varchar("cover_img", { length: 256 }),
-  content: json("content"),
+  content: json("content").$type<Content>().notNull().default({}),
   isTemplate: boolean("is_template"),
   isPublic: boolean("is_public"),
   isHot: boolean("is_hot"),
