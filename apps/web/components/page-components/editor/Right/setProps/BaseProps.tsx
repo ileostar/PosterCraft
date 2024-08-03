@@ -2,14 +2,14 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Toggle } from "@/components/ui/toggle";
 import { Bold, Italic, Underline } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { UseElementStore } from "@/store/element";
 
 import ColorPicker from "../../../../base/ColorPicker";
 
 function BaseProps() {
 
-  const { updateElement,currentElement,getElement } = UseElementStore();
+  const { updateElement,currentElement,getElement,Elements } = UseElementStore();
 
   interface TextStyleState {
     textarea: string;
@@ -39,8 +39,26 @@ function BaseProps() {
   
   const [textStyles, setTextStyles] = useState<TextStyleState>(initialState);
 
+  const reset=()=>{
+    textStyles.textarea="",
+    textStyles.fontSize=0,
+    textStyles.fontFamily="",
+    textStyles.fontStyle="",
+    textStyles.fontWeight="",
+    textStyles.textDecoration="",
+    textStyles.lineHeight=0,
+    textStyles.textAlign= "center", 
+    textStyles.color="black",
+    textStyles.backgroundColor= "transparent"
+  }
+
+
+  
   useEffect(() => {
+      reset()
       const res= getElement(currentElement);
+      console.log(123)
+      console.log(res)
       const resProps = res?.props as any;
       const resText=res?.text;
       setTextStyles(prevStyles => {
@@ -94,7 +112,14 @@ function BaseProps() {
     
   }, [currentElement, getElement]);
 
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false; // 更新ref，表示这不是第一次渲染
+      return; // 跳过后续的逻辑
+  }
+    console.log(456)
     const style = {
       fontSize:textStyles.fontSize+ 'px',
       fontFamily:textStyles.fontFamily,
@@ -107,7 +132,7 @@ function BaseProps() {
       backgroundColor: textStyles.backgroundColor
     };
     updateElement(currentElement,style,textStyles.textarea)
-  }, [textStyles]);   
+  }, [textStyles, currentElement, updateElement]);   
 
   return (
     <div className="py-1 px-6 ">
@@ -253,7 +278,7 @@ function BaseProps() {
         <RadioGroup
           defaultValue={textStyles.textAlign}
           id="radio"
-          onValueChange={(e) => {console.log(e);setTextStyles(prevStyles => ({
+          onValueChange={(e) => {setTextStyles(prevStyles => ({
             ...prevStyles,
             textAlign:e
           }))}}

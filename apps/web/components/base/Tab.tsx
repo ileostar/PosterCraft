@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 interface Tab {
     id: number;
     label: string;
-    content: string | JSX.Element; // 内容可以是字符串或JSX元素
+    content: string | JSX.Element | null; // 内容可以是字符串或JSX元素
   }
 
 interface TabsProps {

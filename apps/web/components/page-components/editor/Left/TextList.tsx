@@ -4,7 +4,7 @@ import { textTemplate } from "@/utils/template";
 import { v4 as uuidv4 } from "uuid";
 
 function TextList() {
-  const { setCurrentElement, addElement } = UseElementStore();
+  const { setCurrentElement, addElement,setIsElement } = UseElementStore();
 
   const handleClick = (event: any) => {
     console.log(event.target.innerHTML);
@@ -22,6 +22,7 @@ function TextList() {
     console.log(element);
     addElement(element);
     setCurrentElement(id);
+    setIsElement(true);
   };
 
   // 将kebab-case转换为camelCase的函数

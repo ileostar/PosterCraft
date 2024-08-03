@@ -10,6 +10,8 @@ type ElementStore= {
     updateElement: (id:string, props:any,text?:string) => void;
     setCurrentElement: (id:string) => void;
     getElement: (id:string) => any;
+    isElement: boolean;
+    setIsElement: (isElement:boolean) => void;
  }
 
 type ElementData= {
@@ -59,6 +61,9 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
       },
     // 当前选中的元素
     setCurrentElement: (elementId: string) => set((state) => ({ currentElement: elementId })),
+   // 判断当前点击的是否是元素(1.背景 2.元素)
+    setIsElement: (isElement: boolean) => set((state) => ({ isElement })),
+    isElement: false
 }));
 
  
