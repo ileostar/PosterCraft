@@ -117,7 +117,7 @@ export class WorkService {
     };
   }
 
-  async publish(userId: string, isTemplate: boolean) {
+  async publish(workId: string, isTemplate: boolean) {
     const url = projectConfig.url;
     const res = await this.db
       .update(work)
@@ -126,11 +126,15 @@ export class WorkService {
         latestPublishAt: new Date(),
         ...(isTemplate && { isTemplate: true }),
       })
-      .where(eq(work.userId, userId));
+      .where(eq(work.uuid, workId));
+    if (res[0].affectedRows === 0) throw '工作区ID不存在';
     const workInfo = await this.db.query.work.findFirst({
-      where: eq(work.id, res[0].insertId),
+      where: eq(work.uuid, workId),
     });
-    return `${url}/p/${userId}-${workInfo.uuid}`;
+    return {
+      url: `${url}/p/${workInfo.id}-${workInfo.uuid}`,
+      pageId: `${workInfo.id}-${workInfo.uuid}`,
+    };
   }
 
   async getPagingWorksList(

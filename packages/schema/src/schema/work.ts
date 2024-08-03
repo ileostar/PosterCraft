@@ -16,7 +16,7 @@ export const work = mysqlTable("work", {
   title: text("title").notNull(),
   desc: text("desc"),
   coverImg: varchar("cover_img", { length: 256 }),
-  content: json("content").default({}),
+  content: json("content"),
   isTemplate: boolean("is_template"),
   isPublic: boolean("is_public"),
   isHot: boolean("is_hot"),

@@ -229,7 +229,7 @@ export class WorkController {
     } catch (error) {
       return {
         code: -1,
-        msg: '发布工作区' + error,
+        msg: '发布工作区失败：' + error,
       };
     }
   }

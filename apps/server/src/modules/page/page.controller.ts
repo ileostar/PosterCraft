@@ -6,9 +6,18 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { PageService } from './page.service';
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Query,
+  Render,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { string } from 'zod';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
+import { APIResponse } from 'src/decorators/apiResponse.decorators';
 
 @ApiBearerAuth()
 @ApiTags('🔮H5渲染模块')
@@ -16,9 +25,17 @@ import { JwtAuthGuard } from 'src/guards/jwt.guard';
 export class PageController {
   constructor(private readonly pageService: PageService) {}
 
-  // TODO 渲染H5页面
+  splitIdAndUuid(str = '') {
+    const result = { id: '', uuid: '' };
+    if (!str) return result;
+    const firstDashIndex = str.indexOf('-');
+    if (firstDashIndex < 0) return result;
+    result.id = str.slice(0, firstDashIndex);
+    result.uuid = str.slice(firstDashIndex + 1);
+    return result;
+  }
+
   @Get(':pageId')
-  @UseGuards(JwtAuthGuard)
   @ApiParam({
     name: 'pageId',
     description: '渲染页面ID',
@@ -29,5 +46,21 @@ export class PageController {
     summary: '获取渲染H5',
     description: '获取渲染H5',
   })
-  renderH5Page(@Param('pageId') pageId: string) {}
+  @Render('index')
+  @APIResponse()
+  async renderH5Page(@Param('pageId') pageId: string, @Res() res) {
+    try {
+      const query = this.splitIdAndUuid(pageId);
+      const data = await this.pageService.renderToPageData(query);
+      res.view('index.art', data);
+      return {
+        code: 200,
+        data: '页面渲染成功',
+      };
+    } catch (error) {
+      return {
+        msg: '获取H5页面失败：' + error,
+      };
+    }
+  }
 }

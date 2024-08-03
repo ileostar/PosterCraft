@@ -1,0 +1,21 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <meta name="description" content="{{desc}}">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/minireset.css/0.0.2/minireset.min.css">
+  <script>
+    window.COMPONENT_DATA = {{ components }}
+  </script>
+</head>
+
+<body style="{{bodyStyle}}">
+  <div id="app">{{@ html }}</div>
+</body>
+
+</html>
