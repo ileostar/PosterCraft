@@ -7,8 +7,9 @@ type ElementStore= {
     currentElement: string;
     addElement: (element:ElementData) => void;
     deleteElement: (id:string) => void;
-    updateElement: (id:string, props:any) => void;
+    updateElement: (id:string, props:any,text?:string) => void;
     setCurrentElement: (id:string) => void;
+    getElement: (id:string) => any;
  }
 
 type ElementData= {
@@ -34,19 +35,28 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
         return { Elements: newState };
       }),
     // 更新元素
-    updateElement: (id: string, props: any) => set((state) => {
+    updateElement: (id: string, props: any,text?:string) => set((state) => {
         const newState = state.Elements.map(item=> {
-            if (item.id === id) return {
+            if (item.id === id) {
+              return {
                 props: {...item.props,
                     ...props
                 },
                 id: item.id,
-                type: item.type
+                type: item.type,
+                text: text || item.text
             };
+          }
             return item;
           });
         return { Elements: newState };
       }),
+    // 获取元素
+      getElement: (id: string) => {
+        const state = get();
+        const element = state.Elements.find(item => item.id === id);
+        return element;
+      },
     // 当前选中的元素
     setCurrentElement: (elementId: string) => set((state) => ({ currentElement: elementId })),
 }));
