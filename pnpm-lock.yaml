@@ -135,7 +135,7 @@ importers:
         specifier: 3.11.0
         version: 3.11.0
       nanoid:
-        specifier: ^5.0.7
+        specifier: 5.0.7
         version: 5.0.7
       passport:
         specifier: 0.7.0
