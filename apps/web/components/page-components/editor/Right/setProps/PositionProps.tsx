@@ -1,52 +1,113 @@
-import { useState } from "react";
+import { UseElementStore } from "@/store/element";
+import { useEffect, useRef, useState } from "react";
 
 function PositionProps() {
-  const [textarea, setTextarea] = useState<string>("");
-  const [fontSize, setFontSize] = useState<string>("");
-  const [fontFamily, setFontFamily] = useState<string>("");
-  const [fontStyle, setFontStyle] = useState<string>("");
-  const [lineHeight, setLineHeight] = useState<string>("");
+  const { updateElement, currentElement, getElement } = UseElementStore();
+
+  interface PositionStyleState {
+    left: number;
+    top: number;
+  }
+
+  const initialState = {
+    top: 0,
+    left: 0,
+  };
+
+  const [positionStyles, setPositionStyles] = useState<PositionStyleState>(initialState);
+
+  const reset = () => {
+    positionStyles.left = 0;
+    positionStyles.top = 0;
+  };
+
+  useEffect(() => {
+    reset();
+    const res = getElement(currentElement);
+    const resProps = res?.props as any;
+    setPositionStyles((prevStyles) => {
+      const updatedStyles = { ...prevStyles };
+      if (resProps) {
+        Object.keys(resProps).forEach((key) => {
+          if (prevStyles.hasOwnProperty(key)) {
+            if (key === "top" && typeof resProps[key] === "string") {
+              const num = parseFloat(resProps.top);
+              if (!isNaN(num)) {
+                updatedStyles[key] = num;
+              }
+            } else if (key === "left" && typeof resProps[key] === "string") {
+              const num = parseFloat(resProps.left);
+              if (!isNaN(num)) {
+                updatedStyles[key] = num;
+              }
+            }
+          }
+        });
+      }
+
+      return updatedStyles;
+    });
+  }, [currentElement, getElement]);
+
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false; // 更新ref，表示这不是第一次渲染
+      return; // 跳过后续的逻辑
+    }
+    const style = {
+      left: positionStyles.left + "px",
+      top: positionStyles.top + "px",
+    };
+    updateElement(currentElement, style);
+  }, [positionStyles, currentElement, updateElement]);
 
   return (
     <div className="py-1 px-6 ">
-     
       <div className="flex justify-between items-center my-4">
         <label
-          htmlFor="fontSize"
+          htmlFor="left"
           className="block mb-1 w-1/3"
         >
-        X轴坐标：
+          X轴坐标：
         </label>
         <input
-          type="text"
-          id="fontSize"
-          value={fontSize}
-          onChange={(e) => setFontSize(e.target.value)}
-          placeholder="Font size"
+          type="number"
+          id="left"
+          value={positionStyles.left}
+          onChange={(e) =>
+            setPositionStyles((prevStyles) => ({
+              ...prevStyles,
+              left: parseInt(e.target.value, 10),
+            }))
+          }
+          placeholder="x轴坐标"
           className="input input-bordered w-2/3"
         />
       </div>
 
       <div className="flex justify-between items-center my-4">
         <label
-          htmlFor="fontSize"
+          htmlFor="top"
           className="block mb-1 w-1/3"
         >
-         y轴坐标：
+          y轴坐标：
         </label>
         <input
-          type="text"
-          id="fontSize"
-          value={fontSize}
-          onChange={(e) => setFontSize(e.target.value)}
-          placeholder="Font size"
+          type="number"
+          id="top"
+          value={positionStyles.top}
+          onChange={(e) =>
+            setPositionStyles((prevStyles) => ({
+              ...prevStyles,
+              top: parseInt(e.target.value, 10),
+            }))
+          }
+          placeholder="y轴坐标"
           className="input input-bordered w-2/3"
         />
       </div>
-
-      
-
-      
     </div>
   );
 }

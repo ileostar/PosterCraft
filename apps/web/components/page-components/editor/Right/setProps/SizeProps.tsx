@@ -1,27 +1,121 @@
-import { useState } from "react";
+import { UseElementStore } from "@/store/element";
+import { useEffect, useRef, useState } from "react";
 
 function SizeProps() {
-  const [textarea, setTextarea] = useState<string>("");
-  const [fontSize, setFontSize] = useState<string>("");
-  const [fontFamily, setFontFamily] = useState<string>("");
-  const [fontStyle, setFontStyle] = useState<string>("");
-  const [lineHeight, setLineHeight] = useState<string>("");
+  const { updateElement, currentElement, getElement } = UseElementStore();
 
+  interface SizeStyleState {
+    height: number;
+    width: number;
+    paddingTop: number;
+    paddingBottom: number;
+    paddingLeft: number;
+    paddingRight: number;
+  }
+
+  const initialState = {
+    height: 0,
+    width: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: 0,
+    paddingRight: 0,
+  };
+
+  const [sizeStyles, setSizeStyles] = useState<SizeStyleState>(initialState);
+
+  const reset = () => {
+    sizeStyles.height = 0;
+    sizeStyles.width = 0;
+    sizeStyles.paddingTop = 0;
+    sizeStyles.paddingBottom = 0;
+    sizeStyles.paddingLeft = 0;
+    sizeStyles.paddingRight = 0;
+  };
+
+  useEffect(() => {
+    reset();
+    const res = getElement(currentElement);
+    const resProps = res?.props as any;
+    setSizeStyles((prevStyles) => {
+      const updatedStyles = { ...prevStyles };
+      if (resProps) {
+        Object.keys(resProps).forEach((key) => {
+          if (prevStyles.hasOwnProperty(key)) {
+            if (key === "height" && typeof resProps[key] === "string") {
+              const num = parseFloat(resProps.height);
+              if (!isNaN(num)) {
+                updatedStyles[key] = num;
+              }
+            } else if (key === "width" && typeof resProps[key] === "string") {
+              const num = parseFloat(resProps.width);
+              if (!isNaN(num)) {
+                updatedStyles[key] = num;
+              }
+            } else if (key === "paddingTop" && typeof resProps[key] === "string") {
+              const num = parseFloat(resProps.paddingTop);
+              if (!isNaN(num)) {
+                updatedStyles[key] = num;
+              }
+            } else if (key === "paddingBottom" && typeof resProps[key] === "string") {
+              const num = parseFloat(resProps.paddingBottom);
+              if (!isNaN(num)) {
+                updatedStyles[key] = num;
+              }
+            } else if (key === "paddingLeft" && typeof resProps[key] === "string") {
+              const num = parseFloat(resProps.paddingLeft);
+              if (!isNaN(num)) {
+                updatedStyles[key] = num;
+              }
+            } else if (key === "paddingRight" && typeof resProps[key] === "string") {
+              const num = parseFloat(resProps.paddingRight);
+              if (!isNaN(num)) {
+                updatedStyles[key] = num;
+              }
+            }
+          }
+        });
+      }
+      return updatedStyles;
+    });
+  }, [currentElement, getElement]);
+
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false; // 更新ref，表示这不是第一次渲染
+      return; // 跳过后续的逻辑
+    }
+    const style = {
+      height: sizeStyles.height + "px",
+      width: sizeStyles.width + "px",
+      paddingTop: sizeStyles.paddingTop + "px",
+      paddingBottom: sizeStyles.paddingBottom + "px",
+      paddingLeft: sizeStyles.paddingLeft + "px",
+      paddingRight: sizeStyles.paddingRight + "px",
+    };
+    updateElement(currentElement, style);
+  }, [sizeStyles, currentElement, updateElement]);
   return (
     <div className="py-1 px-6 ">
-     
       <div className="flex justify-between items-center my-4">
         <label
-          htmlFor="fontSize"
+          htmlFor="height"
           className="block mb-1 w-1/3"
         >
           高度：
         </label>
         <input
-          type="text"
-          id="fontSize"
-          value={fontSize}
-          onChange={(e) => setFontSize(e.target.value)}
+          type="number"
+          id="height"
+          value={sizeStyles.height}
+          onChange={(e) =>
+            setSizeStyles((prevStyles) => ({
+              ...prevStyles,
+              height: parseInt(e.target.value, 10),
+            }))
+          }
           placeholder="Font size"
           className="input input-bordered w-2/3"
         />
@@ -29,33 +123,21 @@ function SizeProps() {
 
       <div className="flex justify-between items-center my-4">
         <label
-          htmlFor="fontSize"
-          className="block mb-1 w-1/3"
-        >
-          高度：
-        </label>
-        <input
-          type="text"
-          id="fontSize"
-          value={fontSize}
-          onChange={(e) => setFontSize(e.target.value)}
-          placeholder="Font size"
-          className="input input-bordered w-2/3"
-        />
-      </div>
-
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="fontSize"
+          htmlFor="width"
           className="block mb-1 w-1/3"
         >
           宽度：
         </label>
         <input
-          type="text"
-          id="fontSize"
-          value={fontSize}
-          onChange={(e) => setFontSize(e.target.value)}
+          type="number"
+          id="width"
+          value={sizeStyles.width}
+          onChange={(e) =>
+            setSizeStyles((prevStyles) => ({
+              ...prevStyles,
+              width: parseInt(e.target.value, 10),
+            }))
+          }
           placeholder="Font size"
           className="input input-bordered w-2/3"
         />
@@ -63,16 +145,21 @@ function SizeProps() {
 
       <div className="flex justify-between items-center my-4">
         <label
-          htmlFor="fontSize"
+          htmlFor="paddingTop"
           className="block mb-1 w-1/3"
         >
           上边距：
         </label>
         <input
           type="text"
-          id="fontSize"
-          value={fontSize}
-          onChange={(e) => setFontSize(e.target.value)}
+          id="paddingTop"
+          value={sizeStyles.paddingTop}
+          onChange={(e) =>
+            setSizeStyles((prevStyles) => ({
+              ...prevStyles,
+              paddingTop: parseInt(e.target.value, 10),
+            }))
+          }
           placeholder="Font size"
           className="input input-bordered w-2/3"
         />
@@ -80,16 +167,21 @@ function SizeProps() {
 
       <div className="flex justify-between items-center my-4">
         <label
-          htmlFor="fontSize"
+          htmlFor="paddingBottom"
           className="block mb-1 w-1/3"
         >
           下边距：
         </label>
         <input
           type="text"
-          id="fontSize"
-          value={fontSize}
-          onChange={(e) => setFontSize(e.target.value)}
+          id="paddingBottom"
+          value={sizeStyles.paddingBottom}
+          onChange={(e) =>
+            setSizeStyles((prevStyles) => ({
+              ...prevStyles,
+              paddingBottom: parseInt(e.target.value, 10),
+            }))
+          }
           placeholder="Font size"
           className="input input-bordered w-2/3"
         />
@@ -97,16 +189,21 @@ function SizeProps() {
 
       <div className="flex justify-between items-center my-4">
         <label
-          htmlFor="fontSize"
+          htmlFor="paddingLeft"
           className="block mb-1 w-1/3"
         >
           左边距：
         </label>
         <input
           type="text"
-          id="fontSize"
-          value={fontSize}
-          onChange={(e) => setFontSize(e.target.value)}
+          id="paddingLeft"
+          value={sizeStyles.paddingLeft}
+          onChange={(e) =>
+            setSizeStyles((prevStyles) => ({
+              ...prevStyles,
+              paddingLeft: parseInt(e.target.value, 10),
+            }))
+          }
           placeholder="Font size"
           className="input input-bordered w-2/3"
         />
@@ -114,22 +211,25 @@ function SizeProps() {
 
       <div className="flex justify-between items-center my-4">
         <label
-          htmlFor="fontSize"
+          htmlFor="paddingRight"
           className="block mb-1 w-1/3"
         >
           右边距：
         </label>
         <input
           type="text"
-          id="fontSize"
-          value={fontSize}
-          onChange={(e) => setFontSize(e.target.value)}
+          id="paddingRight"
+          value={sizeStyles.paddingRight}
+          onChange={(e) =>
+            setSizeStyles((prevStyles) => ({
+              ...prevStyles,
+              paddingRight: parseInt(e.target.value, 10),
+            }))
+          }
           placeholder="Font size"
           className="input input-bordered w-2/3"
         />
       </div>
-
-      
     </div>
   );
 }

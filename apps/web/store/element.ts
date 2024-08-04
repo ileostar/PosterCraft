@@ -7,7 +7,7 @@ type ElementStore= {
     currentElement: string;
     addElement: (element:ElementData) => void;
     deleteElement: (id:string) => void;
-    updateElement: (id:string, props:any,text?:string) => void;
+    updateElement: (id:string, props?:any,text?:string,url?:string) => void;
     setCurrentElement: (id:string) => void;
     getElement: (id:string) => any;
     isElement: boolean;
@@ -23,6 +23,8 @@ type ElementData= {
     type:'text' | 'img' | 'graph';
     // 可选的text属性，类型为string或null
     text?: string | null;
+    //跳转url
+    url?: string;
  }
  
 
@@ -37,16 +39,18 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
         return { Elements: newState };
       }),
     // 更新元素
-    updateElement: (id: string, props: any,text?:string) => set((state) => {
+    updateElement: (id: string, props?: any,text?:string,url?:string) => set((state) => {
         const newState = state.Elements.map(item=> {
             if (item.id === id) {
+              console.log(item);
               return {
                 props: {...item.props,
                     ...props
-                },
+                }|| item.props,
                 id: item.id,
                 type: item.type,
-                text: text || item.text
+                text: text || item.text,
+                url: url || item.url
             };
           }
             return item;
