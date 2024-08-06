@@ -12,6 +12,8 @@ type ElementStore= {
     getElement: (id:string) => any;
     isElement: boolean;
     setIsElement: (isElement:boolean) => void;
+    currentPosition: {left:any,top:any};
+    setCurrentPosition: (left:any,top:any) => void;
  }
 
 type ElementData= {
@@ -26,6 +28,8 @@ type ElementData= {
     //跳转url
     url?: string;
  }
+
+
  
 
 export const UseElementStore = create<ElementStore>((set, get) => ({
@@ -42,7 +46,6 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
     updateElement: (id: string, props?: any,text?:string,url?:string) => set((state) => {
         const newState = state.Elements.map(item=> {
             if (item.id === id) {
-              console.log(item);
               return {
                 props: {...item.props,
                     ...props
@@ -64,10 +67,13 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
         return element;
       },
     // 当前选中的元素
-    setCurrentElement: (elementId: string) => set((state) => ({ currentElement: elementId })),
+    setCurrentElement: (elementId: string) => {set((state) => ({ currentElement: elementId }))},
    // 判断当前点击的是否是元素(1.背景 2.元素)
     setIsElement: (isElement: boolean) => set((state) => ({ isElement })),
-    isElement: false
+    isElement: false,
+    // 更新元素位置
+    currentPosition: { left: 0, top: 0 },
+    setCurrentPosition: (left: any,top:any) => set((state) => ({ currentPosition: { left, top } })),
 }));
 
  

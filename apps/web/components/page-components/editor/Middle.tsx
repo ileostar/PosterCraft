@@ -1,9 +1,11 @@
 "use client";
 
 import { UseElementStore } from "@/store/element";
+import { useEffect, useRef, useState } from "react";
+import DraggableComponent from "../../base/DraggableComponent";
 
 function Middle(props: any) {
-  const { Elements, setCurrentElement, setIsElement } = UseElementStore();
+  const { Elements, setIsElement } = UseElementStore();
 
   return (
     <div
@@ -12,24 +14,28 @@ function Middle(props: any) {
     >
       <h3>海报区域</h3>
       <div
-        className="bg-gray-700 mt-5"
-        style={{ width: "375px", height: "667px", position: "relative", overflow: "scroll" }}
+        className="bg-white mt-5"
+        style={{ width: "375px", height: "667px", position: "relative", overflow: "auto" }}
       >
         {Elements.map((item: any) => (
-          <div
-            key={item.id}
-            onClick={(e) => {
-              e.stopPropagation();
-              setCurrentElement(item.id);
-              setIsElement(true);
-              if(item.url){
-                window.open(item.url);
-              }
-            }}
-            style={{ position: "absolute", ...item.props }}
-          >
-            {item.type === "text" && item.text}
-          </div>
+          // <div
+          //   key={item.id}
+          //   onClick={(e) => {
+          //     e.stopPropagation();
+          //     setCurrentElement(item.id);
+          //     setIsElement(true);
+          //     if (item.url) {
+          //       window.open(item.url);
+          //     }
+          //   }}
+          //   style={{
+          //     position: "absolute",
+          //     ...item.props
+          //   }}
+          // >
+          //   {item.type === "text" && item.text}
+          // </div>
+          <DraggableComponent key={item.id} item={item}/>
         ))}
       </div>
     </div>

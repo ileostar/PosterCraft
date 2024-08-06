@@ -19,7 +19,6 @@ function TextList() {
       type: "text",
       text: event.target.innerHTML,
     };
-    console.log(element);
     addElement(element);
     setCurrentElement(id);
     setIsElement(true);

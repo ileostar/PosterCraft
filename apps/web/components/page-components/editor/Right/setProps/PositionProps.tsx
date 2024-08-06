@@ -2,7 +2,7 @@ import { UseElementStore } from "@/store/element";
 import { useEffect, useRef, useState } from "react";
 
 function PositionProps() {
-  const { updateElement, currentElement, getElement } = UseElementStore();
+  const { updateElement, currentElement, getElement,currentPosition } = UseElementStore();
 
   interface PositionStyleState {
     left: number;
@@ -47,7 +47,7 @@ function PositionProps() {
 
       return updatedStyles;
     });
-  }, [currentElement, getElement]);
+  }, [currentElement, getElement, currentPosition]);
 
   const isFirstRender = useRef(true);
 
@@ -61,7 +61,7 @@ function PositionProps() {
       top: positionStyles.top + "px",
     };
     updateElement(currentElement, style);
-  }, [positionStyles, currentElement, updateElement]);
+  }, [positionStyles, updateElement]);
 
   return (
     <div className="py-1 px-6 ">
