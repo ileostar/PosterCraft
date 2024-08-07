@@ -36,34 +36,23 @@ function ShadowProps() {
       const updatedStyles = { ...prevStyles };
       if (resProps) {
         Object.keys(resProps).forEach((key) => {
-          if (prevStyles.hasOwnProperty(key)) {
-            if (key === "hOffset" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.hOffset);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
-            } else if (key === "vOffset" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.vOffset);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
-            } else if (key === "blur" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.blur);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
-            } else if (key === "spread" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.spread);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
-            } else if (key === "opacity" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.opacity);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
-            } else if (key === "color" && typeof resProps[key] === "string") {
-              updatedStyles[key] = resProps.color;
+          if (key) {
+            switch (key) {
+              case "hOffset":
+              case "vOffset":
+              case "blur":
+              case "spread":
+              case "opacity":
+                const num = parseFloat(resProps[key]);
+                updatedStyles[key] = !isNaN(num) ? num : prevStyles[key];
+                break;
+              case "color":
+                updatedStyles[key] = resProps.color;
+                break;
+              // 可以添加默认情况来处理未知属性
+              default:
+                // 可以选择在这里处理未知的属性，或者什么都不做
+                break;
             }
           }
         });
@@ -85,7 +74,7 @@ function ShadowProps() {
       opacity: shadowStyles.opacity / 100,
     };
 
-    updateElement(currentElement,style)
+    updateElement(currentElement, style);
   }, [shadowStyles, currentElement, updateElement]);
 
   return (

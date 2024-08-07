@@ -2,7 +2,7 @@ import { UseElementStore } from "@/store/element";
 import { useEffect, useRef, useState } from "react";
 
 function SizeProps() {
-  const { updateElement, currentElement, getElement ,currentSize} = UseElementStore();
+  const { updateElement, currentElement, getElement, currentSize } = UseElementStore();
 
   interface SizeStyleState {
     height: number;
@@ -41,44 +41,24 @@ function SizeProps() {
       const updatedStyles = { ...prevStyles };
       if (resProps) {
         Object.keys(resProps).forEach((key) => {
-          if (prevStyles.hasOwnProperty(key)) {
-            if (key === "height" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.height);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
-            } else if (key === "width" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.width);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
-            } else if (key === "paddingTop" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.paddingTop);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
-            } else if (key === "paddingBottom" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.paddingBottom);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
-            } else if (key === "paddingLeft" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.paddingLeft);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
-            } else if (key === "paddingRight" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.paddingRight);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
+          if (key in prevStyles) {
+            switch (key) {
+              case "height":
+              case "width":
+              case "paddingRight":
+              case "paddingLeft":
+              case "paddingBottom":
+              case "paddingTop":
+                const num = parseFloat(resProps[key]);
+                updatedStyles[key] = !isNaN(num) ? num : prevStyles[key];
+                break;
             }
           }
         });
       }
       return updatedStyles;
     });
-  }, [currentElement, getElement,currentSize]);
+  }, [currentElement, getElement, currentSize]);
 
   const isFirstRender = useRef(true);
 

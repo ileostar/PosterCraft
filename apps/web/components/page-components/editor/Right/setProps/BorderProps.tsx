@@ -37,21 +37,17 @@ function BorderProps() {
       const updatedStyles = { ...prevStyles };
       if (resProps) {
         Object.keys(resProps).forEach((key) => {
-          if (prevStyles.hasOwnProperty(key)) {
-            if (key === "borderWidth" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.borderWidth);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
-            } else if (key === "borderRadius" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.borderRadius);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
-            } else if (key === "borderStyle" && typeof resProps[key] === "string") {
-              updatedStyles[key] = resProps.borderStyle;
-            } else if (key === "borderColor" && typeof resProps[key] === "string") {
-              updatedStyles[key] = resProps.borderColor;
+          if (key in prevStyles) {
+            switch (key) {
+              case "borderWidth":
+              case "borderRadius":
+                const num = parseFloat(resProps[key]);
+                updatedStyles[key] = !isNaN(num) ? num : prevStyles[key];
+                break;
+              case "borderStyle":
+              case "borderColor":
+                updatedStyles[key] = resProps[key];
+                break;
             }
           }
         });

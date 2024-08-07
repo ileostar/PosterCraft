@@ -60,31 +60,22 @@ function BaseProps() {
       const updatedStyles = { ...prevStyles };
       if (resProps) {
         Object.keys(resProps).forEach((key) => {
-          if (prevStyles.hasOwnProperty(key)) {
-            if (key === "lineHeight" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.lineHeight);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
-            } else if (key === "fontSize" && typeof resProps[key] === "string") {
-              const num = parseFloat(resProps.fontSize);
-              if (!isNaN(num)) {
-                updatedStyles[key] = num;
-              }
-            } else if (key === "textAlign" && typeof resProps[key] === "string") {
-              updatedStyles[key] = resProps.textAlign;
-            } else if (key === "fontFamily" && typeof resProps[key] === "string") {
-              updatedStyles[key] = resProps.fontFamily;
-            } else if (key === "fontStyle" && typeof resProps[key] === "string") {
-              updatedStyles[key] = resProps.fontStyle;
-            } else if (key === "fontWeight" && typeof resProps[key] === "string") {
-              updatedStyles[key] = resProps.fontWeight;
-            } else if (key === "textDecoration" && typeof resProps[key] === "string") {
-              updatedStyles[key] = resProps.textDecoration;
-            } else if (key === "color" && typeof resProps[key] === "string") {
-              updatedStyles[key] = resProps.color;
-            } else if (key === "backgroundColor" && typeof resProps[key] === "string") {
-              updatedStyles[key] = resProps.backgroundColor;
+          if (key in prevStyles) {
+            switch (key) {
+              case "lineHeight":
+              case "fontSize":
+                const num = parseFloat(resProps[key]);
+                updatedStyles[key] = !isNaN(num) ? num : prevStyles[key];
+                break;
+              case "textAlign":
+              case "fontFamily":
+              case "fontStyle":
+              case "fontWeight":
+              case "textDecoration":
+              case "color":
+              case "backgroundColor":
+                updatedStyles[key] = resProps[key];
+                break;
             }
           }
         });

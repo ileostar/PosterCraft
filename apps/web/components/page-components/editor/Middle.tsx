@@ -9,7 +9,7 @@ function Middle(props: any) {
   const { Elements, setIsElement, setMode, mode } = UseElementStore();
 
   return (
-    <div
+    <button
       className="bg-[#f0f2f5] w-3/5 flex justify-center items-center flex-col"
       onClick={() => {
         setIsElement(false);
@@ -36,7 +36,7 @@ function Middle(props: any) {
           ),
         )}
       </div>
-    </div>
+    </button>
   );
 }
 
