@@ -2,7 +2,7 @@ import { UseElementStore } from "@/store/element";
 import { useEffect, useRef, useState } from "react";
 
 function SizeProps() {
-  const { updateElement, currentElement, getElement } = UseElementStore();
+  const { updateElement, currentElement, getElement ,currentSize} = UseElementStore();
 
   interface SizeStyleState {
     height: number;
@@ -78,7 +78,7 @@ function SizeProps() {
       }
       return updatedStyles;
     });
-  }, [currentElement, getElement]);
+  }, [currentElement, getElement,currentSize]);
 
   const isFirstRender = useRef(true);
 
