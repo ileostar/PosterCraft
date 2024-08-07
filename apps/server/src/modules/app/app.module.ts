@@ -15,6 +15,7 @@ import { TestModule } from '../test/test.module';
 import { WorkModule } from '../work/work.module';
 import { ChannelModule } from '../channel/channel.module';
 import { PageModule } from '../page/page.module';
+import { TemplateModule } from '../template/template.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { PageModule } from '../page/page.module';
     MailModule,
     OssModule,
     WorkModule,
+    TemplateModule,
     ChannelModule,
     PageModule,
     PassportModule.register({ secret: process.env.JWT_SERECT }),

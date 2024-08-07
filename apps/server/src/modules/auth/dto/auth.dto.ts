@@ -1,6 +1,6 @@
-import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
+import { ApiProperty, OmitType } from '@nestjs/swagger';
 import '@nestjs/common';
-import { IsNotEmpty, IsString, Length, Matches } from 'class-validator';
+import { IsNotEmpty, IsString, Length } from 'class-validator';
 import { CreateUserDto } from '../../user/dto/user.dto';
 import { VerifyPhoneDto } from '../../sms/dto/sms.dto';
 

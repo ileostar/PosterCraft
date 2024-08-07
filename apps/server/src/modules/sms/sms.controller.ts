@@ -1,11 +1,5 @@
-import { Body, Controller, Get, Post, Put, UseGuards } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiOperation,
-  ApiQuery,
-  ApiTags,
-} from '@nestjs/swagger';
+import { Body, Controller, Post, Put, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SmsService } from './sms.service';
 import {
   SendCodeBySMSDto,
@@ -15,54 +9,81 @@ import {
 import { JwtAuthGuard } from '../../guards/jwt.guard';
 import { JwtPayloadDto } from '../auth/dto/jwt.dto';
 import { CallbackUserData } from '../auth/decorator/callback.decorator';
-import { string } from 'zod';
+import { APIResponse } from 'src/decorators/apiResponse.decorators';
 
-@ApiBearerAuth()
 @ApiTags('📞SMS短信模块')
 @Controller('sms')
 export class SmsController {
   constructor(private readonly smsService: SmsService) {}
 
-  @Get('sendCodeBySMS')
-  @ApiQuery({
-    name: 'phone',
-    description: '用户手机号',
-    type: string,
-    required: true,
-  })
+  @Post('sendCode')
+  @ApiBody({ type: SendCodeBySMSDto })
   @ApiOperation({
     summary: '发送手机验证码',
     description: '发送手机验证码并返回',
   })
-  sendCodeBySMS(@Body() dto: SendCodeBySMSDto) {
-    return this.smsService.sendCodeBySMS(dto);
+  async sendCodeBySMS(@Body() dto: SendCodeBySMSDto) {
+    try {
+      await this.smsService.sendCodeBySMS(dto);
+      return {
+        code: 200,
+        msg: '短信发送成功',
+      };
+    } catch (error) {
+      return {
+        msg: '短信发送失败：' + error,
+      };
+    }
   }
 
-  @Post('verifyPhone')
+  @Post('verify')
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: '手机号验证',
     description: '用于邮箱更换或者手机号更换前的验证',
   })
   @ApiBody({ type: VerifyPhoneDto })
-  verifyPhone(
+  async verifyPhone(
     @Body() dto: VerifyPhoneDto,
     @CallbackUserData() userData: JwtPayloadDto,
   ) {
-    return this.smsService.verifyPhone(userData.userId, dto);
+    try {
+      await this.smsService.verifyPhone(userData.userId, dto);
+      return {
+        code: 200,
+        msg: '手机号校验成功',
+      };
+    } catch (error) {
+      return {
+        msg: '手机号校验失败：' + error,
+      };
+    }
   }
 
-  @Put('updatePhone')
+  @Put()
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiBody({ type: UpdatePhoneDto })
   @ApiOperation({
     summary: '更换手机号',
     description: '更换前需要验证！！！',
   })
-  updatePhone(
+  @APIResponse()
+  async updatePhone(
     @Body() dto: UpdatePhoneDto,
     @CallbackUserData() userData: JwtPayloadDto,
   ) {
-    return this.smsService.updatePhone(userData.userId, dto);
+    try {
+      await this.smsService.updatePhone(userData.userId, dto);
+      return {
+        code: 200,
+        msg: '手机号更换成功',
+      };
+    } catch (error) {
+      return {
+        msg: '手机号更换失败：' + error,
+      };
+    }
   }
 }

@@ -6,9 +6,9 @@ import {
 } from './dto/mail.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { generateVerificationCode } from 'src/common/utils';
-import { ResponseData } from 'src/interceptor/responseData';
 import { CacheService } from '../cache/cache.service';
 import { UserService } from '../user/user.service';
+import { projectConfig } from 'src/config';
 
 @Injectable()
 export class MailService {
@@ -23,7 +23,7 @@ export class MailService {
     code: number | string,
     subject: string = 'PosterCraft Email',
     template: string = 'index',
-    url: string = process.env.Project_URL,
+    url: string = projectConfig.projectName,
   ) {
     return this.mailerService.sendMail({
       to: email,
@@ -37,72 +37,42 @@ export class MailService {
   }
 
   async sendCodeByMail(dto: SendCodeByEmailDto) {
-    try {
-      const code = generateVerificationCode();
-      await this.cacheService.setCache(dto.email, code);
-      const res = await this.sendMail(dto.email, code);
-      return ResponseData.ok(res, '邮箱验证码发送成功');
-    } catch (error) {
-      return ResponseData.fail('邮箱验证码发送失败:' + error);
-    }
+    const code = generateVerificationCode();
+    await this.cacheService.setCache(dto.email, code);
+    await this.sendMail(dto.email, code);
   }
 
   async bindMail(id: string, dto: BindEmailDto) {
-    try {
-      if (!(await this.userService.findUserByUserId(id)))
-        return ResponseData.ok(null, '用户ID不存在');
-
-      const currentCode = await this.cacheService.getCache(dto.email);
-
-      if (dto.otp === currentCode) {
-        await this.cacheService.delCache(dto.email);
-        if (await this.userService.findUserByEmail(dto.email))
-          return ResponseData.ok(null, '邮箱已存在');
-
-        await this.userService.updateUserInfos({
-          ...dto,
-          userId: id,
-        });
-        return ResponseData.ok(null, '邮箱绑定成功');
-      } else return ResponseData.ok(null, '邮箱绑定失败：验证码错误或超时');
-    } catch (error) {
-      return ResponseData.fail('邮箱绑定失败：' + error);
-    }
+    if (!(await this.userService.findUserByUserId(id))) throw '用户ID不存在';
+    if (dto.otp !== (await this.cacheService.getCache(dto.email)))
+      throw '邮箱绑定失败：验证码错误';
+    if (await this.userService.findUserByEmail(dto.email)) throw '邮箱已存在';
+    await this.userService.updateUserInfos({
+      ...dto,
+      userId: id,
+    });
+    await this.cacheService.delCache(dto.email);
   }
 
   async updateEmail(id: string, dto: BindEmailDto) {
-    try {
-      if (await this.userService.checkEmailExists(dto.email))
-        return ResponseData.fail('邮箱已被绑定');
-      const currentCode = await this.cacheService.getCache(dto.email);
-      if (dto.otp === currentCode) {
-        await this.cacheService.delCache(dto.email);
-        if (!(await this.userService.findUserByEmail(dto.email)))
-          return ResponseData.ok(null, '用户未绑定邮箱');
-
-        await this.userService.updateUserInfos({
-          ...dto,
-          userId: id,
-        });
-        return ResponseData.ok(null, '邮箱绑定成功');
-      } else return ResponseData.ok(null, '邮箱绑定失败：验证码错误或超时');
-    } catch (error) {
-      return ResponseData.fail('邮箱绑定失败：' + error);
-    }
+    if (await this.userService.checkEmailExists(dto.email))
+      throw '邮箱已被绑定';
+    if (dto.otp === (await this.cacheService.getCache(dto.email)))
+      throw '邮箱绑定失败：验证码错误';
+    if (!(await this.userService.findUserByEmail(dto.email)))
+      throw '用户未绑定邮箱';
+    await this.userService.updateUserInfos({
+      ...dto,
+      userId: id,
+    });
+    await this.cacheService.delCache(dto.email);
   }
 
   async verifyEmail(dto: VerifyEmailDto) {
-    try {
-      if (await this.userService.checkEmailExists(dto.email))
-        return ResponseData.fail('用户邮箱不存在');
-      const currentCode = await this.cacheService.getCache(dto.email);
-
-      if (dto.otp === currentCode) {
-        await this.cacheService.delCache(dto.email);
-        return ResponseData.ok(null, '邮箱绑定成功');
-      } else return ResponseData.ok(null, '邮箱绑定失败：验证码错误或超时');
-    } catch (error) {
-      return ResponseData.fail('邮箱绑定失败：' + error);
-    }
+    if (await this.userService.checkEmailExists(dto.email))
+      throw '用户邮箱不存在';
+    if (dto.otp === (await this.cacheService.getCache(dto.email)))
+      throw '邮箱绑定失败：验证码错误';
+    await this.cacheService.delCache(dto.email);
   }
 }

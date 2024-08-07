@@ -35,24 +35,24 @@
   },
   "dependencies": {
     "@t3-oss/env-core": "0.11.0",
-    "axios": "1.7.2",
+    "axios": "1.7.3",
     "drizzle-orm": "0.32.1",
     "zod": "3.23.8"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "4.3.1",
-    "@types/node": "20.14.13",
+    "@types/node": "20.14.14",
     "conventional-changelog-cli": "5.0.0",
     "dotenv": "16.4.5",
     "eslint": "9.8.0",
-    "lint-staged": "15.2.7",
+    "lint-staged": "15.2.8",
     "picocolors": "1.0.1",
     "prettier": "3.3.3",
     "simple-git-hooks": "2.11.1",
-    "tsup": "8.2.3",
-    "tsx": "4.16.2",
-    "turbo": "2.0.9",
+    "tsup": "8.2.4",
+    "tsx": "4.16.5",
+    "turbo": "2.0.11",
     "typescript": "5.5.4",
-    "vitest": "2.0.4"
+    "vitest": "2.0.5"
   }
 }

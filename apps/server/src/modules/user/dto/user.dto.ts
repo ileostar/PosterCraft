@@ -1,6 +1,5 @@
 import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
 import {
-  IsEmail,
   IsEnum,
   IsMobilePhone,
   IsNotEmpty,
@@ -69,15 +68,6 @@ export class CreateUserDto {
   @IsOptional()
   @IsEnum(['admin', 'normal'], { message: '角色必须是admin或normal之一' })
   role?: 'admin' | 'normal';
-}
-
-export class DeleteUserDto {
-  @ApiProperty({
-    example: 13,
-    description: '用户ID不能为空',
-  })
-  @IsNotEmpty({ message: '用户ID不能为空' })
-  userId: string;
 }
 
 export class FindUserDto extends PickType(CreateUserDto, ['phone']) {}

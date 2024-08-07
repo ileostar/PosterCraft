@@ -24,14 +24,9 @@ export class AuthService {
     let user = await this.userService.findUserByUsername(dto.identifier);
     if (!user) {
       user = await this.userService.findUserByEmail(dto.identifier);
-      if (!user) {
-        throw new HttpException('Account not exists', HttpStatus.BAD_REQUEST);
-      }
+      if (!user) throw '用户不存在';
     }
-    if (!(await argon2.verify(user.password, dto.password))) {
-      throw new UnauthorizedException();
-    }
-
+    if (!(await argon2.verify(user.password, dto.password))) throw '密码错误';
     const payload = {
       userId: user.id,
       username: user.username,
@@ -39,54 +34,52 @@ export class AuthService {
       role: user.role,
       email: user.email,
     };
-    return ResponseData.ok(
-      payload,
-      '手机号登录成功',
-      this.jwtService.sign(payload),
-    );
+    return ResponseData.ok(payload, '登录成功', this.jwtService.sign(payload));
   }
 
   /** 短信登录 */
   async phoneOtpLogin(dto: PhoneOtpLoginDto) {
-    try {
-      const user = await this.userService.findWithPhone(dto.phone);
+    const user = await this.userService.findWithPhone(dto.phone);
 
-      let payload;
-      if (!user) {
-        const randomName = generateRandomUsername();
-        const userId = await this.userService.createUser({
-          username: randomName,
-          phone: dto.phone,
-        });
-        await this.userService.checkVerificationCode(dto);
-
-        payload = {
-          userId: userId,
-          username: randomName,
-          phone: dto.phone,
-          role: 'normal',
-        };
-        const jwtToken = await this.jwtService.sign(payload);
-
-        return ResponseData.ok(payload, '手机号注册并登录成功', jwtToken);
-      }
+    let payload;
+    if (!user) {
+      const randomName = generateRandomUsername();
+      const userId = await this.userService.createUser({
+        username: randomName,
+        phone: dto.phone,
+      });
       await this.userService.checkVerificationCode(dto);
 
       payload = {
-        userId: user.id,
-        username: user.username,
-        nickname: user.nickname,
-        avatar: user.avatar,
-        phone: user.phone,
-        role: user.role,
-        email: user.email,
+        userId: userId,
+        username: randomName,
+        phone: dto.phone,
+        role: 'normal',
       };
 
-      const jwtToken = this.jwtService.sign(user);
-      return ResponseData.ok(user, '手机号登录成功', jwtToken);
-    } catch (error) {
-      return ResponseData.fail('手机号登录失败');
+      return {
+        data: payload,
+        msg: '手机号注册并登录成功',
+        token: await this.jwtService.sign(payload),
+      };
     }
+    await this.userService.checkVerificationCode(dto);
+
+    payload = {
+      userId: user.id,
+      username: user.username,
+      nickname: user.nickname,
+      avatar: user.avatar,
+      phone: user.phone,
+      role: user.role,
+      email: user.email,
+    };
+    const jwtToken = this.jwtService.sign(user);
+    return {
+      data: payload,
+      msg: '手机号登录成功',
+      token: jwtToken,
+    };
   }
 
   /** Oauth2 */
@@ -103,19 +96,9 @@ export class AuthService {
 
   /** 默认注册 */
   async signup(dto: RegisterDto) {
-    try {
-      const user = await this.userService.findWithPhone(dto.phone);
-      if (user) {
-        return ResponseData.fail('用户名已存在');
-      }
-
-      await this.userService.checkVerificationCode(dto);
-
-      const res = await this.userService.createUser(dto);
-      const jwtToken = this.jwtService.sign(res);
-      return ResponseData.ok(res, '注册成功', jwtToken);
-    } catch (error) {
-      throw new Error(error);
-    }
+    if (await this.userService.findWithPhone(dto.phone)) throw '用户名已存在';
+    if (!(await this.userService.checkVerificationCode(dto)))
+      throw '手机号校验失败';
+    await this.userService.createUser(dto);
   }
 }

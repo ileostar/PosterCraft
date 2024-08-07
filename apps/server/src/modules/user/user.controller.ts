@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Put,
   Query,
   UseGuards,
@@ -12,31 +13,25 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiOperation,
+  ApiParam,
   ApiQuery,
   ApiTags,
   OmitType,
 } from '@nestjs/swagger';
-import {
-  CreateUserDto,
-  DeleteUserDto,
-  FindUserDto,
-  UpdateUserDto,
-} from './dto/user.dto';
+import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { number } from 'zod';
 import { JwtAuthGuard } from '../../guards/jwt.guard';
 import { APIResponse } from 'src/decorators/apiResponse.decorators';
-import { DbType } from 'src/modules/global/providers/db.provider';
-import { schemas } from '@poster-craft/schema';
 
 @ApiBearerAuth()
 @ApiTags('😀用户信息模块')
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get('getUserInfosByUserId')
-  @ApiQuery({
+  @Get(':userId')
+  @ApiParam({
     name: 'userId',
     description: '用户ID',
     type: number,
@@ -47,14 +42,12 @@ export class UserController {
     description: '根据用户ID获取用户信息',
   })
   @APIResponse(OmitType(CreateUserDto, ['password']))
-  async getUserInfosByUserId(@Query() query: { userId: string }) {
-    const user = await this.userService.findUserByUserId(query.userId);
-    if (!user) {
+  async getUserInfosByUserId(@Param('userId') userId: string) {
+    try {
+      const user = await this.userService.findUserByUserId(userId);
+      if (!user) throw '用户Id不存在';
       return {
-        msg: '用户查询失败',
-      };
-    } else {
-      return {
+        code: 200,
         data: {
           username: user.username,
           email: user.email,
@@ -64,24 +57,66 @@ export class UserController {
           role: user.role,
         },
       };
+    } catch (error) {
+      return {
+        msg: '用户查询失败:' + error,
+      };
     }
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put('updateUserInfos')
-  @ApiBody({ type: UpdateUserDto })
+  @Put(':id')
+  @ApiParam({
+    name: 'userId',
+    description: '用户ID',
+    type: number,
+    required: true,
+  })
+  @ApiBody({ type: OmitType(UpdateUserDto, ['userId']) })
   @ApiOperation({ summary: '更新用户信息', description: '测试' })
-  @APIResponse()
-  async updateUserInfos(@Body() dto: UpdateUserDto) {
-    return this.userService.updateUserInfos(dto);
+  @APIResponse(UpdateUserDto)
+  async updateUserInfos(
+    @Param('userId') userId: string,
+    @Body() dto: Omit<UpdateUserDto, 'userId'>,
+  ) {
+    try {
+      const data = await this.userService.updateUserInfos({
+        userId,
+        ...dto,
+      });
+      return {
+        code: 200,
+        msg: '更新用户信息成功！',
+        data,
+      };
+    } catch (error) {
+      return {
+        msg: '更新用户信息失败：' + error,
+      };
+    }
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete('deleteUserById')
-  @ApiBody({ type: DeleteUserDto })
+  @Delete(':userId')
+  @ApiParam({
+    name: 'userId',
+    description: '用户ID',
+    type: number,
+    required: true,
+  })
   @ApiOperation({ summary: '注销当前用户', description: '根据用户ID删除用户' })
   @APIResponse()
-  async deleteUserById(@Body() dto: DeleteUserDto) {
-    return this.userService.deleteUser(dto);
+  async deleteUserById(@Param('userId') userId: string) {
+    try {
+      await this.userService.deleteUser(userId);
+      return {
+        code: 200,
+        msg: '删除成功',
+      };
+    } catch (error) {
+      return {
+        msg: '删除失败：' + error,
+      };
+    }
   }
 }

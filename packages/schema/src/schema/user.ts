@@ -1,11 +1,11 @@
-import { createId } from "@paralleldrive/cuid2";
 import { mysqlEnum, mysqlTable, text, timestamp, unique, varchar } from "drizzle-orm/mysql-core";
+import { v4 as uuidV4 } from "uuid";
 
 export const user = mysqlTable(
   "user",
   {
     id: varchar("id", { length: 128 })
-      .$defaultFn(() => createId())
+      .$defaultFn(() => uuidV4())
       .primaryKey(),
     username: varchar("username", { length: 256 }).notNull().unique(),
     password: text("password"),
