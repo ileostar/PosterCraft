@@ -25,7 +25,7 @@ function PositionProps() {
     console.log(111)
     reset();
     const res = getElement(currentElement);
-    const resProps = res?.props as any;
+    const resProps = res?.props;
     setPositionStyles((prevStyles) => {
       const updatedStyles = { ...prevStyles };
       if (resProps) {

@@ -7,11 +7,13 @@ type directionType = "top-left" | "top-right" | "bottom-left" | "bottom-right";
 
 //现在的位置=鼠标移动距离+原来的位置
 
-function ResizeComponent(props: { item: any }) {
+function ResizeComponent({
+  item,
+}: Readonly<{
+  item: any;
+}>) {
   const { setCurrentElement, setIsElement, updateElement, setCurrentSize, setMode } =
     UseElementStore();
-
-  const { item } = props;
 
   // 原始的编辑框height，width，top，left, +4和-2是算上边框的2px宽度的border
   let initHeight = item.props.height
@@ -38,7 +40,7 @@ function ResizeComponent(props: { item: any }) {
   };
 
   const resizeBoxRef = useRef<HTMLDivElement>(null);
-  const contentBoxRef = useRef<HTMLDivElement>(null);
+  const contentBoxRef = useRef<HTMLButtonElement>(null);
 
   const calculateSize = (direction: directionType, e: MouseEvent, position: any) => {
     const { clientX, clientY } = e;
@@ -80,7 +82,7 @@ function ResizeComponent(props: { item: any }) {
     }
   };
 
-  const handleMouseDown = (direction: directionType, e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseDown = (direction: directionType, e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setCurrentElement(item.id);
     const { left, top, bottom, right } = resizeBoxRef.current!.getBoundingClientRect();
@@ -150,7 +152,7 @@ function ResizeComponent(props: { item: any }) {
       className="draggable-item"
       ref={resizeBoxRef}
     >
-      <div
+      <button
         ref={contentBoxRef}
         onClick={(e) => {
           e.stopPropagation();
@@ -169,23 +171,23 @@ function ResizeComponent(props: { item: any }) {
         }}
       >
         {item.type === "text" && item.text}
-      </div>
-      <div
+      </button>
+      <button
         className="resize-handle top-left"
         onClick={(e) => e.stopPropagation()}
         onMouseDown={(e) => handleMouseDown("top-left", e)}
       />
-      <div
+      <button
         className="resize-handle top-right"
         onClick={(e) => e.stopPropagation()}
         onMouseDown={(e) => handleMouseDown("top-right", e)}
       />
-      <div
+      <button
         className="resize-handle bottom-left"
         onClick={(e) => e.stopPropagation()}
         onMouseDown={(e) => handleMouseDown("bottom-left", e)}
       />
-      <div
+      <button
         className="resize-handle bottom-right"
         onClick={(e) => e.stopPropagation()}
         onMouseDown={(e) => handleMouseDown("bottom-right", e)}

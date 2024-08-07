@@ -54,7 +54,7 @@ function BaseProps() {
   useEffect(() => {
     reset();
     const res = getElement(currentElement);
-    const resProps = res?.props as any;
+    const resProps = res?.props;
     const resText = res?.text;
     setTextStyles((prevStyles) => {
       const updatedStyles = { ...prevStyles };

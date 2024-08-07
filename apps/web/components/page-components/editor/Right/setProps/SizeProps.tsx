@@ -36,7 +36,7 @@ function SizeProps() {
   useEffect(() => {
     reset();
     const res = getElement(currentElement);
-    const resProps = res?.props as any;
+    const resProps = res?.props;
     setSizeStyles((prevStyles) => {
       const updatedStyles = { ...prevStyles };
       if (resProps) {

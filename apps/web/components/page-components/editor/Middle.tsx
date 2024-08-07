@@ -2,7 +2,7 @@
 
 import { UseElementStore } from "@/store/element";
 
-import DraggableComponent from "../../base/DraggableComponent";
+import ChangePositionComponent from "../../base/ChangePositionComponent";
 import ResizeComponent from "../../base/ResizeComponent";
 
 function Middle(props: any) {
@@ -24,7 +24,7 @@ function Middle(props: any) {
       >
         {Elements.map((item: any) =>
           mode ? (
-            <DraggableComponent
+            <ChangePositionComponent
               key={item.id}
               item={item}
             />

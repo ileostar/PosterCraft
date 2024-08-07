@@ -45,16 +45,16 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
       return { Elements: newState };
     }),
   // 更新元素
-  updateElement: (id: string, props?: any, text?: string, url?: string) =>
+  updateElement: (id: string,  props: any = {}, text?: string, url?: string) =>
     set((state) => {
       const newState = state.Elements.map((item) => {
         if (item.id === id) {
           return {
-            props: { ...item.props, ...props } || item.props,
+            props: { ...item.props, ...props },
             id: item.id,
             type: item.type,
-            text: text || item.text,
-            url: url || item.url,
+            text: text ?? item.text,
+            url: url ?? item.url,
           };
         }
         return item;

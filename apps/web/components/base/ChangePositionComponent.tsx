@@ -3,7 +3,11 @@ import React, { useEffect, useRef, useState } from "react";
 
 //现在的位置=鼠标移动距离+原来的位置
 
-function DraggableComponent(props: { item: any }) {
+function ChangePositionComponent({
+  item,
+}: Readonly<{
+  item: any;
+}>) {
   const {
     setCurrentElement,
     setIsElement,
@@ -13,15 +17,13 @@ function DraggableComponent(props: { item: any }) {
     setMode,
   } = UseElementStore();
 
-  const { item } = props;
-
   let top = item.props.top ? parseInt(item.props.top.replace(/(px|rem)/g, ""), 10) : 0;
   let left = item.props.left ? parseInt(item.props.left.replace(/(px|rem)/g, ""), 10) : 0;
 
   const [position, setPosition] = useState({ x: left, y: top });
-  const draggableRef = useRef<HTMLDivElement>(null);
+  const draggableRef = useRef<HTMLButtonElement>(null);
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCurrentElement(item.id);
 
     // 阻止默认行为（如选择文本）
@@ -33,11 +35,6 @@ function DraggableComponent(props: { item: any }) {
     // 监听mousemove和mouseup事件
     const handleMouseMove = (moveEvent: MouseEvent) => {
       // 更新元素位置
-      //   setPosition({
-      //     x: moveEvent.clientX - initialMouseX+position.x,
-      //     y: moveEvent.clientY - initialMouseY+position.y,
-      //   });
-
       left = moveEvent.clientX - initialMouseX + position.x;
       top = moveEvent.clientY - initialMouseY + position.y;
 
@@ -73,7 +70,7 @@ function DraggableComponent(props: { item: any }) {
   }, [currentElement, position, setCurrentPosition, updateElement, item.id, setCurrentElement]);
 
   return (
-    <div
+    <button
       ref={draggableRef}
       onMouseDown={handleMouseDown}
       onClick={(e) => {
@@ -92,8 +89,8 @@ function DraggableComponent(props: { item: any }) {
       }}
     >
       {item.type === "text" && item.text}
-    </div>
+    </button>
   );
 }
 
-export default DraggableComponent;
+export default ChangePositionComponent;

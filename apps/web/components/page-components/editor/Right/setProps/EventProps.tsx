@@ -13,7 +13,7 @@ function EventProps() {
   useEffect(() => {
     reset();
     const res = getElement(currentElement);
-    const resUrl = res?.url as any;
+    const resUrl = res?.url;
     setClickURL(resUrl);
   }, [currentElement, getElement]);
 
