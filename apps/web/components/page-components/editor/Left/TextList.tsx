@@ -4,7 +4,7 @@ import { textTemplate } from "@/utils/template";
 import { v4 as uuidv4 } from "uuid";
 
 function TextList() {
-  const { setCurrentElement, addElement } = UseElementStore();
+  const { setCurrentElement, addElement,setIsElement } = UseElementStore();
 
   const handleClick = (event: any) => {
     console.log(event.target.innerHTML);
@@ -19,9 +19,9 @@ function TextList() {
       type: "text",
       text: event.target.innerHTML,
     };
-    console.log(element);
     addElement(element);
     setCurrentElement(id);
+    setIsElement(true);
   };
 
   // 将kebab-case转换为camelCase的函数
@@ -29,6 +29,15 @@ function TextList() {
     return str.replace(/-([a-z])/g, function (g) {
       return g[1].toUpperCase();
     });
+  };
+
+  //过滤掉flex布局属性
+  const filterFlexStyle = (str: string): string | null => {
+    if (str.includes("alignItems") || str.includes("justifyContent") || str.includes("display")) {
+      return null;
+    } else {
+      return str;
+    }
   };
 
   // 将CSS样式字符串转换为对象
@@ -42,8 +51,12 @@ function TextList() {
         const [key, value] = style.trim().split(":");
         //转成驼峰css
         const camelCaseKey = kebabCaseToCamelCase(key.trim());
+        // 过滤掉flex布局属性
+        const filterKey = filterFlexStyle(camelCaseKey);
         // 可能需要额外的处理来去除值两端的空格或引号等
-        styleObject[camelCaseKey] = value.trim().replace(/"/g, "").replace(/'/g, "");
+        if(filterKey){
+          styleObject[filterKey] = value.trim().replace(/"/g, "").replace(/'/g, "");
+        }
       }
     });
 
