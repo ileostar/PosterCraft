@@ -18,6 +18,9 @@ function TextList() {
       id: id,
       type: "text",
       text: event.target.innerHTML,
+      isHidden: false,
+      isLocked: false,      
+      layerName:"图层"
     };
     addElement(element);
     setCurrentElement(id);

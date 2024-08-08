@@ -6,7 +6,15 @@ type ElementStore = {
   currentElement: string;
   addElement: (element: ElementData) => void;
   deleteElement: (id: string) => void;
-  updateElement: (id: string, props?: any, text?: string, url?: string) => void;
+  updateElement: (
+    id: string,
+    props?: any,
+    text?: string,
+    url?: string,
+    isHidden?: boolean,
+    isLocked?: boolean,
+    layerName?: string,
+  ) => void;
   setCurrentElement: (id: string) => void;
   getElement: (id: string) => any;
   isElement: boolean;
@@ -17,6 +25,8 @@ type ElementStore = {
   setCurrentSize: (height: any, width: any) => void;
   mode: boolean;
   setMode: (mode: boolean) => void;
+  isCurrentLocked: boolean;
+  setIsCurrentLocked: (mode: boolean) => void;
 };
 
 type ElementData = {
@@ -30,6 +40,12 @@ type ElementData = {
   text?: string | null;
   //跳转url
   url?: string;
+  // 图层是否隐藏
+  isHidden?: boolean;
+  // 图层是否锁定
+  isLocked?: boolean;
+  // 图层名称
+  layerName?: string;
 };
 
 export const UseElementStore = create<ElementStore>((set, get) => ({
@@ -45,7 +61,15 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
       return { Elements: newState };
     }),
   // 更新元素
-  updateElement: (id: string,  props: any = {}, text?: string, url?: string) =>
+  updateElement: (
+    id: string,
+    props: any = {},
+    text?: string,
+    url?: string,
+    isHidden?: boolean,
+    isLocked?: boolean,
+    layerName?: string,
+  ) =>
     set((state) => {
       const newState = state.Elements.map((item) => {
         if (item.id === id) {
@@ -55,6 +79,9 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
             type: item.type,
             text: text ?? item.text,
             url: url ?? item.url,
+            isHidden: isHidden ?? item.isHidden,
+            isLocked: isLocked ?? item.isLocked,
+            layerName: layerName ?? item.layerName,
           };
         }
         return item;
@@ -70,6 +97,10 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
   // 当前选中的元素
   setCurrentElement: (elementId: string) => {
     set((state) => ({ currentElement: elementId }));
+    const element = get().getElement(elementId);
+    if (element) {
+      get().setIsCurrentLocked(element.isLocked);
+    }
   },
   // 判断当前点击的是否是元素(1.背景 2.元素)
   setIsElement: (isElement: boolean) => set((state) => ({ isElement })),
@@ -83,4 +114,7 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
   // 判断当前拖动动作是移动元素位置还是缩放元素尺寸,
   setMode: (mode: boolean) => set((state) => ({ mode })),
   mode: true,
+  // 判断当前元素属性是否被锁定
+  setIsCurrentLocked: (isCurrentLocked: boolean) => set((state) => ({isCurrentLocked })),
+  isCurrentLocked: false,
 }));

@@ -24,15 +24,19 @@ function Middle(props: any) {
       >
         {Elements.map((item: any) =>
           mode ? (
-            <ChangePositionComponent
+            <div
               key={item.id}
-              item={item}
-            />
+              className={` ${item.isHidden ? "invisible" : ""}`}
+            >
+              <ChangePositionComponent item={item} />
+            </div>
           ) : (
-            <ResizeComponent
+            <div
               key={item.id}
-              item={item}
-            />
+              className={` ${item.isHidden ? "invisible" : ""}`}
+            >
+              <ResizeComponent item={item} />
+            </div>
           ),
         )}
       </div>

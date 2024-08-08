@@ -9,6 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@ant-design/icons": "^5.4.0",
         "@ant-design/nextjs-registry": "1.0.0",
         "@hookform/resolvers": "3.9.0",
         "@radix-ui/react-accordion": "^1.2.0",
