@@ -38,6 +38,7 @@ function Middle(props: any) {
               <ResizeComponent item={item} />
             </div>
           ),
+          
         )}
       </div>
     </button>

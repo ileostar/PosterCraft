@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 type ElementStore = {
   Elements: ElementData[];
+  setELements: (elements: ElementData[]) => void;
   // 当前选中的元素
   currentElement: string;
   addElement: (element: ElementData) => void;
@@ -50,6 +51,7 @@ type ElementData = {
 
 export const UseElementStore = create<ElementStore>((set, get) => ({
   Elements: [],
+  setELements: (elements: ElementData[]) => {set({ Elements: elements })},
   currentElement: "",
   // 添加元素
   addElement: (element: ElementData) =>

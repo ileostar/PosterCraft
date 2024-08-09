@@ -164,7 +164,7 @@ function ResizeComponent({
           }
         }}
         style={{
-          //   position: "absolute",
+          // position: "absolute",
           ...item.props,
           width: "100%",
           height: "100%",

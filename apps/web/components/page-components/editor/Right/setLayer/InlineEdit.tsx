@@ -70,7 +70,7 @@ useEffect(()=>{
     <div
       ref={wrapper}
       onClick={(e)=>handleClick(e)}
-      className="m-2 w-3/6"
+      className="m-2 w-3/6 flex align-items-center justify-content-center"
     >
       {isEdited ? (
         <input
@@ -81,7 +81,7 @@ useEffect(()=>{
           onChange={(e) => setInnerValue(e.target.value)}
         />
       ) : (
-        <div className="text-sm text-center m-1">{innerValue}</div>
+        <div className="text-sm text-center m-2">{innerValue}</div>
       )}
     </div>
   );
