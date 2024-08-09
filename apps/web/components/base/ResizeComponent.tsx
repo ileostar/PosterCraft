@@ -12,7 +12,7 @@ function ResizeComponent({
 }: Readonly<{
   item: any;
 }>) {
-  const { setCurrentElement, setIsElement, updateElement, setCurrentSize, setMode } =
+  const { setCurrentElement, setIsElement, updateElement, setCurrentSize } =
     UseElementStore();
 
   // 原始的编辑框height，width，top，left, +4和-2是算上边框的2px宽度的border
@@ -158,7 +158,6 @@ function ResizeComponent({
           e.stopPropagation();
           setCurrentElement(item.id);
           setIsElement(true);
-          setMode(false);
           if (item.url) {
             window.open(item.url);
           }

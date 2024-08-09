@@ -20,7 +20,7 @@ function TextList() {
       text: event.target.innerHTML,
       isHidden: false,
       isLocked: false,      
-      layerName:"图层"
+      layerName:"图层",
     };
     addElement(element);
     setCurrentElement(id);

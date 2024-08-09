@@ -11,9 +11,7 @@ import {useState } from "react";
 
 function Right(props: any) {
   
-  const {isElement,currentElement,isCurrentLocked} = UseElementStore();
-
-  const [isLocked, setIsLocked] = useState(false);
+  const {isElement,isCurrentLocked} = UseElementStore();
 
   const tabs = [
     { id: 0, label: '属性设置', content: (isElement&&!isCurrentLocked)?<SetProps />:null },

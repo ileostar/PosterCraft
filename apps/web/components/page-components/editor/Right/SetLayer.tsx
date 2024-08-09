@@ -1,5 +1,6 @@
 import { UseElementStore } from "@/store/element";
-import { ElementData } from "@/types/ElementType";
+import { arrayMove } from "@/utils/arrayMove";
+import { getParentElement } from "@/utils/getParentElement";
 import {
   DragOutlined,
   EyeInvisibleOutlined,
@@ -8,11 +9,8 @@ import {
   UnlockOutlined,
 } from "@ant-design/icons";
 import { Tooltip } from "antd";
-// import {arrayMoveImmutable} from 'array-move';
 import { useEffect, useRef, useState } from "react";
 
-// import { arrayMove, SortableContainer, SortableElement, SortableHandle } from "react-sortable-hoc";
-import { arrayMove, getParentElement } from "../../../../lib/utils";
 import InlineEdit from "./setLayer/InlineEdit";
 
 function SetLayer() {

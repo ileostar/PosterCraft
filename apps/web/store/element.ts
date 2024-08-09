@@ -15,6 +15,7 @@ type ElementStore = {
     isHidden?: boolean,
     isLocked?: boolean,
     layerName?: string,
+    mode?: string,
   ) => void;
   setCurrentElement: (id: string) => void;
   getElement: (id: string) => any;
@@ -24,8 +25,6 @@ type ElementStore = {
   setCurrentPosition: (left: any, top: any) => void;
   currentSize: { height: any; width: any };
   setCurrentSize: (height: any, width: any) => void;
-  mode: boolean;
-  setMode: (mode: boolean) => void;
   isCurrentLocked: boolean;
   setIsCurrentLocked: (mode: boolean) => void;
 };
@@ -113,9 +112,6 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
   // 当拖动缩放元素时，用于是否更新元素尺寸数据面板的判断
   currentSize: { height: 0, width: 0 },
   setCurrentSize: (height: any, width: any) => set((state) => ({ currentSize: { height, width } })),
-  // 判断当前拖动动作是移动元素位置还是缩放元素尺寸,
-  setMode: (mode: boolean) => set((state) => ({ mode })),
-  mode: true,
   // 判断当前元素属性是否被锁定
   setIsCurrentLocked: (isCurrentLocked: boolean) => set((state) => ({isCurrentLocked })),
   isCurrentLocked: false,
