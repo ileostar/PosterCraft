@@ -1,5 +1,6 @@
 import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
 import { IsNumber } from 'class-validator';
+import { string } from 'zod';
 
 type ChannelProps = {
   name: string;
@@ -39,6 +40,7 @@ export class WorkDto {
     type: Boolean,
     required: false,
     description: '是否是模板',
+    default: false,
   })
   isTemplate?: boolean;
 
@@ -46,22 +48,9 @@ export class WorkDto {
     type: Boolean,
     required: false,
     description: '是否公开',
+    default: false,
   })
   isPublic?: boolean;
-
-  @ApiProperty({
-    type: Boolean,
-    required: false,
-    description: '是否是热门',
-  })
-  isHot?: boolean;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-    description: '被使用量',
-  })
-  copiedCount?: number;
 
   @ApiProperty({
     type: Number,
@@ -88,7 +77,6 @@ export class WorkDto {
 
 export class UpdateWorkDto extends OmitType(WorkDto, [
   'title',
-  'copiedCount',
   'author',
   'userId',
 ]) {
@@ -160,4 +148,18 @@ export class GetMyWorksListDto extends PickType(WorkDto, ['isTemplate']) {
     description: '每页条数',
   })
   pageSize?: number;
+}
+
+export class ResponseURLDto {
+  @ApiProperty({
+    type: string,
+    description: '访问地址',
+  })
+  url: string;
+
+  @ApiProperty({
+    type: string,
+    description: '页面ID',
+  })
+  pageId: string;
 }

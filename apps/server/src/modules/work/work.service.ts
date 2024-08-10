@@ -6,6 +6,8 @@ import { and, eq } from 'drizzle-orm';
 import { JwtPayloadDto } from '../auth/dto/jwt.dto';
 import { ResponseData } from 'src/interceptor/responseData';
 import { projectConfig } from 'src/config';
+import { URL } from 'url';
+import { join } from 'path';
 
 @Injectable()
 export class WorkService {
@@ -40,7 +42,7 @@ export class WorkService {
       const copiedWork = await this.db.query.work.findFirst({
         where: eq(work.uuid, workId),
       });
-      if (!copiedWork || !copiedWork.isPublic) throw '改工作区不存在或不公开';
+      if (!copiedWork || !copiedWork.isPublic) throw '该工作区不存在或不公开';
       const res = await this.db.insert(work).values({
         ...copiedWork,
         id: void 0,
@@ -74,8 +76,7 @@ export class WorkService {
         '复制工作区成功',
       );
     } catch (error) {
-      Logger.error('复制工作区失败' + error);
-      return ResponseData.fail('复制工作区失败' + error);
+      return ResponseData.fail('复制工作区失败：' + error);
     }
   }
 
@@ -118,11 +119,12 @@ export class WorkService {
   }
 
   async publish(workId: string, isTemplate: boolean) {
-    const url = projectConfig.url;
+    const url = projectConfig.url.replace(/\/$/, '');
     const res = await this.db
       .update(work)
       .set({
         status: 2,
+        isPublic: true,
         latestPublishAt: new Date(),
         ...(isTemplate && { isTemplate: true }),
       })
@@ -132,7 +134,25 @@ export class WorkService {
       where: eq(work.uuid, workId),
     });
     return {
-      url: `${url}/p/${workInfo.id}-${workInfo.uuid}`,
+      url: `${url}/pages/${workInfo.id}-${workInfo.uuid}`,
+      pageId: `${workInfo.id}-${workInfo.uuid}`,
+    };
+  }
+
+  async preview(workId: string) {
+    const url = projectConfig.url.replace(/\/$/, '');
+    const res = await this.db
+      .update(work)
+      .set({
+        status: 1,
+      })
+      .where(eq(work.uuid, workId));
+    if (res[0].affectedRows === 0) throw '工作区ID不存在';
+    const workInfo = await this.db.query.work.findFirst({
+      where: eq(work.uuid, workId),
+    });
+    return {
+      url: `${url}/pages/preview/${workInfo.id}-${workInfo.uuid}`,
       pageId: `${workInfo.id}-${workInfo.uuid}`,
     };
   }

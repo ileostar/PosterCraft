@@ -4,8 +4,8 @@ import { boolean, int, json, mysqlTable, text, timestamp, varchar } from "drizzl
 import { user } from "./user";
 
 type ChannelProps = {
-  name: string;
   channelId: string;
+  name: string;
 };
 
 type Content = {
@@ -27,7 +27,7 @@ export const work = mysqlTable("work", {
   isHot: boolean("is_hot"),
   author: varchar("author", { length: 256 }),
   copiedCount: int("copied_count").default(0),
-  status: int("status").default(1),
+  status: int("status").default(0),
   userId: varchar("user_id", { length: 128 }).references(() => user.id),
   channels: json("channels").$type<Array<ChannelProps>>().notNull().default([]),
   latestPublishAt: timestamp("latest_publishAt"),
