@@ -265,13 +265,13 @@ importers:
         specifier: 3.9.0
         version: 3.9.0(react-hook-form@7.52.2(react@18.3.1))
       '@radix-ui/react-accordion':
-        specifier: ^1.2.0
+        specifier: 1.2.0
         version: 1.2.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-label':
         specifier: 2.1.0
         version: 2.1.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-radio-group':
-        specifier: ^1.2.0
+        specifier: 1.2.0
         version: 1.2.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-separator':
         specifier: 1.1.0
@@ -280,7 +280,7 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(@types/react@18.3.3)(react@18.3.1)
       '@radix-ui/react-toggle':
-        specifier: ^1.1.0
+        specifier: 1.1.0
         version: 1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       antd:
         specifier: 5.20.0
@@ -307,7 +307,7 @@ importers:
         specifier: 18.3.1
         version: 18.3.1
       react-color:
-        specifier: ^2.19.3
+        specifier: 2.19.3
         version: 2.19.3(react@18.3.1)
       react-dom:
         specifier: 18.3.1
@@ -341,7 +341,7 @@ importers:
         specifier: 18.3.3
         version: 18.3.3
       '@types/react-color':
-        specifier: ^3.0.12
+        specifier: 3.0.12
         version: 3.0.12
       '@types/react-dom':
         specifier: 18.3.0
@@ -7377,6 +7377,7 @@ packages:
   superagent@10.0.0:
     resolution: {integrity: sha512-Lm/+H7sEL6Ci/U0lx7Gn67A9x7+kA0OHBT9J6F6kK5r8DiuJiemG6qMqz0pjsmw4NOOxPuIEKLE8GE4vLtiomg==}
     engines: {node: '>=14.18.0'}
+    deprecated: Please use v9+ until we resolve RE2 issues, e.g. https://github.com/ladjs/superagent/pull/1813 and https://github.com/ladjs/superagent/issues/1814
 
   superagent@9.0.2:
     resolution: {integrity: sha512-xuW7dzkUpcJq7QnhOsnNUgtYp3xRwpt2F7abdRYIpCsAt0hhUqia0EdxyXZQQpNmGtsCzYHryaKSV3q3GJnq7w==}
