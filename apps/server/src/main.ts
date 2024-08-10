@@ -19,7 +19,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       /^http:\/\/localhost(:\d+)?$/,
-      /^http:\/\/poster-craft\.leostar\.top(:81)?$/,
+      /^https:\/\/poster-craft\.leostar\.top(:81)?$/,
     ],
   });
 
