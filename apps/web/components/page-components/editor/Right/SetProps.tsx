@@ -1,15 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import "../../../../style/dropDownAnimate.css";
+import BaseProps from "./setProps/BaseProps"
+import BorderProps from "./setProps/BorderProps"
+import EventProps from "./setProps/EventProps"
+import PositionProps from "./setProps/PositionProps"
+import SizeProps from "./setProps/SizeProps"
+import ShadowProps from "./setProps/ShadowProps"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 function SetProps() {
-  const [isExpandedBase, setIsExpandedBase] = useState(false);
-  const [isExpandedSize, setIsExpandedSize] = useState(false);
-  const [isExpandedBorder, setIsExpandedBorder] = useState(false);
-  const [isExpandedPosition, setIsExpandedPosition] = useState(false);
-  const [isExpandedShadow, setIsExpandedShadow] = useState(false);
-  const [isExpandedEvent, setIsExpandedEvent] = useState(false);
-  
   const parentRef = useRef<HTMLDivElement | null>(null);
   const [childStyle, setChildStyle] = useState({});
 
@@ -20,116 +24,38 @@ function SetProps() {
     }
   }, []); 
 
-  const toggleDropDown = (type: string) => {
-    if (type === "base") {
-      setIsExpandedBase(!isExpandedBase);
-    } else if (type === "size") {
-      setIsExpandedSize(!isExpandedSize);
-    } else if (type === "border") {
-      setIsExpandedBorder(!isExpandedBorder);
-    } else if (type === "position") {
-      setIsExpandedPosition(!isExpandedPosition);
-    } else if (type === "shadow") {
-      setIsExpandedShadow(!isExpandedShadow);
-    } else if (type === "event") {
-      setIsExpandedEvent(!isExpandedEvent);
-    }
-  };
-
-
   return (
     <div className="h-full"  ref={parentRef}>
-      <div style={childStyle}>
-      <div>
-        <button
-          onClick={() => toggleDropDown("base")}
-          className="w-full py-3 border"
+    <div style={childStyle} className="overflow-x-hidden">
+    <Accordion
+          type="single"
+          collapsible
         >
-          基本属性
-        </button>
-        <div className={` bg-white dropdown-content ${isExpandedBase ? "expanded-base" : ""}`}>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-        </div>
-      </div>
-      <div>
-      <button
-          onClick={() => toggleDropDown("size")}
-          className="w-full py-3  border"
-        >
-          尺寸
-        </button>
-        <div className={` bg-white dropdown-content ${isExpandedSize ? "expanded-size" : ""}`}>
-          <div className="pt-2">
-            <p>这里是基本属性的详细信息...</p>
-            <p>这里是基本属性的详细信息...</p>
-            <p>这里是基本属性的详细信息...</p>
-            <p>这里是基本属性的详细信息...</p>
-          </div>
-        </div>
-      </div>
-      <div>
-      <button
-          onClick={() => toggleDropDown("border")}
-          className="w-full py-3  border"
-        >
-          边框
-        </button>
-        <div className={` bg-white dropdown-content ${isExpandedBorder ? "expanded-border" : ""}`}>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-        </div>
-      </div>
-      <div>
-      <button
-          onClick={() => toggleDropDown("position")}
-          className="w-full py-3  border"
-        >
-          位置
-        </button>
-        <div className={` bg-white dropdown-content ${isExpandedPosition ? "expanded-position" : ""}`}>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-        </div>
-      </div>
-      <div>
-      <button
-          onClick={() => toggleDropDown("shadow")}
-          className="w-full py-3  border"
-        >
-          阴影与透明度
-        </button>
-        <div className={` bg-white dropdown-content ${isExpandedShadow ? "expanded-shadow" : ""}`}>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-        </div>
-      </div>
-      <div>
-      <button
-          onClick={() => toggleDropDown("event")}
-          className="w-full py-3 border "
-        >
-          事件功能
-        </button>
-        <div className={` bg-white dropdown-content ${isExpandedEvent ? "expanded-event" : ""}`}>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-          <p>这里是基本属性的详细信息...</p>
-        </div>
-      </div>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>基本属性</AccordionTrigger>
+            <AccordionContent><BaseProps/></AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger>尺寸</AccordionTrigger>
+            <AccordionContent><SizeProps/></AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger>边框</AccordionTrigger>
+            <AccordionContent><BorderProps/></AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-4">
+            <AccordionTrigger>位置</AccordionTrigger>
+            <AccordionContent><PositionProps/></AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-5">
+            <AccordionTrigger>阴影与透明度</AccordionTrigger>
+            <AccordionContent><ShadowProps/></AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-6">
+            <AccordionTrigger>事件功能</AccordionTrigger>
+            <AccordionContent><EventProps/></AccordionContent>
+          </AccordionItem>
+        </Accordion>
     </div>
     </div>
   );
