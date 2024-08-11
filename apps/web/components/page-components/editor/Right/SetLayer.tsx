@@ -47,7 +47,7 @@ function SetLayer() {
 
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     const currentEle = getParentElement(e.target as HTMLElement, "parentItem");
-    if (currentEle && currentEle.dataset.index) {
+    if (currentEle?.dataset?.index) {
       const moveIndex = Number(currentEle.dataset.index);
       let list = Elements;
       list = arrayMove(list, dragData.currentDragIndex, moveIndex);
@@ -71,6 +71,7 @@ function SetLayer() {
         className="overflow-x-hidden"
         onDrop={(e) => onDrop(e)}
         onDragOver={(e) => onDragOver(e)}
+        role="button"
       >
         {Elements.map((item, index) => (
           <div
@@ -78,6 +79,7 @@ function SetLayer() {
             className={`${item.id == dragData.currentDragId ? "border-red-500 bg-red-500 text-white" : "border-gray-950"} parentItem flex justify-around w-full h-12 relative border-t border-l border-r  ${
               index === Elements.length - 1 ? "border-b" : ""
             }`}
+            role="button"
             style={{ zIndex: 10 }}
             draggable
             onDragStart={(event) => onDragStart(event, item.id, index)}

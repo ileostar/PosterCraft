@@ -5,7 +5,6 @@ import SetProps from "@/components/page-components/editor/Right/SetProps"
 import SetLayer from "@/components/page-components/editor/Right/SetLayer"
 import SetPage from "@/components/page-components/editor/Right/SetPage"
 import { UseElementStore } from "@/store/element";
-import {useState } from "react";
 
  
 

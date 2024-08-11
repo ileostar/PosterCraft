@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect,useState } from 'react';
 
 const useClickOutside = (elementRef: React.MutableRefObject<HTMLElement | null>) => {
   const [isClickOutside, setIsClickOutside] = useState(false);
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (elementRef.current && elementRef.current.contains(event.target as HTMLElement)) {
+    if (elementRef.current?.contains(event.target as HTMLElement)) {
       setIsClickOutside(false);
     }
     else {

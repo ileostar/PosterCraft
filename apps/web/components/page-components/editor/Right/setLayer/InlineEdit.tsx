@@ -1,7 +1,6 @@
 import useKeyPress from "@/hooks/useKeyPress";
 import useClickOutside from "@/hooks/useClickOutside";
 import { UseElementStore } from "@/store/element";
-import { error } from "console";
 import { useEffect, useRef, useState } from "react";
 
 function InlineEdit({
@@ -69,6 +68,7 @@ useEffect(()=>{
   return (
     <div
       ref={wrapper}
+      role="button"
       onClick={(e)=>handleClick(e)}
       className="m-2 w-3/6 flex align-items-center justify-content-center"
     >
