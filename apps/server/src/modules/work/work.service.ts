@@ -5,9 +5,7 @@ import { work } from '@poster-craft/schema';
 import { and, eq } from 'drizzle-orm';
 import { JwtPayloadDto } from '../auth/dto/jwt.dto';
 import { ResponseData } from 'src/interceptor/responseData';
-import { projectConfig } from 'src/config';
-import { URL } from 'url';
-import { join } from 'path';
+import { GlobalConfig } from 'src/config';
 
 @Injectable()
 export class WorkService {
@@ -119,7 +117,7 @@ export class WorkService {
   }
 
   async publish(workId: string, isTemplate: boolean) {
-    const url = projectConfig.url.replace(/\/$/, '');
+    const url = GlobalConfig.url.replace(/\/$/, '');
     const res = await this.db
       .update(work)
       .set({
@@ -140,7 +138,7 @@ export class WorkService {
   }
 
   async preview(workId: string) {
-    const url = projectConfig.url.replace(/\/$/, '');
+    const url = GlobalConfig.url.replace(/\/$/, '');
     const res = await this.db
       .update(work)
       .set({

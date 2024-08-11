@@ -16,6 +16,7 @@ import { WorkModule } from '../work/work.module';
 import { ChannelModule } from '../channel/channel.module';
 import { PageModule } from '../page/page.module';
 import { TemplateModule } from '../template/template.module';
+import { GlobalConfig } from 'src/config';
 
 @Module({
   imports: [
@@ -34,18 +35,18 @@ import { TemplateModule } from '../template/template.module';
     TemplateModule,
     ChannelModule,
     PageModule,
-    PassportModule.register({ secret: process.env.JWT_SERECT }),
+    PassportModule.register({ secret: GlobalConfig.jwt_secret }),
     JwtModule.register({
       global: true,
-      secret: process.env.JWT_SECRET,
+      secret: GlobalConfig.jwt_secret,
       signOptions: { expiresIn: '3d' },
     }),
     RedisModule.forRootAsync({
       useFactory: () => ({
         type: 'single',
-        url: process.env.REDIS_URL,
+        url: GlobalConfig.redis_url,
         options: {
-          password: process.env.REDIS_PASSWORD,
+          password: GlobalConfig.redis_password,
         },
       }),
     }),

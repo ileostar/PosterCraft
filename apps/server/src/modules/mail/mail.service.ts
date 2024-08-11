@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Global, Injectable } from '@nestjs/common';
 import {
   SendCodeByEmailDto,
   BindEmailDto,
@@ -8,7 +8,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { generateVerificationCode } from 'src/common/utils';
 import { CacheService } from '../cache/cache.service';
 import { UserService } from '../user/user.service';
-import { projectConfig } from 'src/config';
+import { GlobalConfig } from 'src/config';
 
 @Injectable()
 export class MailService {
@@ -23,7 +23,7 @@ export class MailService {
     code: number | string,
     subject: string = 'PosterCraft Email',
     template: string = 'index',
-    url: string = projectConfig.projectName,
+    url: string = GlobalConfig.projectName,
   ) {
     return this.mailerService.sendMail({
       to: email,

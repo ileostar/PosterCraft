@@ -11,6 +11,7 @@ import Client from 'src/factories/sms';
 import * as $Dysmsapi20170525 from '@alicloud/dysmsapi20170525';
 import * as $Util from '@alicloud/tea-util';
 import { UserService } from '../user/user.service';
+import { GlobalConfig } from 'src/config';
 
 @Injectable()
 export class SmsService {
@@ -23,8 +24,8 @@ export class SmsService {
     this.cacheService.setCache(dto.phone, code);
     const client = Client.createClient();
     const sendSmsRequest = new $Dysmsapi20170525.SendSmsRequest({
-      signName: process.env.SignName,
-      templateCode: process.env.TemplateCode,
+      signName: GlobalConfig.sms.signName,
+      templateCode: GlobalConfig.sms.templateCode,
       phoneNumbers: dto.phone,
       templateParam: JSON.stringify({ code }),
     });

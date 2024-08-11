@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import * as OSS from 'ali-oss';
-import { ConfigService } from '@nestjs/config';
+import { GlobalConfig } from 'src/config';
 
 @Injectable()
 export class OssService {
   private client: OSS;
 
-  constructor(private configService: ConfigService) {
+  constructor() {
     this.client = new OSS({
-      region: this.configService.get<string>('OSS_REGION'),
-      accessKeyId: this.configService.get<string>('OSS_ACCESS_KEY_ID'),
-      accessKeySecret: this.configService.get<string>('OSS_ACCESS_KEY_SECRET'),
-      bucket: this.configService.get<string>('OSS_BUCKET'),
+      region: GlobalConfig.oss.region,
+      accessKeyId: GlobalConfig.oss.accessKeyId,
+      accessKeySecret: GlobalConfig.oss.accessKeySecret,
+      bucket: GlobalConfig.oss.bucket,
     });
   }
 
