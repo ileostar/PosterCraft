@@ -22,6 +22,7 @@ import { string } from 'zod';
 import {
   CreateWorkDto,
   GetMyWorksListDto,
+  ResponseURLDto,
   ResponseWorkInfo,
   ResponseWorksListDto,
   UpdateWorkDto,
@@ -116,8 +117,7 @@ export class WorkController {
   @UseGuards(JwtAuthGuard)
   @ApiParam({
     name: 'workId',
-    required: false,
-    description: '工作区Id（可选），不填默认获取所有工作区',
+    description: '工作区Id',
     type: string,
   })
   @ApiOperation({
@@ -216,8 +216,9 @@ export class WorkController {
   })
   @ApiOperation({
     summary: '发布工作区',
-    description: '根据工作区Id发布工作区',
+    description: '根据工作区Id发布工作区，返回访问地址',
   })
+  @APIResponse(ResponseURLDto)
   async publishWork(@Param('workId') workId: string) {
     try {
       const data = await this.workService.publish(workId, false);
@@ -244,8 +245,9 @@ export class WorkController {
   })
   @ApiOperation({
     summary: '发布为工作区模版',
-    description: '根据工作区Id发布为工作区模版',
+    description: '根据工作区Id发布为工作区模版，返回访问地址',
   })
+  @APIResponse(ResponseURLDto)
   async publishWorkTemplate(@Param('workId') workId: string) {
     try {
       const data = await this.workService.publish(workId, true);
@@ -257,6 +259,35 @@ export class WorkController {
     } catch (error) {
       return {
         msg: '发布工作区失败' + error,
+      };
+    }
+  }
+
+  @Post('preview/:workId')
+  @UseGuards(JwtAuthGuard)
+  @ApiParam({
+    name: 'workId',
+    required: true,
+    description: '工作区Id（必填）',
+    type: string,
+  })
+  @ApiOperation({
+    summary: '获取预览工作区地址',
+    description: '根据工作区Id获取预览工作区地址',
+  })
+  @APIResponse(ResponseURLDto)
+  async previewWork(@Param('workId') workId: string) {
+    try {
+      const data = await this.workService.preview(workId);
+      return {
+        code: 200,
+        msg: '获取预览工作区地址成功',
+        data,
+      };
+    } catch (error) {
+      return {
+        code: -1,
+        msg: '获取预览工作区地址失败：' + error,
       };
     }
   }

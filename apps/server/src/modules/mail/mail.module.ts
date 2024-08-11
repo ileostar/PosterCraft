@@ -5,6 +5,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { CacheModule } from '../cache/cache.modules';
 import { UserModule } from '../user/user.module';
+import { GlobalConfig } from 'src/config';
 
 @Module({
   imports: [
@@ -12,12 +13,12 @@ import { UserModule } from '../user/user.module';
     CacheModule,
     MailerModule.forRoot({
       transport: {
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
+        host: GlobalConfig.mail.host,
+        port: GlobalConfig.mail.port,
         secure: false,
         auth: {
-          user: process.env.EMAIL_ID,
-          pass: process.env.EMAIL_PASS,
+          user: GlobalConfig.mail.id,
+          pass: GlobalConfig.mail.pass,
         },
       },
       defaults: {

@@ -134,3 +134,5 @@ dist
 .turbo/
 apps/server/.env.prod
 apps/server/.env.test
+
+.vercel

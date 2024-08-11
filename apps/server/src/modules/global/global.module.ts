@@ -8,14 +8,9 @@ const envConfig = {
 };
 
 const envFilePath = envConfig[process.env.NODE_ENV] || '.env';
+
 @Global()
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      envFilePath: envFilePath,
-      isGlobal: true,
-    }),
-  ],
   providers: [DbProvider],
   exports: [DB],
 })

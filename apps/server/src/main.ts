@@ -3,7 +3,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './modules/app/app.module';
 import { appGlobalMiddleware } from './middlewares/global.middleware.ts';
-import { projectConfig } from './config';
+import { GlobalConfig } from './config';
 import { Logger } from '@nestjs/common';
 import { join } from 'path';
 import {
@@ -19,7 +19,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       /^http:\/\/localhost(:\d+)?$/,
-      /^http:\/\/poster-craft\.leostar\.top(:81)?$/,
+      /^https:\/\/poster-craft\.leostar\.top(:81)?$/,
     ],
   });
 
@@ -38,8 +38,8 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/swagger', app, document, projectConfig.swaggerConfig);
-  await app.listen(projectConfig.port);
+  SwaggerModule.setup('/swagger', app, document, GlobalConfig.swaggerConfig);
+  await app.listen(GlobalConfig.port);
 }
 
-bootstrap().then(() => Logger.log(projectConfig.StartLog));
+bootstrap().then(() => Logger.log(GlobalConfig.StartLog));

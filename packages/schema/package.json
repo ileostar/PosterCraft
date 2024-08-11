@@ -1,7 +1,6 @@
 {
   "name": "@poster-craft/schema",
   "version": "1.0.0",
-  "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -9,5 +8,9 @@
   },
   "dependencies": {
     "@paralleldrive/cuid2": "2.2.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

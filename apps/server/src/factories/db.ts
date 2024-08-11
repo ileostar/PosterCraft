@@ -3,12 +3,13 @@ import { Logger } from '@nestjs/common';
 import { DefaultLogger, LogWriter } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/mysql2';
 import * as mysql from 'mysql2/promise';
+import { GlobalConfig } from 'src/config';
 
 let connection: mysql.Connection;
 
 async function createConnection() {
   return await mysql.createConnection({
-    uri: process.env.DATABASE_URL,
+    uri: GlobalConfig.database_url,
     multipleStatements: true,
     waitForConnections: true,
     connectionLimit: 10,
@@ -37,9 +38,6 @@ export async function setupDB() {
       logger.verbose(message);
     }
   }
-
-  logger.debug(`Connecting to ${process.env.DATABASE_URL}`);
-  logger.debug(`SECRET: ${process.env.JWT_SECRET}`);
 
   connection = await createConnection();
 
