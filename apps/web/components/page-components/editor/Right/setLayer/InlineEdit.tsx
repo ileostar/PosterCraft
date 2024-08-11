@@ -68,7 +68,6 @@ useEffect(()=>{
   return (
     <div
       ref={wrapper}
-      role="button"
       onClick={(e)=>handleClick(e)}
       className="m-2 w-3/6 flex align-items-center justify-content-center"
     >
