@@ -178,7 +178,7 @@ function Index(props: any) {
   return (
     <AuthLayout>
       <div>
-        <Head />
+        <Head mode={'sticky'}/>
         <div
           className="w-4/5 mx-auto  mt-8"
           id="my-work"
