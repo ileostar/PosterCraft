@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { DB, DbType } from '../global/providers/db.provider';
 import { WorkService } from '../work/work.service';
 import { GetTemplateListDto } from './dto/template.dto';
-import { work } from '@poster-craft/schema';
+import { work } from '../../../../packages/schema';
 import { eq } from 'drizzle-orm';
 
 @Injectable()

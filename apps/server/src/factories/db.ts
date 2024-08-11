@@ -1,4 +1,4 @@
-import { schemas } from '@poster-craft/schema';
+import { schemas } from '../../../../packages/schema';
 import { Logger } from '@nestjs/common';
 import { DefaultLogger, LogWriter } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/mysql2';
