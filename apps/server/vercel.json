@@ -1,5 +1,8 @@
 {
   "version": 2,
+  "buildCommand": "turbo run build",
+  "installCommand": "pnpm -w install",
+  "outputDirectory": "dist",
   "builds": [
     {
       "src": "dist/src/main.js",
