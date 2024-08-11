@@ -12,7 +12,7 @@ export interface ElementData {
   type: "text" | "img" | "graph";
   // 可选的text属性，类型为string或null
   text?: string | null;
-  //跳转url
+  // 跳转url
   url?: string;
   // 图层是否隐藏
   isHidden?: boolean;

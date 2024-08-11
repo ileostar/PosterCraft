@@ -1,11 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import "../../style/card.css";
-import  "../../style/scrollAnimate.css"
-import { useRef } from "react";
+import "../../style/scrollAnimate.css";
+
 import { useScrollAnimate } from "@/hooks/useScrollAnimate";
+import { useRef } from "react";
 
 function Card() {
   const router = useRouter();
@@ -13,7 +15,6 @@ function Card() {
     router.push("/editor");
   };
 
- 
   const boxRef = useRef<HTMLDivElement>(null); // 指定ref的类型为HTMLDivElement
   useScrollAnimate(boxRef);
 
@@ -21,13 +22,16 @@ function Card() {
     <div
       className="card bg-base-100 w-80 shadow-xl mb-7 mt-7 hover-zoom ml-14 box"
       onClick={handleClick}
-         ref={boxRef}  
+      ref={boxRef}
     >
       <figure>
-        <img
-          className="h-96 w-full object-cover img"
+        <Image
           src="/num.jpg"
           alt="Shoes"
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="w-full h-auto"
         />
       </figure>
       <div className="card-body">
@@ -41,9 +45,13 @@ function Card() {
           <div className="badge badge-outline">Products</div> */}
           <div className="text-lg">作者：leoaa</div>
           <div className="flex justify-around">
-            <img
-              className="h-6 object-cover"
+            <Image
               src="/人数数量.png"
+              alt="Shoes"
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="w-auto h-6"
             />
             <div className="ml-2 text-lg text-red-500">1121</div>
           </div>
