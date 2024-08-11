@@ -17,9 +17,6 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "@poster-craft/*": ["packages/*"]
-    }
+    "noFallthroughCasesInSwitch": false
   }
 }
