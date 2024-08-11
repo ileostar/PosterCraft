@@ -2,37 +2,19 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
   <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## 描述
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+PosterCraft 海报编辑器服务端
 
-## Installation
+## 安装
 
 ```bash
 $ pnpm install
 ```
 
-## Running the app
+## 运行
 
 ```bash
 # development
@@ -45,7 +27,7 @@ $ pnpm run start:dev
 $ pnpm run start:prod
 ```
 
-## Test
+## 测试
 
 ```bash
 # unit tests
@@ -61,9 +43,41 @@ $ pnpm run test:cov
 ## 环境变量配置
 
 ```bash
-DATABASE_URL="mysql://root:root@127.0.0.1:3306/<your-database>"
-JWT_SECRET="<your-secret>"
+# Mysql
+DATABASE_URL="mysql://<your-database-name>:<your-database-password>@127.0.0.1:3306/poster_craft"
+JWT_SECRET=<your-jwt-secret>
+
+# Redis
 REDIS_URL="redis://127.0.0.1:6379"
+
+# SMS短信服务
+ALIBABA_CLOUD_ACCESS_KEY_ID=<your-SMS-signName>
+ALIBABA_CLOUD_ACCESS_KEY_SECRET=<your-SMS-signName>
+SignName=<your-SMS-signName>
+TemplateCode=<your-SMS-TemplateCode>
+
+# Google Oauth2
+GOOGLE_CLIENT_ID=<your-google-client-id>
+GOOGLE_CLIENT_SECRET=<your-google-client-secret>
+GOOGLE_REDIRECT_URI=<your-google-redirect-uri>
+
+# Github Oauth2
+GITHUB_CLIENT_ID=<your-github-client-id>
+GITHUB_CLIENT_SECRET=<your-github-client-secret>
+GITHUB_REDIRECT_URI=<your-github-redirect-uri>
+
+# OSS
+OSS_ACCESS_KEY_ID=<your_access_key_id>
+OSS_ACCESS_KEY_SECRET=<your_access_key_secret>
+OSS_REGION=<your_region>
+OSS_BUCKET=<your_bucket_name>
+
+# Mail
+EMAIL_HOST=<your-email-host>
+EMAIL_PORT=<your-email-port>
+EMAIL_ID=<your-email-id>
+EMAIL_PASS=<your-email-pass>
+
 ```
 
 `<your-secret>` 填一串字符串
