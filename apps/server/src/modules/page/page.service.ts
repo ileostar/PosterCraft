@@ -1,6 +1,6 @@
 import { Inject, Injectable, Post } from '@nestjs/common';
 import { DB, DbType } from '../global/providers/db.provider';
-import { work } from '../../../../packages/schema';
+import { work } from '@poster-craft/schema';
 import { eq } from 'drizzle-orm';
 import LegoComponents from 'lego-components';
 import { createSSRApp } from 'vue';

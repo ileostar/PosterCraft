@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { DB, DbType } from 'src/modules/global/providers/db.provider';
 import * as argon2 from 'argon2';
-import { user } from '../../../../packages/schema';
+import { user } from '@poster-craft/schema';
 import {
   ApiBody,
   ApiOperation,

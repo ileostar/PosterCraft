@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { DB, DbType } from '../global/providers/db.provider';
 import { GetMyWorksListDto, WorkDto } from './dto/work.dto';
-import { work } from '../../../../packages/schema';
+import { work } from '@poster-craft/schema';
 import { and, eq } from 'drizzle-orm';
 import { JwtPayloadDto } from '../auth/dto/jwt.dto';
 import { ResponseData } from 'src/interceptor/responseData';
