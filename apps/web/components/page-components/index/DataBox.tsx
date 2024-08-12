@@ -1,28 +1,39 @@
 "use client";
 
 import { useScrollAnimate } from "@/hooks/useScrollAnimate";
+import Image from "next/image";
 import { useRef } from "react";
 
 function Index(props: any) {
-
   const boxRef = useRef<HTMLDivElement>(null); // 指定ref的类型为HTMLDivElement
   useScrollAnimate(boxRef);
 
   return (
-    <div className="mt-8 mb-8 flex w-2/3 mx-auto flex-col lg:flex-row box" ref={boxRef}>
+    <div
+      className="mt-8 mb-8 flex w-2/3 mx-auto flex-col lg:flex-row box"
+      ref={boxRef}
+    >
       <div className="card bg-base-300 rounded-box grid h-32 flex-grow place-items-center ">
-        <img
-          src="./余额.png"
-          className="w-14"
+        <Image
+          src="/余额.png"
+          alt="balances"
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="w-14 h-auto"
         />
         <div className="text-lg">海量H5模板</div>
         <div className="text-sm text-gray-500">一键生成，一分钟轻松制作</div>
       </div>
       <div className="divider lg:divider-horizontal"></div>
       <div className="card bg-base-300 rounded-box grid h-32 flex-grow place-items-center">
-        <img
-          src="./体验好.png"
-          className="w-14"
+        <Image
+          src="/体验好.png"
+          alt="good experience"
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="w-14 h-auto"
         />
         <div className="text-lg">极致体验</div>
         <div className="text-sm text-gray-500">用户的一致选择</div>

@@ -14,7 +14,6 @@ function ChangePositionComponent({
     currentElement,
     updateElement,
     setCurrentPosition,
-    setMode,
   } = UseElementStore();
 
   let top = item.props.top ? parseInt(item.props.top.replace(/(px|rem)/g, ""), 10) : 0;
@@ -24,7 +23,6 @@ function ChangePositionComponent({
   const draggableRef = useRef<HTMLButtonElement>(null);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setCurrentElement(item.id);
 
     // 阻止默认行为（如选择文本）
     e.preventDefault();
@@ -77,7 +75,6 @@ function ChangePositionComponent({
         e.stopPropagation();
         setCurrentElement(item.id);
         setIsElement(true);
-        setMode(false);
         if (item.url) {
           window.open(item.url);
         }

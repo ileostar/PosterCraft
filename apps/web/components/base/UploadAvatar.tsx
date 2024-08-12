@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Flex, message, Upload } from 'antd';
 import type { GetProp, UploadProps } from 'antd';
+import Image from "next/image";
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -75,7 +76,14 @@ const UploadAvatar: React.FC<ChildProps> = ({ handleOssUrl,img }) => {
         beforeUpload={beforeUpload}
         onChange={handleChange}
       >
-        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+        {imageUrl ? <Image
+          src={imageUrl}
+          alt="avatar"
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="w-full h-auto"
+        /> : uploadButton}
       </Upload>
   );
 };
