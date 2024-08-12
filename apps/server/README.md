@@ -44,11 +44,12 @@ $ pnpm run test:cov
 
 ```bash
 # Mysql
-DATABASE_URL="mysql://<your-database-name>:<your-database-password>@127.0.0.1:3306/poster_craft"
+DATABASE_URL="mysql://root:<your-database-password>@127.0.0.1:3306/poster_craft"
 JWT_SECRET=<your-jwt-secret>
 
 # Redis
 REDIS_URL="redis://127.0.0.1:6379"
+REDIS_PASSWORD=<your-redis-password>
 
 # SMS短信服务
 ALIBABA_CLOUD_ACCESS_KEY_ID=<your-SMS-signName>
@@ -80,6 +81,18 @@ EMAIL_PASS=<your-email-pass>
 
 ```
 
-`<your-secret>` 填一串字符串
+`DATABASE_URL` 填上你的mysql数据库密码 `<your-database-password>`，
 
-这里要确保你的数据库 `<your-database>` 已经创建
+这里要确保你的数据库 `poster_craft` 已经创建
+
+填上你的 `Redis` 信息，`REDIS_PASSWORD`没有可以不填
+
+SMS短信服务，去阿里云 [开通SMS](https://dysms.console.aliyun.com/overview)
+
+[Google Oauth2凭证获取](https://console.cloud.google.com/apis/credentials)
+
+[Github Oauth2凭证获取](https://github.com/settings/developers)
+
+[开通OSS](https://oss.console.aliyun.com/overview)
+
+[开通Mail](https://mail.163.com/js6/main.jsp)
