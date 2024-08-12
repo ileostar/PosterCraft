@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "installCommand": "pnpm install -w",
+  "buildCommand": "turbo build",
   "builds": [
     {
       "src": "apps/server/dist/src/main.js",
