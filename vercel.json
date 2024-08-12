@@ -2,12 +2,11 @@
   "version": 2,
   "installCommand": "pnpm install -w",
   "buildCommand": "turbo build",
-  "builds": [
-    {
-      "src": "apps/server/dist/src/main.js",
-      "use": "@vercel/node"
+  "functions": {
+    "apps/server/dist/src/main.js": {
+      "maxDuration": 30
     }
-  ],
+  },
   "routes": [
     {
       "src": "/(.*)",
