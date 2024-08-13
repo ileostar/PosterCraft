@@ -112,8 +112,8 @@ importers:
         specifier: 10.3.10
         version: 10.3.10(@nestjs/common@10.3.10)(@nestjs/core@10.3.10)(@nestjs/platform-socket.io@10.3.10)(reflect-metadata@0.2.2)(rxjs@7.8.1)
       '@poster-craft/schema':
-        specifier: 1.1.0
-        version: link:../../packages/schema
+        specifier: 1.0.0
+        version: 1.0.0
       ali-oss:
         specifier: 6.20.0
         version: 6.20.0
@@ -3407,6 +3407,12 @@ packages:
     engines: {node: '>=14'}
     requiresBuild: true
     optional: true
+
+  /@poster-craft/schema@1.0.0:
+    resolution: {integrity: sha512-8FyW9xpl0Cb01bFKF27TeddiYOHf2IP771uP1SrPbQJuF6cJQ442Xr7/HO/qC+opyBbHmfNp5d2f0VOA4ARIiQ==}
+    dependencies:
+      '@paralleldrive/cuid2': 2.2.2
+    dev: false
 
   /@radix-ui/primitive@1.1.0:
     resolution: {integrity: sha512-4Z8dn6Upk0qk4P74xBhZ6Hd/w0mPEzOOLxy4xiPXOXqjF7jZS0VAKk7/x/H6FyY2zCkYJqePf1G5KmkmNJ4RBA==}
