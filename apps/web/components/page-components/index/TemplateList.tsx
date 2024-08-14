@@ -1,9 +1,18 @@
 "use client";
 
-import Card from "../../base/MyCard";
+import { configResponsive, useResponsive } from "ahooks";
+
+import Card from "../../base/Card";
 import Search from "../../base/MySearch";
 
+configResponsive({
+  sm: 0,
+  md: 768,
+  lg: 1024,
+});
+
 function Index(props: any) {
+  const responsive = useResponsive();
   return (
     <div>
       <div className="w-4/5 mx-auto relative">
@@ -16,10 +25,16 @@ function Index(props: any) {
         <div className="absolute right-8 top-0">
           <Search searchMessage={"查找热门海报"} />
         </div>
-        <div className="flex flex-wrap justify-start items-center">
-          {Array.from({ length: 7 }, (_, index) => (
+        <div className="flex flex-wrap w-full justify-between lg:gap-1 md:gap-0.5 items-center">
+          {Array.from({ length: 6 }, (_, index) => (
             <Card key={index} />
           ))}
+          {responsive["lg"]
+            ? Array.from({ length: 4 - (6 % 4) }, (_, index) => <div className="w-[24%]" />)
+            : null}
+          {!responsive["lg"] && responsive["md"]
+            ? Array.from({ length: 4 - (6 % 4) }, (_, index) => <div className="w-[49%]" />)
+            : null}
         </div>
         <div className="join absolute right-40 mt-8 w-20">
           <button className="join-item btn">«</button>
