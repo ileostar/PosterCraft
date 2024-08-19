@@ -1,14 +1,14 @@
 interface DocsConfig {
-  [index: string]: unknown
-  appearance: 'dark'
+  [index: string]: unknown;
+  appearance: "dark";
 }
 
 export const docsConfig: DocsConfig = {
-  title: 'PosterCraft',
-  description: '可视化海报编辑器',
-  lang: 'zh-CN',
+  title: "PosterCraft",
+  description: "可视化海报编辑器",
+  lang: "zh-CN",
   lastUpdated: true,
-  appearance: 'dark',
+  appearance: "dark",
   outline: [2, 3],
   ignoreDeadLinks: true,
-}
+};

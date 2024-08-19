@@ -1,6 +1,6 @@
-function GoogleIcon(){
-    return(
-      <svg
+function GoogleIcon() {
+  return (
+    <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 48 48"
       width="24px"
@@ -23,7 +23,7 @@ function GoogleIcon(){
         d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
       />
     </svg>
-    )
+  );
 }
 
 export default GoogleIcon;

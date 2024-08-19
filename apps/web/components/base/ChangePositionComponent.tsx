@@ -8,13 +8,8 @@ function ChangePositionComponent({
 }: Readonly<{
   item: any;
 }>) {
-  const {
-    setCurrentElement,
-    setIsElement,
-    currentElement,
-    updateElement,
-    setCurrentPosition,
-  } = UseElementStore();
+  const { setCurrentElement, setIsElement, currentElement, updateElement, setCurrentPosition } =
+    UseElementStore();
 
   let top = item.props.top ? parseInt(item.props.top.replace(/(px|rem)/g, ""), 10) : 0;
   let left = item.props.left ? parseInt(item.props.left.replace(/(px|rem)/g, ""), 10) : 0;
@@ -23,7 +18,6 @@ function ChangePositionComponent({
   const draggableRef = useRef<HTMLButtonElement>(null);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
-
     // 阻止默认行为（如选择文本）
     e.preventDefault();
     // 记录初始鼠标位置

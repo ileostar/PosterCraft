@@ -4,7 +4,7 @@ import { textTemplate } from "@/utils/template";
 import { v4 as uuidv4 } from "uuid";
 
 function TextList() {
-  const { setCurrentElement, addElement,setIsElement } = UseElementStore();
+  const { setCurrentElement, addElement, setIsElement } = UseElementStore();
 
   const handleClick = (event: any) => {
     console.log(event.target.innerHTML);
@@ -19,8 +19,8 @@ function TextList() {
       type: "text",
       text: event.target.innerHTML,
       isHidden: false,
-      isLocked: false,      
-      layerName:"图层",
+      isLocked: false,
+      layerName: "图层",
     };
     addElement(element);
     setCurrentElement(id);
@@ -57,7 +57,7 @@ function TextList() {
         // 过滤掉flex布局属性
         const filterKey = filterFlexStyle(camelCaseKey);
         // 可能需要额外的处理来去除值两端的空格或引号等
-        if(filterKey){
+        if (filterKey) {
           styleObject[filterKey] = value.trim().replace(/"/g, "").replace(/'/g, "");
         }
       }

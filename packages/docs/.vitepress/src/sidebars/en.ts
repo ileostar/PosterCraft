@@ -9,37 +9,32 @@
 // })
 
 export const sidebar = {
-  '/en/': [
+  "/en/": [
     {
-      text: 'Project Introduce',
+      text: "Project Introduce",
       items: [
-        { text: 'brief introduction', link: '/zh/introduce/introduce' },
-        { text: 'quick action', link: '/zh/introduce/use' },
-        { text: 'technology stack', link: '/zh/introduce/technology' },
+        { text: "brief introduction", link: "/zh/introduce/introduce" },
+        { text: "quick action", link: "/zh/introduce/use" },
+        { text: "technology stack", link: "/zh/introduce/technology" },
       ],
     },
     {
-      text: 'Development Problem',
+      text: "Development Problem",
       items: [
-        { text: 'problem1', link: '/zh/problem/problem-1'},
-        { text: 'problem2', link: '/zh/problem/problem-2' },
-        { text: 'problem3', link: '/zh/problem/problem-3' },
-      ],
-    },
-  ],
-  '/en/about/': [
-
-    {
-      text: 'Communication',
-      items: [
-        { text: 'Communication group', link: '/en/about/communication' },
-      ],
-    },
-    {
-      text: 'Concerning',
-      items: [
-        { text: 'Development Team', link: '/en/about/team' },
+        { text: "problem1", link: "/zh/problem/problem-1" },
+        { text: "problem2", link: "/zh/problem/problem-2" },
+        { text: "problem3", link: "/zh/problem/problem-3" },
       ],
     },
   ],
-}
+  "/en/about/": [
+    {
+      text: "Communication",
+      items: [{ text: "Communication group", link: "/en/about/communication" }],
+    },
+    {
+      text: "Concerning",
+      items: [{ text: "Development Team", link: "/en/about/team" }],
+    },
+  ],
+};

@@ -1,15 +1,13 @@
-import React, { useCallback, useState } from 'react';  
-import * as THREE from 'three';  
-  
-function Index(props: any) {   
+import React, { useCallback, useState } from "react";
+import * as THREE from "three";
 
-let renderer:any, scene:any, camera:any, inside:any, outside:any, particle:any;
+function Index(props: any) {
+  let renderer: any, scene: any, camera: any, inside: any, outside: any, particle: any;
 
-
-function onload(node: HTMLDivElement) {
-    console.log('three.js loaded');
+  function onload(node: HTMLDivElement) {
+    console.log("three.js loaded");
     console.log(props);
-    console.log(props.boxWidth, props.boxHeight)
+    console.log(props.boxWidth, props.boxHeight);
 
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     // renderer.setSize(window.innerWidth, window.innerHeight);
@@ -28,15 +26,15 @@ function onload(node: HTMLDivElement) {
     var geom2 = new THREE.IcosahedronGeometry(15, 1);
 
     var mat = new THREE.MeshPhongMaterial({
-        color: 0xffffff,
-        // color: 0xda524f,
-        // shading: THREE.FlatShading
+      color: 0xffffff,
+      // color: 0xda524f,
+      // shading: THREE.FlatShading
     });
     mat.flatShading = true; // 设置平坦着色
     var mat2 = new THREE.MeshPhongMaterial({
-        color: 0xffffff,
-        wireframe: true,
-        side: THREE.DoubleSide
+      color: 0xffffff,
+      wireframe: true,
+      side: THREE.DoubleSide,
     });
 
     var planet = new THREE.Mesh(geom, mat);
@@ -56,70 +54,63 @@ function onload(node: HTMLDivElement) {
 
     var lights1 = new THREE.DirectionalLight(0xffffff, 5);
     lights1.position.set(1, 0, 0);
-    var lights2 = new THREE.DirectionalLight(0x11E8BB, 5);
+    var lights2 = new THREE.DirectionalLight(0x11e8bb, 5);
     lights2.position.set(0.75, 1, 0.5);
-    var lights3 = new THREE.DirectionalLight(0x8200C9, 5);
+    var lights3 = new THREE.DirectionalLight(0x8200c9, 5);
     lights3.position.set(-0.75, -1, 0.5);
     scene.add(lights1);
     scene.add(lights2);
     scene.add(lights3);
 
-
-
-
     particle = new THREE.Object3D();
     scene.add(particle);
     var geometry = new THREE.TetrahedronGeometry(2, 0);
     var material = new THREE.MeshPhongMaterial({
-        color: 0xffffff,
-        // shading: THREE.FlatShading
+      color: 0xffffff,
+      // shading: THREE.FlatShading
     });
     material.flatShading = true; // 设置平坦着色
     for (var i = 0; i < 1000; i++) {
-        var mesh = new THREE.Mesh(geometry, material);
-        mesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
-        mesh.position.multiplyScalar(90 + (Math.random() * 700));
-        mesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2); //旋转
+      var mesh = new THREE.Mesh(geometry, material);
+      mesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
+      mesh.position.multiplyScalar(90 + Math.random() * 700);
+      mesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2); //旋转
 
-        particle.add(mesh);
+      particle.add(mesh);
     }
+  }
 
-}
-
-function animate() {
+  function animate() {
     requestAnimationFrame(animate);
 
-    particle.rotation.x += 0.0010;
-    particle.rotation.y -= 0.0040;
-    inside.rotation.x -= 0.0020;
-    inside.rotation.y -= 0.0030;
-    outside.rotation.x -= 0.0010;
-    outside.rotation.y += 0.0020;
+    particle.rotation.x += 0.001;
+    particle.rotation.y -= 0.004;
+    inside.rotation.x -= 0.002;
+    inside.rotation.y -= 0.003;
+    outside.rotation.x -= 0.001;
+    outside.rotation.y += 0.002;
     renderer.clear();
 
-    renderer.render(scene, camera)
-};
+    renderer.render(scene, camera);
+  }
 
-const [initialized, setInitialized] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
-// eslint-disable-next-line 
-const threeDivRef = useCallback(
+  // eslint-disable-next-line
+  const threeDivRef = useCallback(
     (node: HTMLDivElement | null) => {
       if (node !== null && !initialized) {
-        onload(node)
-         animate()
+        onload(node);
+        animate();
         setInitialized(true);
       }
     },
-    // eslint-disable-next-line 
-    [initialized]
+    // eslint-disable-next-line
+    [initialized],
   );
 
+  // return <div ref={threeDivRef}   style={{background: 'linear-gradient(to bottom, #11e8bb 0%, #8200c9 100%)'}} />;
+  return <div ref={threeDivRef} />;
+}
 
- 
-  
-  // return <div ref={threeDivRef}   style={{background: 'linear-gradient(to bottom, #11e8bb 0%, #8200c9 100%)'}} />;  
-  return <div ref={threeDivRef}  />;  
-}  
-  
 export default Index;

@@ -1,16 +1,14 @@
-import { defineConfig } from 'vitepress'
-import { docsConfig } from './src/docs'
-
-import { themeConfig } from './src/theme'
-import { head } from './src/head'
+import { defineConfig } from "vitepress";
 
 // 配置的英文文档设置
 
-import { enConfig } from './src/configs/en'
-
+import { enConfig } from "./src/configs/en";
 // 配置的中文文档设置
 
-import { zhConfig } from './src/configs/zh'
+import { zhConfig } from "./src/configs/zh";
+import { docsConfig } from "./src/docs";
+import { head } from "./src/head";
+import { themeConfig } from "./src/theme";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -23,16 +21,16 @@ export default defineConfig({
   /* 语言配置 */
   locales: {
     root: {
-      label: '简体中文',
-      lang: 'zh-CN',
-      link: '/index',
+      label: "简体中文",
+      lang: "zh-CN",
+      link: "/index",
       ...zhConfig,
     },
     en: {
-      label: 'English',
-      lang: 'en-US',
-      link: '/en/',
+      label: "English",
+      lang: "en-US",
+      link: "/en/",
       ...enConfig,
     },
   },
-})
+});

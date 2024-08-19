@@ -82,14 +82,15 @@ export default function Login() {
     }
   }, [countdown]);
 
-  const handleSign = async () => { 
-    let res= isPhoneMode?await loginBySMS(form.getValues("phone"), form.getValues("code")):await defaultSignIn(form.getValues("username"), form.getValues("password"));
+  const handleSign = async () => {
+    let res = isPhoneMode
+      ? await loginBySMS(form.getValues("phone"), form.getValues("code"))
+      : await defaultSignIn(form.getValues("username"), form.getValues("password"));
     window.localStorage.setItem("token", res.token); //存入本地
-    if(isPhoneMode) {
-      window.localStorage.setItem("userId", res.data.id); 
-    }
-    else{
-      window.localStorage.setItem("userId", res.data.userId); 
+    if (isPhoneMode) {
+      window.localStorage.setItem("userId", res.data.id);
+    } else {
+      window.localStorage.setItem("userId", res.data.userId);
     }
     console.log(res.token);
     router.push("/");

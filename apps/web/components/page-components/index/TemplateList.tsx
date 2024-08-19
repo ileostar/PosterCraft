@@ -13,6 +13,7 @@ configResponsive({
 
 function Index(props: any) {
   const responsive = useResponsive();
+
   return (
     <div>
       <div className="w-4/5 mx-auto relative">
@@ -29,11 +30,21 @@ function Index(props: any) {
           {Array.from({ length: 6 }, (_, index) => (
             <Card key={index} />
           ))}
-          {responsive["lg"]
-            ? Array.from({ length: 4 - (6 % 4) }, (_, index) => <div className="w-[24%]" />)
+          {responsive?.lg
+            ? Array.from({ length: 4 - (6 % 4) }, (_, index) => (
+                <div
+                  className="w-[24%]"
+                  key={index}
+                />
+              ))
             : null}
-          {!responsive["lg"] && responsive["md"]
-            ? Array.from({ length: 4 - (6 % 4) }, (_, index) => <div className="w-[49%]" />)
+          {!responsive?.lg && responsive?.md
+            ? Array.from({ length: 4 - (6 % 4) }, (_, index) => (
+                <div
+                  className="w-[49%]"
+                  key={index}
+                />
+              ))
             : null}
         </div>
         <div className="join absolute right-40 mt-8 w-20">

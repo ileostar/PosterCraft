@@ -1,10 +1,11 @@
-import useKeyPress from "@/hooks/useKeyPress";
 import useClickOutside from "@/hooks/useClickOutside";
+import useKeyPress from "@/hooks/useKeyPress";
 import { UseElementStore } from "@/store/element";
 import { useEffect, useRef, useState } from "react";
 
 function InlineEdit({
-  value,id
+  value,
+  id,
 }: Readonly<{
   value?: string;
   id: string;
@@ -18,7 +19,7 @@ function InlineEdit({
   const wrapper = useRef<null | HTMLDivElement>(null);
   const inputRef = useRef<null | HTMLInputElement>(null);
 
-  const isOutsideRef = useClickOutside(wrapper)
+  const isOutsideRef = useClickOutside(wrapper);
 
   // 创建一个函数来计算validateCheck，这个函数可以在渲染时调用
   const getValidateCheck = () => {
@@ -28,47 +29,47 @@ function InlineEdit({
     return innerValue.trim() !== "";
   };
 
-  const handleClick = (e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     setIsEdited(true);
     inputRef.current?.focus();
-  }
+  };
 
-  useKeyPress('Enter', () => {
+  useKeyPress("Enter", () => {
     if (!getValidateCheck()) {
-      return
+      return;
     }
     if (isEdited) {
       setIsEdited(false);
-      updateElement(id,undefined,undefined,undefined,undefined,undefined,innerValue);
+      updateElement(id, undefined, undefined, undefined, undefined, undefined, innerValue);
     }
-  })
-  useKeyPress('Escape', () => {
+  });
+  useKeyPress("Escape", () => {
     if (isEdited) {
-        setIsEdited(false);
+      setIsEdited(false);
       setInnerValue(value);
     }
-  })
+  });
 
-  useEffect(()=>{
-    setIsOutside(isOutsideRef)
-},[isOutsideRef])  
+  useEffect(() => {
+    setIsOutside(isOutsideRef);
+  }, [isOutsideRef]);
 
-useEffect(()=>{
+  useEffect(() => {
     if (!getValidateCheck()) {
-        return
-      }
-      if (isOutside && isEdited) {
-        setIsEdited(false);
-        updateElement(id,undefined,undefined,undefined,undefined,undefined,innerValue);
-      }
+      return;
+    }
+    if (isOutside && isEdited) {
+      setIsEdited(false);
+      updateElement(id, undefined, undefined, undefined, undefined, undefined, innerValue);
+    }
     //  setIsOutside(false)
-},[isOutside])
+  }, [isOutside]);
 
   return (
     <div
       ref={wrapper}
-      onClick={(e)=>handleClick(e)}
+      onClick={(e) => handleClick(e)}
       className="m-2 w-3/6 flex align-items-center justify-content-center"
     >
       {isEdited ? (

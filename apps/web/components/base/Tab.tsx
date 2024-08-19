@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 interface Tab {
-    id: number;
-    label: string;
-    content: string | JSX.Element | null; // 内容可以是字符串或JSX元素
-  }
+  id: number;
+  label: string;
+  content: string | JSX.Element | null; // 内容可以是字符串或JSX元素
+}
 
 interface TabsProps {
   readonly tabs: ReadonlyArray<Tab>; // 定义接收的props类型
@@ -20,13 +20,16 @@ function Tabs({ tabs }: TabsProps) {
   };
 
   return (
-    <div className='flex flex-col flex-1'>
-      <div role="tablist" className="tabs tabs-bordered">
-        {tabs.map((tab:any) => (
+    <div className="flex flex-col flex-1">
+      <div
+        role="tablist"
+        className="tabs tabs-bordered"
+      >
+        {tabs.map((tab: any) => (
           <button
             key={tab.id}
             role="tab"
-            className={`tab ${tab.id === activeTabIndex ? 'tab-active' : ''}`}
+            className={`tab ${tab.id === activeTabIndex ? "tab-active" : ""}`}
             onClick={() => handleTabClick(tab.id)}
           >
             {tab.label}
@@ -36,10 +39,8 @@ function Tabs({ tabs }: TabsProps) {
       <div className="flex-1">
         {/* 根据当前活动的标签页索引渲染对应的内容 */}
         {tabs[activeTabIndex]?.content && (
-          <div className="h-full">
-            {tabs[activeTabIndex].content}
-          </div>
-        )} 
+          <div className="h-full">{tabs[activeTabIndex].content}</div>
+        )}
       </div>
     </div>
   );
