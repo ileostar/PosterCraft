@@ -5,6 +5,7 @@ import {
   HttpStatus,
   Res,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { OssService } from './oss.service';
 import {
@@ -16,6 +17,7 @@ import {
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../guards/jwt.guard';
 import { UpdateUploadDto } from './dto/oss.dto';
+import { FileInterceptor } from '@nest-lab/fastify-multer';
 
 @ApiTags('📦OSS对象存储模块')
 @ApiBearerAuth()
@@ -25,21 +27,26 @@ export class OssController {
 
   @Post('upload')
   @UseGuards(JwtAuthGuard)
+  @UseInterceptors(FileInterceptor('file'))
   @ApiOperation({ summary: '上传文件' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'Upload file',
     type: UpdateUploadDto,
   })
-  async uploadFile(@UploadedFile() file: Express.Multer.File, @Res() res) {
+  async uploadFile(@UploadedFile() file: Express.Multer.File) {
     try {
       const key = `${Date.now()}-${file.originalname}`;
+      console.log('111', file);
       const result = await this.ossService.uploadFile(file, key);
-      return res.status(HttpStatus.OK).json({ url: result.url });
+      return {
+        code: 200,
+        data: { url: result.url },
+      };
     } catch (error) {
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: error.message });
+      return {
+        msg: '上传出错：' + error,
+      };
     }
   }
 }

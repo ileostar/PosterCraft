@@ -6,14 +6,14 @@ import ChangePositionComponent from "../../base/ChangePositionComponent";
 import ResizeComponent from "../../base/ResizeComponent";
 
 function Middle(props: any) {
-  const { Elements, setIsElement, currentElement,setCurrentElement } = UseElementStore();
+  const { Elements, setIsElement, currentElement, setCurrentElement } = UseElementStore();
 
   return (
     <button
       className="bg-[#f0f2f5] w-3/5 flex justify-center items-center flex-col"
       onClick={() => {
         setIsElement(false);
-        setCurrentElement('');
+        setCurrentElement("");
       }}
     >
       <h3>海报区域</h3>

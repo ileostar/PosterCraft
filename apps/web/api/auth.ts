@@ -1,6 +1,7 @@
 import { openCenteredOAuthPopup } from "@/utils/popup";
 import { AxiosResponse } from "axios";
 import io from "socket.io-client";
+
 import { request } from "../utils/request";
 
 interface CustomAxiosResponse<T = any> extends AxiosResponse<T> {
@@ -16,11 +17,10 @@ interface GithubSignInResponse {
   data: {
     isSignUp: any;
     userData: {
-        username: any;
+      username: any;
     };
-};
+  };
 }
-
 
 /**
  * sms短信登录
@@ -96,7 +96,6 @@ export function googleSignIn() {
   });
 }
 
- 
 // export function githubSignIn() {
 //   const socket = io("http://localhost:3001"); // 连接到你的NestJS WebSocket服务器
 
@@ -124,19 +123,17 @@ export async function githubSignIn(): Promise<GithubSignInResponse> {
   });
 
   return new Promise((resolve, reject) => {
-    socket.on("messageToAll", (data: string) => { 
+    socket.on("messageToAll", (data: string) => {
       try {
         const parsedData = JSON.parse(data);
         console.log("Received message from server:", parsedData);
         authWindow!.close();
         socket.close();
-        resolve(parsedData); 
+        resolve(parsedData);
       } catch (error) {
         console.error("Error parsing message:", error);
-        reject(new Error('Something went wrong'));
+        reject(new Error("Something went wrong"));
       }
     });
   });
 }
-
- 

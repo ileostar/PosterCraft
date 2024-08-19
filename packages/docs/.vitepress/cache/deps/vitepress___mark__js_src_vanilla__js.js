@@ -28,7 +28,14 @@ var DOMIterator = class _DOMIterator {
    * @access public
    */
   static matches(element, selector) {
-    const selectors = typeof selector === "string" ? [selector] : selector, fn = element.matches || element.matchesSelector || element.msMatchesSelector || element.mozMatchesSelector || element.oMatchesSelector || element.webkitMatchesSelector;
+    const selectors = typeof selector === "string" ? [selector] : selector,
+      fn =
+        element.matches ||
+        element.matchesSelector ||
+        element.msMatchesSelector ||
+        element.mozMatchesSelector ||
+        element.oMatchesSelector ||
+        element.webkitMatchesSelector;
     if (fn) {
       let match = false;
       selectors.every((sel) => {
@@ -49,7 +56,8 @@ var DOMIterator = class _DOMIterator {
    * @access protected
    */
   getContexts() {
-    let ctx, filteredCtx = [];
+    let ctx,
+      filteredCtx = [];
     if (typeof this.ctx === "undefined" || !this.ctx) {
       ctx = [];
     } else if (NodeList.prototype.isPrototypeOf(this.ctx)) {
@@ -57,16 +65,15 @@ var DOMIterator = class _DOMIterator {
     } else if (Array.isArray(this.ctx)) {
       ctx = this.ctx;
     } else if (typeof this.ctx === "string") {
-      ctx = Array.prototype.slice.call(
-        document.querySelectorAll(this.ctx)
-      );
+      ctx = Array.prototype.slice.call(document.querySelectorAll(this.ctx));
     } else {
       ctx = [this.ctx];
     }
     ctx.forEach((ctx2) => {
-      const isDescendant = filteredCtx.filter((contexts) => {
-        return contexts.contains(ctx2);
-      }).length > 0;
+      const isDescendant =
+        filteredCtx.filter((contexts) => {
+          return contexts.contains(ctx2);
+        }).length > 0;
       if (filteredCtx.indexOf(ctx2) === -1 && !isDescendant) {
         filteredCtx.push(ctx2);
       }
@@ -85,8 +92,7 @@ var DOMIterator = class _DOMIterator {
    * @param {function} [errorFn]
    * @access protected
    */
-  getIframeContents(ifr, successFn, errorFn = () => {
-  }) {
+  getIframeContents(ifr, successFn, errorFn = () => {}) {
     let doc;
     try {
       const ifrWin = ifr.contentWindow;
@@ -108,7 +114,9 @@ var DOMIterator = class _DOMIterator {
    * @access protected
    */
   isIframeBlank(ifr) {
-    const bl = "about:blank", src = ifr.getAttribute("src").trim(), href = ifr.contentWindow.location.href;
+    const bl = "about:blank",
+      src = ifr.getAttribute("src").trim(),
+      href = ifr.contentWindow.location.href;
     return href === bl && src !== bl && src;
   }
   /**
@@ -122,7 +130,8 @@ var DOMIterator = class _DOMIterator {
    * @access protected
    */
   observeIframeLoad(ifr, successFn, errorFn) {
-    let called = false, tout = null;
+    let called = false,
+      tout = null;
     const listener = () => {
       if (called) {
         return;
@@ -187,18 +196,23 @@ var DOMIterator = class _DOMIterator {
    */
   waitForIframes(ctx, done) {
     let eachCalled = 0;
-    this.forEachIframe(ctx, () => true, (ifr) => {
-      eachCalled++;
-      this.waitForIframes(ifr.querySelector("html"), () => {
-        if (!--eachCalled) {
+    this.forEachIframe(
+      ctx,
+      () => true,
+      (ifr) => {
+        eachCalled++;
+        this.waitForIframes(ifr.querySelector("html"), () => {
+          if (!--eachCalled) {
+            done();
+          }
+        });
+      },
+      (handled) => {
+        if (!handled) {
           done();
         }
-      });
-    }, (handled) => {
-      if (!handled) {
-        done();
-      }
-    });
+      },
+    );
   }
   /**
    * Callback allowing to filter an iframe. Must return true when the element
@@ -227,9 +241,10 @@ var DOMIterator = class _DOMIterator {
    * @param {DOMIterator~forEachIframeEndCallback} [end] - End callback
    * @access protected
    */
-  forEachIframe(ctx, filter, each, end = () => {
-  }) {
-    let ifr = ctx.querySelectorAll("iframe"), open = ifr.length, handled = 0;
+  forEachIframe(ctx, filter, each, end = () => {}) {
+    let ifr = ctx.querySelectorAll("iframe"),
+      open = ifr.length,
+      handled = 0;
     ifr = Array.prototype.slice.call(ifr);
     const checkEnd = () => {
       if (--open <= 0) {
@@ -243,13 +258,17 @@ var DOMIterator = class _DOMIterator {
       if (_DOMIterator.matches(ifr2, this.exclude)) {
         checkEnd();
       } else {
-        this.onIframeReady(ifr2, (con) => {
-          if (filter(ifr2)) {
-            handled++;
-            each(con);
-          }
-          checkEnd();
-        }, checkEnd);
+        this.onIframeReady(
+          ifr2,
+          (con) => {
+            if (filter(ifr2)) {
+              handled++;
+              each(con);
+            }
+            checkEnd();
+          },
+          checkEnd,
+        );
       }
     });
   }
@@ -285,10 +304,12 @@ var DOMIterator = class _DOMIterator {
    * @access protected
    */
   compareNodeIframe(node, prevNode, ifr) {
-    const compCurr = node.compareDocumentPosition(ifr), prev = Node.DOCUMENT_POSITION_PRECEDING;
+    const compCurr = node.compareDocumentPosition(ifr),
+      prev = Node.DOCUMENT_POSITION_PRECEDING;
     if (compCurr & prev) {
       if (prevNode !== null) {
-        const compPrev = prevNode.compareDocumentPosition(ifr), after = Node.DOCUMENT_POSITION_FOLLOWING;
+        const compPrev = prevNode.compareDocumentPosition(ifr),
+          after = Node.DOCUMENT_POSITION_FOLLOWING;
         if (compPrev & after) {
           return true;
         }
@@ -321,7 +342,7 @@ var DOMIterator = class _DOMIterator {
     }
     return {
       prevNode,
-      node
+      node,
     };
   }
   /**
@@ -351,7 +372,8 @@ var DOMIterator = class _DOMIterator {
    * @access protected
    */
   checkIframeFilter(node, prevNode, currIfr, ifr) {
-    let key = false, handled = false;
+    let key = false,
+      handled = false;
     ifr.forEach((ifrDict, i) => {
       if (ifrDict.val === currIfr) {
         key = i;
@@ -362,7 +384,7 @@ var DOMIterator = class _DOMIterator {
       if (key === false && !handled) {
         ifr.push({
           val: currIfr,
-          handled: true
+          handled: true,
         });
       } else if (key !== false && !handled) {
         ifr[key].handled = true;
@@ -372,7 +394,7 @@ var DOMIterator = class _DOMIterator {
     if (key === false) {
       ifr.push({
         val: currIfr,
-        handled: false
+        handled: false,
       });
     }
     return false;
@@ -390,11 +412,7 @@ var DOMIterator = class _DOMIterator {
     ifr.forEach((ifrDict) => {
       if (!ifrDict.handled) {
         this.getIframeContents(ifrDict.val, (con) => {
-          this.createInstanceOnIframe(con).forEachNode(
-            whatToShow,
-            eCb,
-            fCb
-          );
+          this.createInstanceOnIframe(con).forEachNode(whatToShow, eCb, fCb);
         });
       }
     });
@@ -411,24 +429,29 @@ var DOMIterator = class _DOMIterator {
    */
   iterateThroughNodes(whatToShow, ctx, eachCb, filterCb, doneCb) {
     const itr = this.createIterator(ctx, whatToShow, filterCb);
-    let ifr = [], elements = [], node, prevNode, retrieveNodes = () => {
-      ({
-        prevNode,
-        node
-      } = this.getIteratorNode(itr));
-      return node;
-    };
+    let ifr = [],
+      elements = [],
+      node,
+      prevNode,
+      retrieveNodes = () => {
+        ({ prevNode, node } = this.getIteratorNode(itr));
+        return node;
+      };
     while (retrieveNodes()) {
       if (this.iframes) {
-        this.forEachIframe(ctx, (currIfr) => {
-          return this.checkIframeFilter(node, prevNode, currIfr, ifr);
-        }, (con) => {
-          this.createInstanceOnIframe(con).forEachNode(
-            whatToShow,
-            (ifrNode) => elements.push(ifrNode),
-            filterCb
-          );
-        });
+        this.forEachIframe(
+          ctx,
+          (currIfr) => {
+            return this.checkIframeFilter(node, prevNode, currIfr, ifr);
+          },
+          (con) => {
+            this.createInstanceOnIframe(con).forEachNode(
+              whatToShow,
+              (ifrNode) => elements.push(ifrNode),
+              filterCb,
+            );
+          },
+        );
       }
       elements.push(node);
     }
@@ -458,8 +481,7 @@ var DOMIterator = class _DOMIterator {
    * @param {DOMIterator~forEachNodeEndCallback} done - End callback
    * @access public
    */
-  forEachNode(whatToShow, each, filter, done = () => {
-  }) {
+  forEachNode(whatToShow, each, filter, done = () => {}) {
     const contexts = this.getContexts();
     let open = contexts.length;
     if (!open) {
@@ -518,32 +540,33 @@ var Mark = class {
    * @access protected
    */
   set opt(val) {
-    this._opt = Object.assign({}, {
-      "element": "",
-      "className": "",
-      "exclude": [],
-      "iframes": false,
-      "iframesTimeout": 5e3,
-      "separateWordSearch": true,
-      "diacritics": true,
-      "synonyms": {},
-      "accuracy": "partially",
-      "acrossElements": false,
-      "caseSensitive": false,
-      "ignoreJoiners": false,
-      "ignoreGroups": 0,
-      "ignorePunctuation": [],
-      "wildcards": "disabled",
-      "each": () => {
+    this._opt = Object.assign(
+      {},
+      {
+        element: "",
+        className: "",
+        exclude: [],
+        iframes: false,
+        iframesTimeout: 5e3,
+        separateWordSearch: true,
+        diacritics: true,
+        synonyms: {},
+        accuracy: "partially",
+        acrossElements: false,
+        caseSensitive: false,
+        ignoreJoiners: false,
+        ignoreGroups: 0,
+        ignorePunctuation: [],
+        wildcards: "disabled",
+        each: () => {},
+        noMatch: () => {},
+        filter: () => true,
+        done: () => {},
+        debug: false,
+        log: window.console,
       },
-      "noMatch": () => {
-      },
-      "filter": () => true,
-      "done": () => {
-      },
-      "debug": false,
-      "log": window.console
-    }, val);
+      val,
+    );
   }
   get opt() {
     return this._opt;
@@ -554,12 +577,7 @@ var Mark = class {
    * @access protected
    */
   get iterator() {
-    return new DOMIterator(
-      this.ctx,
-      this.opt.iframes,
-      this.opt.exclude,
-      this.opt.iframesTimeout
-    );
+    return new DOMIterator(this.ctx, this.opt.iframes, this.opt.exclude, this.opt.iframesTimeout);
   }
   /**
    * Logs a message if log is enabled
@@ -624,17 +642,26 @@ var Mark = class {
    * @access protected
    */
   createSynonymsRegExp(str) {
-    const syn = this.opt.synonyms, sens = this.opt.caseSensitive ? "" : "i", joinerPlaceholder = this.opt.ignoreJoiners || this.opt.ignorePunctuation.length ? "\0" : "";
+    const syn = this.opt.synonyms,
+      sens = this.opt.caseSensitive ? "" : "i",
+      joinerPlaceholder = this.opt.ignoreJoiners || this.opt.ignorePunctuation.length ? "\0" : "";
     for (let index in syn) {
       if (syn.hasOwnProperty(index)) {
-        const value = syn[index], k1 = this.opt.wildcards !== "disabled" ? this.setupWildcardsRegExp(index) : this.escapeStr(index), k2 = this.opt.wildcards !== "disabled" ? this.setupWildcardsRegExp(value) : this.escapeStr(value);
+        const value = syn[index],
+          k1 =
+            this.opt.wildcards !== "disabled"
+              ? this.setupWildcardsRegExp(index)
+              : this.escapeStr(index),
+          k2 =
+            this.opt.wildcards !== "disabled"
+              ? this.setupWildcardsRegExp(value)
+              : this.escapeStr(value);
         if (k1 !== "" && k2 !== "") {
           str = str.replace(
-            new RegExp(
-              `(${this.escapeStr(k1)}|${this.escapeStr(k2)})`,
-              `gm${sens}`
-            ),
-            joinerPlaceholder + `(${this.processSynomyms(k1)}|${this.processSynomyms(k2)})` + joinerPlaceholder
+            new RegExp(`(${this.escapeStr(k1)}|${this.escapeStr(k2)})`, `gm${sens}`),
+            joinerPlaceholder +
+              `(${this.processSynomyms(k1)}|${this.processSynomyms(k2)})` +
+              joinerPlaceholder,
           );
         }
       }
@@ -676,7 +703,9 @@ var Mark = class {
    */
   createWildcardsRegExp(str) {
     let spaces = this.opt.wildcards === "withSpaces";
-    return str.replace(/\u0001/g, spaces ? "[\\S\\s]?" : "\\S?").replace(/\u0002/g, spaces ? "[\\S\\s]*?" : "\\S*");
+    return str
+      .replace(/\u0001/g, spaces ? "[\\S\\s]?" : "\\S?")
+      .replace(/\u0002/g, spaces ? "[\\S\\s]*?" : "\\S*");
   }
   /**
    * Sets up the regular expression string to allow later insertion of
@@ -722,51 +751,54 @@ var Mark = class {
    * @access protected
    */
   createDiacriticsRegExp(str) {
-    const sens = this.opt.caseSensitive ? "" : "i", dct = this.opt.caseSensitive ? [
-      "aàáảãạăằắẳẵặâầấẩẫậäåāą",
-      "AÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÄÅĀĄ",
-      "cçćč",
-      "CÇĆČ",
-      "dđď",
-      "DĐĎ",
-      "eèéẻẽẹêềếểễệëěēę",
-      "EÈÉẺẼẸÊỀẾỂỄỆËĚĒĘ",
-      "iìíỉĩịîïī",
-      "IÌÍỈĨỊÎÏĪ",
-      "lł",
-      "LŁ",
-      "nñňń",
-      "NÑŇŃ",
-      "oòóỏõọôồốổỗộơởỡớờợöøō",
-      "OÒÓỎÕỌÔỒỐỔỖỘƠỞỠỚỜỢÖØŌ",
-      "rř",
-      "RŘ",
-      "sšśșş",
-      "SŠŚȘŞ",
-      "tťțţ",
-      "TŤȚŢ",
-      "uùúủũụưừứửữựûüůū",
-      "UÙÚỦŨỤƯỪỨỬỮỰÛÜŮŪ",
-      "yýỳỷỹỵÿ",
-      "YÝỲỶỸỴŸ",
-      "zžżź",
-      "ZŽŻŹ"
-    ] : [
-      "aàáảãạăằắẳẵặâầấẩẫậäåāąAÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÄÅĀĄ",
-      "cçćčCÇĆČ",
-      "dđďDĐĎ",
-      "eèéẻẽẹêềếểễệëěēęEÈÉẺẼẸÊỀẾỂỄỆËĚĒĘ",
-      "iìíỉĩịîïīIÌÍỈĨỊÎÏĪ",
-      "lłLŁ",
-      "nñňńNÑŇŃ",
-      "oòóỏõọôồốổỗộơởỡớờợöøōOÒÓỎÕỌÔỒỐỔỖỘƠỞỠỚỜỢÖØŌ",
-      "rřRŘ",
-      "sšśșşSŠŚȘŞ",
-      "tťțţTŤȚŢ",
-      "uùúủũụưừứửữựûüůūUÙÚỦŨỤƯỪỨỬỮỰÛÜŮŪ",
-      "yýỳỷỹỵÿYÝỲỶỸỴŸ",
-      "zžżźZŽŻŹ"
-    ];
+    const sens = this.opt.caseSensitive ? "" : "i",
+      dct = this.opt.caseSensitive
+        ? [
+            "aàáảãạăằắẳẵặâầấẩẫậäåāą",
+            "AÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÄÅĀĄ",
+            "cçćč",
+            "CÇĆČ",
+            "dđď",
+            "DĐĎ",
+            "eèéẻẽẹêềếểễệëěēę",
+            "EÈÉẺẼẸÊỀẾỂỄỆËĚĒĘ",
+            "iìíỉĩịîïī",
+            "IÌÍỈĨỊÎÏĪ",
+            "lł",
+            "LŁ",
+            "nñňń",
+            "NÑŇŃ",
+            "oòóỏõọôồốổỗộơởỡớờợöøō",
+            "OÒÓỎÕỌÔỒỐỔỖỘƠỞỠỚỜỢÖØŌ",
+            "rř",
+            "RŘ",
+            "sšśșş",
+            "SŠŚȘŞ",
+            "tťțţ",
+            "TŤȚŢ",
+            "uùúủũụưừứửữựûüůū",
+            "UÙÚỦŨỤƯỪỨỬỮỰÛÜŮŪ",
+            "yýỳỷỹỵÿ",
+            "YÝỲỶỸỴŸ",
+            "zžżź",
+            "ZŽŻŹ",
+          ]
+        : [
+            "aàáảãạăằắẳẵặâầấẩẫậäåāąAÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÄÅĀĄ",
+            "cçćčCÇĆČ",
+            "dđďDĐĎ",
+            "eèéẻẽẹêềếểễệëěēęEÈÉẺẼẸÊỀẾỂỄỆËĚĒĘ",
+            "iìíỉĩịîïīIÌÍỈĨỊÎÏĪ",
+            "lłLŁ",
+            "nñňńNÑŇŃ",
+            "oòóỏõọôồốổỗộơởỡớờợöøōOÒÓỎÕỌÔỒỐỔỖỘƠỞỠỚỜỢÖØŌ",
+            "rřRŘ",
+            "sšśșşSŠŚȘŞ",
+            "tťțţTŤȚŢ",
+            "uùúủũụưừứửữựûüůūUÙÚỦŨỤƯỪỨỬỮỰÛÜŮŪ",
+            "yýỳỷỹỵÿYÝỲỶỸỴŸ",
+            "zžżźZŽŻŹ",
+          ];
     let handled = [];
     str.split("").forEach((ch) => {
       dct.every((dct2) => {
@@ -774,10 +806,7 @@ var Mark = class {
           if (handled.indexOf(dct2) > -1) {
             return false;
           }
-          str = str.replace(
-            new RegExp(`[${dct2}]`, `gm${sens}`),
-            `[${dct2}]`
-          );
+          str = str.replace(new RegExp(`[${dct2}]`, `gm${sens}`), `[${dct2}]`);
           handled.push(dct2);
         }
         return true;
@@ -794,7 +823,7 @@ var Mark = class {
    * @access protected
    */
   createMergedBlanksRegExp(str) {
-    return str.replace(/[\s]+/gmi, "[\\s]+");
+    return str.replace(/[\s]+/gim, "[\\s]+");
   }
   /**
    * Creates a regular expression string to match the specified string with
@@ -808,7 +837,10 @@ var Mark = class {
    */
   createAccuracyRegExp(str) {
     const chars = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~¡¿";
-    let acc = this.opt.accuracy, val = typeof acc === "string" ? acc : acc.value, ls = typeof acc === "string" ? [] : acc.limiters, lsJoin = "";
+    let acc = this.opt.accuracy,
+      val = typeof acc === "string" ? acc : acc.value,
+      ls = typeof acc === "string" ? [] : acc.limiters,
+      lsJoin = "";
     ls.forEach((limiter) => {
       lsJoin += `|${this.escapeStr(limiter)}`;
     });
@@ -853,10 +885,10 @@ var Mark = class {
     });
     return {
       // sort because of https://git.io/v6USg
-      "keywords": stack.sort((a, b) => {
+      keywords: stack.sort((a, b) => {
         return b.length - a.length;
       }),
-      "length": stack.length
+      length: stack.length,
     };
   }
   /**
@@ -898,17 +930,19 @@ var Mark = class {
     }
     const stack = [];
     let last = 0;
-    array.sort((a, b) => {
-      return a.start - b.start;
-    }).forEach((item) => {
-      let { start, end, valid } = this.callNoMatchOnInvalidRanges(item, last);
-      if (valid) {
-        item.start = start;
-        item.length = end - start;
-        stack.push(item);
-        last = end;
-      }
-    });
+    array
+      .sort((a, b) => {
+        return a.start - b.start;
+      })
+      .forEach((item) => {
+        let { start, end, valid } = this.callNoMatchOnInvalidRanges(item, last);
+        if (valid) {
+          item.start = start;
+          item.length = end - start;
+          stack.push(item);
+          last = end;
+        }
+      });
     return stack;
   }
   /**
@@ -921,25 +955,30 @@ var Mark = class {
    * calculated end range is valid
    */
   /**
-    * Initial validation of ranges for markRanges. Preliminary checks are done
-    * to ensure the start and length values exist and are not zero or non-
-    * numeric
-    * @param {Mark~rangeObject} range - the current range object
-    * @param {number} last - last index of range
-    * @return {Mark~validObject}
-    * @access protected
-    */
+   * Initial validation of ranges for markRanges. Preliminary checks are done
+   * to ensure the start and length values exist and are not zero or non-
+   * numeric
+   * @param {Mark~rangeObject} range - the current range object
+   * @param {number} last - last index of range
+   * @return {Mark~validObject}
+   * @access protected
+   */
   callNoMatchOnInvalidRanges(range, last) {
-    let start, end, valid = false;
+    let start,
+      end,
+      valid = false;
     if (range && typeof range.start !== "undefined") {
       start = parseInt(range.start, 10);
       end = start + parseInt(range.length, 10);
-      if (this.isNumeric(range.start) && this.isNumeric(range.length) && end - last > 0 && end - start > 0) {
+      if (
+        this.isNumeric(range.start) &&
+        this.isNumeric(range.length) &&
+        end - last > 0 &&
+        end - start > 0
+      ) {
         valid = true;
       } else {
-        this.log(
-          `Ignoring invalid or overlapping range: ${JSON.stringify(range)}`
-        );
+        this.log(`Ignoring invalid or overlapping range: ${JSON.stringify(range)}`);
         this.opt.noMatch(range);
       }
     } else {
@@ -949,7 +988,7 @@ var Mark = class {
     return {
       start,
       end,
-      valid
+      valid,
     };
   }
   /**
@@ -964,7 +1003,11 @@ var Mark = class {
    * @access protected
    */
   checkWhitespaceRanges(range, originalLength, string) {
-    let end, valid = true, max = string.length, offset = originalLength - max, start = parseInt(range.start, 10) - offset;
+    let end,
+      valid = true,
+      max = string.length,
+      offset = originalLength - max,
+      start = parseInt(range.start, 10) - offset;
     start = start > max ? max : start;
     end = start + parseInt(range.length, 10);
     if (end > max) {
@@ -983,7 +1026,7 @@ var Mark = class {
     return {
       start,
       end,
-      valid
+      valid,
     };
   }
   /**
@@ -1010,25 +1053,31 @@ var Mark = class {
    * @access protected
    */
   getTextNodes(cb) {
-    let val = "", nodes = [];
-    this.iterator.forEachNode(NodeFilter.SHOW_TEXT, (node) => {
-      nodes.push({
-        start: val.length,
-        end: (val += node.textContent).length,
-        node
-      });
-    }, (node) => {
-      if (this.matchesExclude(node.parentNode)) {
-        return NodeFilter.FILTER_REJECT;
-      } else {
-        return NodeFilter.FILTER_ACCEPT;
-      }
-    }, () => {
-      cb({
-        value: val,
-        nodes
-      });
-    });
+    let val = "",
+      nodes = [];
+    this.iterator.forEachNode(
+      NodeFilter.SHOW_TEXT,
+      (node) => {
+        nodes.push({
+          start: val.length,
+          end: (val += node.textContent).length,
+          node,
+        });
+      },
+      (node) => {
+        if (this.matchesExclude(node.parentNode)) {
+          return NodeFilter.FILTER_REJECT;
+        } else {
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      },
+      () => {
+        cb({
+          value: val,
+          nodes,
+        });
+      },
+    );
   }
   /**
    * Checks if an element matches any of the specified exclude selectors. Also
@@ -1039,14 +1088,17 @@ var Mark = class {
    * @access protected
    */
   matchesExclude(el) {
-    return DOMIterator.matches(el, this.opt.exclude.concat([
-      // ignores the elements itself, not their childrens (selector *)
-      "script",
-      "style",
-      "title",
-      "head",
-      "html"
-    ]));
+    return DOMIterator.matches(
+      el,
+      this.opt.exclude.concat([
+        // ignores the elements itself, not their childrens (selector *)
+        "script",
+        "style",
+        "title",
+        "head",
+        "html",
+      ]),
+    );
   }
   /**
    * Wraps the instance element and class around matches that fit the start
@@ -1059,7 +1111,9 @@ var Mark = class {
    * @access protected
    */
   wrapRangeInTextNode(node, start, end) {
-    const hEl = !this.opt.element ? "mark" : this.opt.element, startNode = node.splitText(start), ret = startNode.splitText(end - start);
+    const hEl = !this.opt.element ? "mark" : this.opt.element,
+      startNode = node.splitText(start),
+      ret = startNode.splitText(end - start);
     let repl = document.createElement(hEl);
     repl.setAttribute("data-markjs", "true");
     if (this.opt.className) {
@@ -1110,7 +1164,10 @@ var Mark = class {
         if (!filterCb(n.node)) {
           return false;
         }
-        const s = start - n.start, e = (end > n.end ? n.end : end) - n.start, startStr = dict.value.substr(0, n.start), endStr = dict.value.substr(e + n.start);
+        const s = start - n.start,
+          e = (end > n.end ? n.end : end) - n.start,
+          startStr = dict.value.substr(0, n.start),
+          endStr = dict.value.substr(e + n.start);
         n.node = this.wrapRangeInTextNode(n.node, s, e);
         dict.value = startStr + endStr;
         dict.nodes.forEach((k, j) => {
@@ -1174,11 +1231,7 @@ var Mark = class {
               pos += match[i].length;
             }
           }
-          node = this.wrapRangeInTextNode(
-            node,
-            pos,
-            pos + match[matchIdx].length
-          );
+          node = this.wrapRangeInTextNode(node, pos, pos + match[matchIdx].length);
           eachCb(node.previousSibling);
           regex.lastIndex = 0;
         }
@@ -1224,12 +1277,18 @@ var Mark = class {
           }
         }
         const end = start + match[matchIdx].length;
-        this.wrapRangeInMappedTextNode(dict, start, end, (node) => {
-          return filterCb(match[matchIdx], node);
-        }, (node, lastIndex) => {
-          regex.lastIndex = lastIndex;
-          eachCb(node);
-        });
+        this.wrapRangeInMappedTextNode(
+          dict,
+          start,
+          end,
+          (node) => {
+            return filterCb(match[matchIdx], node);
+          },
+          (node, lastIndex) => {
+            regex.lastIndex = lastIndex;
+            eachCb(node);
+          },
+        );
       }
       endCb();
     });
@@ -1266,22 +1325,19 @@ var Mark = class {
     this.getTextNodes((dict) => {
       const originalLength = dict.value.length;
       ranges.forEach((range, counter) => {
-        let { start, end, valid } = this.checkWhitespaceRanges(
-          range,
-          originalLength,
-          dict.value
-        );
+        let { start, end, valid } = this.checkWhitespaceRanges(range, originalLength, dict.value);
         if (valid) {
-          this.wrapRangeInMappedTextNode(dict, start, end, (node) => {
-            return filterCb(
-              node,
-              range,
-              dict.value.substring(start, end),
-              counter
-            );
-          }, (node) => {
-            eachCb(node, range);
-          });
+          this.wrapRangeInMappedTextNode(
+            dict,
+            start,
+            end,
+            (node) => {
+              return filterCb(node, range, dict.value.substring(start, end), counter);
+            },
+            (node) => {
+              eachCb(node, range);
+            },
+          );
         }
       });
       endCb();
@@ -1382,7 +1438,8 @@ var Mark = class {
   markRegExp(regexp, opt) {
     this.opt = opt;
     this.log(`Searching with expression "${regexp}"`);
-    let totalMatches = 0, fn = "wrapMatches";
+    let totalMatches = 0,
+      fn = "wrapMatches";
     const eachCb = (element) => {
       totalMatches++;
       this.opt.each(element);
@@ -1390,14 +1447,20 @@ var Mark = class {
     if (this.opt.acrossElements) {
       fn = "wrapMatchesAcrossElements";
     }
-    this[fn](regexp, this.opt.ignoreGroups, (match, node) => {
-      return this.opt.filter(node, match, totalMatches);
-    }, eachCb, () => {
-      if (totalMatches === 0) {
-        this.opt.noMatch(regexp);
-      }
-      this.opt.done(totalMatches);
-    });
+    this[fn](
+      regexp,
+      this.opt.ignoreGroups,
+      (match, node) => {
+        return this.opt.filter(node, match, totalMatches);
+      },
+      eachCb,
+      () => {
+        if (totalMatches === 0) {
+          this.opt.noMatch(regexp);
+        }
+        this.opt.done(totalMatches);
+      },
+    );
   }
   /**
    * Callback for each marked element
@@ -1517,30 +1580,39 @@ var Mark = class {
    */
   mark(sv, opt) {
     this.opt = opt;
-    let totalMatches = 0, fn = "wrapMatches";
-    const {
-      keywords: kwArr,
-      length: kwArrLen
-    } = this.getSeparatedKeywords(typeof sv === "string" ? [sv] : sv), sens = this.opt.caseSensitive ? "" : "i", handler = (kw) => {
-      let regex = new RegExp(this.createRegExp(kw), `gm${sens}`), matches = 0;
-      this.log(`Searching with expression "${regex}"`);
-      this[fn](regex, 1, (term, node) => {
-        return this.opt.filter(node, kw, totalMatches, matches);
-      }, (element) => {
-        matches++;
-        totalMatches++;
-        this.opt.each(element);
-      }, () => {
-        if (matches === 0) {
-          this.opt.noMatch(kw);
-        }
-        if (kwArr[kwArrLen - 1] === kw) {
-          this.opt.done(totalMatches);
-        } else {
-          handler(kwArr[kwArr.indexOf(kw) + 1]);
-        }
-      });
-    };
+    let totalMatches = 0,
+      fn = "wrapMatches";
+    const { keywords: kwArr, length: kwArrLen } = this.getSeparatedKeywords(
+        typeof sv === "string" ? [sv] : sv,
+      ),
+      sens = this.opt.caseSensitive ? "" : "i",
+      handler = (kw) => {
+        let regex = new RegExp(this.createRegExp(kw), `gm${sens}`),
+          matches = 0;
+        this.log(`Searching with expression "${regex}"`);
+        this[fn](
+          regex,
+          1,
+          (term, node) => {
+            return this.opt.filter(node, kw, totalMatches, matches);
+          },
+          (element) => {
+            matches++;
+            totalMatches++;
+            this.opt.each(element);
+          },
+          () => {
+            if (matches === 0) {
+              this.opt.noMatch(kw);
+            }
+            if (kwArr[kwArrLen - 1] === kw) {
+              this.opt.done(totalMatches);
+            } else {
+              handler(kwArr[kwArr.indexOf(kw) + 1]);
+            }
+          },
+        );
+      };
     if (this.opt.acrossElements) {
       fn = "wrapMatchesAcrossElements";
     }
@@ -1589,11 +1661,10 @@ var Mark = class {
    */
   markRanges(rawRanges, opt) {
     this.opt = opt;
-    let totalMatches = 0, ranges = this.checkRanges(rawRanges);
+    let totalMatches = 0,
+      ranges = this.checkRanges(rawRanges);
     if (ranges && ranges.length) {
-      this.log(
-        "Starting to mark with the following ranges: " + JSON.stringify(ranges)
-      );
+      this.log("Starting to mark with the following ranges: " + JSON.stringify(ranges));
       this.wrapRangeFromIndex(
         ranges,
         (node, range, match, counter) => {
@@ -1605,7 +1676,7 @@ var Mark = class {
         },
         () => {
           this.opt.done(totalMatches);
-        }
+        },
       );
     } else {
       this.opt.done(totalMatches);
@@ -1625,16 +1696,22 @@ var Mark = class {
       sel += `.${this.opt.className}`;
     }
     this.log(`Removal selector "${sel}"`);
-    this.iterator.forEachNode(NodeFilter.SHOW_ELEMENT, (node) => {
-      this.unwrapMatches(node);
-    }, (node) => {
-      const matchesSel = DOMIterator.matches(node, sel), matchesExclude = this.matchesExclude(node);
-      if (!matchesSel || matchesExclude) {
-        return NodeFilter.FILTER_REJECT;
-      } else {
-        return NodeFilter.FILTER_ACCEPT;
-      }
-    }, this.opt.done);
+    this.iterator.forEachNode(
+      NodeFilter.SHOW_ELEMENT,
+      (node) => {
+        this.unwrapMatches(node);
+      },
+      (node) => {
+        const matchesSel = DOMIterator.matches(node, sel),
+          matchesExclude = this.matchesExclude(node);
+        if (!matchesSel || matchesExclude) {
+          return NodeFilter.FILTER_REJECT;
+        } else {
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      },
+      this.opt.done,
+    );
   }
 };
 
@@ -1659,7 +1736,5 @@ function Mark2(ctx) {
   };
   return this;
 }
-export {
-  Mark2 as default
-};
+export { Mark2 as default };
 //# sourceMappingURL=vitepress___mark__js_src_vanilla__js.js.map

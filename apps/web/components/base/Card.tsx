@@ -9,19 +9,19 @@ import "../../style/scrollAnimate.css";
 import { useScrollAnimate } from "@/hooks/useScrollAnimate";
 import { useRef } from "react";
 
-function Card() {
+const Card: React.FC = () => {
   const router = useRouter();
-  const handleClick = () => {
-    router.push("/editor");
-  };
+  // const handleClick = () => {
+  //   router.push("/editor");
+  // };
 
   const boxRef = useRef<HTMLDivElement>(null); // 指定ref的类型为HTMLDivElement
   useScrollAnimate(boxRef);
 
   return (
     <div
-      className="card bg-base-100 w-80 shadow-xl mb-7 mt-7 hover-zoom ml-14 box"
-      onClick={handleClick}
+      className="lg:w-[24%] md:w-[49%] w-full card bg-base-100 shadow-xl my-7 hover-zoom box"
+      // onClick={handleClick}
       ref={boxRef}
     >
       <figure>
@@ -59,6 +59,5 @@ function Card() {
       </div>
     </div>
   );
-}
-
+};
 export default Card;

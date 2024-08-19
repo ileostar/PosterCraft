@@ -16,8 +16,10 @@
     "test:cov": "vitest --coverage"
   },
   "dependencies": {
+    "@fastify/multipart": "^8.3.0",
     "@fastify/static": "7.0.4",
     "@fastify/view": "9.1.0",
+    "@nest-lab/fastify-multer": "^1.2.0",
     "@nestjs-modules/ioredis": "2.0.2",
     "@nestjs-modules/mailer": "2.0.2",
     "@nestjs/axios": "3.0.2",
@@ -31,6 +33,7 @@
     "@nestjs/schedule": "4.1.0",
     "@nestjs/swagger": "7.4.0",
     "@nestjs/websockets": "10.3.10",
+    "@netlify/functions": "^2.8.1",
     "@poster-craft/schema": "1.0.0",
     "ali-oss": "6.20.0",
     "argon2": "0.40.3",
