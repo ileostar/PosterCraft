@@ -20,7 +20,7 @@ const Card: React.FC = () => {
 
   return (
     <div
-      className="lg:w-[24%] md:w-[49%]  w-full card bg-base-100 shadow-xl my-7 hover-zoom box"
+      className="lg:w-[24%] md:w-[49%] w-full card bg-base-100 shadow-xl my-7 hover-zoom box"
       // onClick={handleClick}
       ref={boxRef}
     >

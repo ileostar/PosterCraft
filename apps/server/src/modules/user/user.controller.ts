@@ -65,7 +65,7 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put(':id')
+  @Put(':userId')
   @ApiParam({
     name: 'userId',
     description: '用户ID',

@@ -16,8 +16,10 @@
     "test:cov": "vitest --coverage"
   },
   "dependencies": {
+    "@fastify/multipart": "^8.3.0",
     "@fastify/static": "7.0.4",
     "@fastify/view": "9.1.0",
+    "@nest-lab/fastify-multer": "^1.2.0",
     "@nestjs-modules/ioredis": "2.0.2",
     "@nestjs-modules/mailer": "2.0.2",
     "@nestjs/axios": "3.0.2",

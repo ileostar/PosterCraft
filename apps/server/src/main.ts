@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-
+import multipart from '@fastify/multipart';
 import { AppModule } from './modules/app/app.module';
 import { appGlobalMiddleware } from './middlewares/global.middleware.ts';
 import { GlobalConfig } from './config';
@@ -29,6 +29,7 @@ async function bootstrap() {
     },
     templates: join(__dirname, 'views'),
   });
+  await app.register(multipart);
 
   appGlobalMiddleware(app);
   const config = new DocumentBuilder()
