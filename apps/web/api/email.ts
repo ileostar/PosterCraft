@@ -8,9 +8,10 @@ interface CustomAxiosResponse<T = any> extends AxiosResponse<T> {
   msg?: any;
 }
 
+//发送邮箱验证码
 export function sendCodeByEmail(email: string): Promise<CustomAxiosResponse> {
   return request({
-    url: "/mail/sendCodeByEmail",
+    url: "/mail/sendCode",
     params: {
       email: email,
     },
@@ -18,13 +19,14 @@ export function sendCodeByEmail(email: string): Promise<CustomAxiosResponse> {
   });
 }
 
+//更换邮箱
 export function updateEmail(
   userId: string,
   email: string,
   otp: string,
 ): Promise<CustomAxiosResponse> {
   return request({
-    url: "/mail/updateEmail",
+    url: "/mail",
     data: {
       email,
       userId,
@@ -34,17 +36,33 @@ export function updateEmail(
   });
 }
 
+//绑定邮箱
 export function bindEmail(
   userId: string,
   email: string,
   otp: string,
 ): Promise<CustomAxiosResponse> {
   return request({
-    url: "/mail/bindEmail",
+    url: "/mail/bind",
     data: {
       email,
       userId,
       otp,
+    },
+    method: "post",
+  });
+}
+
+//验证邮箱
+export function verifyEmail(
+  email: string,
+  otp: string,
+): Promise<CustomAxiosResponse> {
+  return request({
+    url: "/mail/verify",
+    data: {
+      email,
+      otp
     },
     method: "post",
   });

@@ -2,17 +2,14 @@ import { request } from "../utils/request";
 
 export function getUserInfo(userId: string) {
   return request({
-    url: "/user/getUserInfosByUserId",
-    params: {
-      userId: userId,
-    },
+    url: `/users/${userId}`,
     method: "get",
   });
 }
 
-export function updateUserInfo(data: any) {
+export function updateUserInfo(id:any,data: any) {
   return request({
-    url: "/user/updateUserInfos",
+    url: `/users/${id}`,
     data: data,
     method: "put",
   });
@@ -20,10 +17,7 @@ export function updateUserInfo(data: any) {
 
 export function deleteUser(userId: string) {
   return request({
-    url: "/user/deleteUserById",
-    data: {
-      userId: userId,
-    },
+    url: `/users/${userId}`,
     method: "delete",
   });
 }

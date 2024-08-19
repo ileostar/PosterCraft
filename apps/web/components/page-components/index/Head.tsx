@@ -28,7 +28,7 @@ function Head({ mode }: Readonly<{ mode: string }>) {
   }, []);
 
   return (
-    <div className={`navbar z-50 bg-red-500  ${mode == "fixed" ? "myFixed " : "sticky"}`}>
+    <div className={`navbar z-50 bg-red-500  ${mode == "fixed" ? "fixed" : "sticky"}`}>
       <div className="flex-1">
         <Link
           href="/"

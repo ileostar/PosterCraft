@@ -37,19 +37,6 @@ export async function loginBySMS(phone: any, code: any): Promise<CustomAxiosResp
 }
 
 /**
- * sms发送短信
- */
-export function sendBySMS(phone: any) {
-  return request({
-    url: "/sms/sendCodeBySMS",
-    data: {
-      phone: phone,
-    },
-    method: "post",
-  });
-}
-
-/**
  * 普通注册
  */
 export function defaultSignUp(username: any, password: any, phone: any, otp: any) {
@@ -70,7 +57,7 @@ export function defaultSignUp(username: any, password: any, phone: any, otp: any
  */
 export function defaultSignIn(identifier: any, password: any): Promise<CustomAxiosResponse> {
   return request({
-    url: "/auth/defaultLogin",
+    url: "/auth/login",
     data: {
       identifier,
       password,

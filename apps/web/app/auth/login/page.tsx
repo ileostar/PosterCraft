@@ -1,6 +1,7 @@
 "use client";
 
-import { defaultSignIn, defaultSignUp, loginBySMS, sendBySMS } from "@/api/auth";
+import { defaultSignIn, defaultSignUp, loginBySMS } from "@/api/auth";
+import {  sendBySMS } from "@/api/sms";
 import MyFormField from "@/components/base/MyFormField";
 import Layout from "@/components/page-components/auth/AuthBackGround";
 import Oauth2 from "@/components/page-components/auth/Oauth2";
@@ -31,8 +32,8 @@ const loginFormSchema = z.object({
   }),
   username: z
     .string()
-    .min(4, { message: "用户名长度不能少于4个字符" })
-    .max(12, { message: "用户名长度不能超过20个字符" }),
+    // .min(4, { message: "用户名长度不能少于4个字符" })
+    // .max(12, { message: "用户名长度不能超过20个字符" }),
 });
 
 export type loginFormSchemaType = z.infer<typeof loginFormSchema>;
@@ -85,12 +86,13 @@ export default function Login() {
   const handleSign = async () => { 
     let res= isPhoneMode?await loginBySMS(form.getValues("phone"), form.getValues("code")):await defaultSignIn(form.getValues("username"), form.getValues("password"));
     window.localStorage.setItem("token", res.token); //存入本地
-    if(isPhoneMode) {
-      window.localStorage.setItem("userId", res.data.id); 
-    }
-    else{
-      window.localStorage.setItem("userId", res.data.userId); 
-    }
+    window.localStorage.setItem("userId", res.data?.userId); 
+    // if(isPhoneMode) {
+    //   window.localStorage.setItem("userId", res.data.id); 
+    // }
+    // else{
+    //   window.localStorage.setItem("userId", res.data.userId); 
+    // }
     console.log(res.token);
     router.push("/");
   };
