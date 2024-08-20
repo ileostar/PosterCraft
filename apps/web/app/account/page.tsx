@@ -314,19 +314,7 @@ function Index(props: any) {
     };
   }, []);
 
-  const RenderThreeD = () => {
-    if (isReady) {
-      return (
-        <ThreeD
-          boxWidth={boxWidth}
-          boxHeight={boxHeight}
-        />
-      );
-    }
-    // 如果还没准备好，可以渲染一个加载指示器或其他占位符
-    return <div>Loading...</div>;
-  };
-
+   
   return (
     <AuthLayout>
       <div>
@@ -341,7 +329,14 @@ function Index(props: any) {
               style={{ background: "linear-gradient(to bottom, #11e8bb 0%, #8200c9 100%)" }}
               ref={boxRef}
             >
-              {RenderThreeD()}
+              {isReady ? (
+                <ThreeD
+                  boxWidth={boxWidth}
+                  boxHeight={boxHeight}
+                />
+              ) : (
+                <div>Loading...</div>
+              )}
             </div>
             <div className="card-body">
               <div
@@ -536,7 +531,7 @@ function Index(props: any) {
                   <button
                     className="btn"
                     onClick={() => {
-                      handleUpdatePhone;
+                      handleUpdatePhone();
                     }}
                   >
                     确认
@@ -622,7 +617,7 @@ function Index(props: any) {
                 <button
                   className="btn"
                   onClick={() => {
-                    handleUpdateEmail;
+                    handleUpdateEmail();
                   }}
                 >
                   {email ? "确认" : "绑定"}
