@@ -10,7 +10,6 @@ import ThreeD from "@/components/model/MyModel";
 
 import "@/style/3d.css";
 
-import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -126,7 +125,6 @@ function Index(props: any) {
   });
   async function onSubmit(values: any) {
     console.log(values);
-    // showModal();
   }
 
   //子组件的回调函数
@@ -310,11 +308,11 @@ function Index(props: any) {
         setBoxHeight(height);
         setIsReady(true);
       }
-    },10);
+    }, 10);
     return () => {
       clearTimeout(timer);
     };
-  }, []); 
+  }, []);
 
   const RenderThreeD = () => {
     if (isReady) {
@@ -340,7 +338,7 @@ function Index(props: any) {
           <div className="card lg:card-side bg-base-100 shadow-xl">
             <div
               className="w-1/2"
-              style={{background: 'linear-gradient(to bottom, #11e8bb 0%, #8200c9 100%)'}}
+              style={{ background: "linear-gradient(to bottom, #11e8bb 0%, #8200c9 100%)" }}
               ref={boxRef}
             >
               {RenderThreeD()}
@@ -352,6 +350,16 @@ function Index(props: any) {
               >
                 个人中心
               </div>
+
+              <label className="label flex justify-end">
+                <Link
+                  href="/auth/login"
+                  onClick={handleDelete}
+                  className="label-text-alt link link-hover text-[#EF4444] "
+                >
+                  注销账号
+                </Link>
+              </label>
 
               <div className="flex justify-center mb-8">
                 {/* //表单 */}
@@ -390,15 +398,6 @@ function Index(props: any) {
                             更新信息
                           </button>
                         </div>
-                        {/* <label className="label flex justify-end">
-                          <Link
-                            href="/auth/login"
-                            onClick={handleDelete}
-                            className="label-text-alt link link-hover text-[#EF4444] "
-                          >
-                            注销账号
-                          </Link>
-                        </label> */}
                       </form>
                     </div>
                   </Form>
