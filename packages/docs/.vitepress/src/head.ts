@@ -1,18 +1,18 @@
-import type { HeadConfig } from 'vitepress'
+import type { HeadConfig } from "vitepress";
 
 export const head: HeadConfig[] = [
   [
-    'link',
+    "link",
     {
-      rel: 'icon',
-      href: '/logo.png',
+      rel: "icon",
+      href: "/logo.png",
     },
   ],
   [
-    'meta',
+    "meta",
     {
-      name: 'keywords',
-      content: 'PosterCraft',
+      name: "keywords",
+      content: "PosterCraft",
     },
   ],
-]
+];

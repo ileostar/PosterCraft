@@ -50,7 +50,9 @@ type ElementData = {
 
 export const UseElementStore = create<ElementStore>((set, get) => ({
   Elements: [],
-  setELements: (elements: ElementData[]) => {set({ Elements: elements })},
+  setELements: (elements: ElementData[]) => {
+    set({ Elements: elements });
+  },
   currentElement: "",
   // 添加元素
   addElement: (element: ElementData) =>
@@ -113,6 +115,6 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
   currentSize: { height: 0, width: 0 },
   setCurrentSize: (height: any, width: any) => set((state) => ({ currentSize: { height, width } })),
   // 判断当前元素属性是否被锁定
-  setIsCurrentLocked: (isCurrentLocked: boolean) => set((state) => ({isCurrentLocked })),
+  setIsCurrentLocked: (isCurrentLocked: boolean) => set((state) => ({ isCurrentLocked })),
   isCurrentLocked: false,
 }));

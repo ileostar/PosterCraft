@@ -4,6 +4,7 @@ import { githubSignIn, googleSignIn } from "@/api/auth";
 import GithubIcon from "@/components/base/GithubIcon";
 import GoogleIcon from "@/components/base/GoogleIcon";
 import { useRouter } from "next/navigation";
+
 import { useGithubUsername, useOauth2Dialog } from "../../../store/auth";
 
 function Oauth2() {
@@ -33,7 +34,7 @@ function Oauth2() {
         className="text-gray cursor-pointer mr-1 hover:animate-pulse"
         onClick={() => googleSignIn()}
       >
-        <GoogleIcon/>
+        <GoogleIcon />
       </button>
       <button
         className="cursor-pointer hover:animate-pulse"
@@ -42,7 +43,7 @@ function Oauth2() {
           handleGithubSignIn();
         }}
       >
-        <GithubIcon/>
+        <GithubIcon />
       </button>
     </div>
   );

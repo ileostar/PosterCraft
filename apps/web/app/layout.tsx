@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Inter } from "next/font/google";
-import { AntdRegistry } from '@ant-design/nextjs-registry';
+
 import "./globals.css";
+import "nprogress/nprogress.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,7 +14,7 @@ export const metadata: Metadata = {
   icons: [
     {
       rel: "icon",
-      url: "../../../public/assets/logo.png",
+      url: "/favicon.png",
     },
   ],
 };
@@ -24,7 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}><AntdRegistry>{children}</AntdRegistry></body>
+      <body className={inter.className}>
+        <AntdRegistry>{children}</AntdRegistry>
+      </body>
     </html>
   );
 }

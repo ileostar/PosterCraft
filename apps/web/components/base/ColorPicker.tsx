@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SketchPicker } from "react-color";
 
-const ColorPicker = ({changeColor}:{changeColor:(value: string) => void;}) => {
+const ColorPicker = ({ changeColor }: { changeColor: (value: string) => void }) => {
   const [color] = useState("#000000");
 
   const handleChangeComplete = (color: any) => {
@@ -12,7 +12,7 @@ const ColorPicker = ({changeColor}:{changeColor:(value: string) => void;}) => {
   return (
     <div className="w-2/3">
       <SketchPicker
-       className="w-full"
+        className="w-full"
         color={color}
         onChangeComplete={handleChangeComplete}
       />
