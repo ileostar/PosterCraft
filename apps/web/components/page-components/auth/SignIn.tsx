@@ -25,7 +25,7 @@ function renderSignIn({
 }) {
   if (isPhoneMode) {
     return (
-      <div>
+      <div className="flex flex-col gap-1">
         <MyFormField
           form={form}
           name={"phone"}
@@ -37,14 +37,8 @@ function renderSignIn({
           name={"code"}
           placeholder={"请输入验证码"}
           label={"验证码"}
+          isVerify={true}
         />
-        <button
-          className={`btn btn-outline btn-error mt-2`}
-          onClick={handleClick}
-          disabled={isDisabled}
-        >
-          {isPhoneMode && (!isDisabled ? "发送验证码" : `${countdown}s后再试`)}
-        </button>
         <label className="label justify-end">
           <Link
             href="#"
@@ -60,7 +54,7 @@ function renderSignIn({
     );
   } else {
     return (
-      <div>
+      <div className="flex flex-col gap-1">
         <MyFormField
           form={form}
           name={"username"}

@@ -4,28 +4,26 @@ import io from "socket.io-client";
 
 import { request } from "../utils/request";
 
-interface CustomAxiosResponse<T = any> extends AxiosResponse<T> {
-  token?: any;
-  code?: any;
-  msg?: any;
+interface CustomAxiosResponse<T> extends AxiosResponse<T> {
+  token?: string;
+  code?: 200 | -1;
+  msg?: string;
+  data: T;
 }
 
-interface GithubSignInResponse {
-  token?: any;
-  code?: any;
-  msg?: any;
-  data: {
-    isSignUp: any;
+interface GithubSignInResponse
+  extends CustomAxiosResponse<{
+    isSignUp: boolean;
     userData: {
-      username: any;
+      username: string;
+      [index: string]: unknown;
     };
-  };
-}
+  }> {}
 
 /**
  * sms短信登录
  */
-export async function loginBySMS(phone: any, code: any): Promise<CustomAxiosResponse> {
+export async function loginBySMS(phone: any, code: any) {
   return request({
     url: "/auth/phoneOtpLogin",
     data: {
@@ -55,7 +53,7 @@ export function defaultSignUp(username: any, password: any, phone: any, otp: any
 /**
  * 普通登录
  */
-export function defaultSignIn(identifier: any, password: any): Promise<CustomAxiosResponse> {
+export function defaultSignIn(identifier: any, password: any) {
   return request({
     url: "/auth/login",
     data: {
@@ -82,20 +80,6 @@ export function googleSignIn() {
     socket.close();
   });
 }
-
-// export function githubSignIn() {
-//   const socket = io("http://localhost:3001"); // 连接到你的NestJS WebSocket服务器
-
-//   const authWindow = openCenteredOAuthPopup("http://127.0.0.1:3001/auth/github/callback", 600, 500);
-//   socket.on("connect", () => {
-//     console.log("Connected to the server!");
-//   });
-//   socket.on("messageToAll", (data: any) => {
-//     console.log("Received message from server:", JSON.parse(data));
-//     authWindow!.close();
-//     socket.close();
-//   });
-// }
 
 /**
  * github登录

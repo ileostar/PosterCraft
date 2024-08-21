@@ -1,7 +1,7 @@
 "use client";
 
 import { defaultSignUp } from "@/api/auth";
-import {  sendBySMS } from "@/api/sms";
+import { sendBySMS } from "@/api/sms";
 import MyFormField from "@/components/base/MyFormField";
 import Layout from "@/components/page-components/auth/AuthBackGround";
 import Oauth2 from "@/components/page-components/auth/Oauth2";
@@ -44,46 +44,18 @@ export default function Register() {
     },
   });
   async function onSubmit(values: loginFormSchemaType) {
-    console.log(values);
-  }
-
-  //按钮禁用
-  const [isDisabled, setIsDisabled] = useState(false);
-  //倒计时
-  const [countdown, setCountdown] = useState(0);
-
-  // 发送验证码并启动倒计时
-  const handleClick = () => {
-    if (!isDisabled) {
-      sendBySMS(form.getValues("phone"));
-      setIsDisabled(true);
-      setCountdown(60);
-    }
-  };
-  useEffect(() => {
-    if (countdown > 0) {
-      const intervalId = setInterval(() => {
-        setCountdown((prevCountdown) => prevCountdown - 1);
-      }, 1000);
-      return () => {
-        clearInterval(intervalId);
-      };
-    }
-    if (countdown === 0) {
-      setIsDisabled(false);
-    }
-  }, [countdown]);
-
-  const handleSign = async () => {
-    let res = await defaultSignUp(
+    const res = await defaultSignUp(
       form.getValues("username"),
       form.getValues("password"),
       form.getValues("phone"),
       form.getValues("code"),
     );
-    console.log(res);
-    router.push("/auth/login");
-  };
+    setTimeout(() => {
+      router.push("/auth/login");
+    }, 2000);
+  }
+
+  const handleSign = async () => {};
 
   return (
     <Layout>
@@ -97,7 +69,7 @@ export default function Register() {
               <div className="flex justify-center items-center ">
                 <p className="text-red-500 text-2xl card-title">Sign Up</p>
               </div>
-              <div>
+              <div className="flex flex-col gap-1 mb-1">
                 <MyFormField
                   form={form}
                   name={"username"}
@@ -121,18 +93,12 @@ export default function Register() {
                   name={"code"}
                   placeholder={"请输入验证码"}
                   label={"验证码"}
+                  isVerify={true}
                 />
-                <button
-                  className={`btn btn-outline btn-error mt-2`}
-                  onClick={handleClick}
-                  disabled={isDisabled}
-                >
-                  {!isDisabled ? "发送验证码" : `${countdown}s后再试`}
-                </button>
               </div>
               <div className="flex justify-between mt-[5px]">
                 <Button
-                  className="btn w-full hover:bg-red-600 bg-[#EF4444] text-white"
+                  className="btn w-full hover:bg-red-600  text-white"
                   onClick={() => handleSign()}
                   type="submit"
                 >
@@ -143,7 +109,7 @@ export default function Register() {
                 <label className="label">
                   <Link
                     href="/auth/login"
-                    className="label-text-alt link link-hover text-[#EF4444] "
+                    className="label-text-alt no-underline link link-hover text-[#EF4444] "
                   >
                     点此登录
                   </Link>
