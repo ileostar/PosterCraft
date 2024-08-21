@@ -3,7 +3,6 @@
 import AuthLayout from "@/components/base/AuthLayout";
 import Card from "@/components/base/Card";
 import Search from "@/components/base/MySearch";
-import Link from "next/link";
 
 import Head from "../../components/page-components/index/Head";
 
@@ -11,7 +10,7 @@ function Index(props: any) {
   return (
     <AuthLayout>
       <div>
-        <Head />
+        <Head mode={"sticky"} />
         <div
           className="w-4/5 mx-auto relative mt-32 mb-32"
           id="my-work"

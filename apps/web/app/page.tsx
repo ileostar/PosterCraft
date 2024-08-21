@@ -6,13 +6,13 @@ import TemplateList from "../components/page-components/index/TemplateList";
 
 function Main() {
   return (
-    <main className="h-screen">
-      <Head />
+    <div className="h-screen">
+      <Head mode={"fixed"} />
       <Banner />
       <DataBox />
       <TemplateList />
       <Foot />
-    </main>
+    </div>
   );
 }
 

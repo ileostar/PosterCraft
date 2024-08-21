@@ -11,7 +11,7 @@ function Index(props: any) {
   return (
     <AuthLayout>
       <div className="w-screen h-screen flex flex-col">
-        <Head />
+        <Head mode={"sticky"} />
         <div className="flex h-full">
           <Left />
           <Middle />

@@ -12,7 +12,8 @@ function MyFormField({
   name,
   placeholder,
   label,
-}: Readonly<{ form: FormType; name: string; placeholder: string; label?: string }>) {
+  readonly
+}: Readonly<{ form: FormType; name: string; placeholder: string; label?: string,readonly?:boolean }>) {
   return (
     <FormField
       control={form.control}
@@ -25,6 +26,7 @@ function MyFormField({
               className="input-bordered"
               {...field}
               placeholder={placeholder}
+              readOnly={readonly}
             />
           </FormControl>
           <FormMessage />
