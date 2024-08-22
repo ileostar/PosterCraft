@@ -41,10 +41,7 @@ function Index(props: any) {
   };
 
   return (
-    <div
-      className="flex items-center bg-base-200 h-full justify-center"
-      style={{ background: "linear-gradient(to bottom, #11e8bb 0%, #8200c9 100%)" }}
-    >
+    <div className="flex items-center bg-base-200 h-full justify-center">
       <div className="flex flex-row  w-2/3 justify-around">
         <div className="w-1/2">
           <h1 className="text-5xl font-bold ">可视化海报编辑器</h1>

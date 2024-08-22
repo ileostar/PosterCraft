@@ -42,6 +42,7 @@
     "zustand": "4.5.4"
   },
   "devDependencies": {
+    "@poster-craft/tailwind-config": "workspace:^",
     "@types/array-move": "^2.0.0",
     "@types/react": "18.3.3",
     "@types/react-color": "3.0.12",

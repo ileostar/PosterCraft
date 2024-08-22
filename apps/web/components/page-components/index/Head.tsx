@@ -28,11 +28,13 @@ function Head({ mode }: Readonly<{ mode: string }>) {
   }, []);
 
   return (
-    <div className={`navbar z-50 bg-red-500  ${mode == "fixed" ? "fixed" : "sticky"}`}>
+    <div
+      className={`navbar bg-background/30 fixed inset-x-0 top-4 z-40 mx-auto flex h-[60px] max-w-5xl items-center justify-between rounded-2xl px-8 shadow-sm saturate-100 backdrop-blur-[10px] transition-colors ${mode == "fixed" ? "fixed" : "sticky"}`}
+    >
       <div className="flex-1">
         <Link
           href="/"
-          className="btn btn-ghost text-xl text-white"
+          className="btn btn-ghost text-xl oolor-red drak:color-white"
         >
           PosterCraft
         </Link>
@@ -69,9 +71,7 @@ function Head({ mode }: Readonly<{ mode: string }>) {
               />
             </div>
           </button>
-          <ul
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-          >
+          <ul className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
             <li>
               <Link href="/account">我的账号</Link>
             </li>
