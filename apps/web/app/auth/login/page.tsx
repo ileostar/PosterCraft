@@ -8,6 +8,7 @@ import Oauth2 from "@/components/page-components/auth/Oauth2";
 import renderSignIn from "@/components/page-components/auth/SignIn";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { toast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -91,18 +92,16 @@ export default function Login() {
     console.log(res.token);
     router.push("/");
   };
-
   const { githubUsername } = useGithubUsername();
   const { setIsOpen, isOpen } = useOauth2Dialog();
 
   const addPhoneByGithub = async () => {
     let res = await defaultSignUp(
       githubUsername,
-      "",
+      null,
       form.getValues("phone"),
       form.getValues("code"),
     );
-    console.log(res);
     CloseModal();
     router.push("/");
   };
@@ -132,45 +131,43 @@ export default function Login() {
     <Layout>
       <div className="w-[92vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] xl:w-[25vw] min-w-[320px] card shrink-0 max-w-sm shadow-2xl bg-base-100 font-serif rounded-2xl">
         <Form {...form}>
-          <div>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="flex flex-col gap-2 p-8 bg-slate-100 rounded-2xl"
-            >
-              <div className="flex justify-center items-center ">
-                <p className="text-red-500 text-2xl card-title">Sign In</p>
-              </div>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-2 p-8 bg-slate-100 rounded-2xl"
+          >
+            <div className="flex justify-center items-center ">
+              <p className="text-red-500 text-2xl card-title">Sign In</p>
+            </div>
 
-              {renderSignIn({
-                isPhoneMode,
-                setIsPhoneMode,
-                isDisabled,
-                form,
-                handleClick,
-                countdown,
-              })}
-              <div className="flex justify-between mt-[5px]">
-                <Button
-                  className="btn w-full hover:bg-red-600 bg-[#EF4444] text-white"
-                  onClick={() => handleSign()}
-                  type="submit"
+            {renderSignIn({
+              isPhoneMode,
+              setIsPhoneMode,
+              isDisabled,
+              form,
+              handleClick,
+              countdown,
+            })}
+            <div className="flex justify-between mt-[5px]">
+              <Button
+                className="btn w-full hover:bg-red-600 bg-[#EF4444] text-white"
+                onClick={() => handleSign()}
+                type="submit"
+              >
+                登录
+              </Button>
+            </div>
+            <div className="flex justify-between items-center">
+              <label className="label">
+                <Link
+                  href="/auth/register"
+                  className="label-text-alt link link-hover text-[#EF4444] "
                 >
-                  登录
-                </Button>
-              </div>
-              <div className="flex justify-between items-center">
-                <label className="label">
-                  <Link
-                    href="/auth/register"
-                    className="label-text-alt link link-hover text-[#EF4444] "
-                  >
-                    点此注册
-                  </Link>
-                </label>
-                <Oauth2 />
-              </div>
-            </form>
-          </div>
+                  点此注册
+                </Link>
+              </label>
+              <Oauth2 />
+            </div>
+          </form>
         </Form>
       </div>
 
@@ -192,14 +189,8 @@ export default function Login() {
               name={"code"}
               placeholder={"请输入验证码"}
               label={"验证码"}
+              isVerify={true}
             />
-            <button
-              className={`btn btn-outline btn-error mt-4`}
-              onClick={handleClick}
-              disabled={isDisabled}
-            >
-              {!isDisabled ? "发送验证码" : `${countdown}s后再试`}
-            </button>
           </Form>
           <div className="modal-action">
             <form method="dialog">

@@ -15,7 +15,6 @@ function Oauth2() {
 
   const handleGithubSignIn = async () => {
     const res = await githubSignIn();
-    console.log(res);
     if (res.data.isSignUp) {
       window.localStorage.setItem("token", res.token); //存入本地
       router.push("/");

@@ -3,11 +3,7 @@
 import Card from "../../base/Card";
 import Search from "../../base/MySearch";
 
- 
-
 function Index(props: any) {
-
-
   return (
     <div>
       <div className="w-4/5 mx-auto relative">
@@ -24,14 +20,12 @@ function Index(props: any) {
           {Array.from({ length: 7 }, (_, index) => (
             <Card key={index} />
           ))}
-          {
-            Array.from({ length: 4 - (7 % 4) }, (_, index) => (
-                <div
-                  className="w-[24%]"
-                  key={index}
-                />
-              ))
-            }
+          {Array.from({ length: 4 - (7 % 4) }, (_, index) => (
+            <div
+              className="w-[24%]"
+              key={index}
+            />
+          ))}
         </div>
         <div className="join absolute right-40 mt-8 w-20">
           <button className="join-item btn">«</button>
@@ -56,14 +50,12 @@ function Index(props: any) {
           {Array.from({ length: 7 }, (_, index) => (
             <Card key={index} />
           ))}
-          {
-            Array.from({ length: 4 - (7 % 4) }, (_, index) => (
-                <div
-                  className="w-[24%]"
-                  key={index}
-                />
-              ))
-            }
+          {Array.from({ length: 4 - (7 % 4) }, (_, index) => (
+            <div
+              className="w-[24%]"
+              key={index}
+            />
+          ))}
         </div>
         <div className="join absolute right-40 mt-8 w-20">
           <button className="join-item btn">«</button>
