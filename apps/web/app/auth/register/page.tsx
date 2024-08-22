@@ -10,7 +10,6 @@ import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -54,8 +53,6 @@ export default function Register() {
       router.push("/auth/login");
     }, 2000);
   }
-
-  const handleSign = async () => {};
 
   return (
     <Layout>

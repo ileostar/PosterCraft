@@ -92,7 +92,6 @@ export default function Login() {
     console.log(res.token);
     router.push("/");
   };
-
   const { githubUsername } = useGithubUsername();
   const { setIsOpen, isOpen } = useOauth2Dialog();
 
