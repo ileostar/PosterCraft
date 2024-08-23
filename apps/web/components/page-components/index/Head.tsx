@@ -29,7 +29,7 @@ function Head({ mode }: Readonly<{ mode: string }>) {
 
   return (
     <div
-      className={`navbar bg-background/30 fixed inset-x-0 top-4 z-40 mx-auto flex h-[60px] max-w-5xl items-center justify-between rounded-2xl px-8 shadow-sm saturate-100 backdrop-blur-[10px] transition-colors ${mode == "fixed" ? "fixed" : "sticky"}`}
+      className={`navbar bg-background/30 fixed inset-x-0 top-4 z-40 mx-auto flex h-[60px] max-w-7xl items-center justify-between rounded-2xl px-8 shadow-sm saturate-100 backdrop-blur-[10px] transition-colors ${mode == "fixed" ? "fixed" : "sticky"}`}
     >
       <div className="flex-1">
         <Link

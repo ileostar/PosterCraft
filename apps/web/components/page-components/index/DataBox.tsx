@@ -10,7 +10,7 @@ function Index(props: any) {
 
   return (
     <div
-      className="mt-8 mb-8 flex w-2/3 mx-auto flex-col lg:flex-row box"
+      className="mt-8 mb-8 flex max-w-7xl mx-auto flex-col lg:flex-row box"
       ref={boxRef}
     >
       <div className="card bg-base-300 rounded-box grid h-32 flex-grow place-items-center ">

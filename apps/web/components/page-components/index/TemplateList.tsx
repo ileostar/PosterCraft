@@ -6,7 +6,7 @@ import Search from "../../base/MySearch";
 function Index(props: any) {
   return (
     <div>
-      <div className="w-4/5 mx-auto relative">
+      <div className="min-w-96 p-5 sm:p-16 md:p-20 lg:p-30 xl:p-0 sm:max-w-7xl mx-auto relative">
         <div
           className="bg-red-500 w-1/6 text-center text-white pt-4 pb-4 font-semibold"
           style={{ clipPath: "polygon(0 0, 100% 0, 80% 100%, 0 100%)" }}
@@ -34,7 +34,7 @@ function Index(props: any) {
         </div>
       </div>
       <div
-        className="w-4/5 mx-auto relative mt-32 mb-32"
+        className="max-w-7xl mx-auto relative mt-32 mb-32"
         id="my-work"
       >
         <div
