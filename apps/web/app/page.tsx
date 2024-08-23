@@ -2,8 +2,7 @@ import Banner from "../components/page-components/index/Banner";
 import DataBox from "../components/page-components/index/DataBox";
 import Foot from "../components/page-components/index/Foot";
 import Head from "../components/page-components/index/Head";
-import TemplateList from "../components/page-components/index/TemplateList";
-import MyList from "../components/page-components/index/MyList";
+import List from "../components/page-components/index/List";
 
 function Main() {
   return (
@@ -11,8 +10,8 @@ function Main() {
       <Head mode={"fixed"} />
       <Banner />
       <DataBox />
-      <TemplateList />
-      <MyList />
+      <List mode="模板"/>
+      <List mode="作品"/>
       <Foot />
     </main>
   );
