@@ -96,7 +96,6 @@ export default function Login() {
     window.localStorage.setItem("userId", res.data.data.userId);
     router.push("/");
   };
-
   const { githubUsername } = useGithubUsername();
   const { setIsOpen, isOpen } = useOauth2Dialog();
 

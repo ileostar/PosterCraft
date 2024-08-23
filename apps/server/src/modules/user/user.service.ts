@@ -32,8 +32,8 @@ export class UserService {
   async updateUserInfos(dto: UpdateUserDto) {
     const old = await this.findUserByUserId(dto.userId);
     if (!old) throw '用户ID不存在';
-    if (dto.username && (await this.checkUsernameExists(dto.username)))
-      throw '用户名已存在';
+    const tempUser = await this.findUserByUsername(dto.username);
+    if (dto.username && tempUser.userId !== dto.userId) throw '用户名已存在';
     await this.db.update(user).set(dto).where(eq(user.id, dto.userId));
     return dto;
   }
