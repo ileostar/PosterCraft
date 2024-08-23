@@ -64,7 +64,7 @@ export default function Login() {
   // 发送验证码并启动倒计时
   const handleClick = () => {
     if (!isDisabled) {
-      sendBySMS(form.getValues("phone"));
+      sendBySMS({phone:form.getValues("phone")});
       setIsDisabled(true);
       setCountdown(60);
     }
@@ -85,11 +85,15 @@ export default function Login() {
 
   const handleSign = async () => {
     let res = isPhoneMode
-      ? await loginBySMS(form.getValues("phone"), form.getValues("code"))
-      : await defaultSignIn(form.getValues("username"), form.getValues("password"));
-    window.localStorage.setItem("token", res.token); //存入本地
-    window.localStorage.setItem("userId", res.data?.userId);
-    console.log(res.token);
+      ? await loginBySMS({ phone: form.getValues("phone"), otp: form.getValues("code") })
+      : await defaultSignIn({
+          identifier: form.getValues("username"),
+          password: form.getValues("password"),
+        });
+    if (res.data.token) {
+      window.localStorage.setItem("token", res.data.token); //存入本地
+    }
+    window.localStorage.setItem("userId", res.data.data.userId);
     router.push("/");
   };
 
@@ -97,12 +101,12 @@ export default function Login() {
   const { setIsOpen, isOpen } = useOauth2Dialog();
 
   const addPhoneByGithub = async () => {
-    let res = await defaultSignUp(
-      githubUsername,
-      null,
-      form.getValues("phone"),
-      form.getValues("code"),
-    );
+    let res = await defaultSignUp({
+      username:githubUsername,
+      password:null,
+      phone:form.getValues("phone"),
+     otp: form.getValues("code")
+  });
     CloseModal();
     router.push("/");
   };

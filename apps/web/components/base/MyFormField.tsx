@@ -34,7 +34,7 @@ function MyFormField({
   // 发送验证码并启动倒计时
   const handleClick = () => {
     if (!isDisabled) {
-      sendBySMS(form.getValues("phone"));
+      sendBySMS({phone:form.getValues("phone")});
       setIsDisabled(true);
       setCountdown(60);
     }

@@ -1,6 +1,6 @@
 "use client";
 
-import { githubSignIn, googleSignIn } from "@/api/auth";
+import { githubSignIn} from "@/api/auth";
 import GithubIcon from "@/components/base/GithubIcon";
 import GoogleIcon from "@/components/base/GoogleIcon";
 import { useRouter } from "next/navigation";
@@ -16,8 +16,8 @@ function Oauth2() {
   const handleGithubSignIn = async () => {
     const res = await githubSignIn();
     console.log(res);
-    if (res.data.isSignUp) {
-      window.localStorage.setItem("token", res.token); //存入本地
+    if (res.data.isSignUp&&res.token) {
+      window.localStorage.setItem("token", res.token);
       router.push("/");
     } else {
       res.data.userData.username
@@ -32,7 +32,7 @@ function Oauth2() {
       <span className="text-xs font-serif">其他登录方式：</span>
       <button
         className="text-gray cursor-pointer mr-1 hover:animate-pulse"
-        onClick={() => googleSignIn()}
+        // onClick={() => googleSignIn()}
       >
         <GoogleIcon />
       </button>
