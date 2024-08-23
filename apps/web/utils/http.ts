@@ -3,7 +3,7 @@ import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "",
+  baseURL: "http://127.0.0.1:3001",
   timeout: 5000,
 });
 
@@ -11,6 +11,8 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     if (config.headers) {
+      const curToken = localStorage.getItem("token");
+      config.headers.Authorization = `Bearer ${curToken}`;
     }
     return config;
   },

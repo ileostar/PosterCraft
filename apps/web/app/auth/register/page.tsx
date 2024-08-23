@@ -1,7 +1,6 @@
 "use client";
 
 import { defaultSignUp } from "@/api/auth";
-import { sendBySMS } from "@/api/sms";
 import MyFormField from "@/components/base/MyFormField";
 import Layout from "@/components/page-components/auth/AuthBackGround";
 import Oauth2 from "@/components/page-components/auth/Oauth2";
@@ -10,7 +9,6 @@ import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -44,18 +42,16 @@ export default function Register() {
     },
   });
   async function onSubmit(values: loginFormSchemaType) {
-    const res = await defaultSignUp(
-      form.getValues("username"),
-      form.getValues("password"),
-      form.getValues("phone"),
-      form.getValues("code"),
-    );
+    const res = await defaultSignUp({
+      username: form.getValues("username"),
+      password: form.getValues("password"),
+      phone: form.getValues("phone"),
+      otp: form.getValues("code"),
+    });
     setTimeout(() => {
       router.push("/auth/login");
     }, 2000);
   }
-
-  const handleSign = async () => {};
 
   return (
     <Layout>

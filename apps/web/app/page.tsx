@@ -7,14 +7,14 @@ import MyList from "../components/page-components/index/MyList";
 
 function Main() {
   return (
-    <div className="h-screen">
+    <main className="h-screen">
       <Head mode={"fixed"} />
       <Banner />
       <DataBox />
       <TemplateList />
       <MyList />
       <Foot />
-    </div>
+    </main>
   );
 }
 
