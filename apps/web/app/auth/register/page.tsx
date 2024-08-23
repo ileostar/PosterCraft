@@ -57,7 +57,6 @@ export default function Register() {
     <Layout>
       <div className="w-[92vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] xl:w-[25vw] min-w-[320px] card shrink-0 max-w-sm shadow-2xl bg-base-100 font-serif rounded-2xl">
         <Form {...form}>
-          <div>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="flex flex-col gap-2 p-8 bg-slate-100 rounded-2xl"
@@ -95,7 +94,7 @@ export default function Register() {
               <div className="flex justify-between mt-[5px]">
                 <Button
                   className="btn w-full hover:bg-red-600  text-white"
-                  onClick={() => handleSign()}
+                  // onClick={() => handleSign()}
                   type="submit"
                 >
                   注册
@@ -113,7 +112,6 @@ export default function Register() {
                 <Oauth2 />
               </div>
             </form>
-          </div>
         </Form>
       </div>
     </Layout>

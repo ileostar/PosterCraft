@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
-    "@ant-design/nextjs-registry": "1.0.0",
     "@hookform/resolvers": "3.9.0",
     "@radix-ui/react-accordion": "1.2.0",
     "@radix-ui/react-label": "2.1.0",
@@ -22,7 +21,6 @@
     "@radix-ui/react-tooltip": "^1.1.2",
     "@types/nprogress": "^0.2.3",
     "ahooks": "^3.8.1",
-    "antd": "5.20.0",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
     "lucide-react": "0.424.0",
