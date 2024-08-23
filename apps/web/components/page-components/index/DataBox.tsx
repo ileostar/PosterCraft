@@ -4,7 +4,7 @@ import { useScrollAnimate } from "@/hooks/useScrollAnimate";
 import Image from "next/image";
 import { useRef } from "react";
 
-function Index(props: any) {
+function DataBox(props: any) {
   const boxRef = useRef<HTMLDivElement>(null); // 指定ref的类型为HTMLDivElement
   useScrollAnimate(boxRef);
 
@@ -109,4 +109,4 @@ function Index(props: any) {
   );
 }
 
-export default Index;
+export default DataBox;
