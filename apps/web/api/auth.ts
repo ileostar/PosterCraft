@@ -1,89 +1,33 @@
+import http from "@/utils/http";
 import { openCenteredOAuthPopup } from "@/utils/popup";
-import { AxiosResponse } from "axios";
 import io from "socket.io-client";
 
-import { request } from "../utils/request";
+import {
+  defaultSignInBody,
+  defaultSignInResponse,
+  defaultSignUpBody,
+  GithubSignInResponse,
+  loginBySMSBody,
+  loginBySMSResponse,
+} from "./types/auth";
+import { ResponseData } from "./types/common";
 
-interface CustomAxiosResponse<T> extends AxiosResponse<T> {
-  token?: string;
-  code?: 200 | -1;
-  msg?: string;
-  data: T;
+/** 普通登录 */
+export function defaultSignIn(body: defaultSignInBody) {
+  return http.post<ResponseData<defaultSignInResponse>>("/auth/login", body);
 }
 
-interface GithubSignInResponse
-  extends CustomAxiosResponse<{
-    isSignUp: boolean;
-    userData: {
-      username: string;
-      [index: string]: unknown;
-    };
-  }> {}
-
-/**
- * sms短信登录
- */
-export async function loginBySMS(phone: any, code: any) {
-  return request({
-    url: "/auth/phoneOtpLogin",
-    data: {
-      phone: phone,
-      otp: code,
-    },
-    method: "post",
-  });
+/** 短信登录 */
+export function loginBySMS(body: loginBySMSBody) {
+  return http.post<ResponseData<loginBySMSResponse>>("/auth/phoneOtpLogin", body);
 }
 
-/**
- * 普通注册
- */
-export function defaultSignUp(username: any, password: any, phone: any, otp: any) {
-  return request({
-    url: "/auth/signup",
-    data: {
-      username,
-      password,
-      phone,
-      otp,
-    },
-    method: "post",
-  });
+/** 普通注册 */
+export function defaultSignUp(body: defaultSignUpBody) {
+  return http.post<ResponseData<null>>("/auth/signup", body);
 }
 
-/**
- * 普通登录
- */
-export function defaultSignIn(identifier: any, password: any) {
-  return request({
-    url: "/auth/login",
-    data: {
-      identifier,
-      password,
-    },
-    method: "post",
-  });
-}
-
-/**
- * 谷歌登录
- */
-export function googleSignIn() {
-  const socket = io("http://localhost:3001"); // 连接到你的NestJS WebSocket服务器
-
-  const authWindow = openCenteredOAuthPopup("http://127.0.0.1:3001/auth/google/callback", 600, 500);
-  socket.on("connect", () => {
-    console.log("Connected to the server!");
-  });
-  socket.on("messageToAll", (data: any) => {
-    console.log("Received message from server:", JSON.parse(data));
-    authWindow!.close();
-    socket.close();
-  });
-}
-
-/**
- * github登录
- */
+/** github登录 */
 export async function githubSignIn(): Promise<GithubSignInResponse> {
   const socket = io("http://localhost:3001");
 

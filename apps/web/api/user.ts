@@ -1,23 +1,19 @@
-import { request } from "../utils/request";
+import http from "@/utils/http";
 
+import { ResponseData } from "./types/common";
+import { getUserInfoResponse, updateUserInfoBody, updateUserInfoResponse } from "./types/user";
+
+/** 获取用户信息 */
 export function getUserInfo(userId: string) {
-  return request({
-    url: `/users/${userId}`,
-    method: "get",
-  });
+  return http.get<ResponseData<getUserInfoResponse>>(`/users/${userId}`);
 }
 
-export function updateUserInfo(id:any,data: any) {
-  return request({
-    url: `/users/${id}`,
-    data: data,
-    method: "put",
-  });
+/** 更新用户信息 */
+export function updateUserInfo(userId: string, body: updateUserInfoBody) {
+  return http.put<ResponseData<updateUserInfoResponse>>(`/users/${userId}`, body);
 }
 
+/** 删除用户信息 */
 export function deleteUser(userId: string) {
-  return request({
-    url: `/users/${userId}`,
-    method: "delete",
-  });
+  return http.delete<ResponseData<null>>(`/users/${userId}`);
 }
