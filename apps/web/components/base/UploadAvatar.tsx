@@ -20,7 +20,6 @@ const UploadAvatar: React.FC<ChildProps> = ({ handleOssUrl, img }) => {
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-    // setFile(file);
     console.log(file);
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     const isLt2M = file.size / 1024 / 1024 < 2;
@@ -71,7 +70,7 @@ const UploadAvatar: React.FC<ChildProps> = ({ handleOssUrl, img }) => {
   return (
     <div>
       {imageUrl ? (
-        <div
+        <button
           className="w-24 h-24"
           onClick={() => handleClickButton()}
         >
@@ -90,7 +89,7 @@ const UploadAvatar: React.FC<ChildProps> = ({ handleOssUrl, img }) => {
             sizes="100vw"
             className="w-full h-auto"
           />
-        </div>
+        </button>
       ) : (
         <div>
           <input
