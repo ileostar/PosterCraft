@@ -72,7 +72,7 @@ export class UserController {
   })
   @ApiBody({ type: OmitType(UpdateUserDto, ['userId']) })
   @ApiOperation({ summary: '更新用户信息', description: '测试' })
-  @APIResponse(UpdateUserDto)
+  @APIResponse(OmitType(UpdateUserDto, ['userId']))
   async updateUserInfos(
     @Param('userId') userId: string,
     @Body() dto: Omit<UpdateUserDto, 'userId'>,
