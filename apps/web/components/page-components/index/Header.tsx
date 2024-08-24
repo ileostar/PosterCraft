@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
 import "@/style/header.css";
@@ -34,7 +33,7 @@ function Head({ mode }: Readonly<{ mode: string }>) {
       <div className="flex-1">
         <Link
           href="/"
-          className="btn btn-ghost text-xl oolor-red drak:color-white"
+          className="btn btn-ghost text-xl"
         >
           PosterCraft
         </Link>
@@ -46,7 +45,7 @@ function Head({ mode }: Readonly<{ mode: string }>) {
             className="btn btn-ghost btn-circle"
           >
             <Link href="/myWork">
-              <div className="indicator"></div>
+              <span className="icon-[carbon--add-filled] text-blue-500"></span>
             </Link>
           </button>
         </div>

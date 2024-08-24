@@ -41,6 +41,8 @@
     "zustand": "4.5.4"
   },
   "devDependencies": {
+    "@iconify-json/carbon": "^1.1.37",
+    "@iconify/tailwind": "^1.1.3",
     "@poster-craft/tailwind-config": "workspace:^",
     "@types/array-move": "^2.0.0",
     "@types/react": "18.3.3",

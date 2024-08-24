@@ -5,7 +5,7 @@ import Left from "@/components/page-components/editor/Left";
 import Middle from "@/components/page-components/editor/Middle";
 import Right from "@/components/page-components/editor/Right";
 
-import Head from "../../components/page-components/index/Head";
+import Head from "../../components/page-components/index/Header";
 
 function Index(props: any) {
   return (

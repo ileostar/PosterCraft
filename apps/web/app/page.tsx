@@ -3,13 +3,13 @@ import Image from "next/image";
 import Banner from "../components/page-components/index/Banner";
 import DataBox from "../components/page-components/index/DataBox";
 import Footer from "../components/page-components/index/Footer";
-import Head from "../components/page-components/index/Head";
+import Header from "../components/page-components/index/Header";
 import List from "../components/page-components/index/List";
 
 function Main() {
   return (
     <main className="relative">
-      <Head mode={"fixed"} />
+      <Header mode={"fixed"} />
       <Banner />
       <DataBox />
       <List

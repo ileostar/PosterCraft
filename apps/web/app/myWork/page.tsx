@@ -4,7 +4,7 @@ import AuthLayout from "@/components/base/AuthLayout";
 import Search from "@/components/base/MySearch";
 import Card from "@/components/base/PostCard";
 
-import Head from "../../components/page-components/index/Head";
+import Head from "../../components/page-components/index/Header";
 
 function Index(props: any) {
   return (

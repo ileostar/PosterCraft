@@ -2,6 +2,8 @@ import type { Config } from "tailwindcss";
 
 import sharedConfig from "@poster-craft/tailwind-config";
 
+const { addDynamicIconSelectors } = require("@iconify/tailwind");
+
 const { fontFamily } = require("tailwindcss/defaultTheme");
 
 const config = {
@@ -12,8 +14,8 @@ const config = {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
-  prefix: "",
   presets: [sharedConfig],
+  plugins: [addDynamicIconSelectors(), require("tailwindcss-animate"), require("daisyui")],
   theme: {
     container: {
       center: true,
@@ -97,7 +99,6 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("daisyui")],
 } satisfies Config;
 
 export default config;
