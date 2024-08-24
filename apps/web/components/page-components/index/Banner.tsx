@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 import ThreeD from "../../model/MyModel";
 
-function Index(props: any) {
+function Banner(props: any) {
   const router = useRouter();
 
   const boxRef = useRef<HTMLDivElement>(null); // 指定ref的类型为HTMLDivElement
@@ -72,4 +72,4 @@ function Index(props: any) {
   );
 }
 
-export default Index;
+export default Banner;

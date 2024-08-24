@@ -4,7 +4,7 @@ import Banner from "../components/page-components/index/Banner";
 import DataBox from "../components/page-components/index/DataBox";
 import Footer from "../components/page-components/index/Footer";
 import Head from "../components/page-components/index/Head";
-import TemplateList from "../components/page-components/index/TemplateList";
+import List from "../components/page-components/index/List";
 
 function Main() {
   return (
@@ -12,7 +12,14 @@ function Main() {
       <Head mode={"fixed"} />
       <Banner />
       <DataBox />
-      <TemplateList />
+      <List
+        title="热门模板"
+        searchText="查找热门模板"
+      />
+      <List
+        title="热门作品"
+        searchText="查找热门作品"
+      />
       <Footer />
       <Image
         width={1512}
