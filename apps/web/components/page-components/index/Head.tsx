@@ -46,16 +46,7 @@ function Head({ mode }: Readonly<{ mode: string }>) {
             className="btn btn-ghost btn-circle"
           >
             <Link href="/myWork">
-              <div className="indicator">
-                <Image
-                  src="/我的作品.png"
-                  alt="My Work"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  className="h-5 w-5"
-                />
-              </div>
+              <div className="indicator"></div>
             </Link>
           </button>
         </div>

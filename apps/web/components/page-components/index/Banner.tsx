@@ -46,7 +46,7 @@ function Index(props: any) {
   };
 
   return (
-    <div className="mx-auto flex max-w-7xl h-[100vh] justify-around items-center gap-5">
+    <div className="overflow-hidden z-10 relative mx-auto flex max-w-7xl h-[100vh] justify-around items-center gap-5">
       <div className="flex-1">
         <h1 className="text-5xl font-bold ">可视化海报编辑器</h1>
         <p className="py-6  text-lg">

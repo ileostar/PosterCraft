@@ -1,8 +1,8 @@
 "use client";
 
 import AuthLayout from "@/components/base/AuthLayout";
-import Card from "@/components/base/Card";
 import Search from "@/components/base/MySearch";
+import Card from "@/components/base/PostCard";
 
 import Head from "../../components/page-components/index/Head";
 
