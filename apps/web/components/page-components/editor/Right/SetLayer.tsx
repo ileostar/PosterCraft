@@ -1,3 +1,4 @@
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { UseElementStore } from "@/store/element";
 import { arrayMove } from "@/utils/arrayMove";
 import { getParentElement } from "@/utils/getParentElement";
@@ -8,7 +9,6 @@ import {
   LockOutlined,
   UnlockOutlined,
 } from "@ant-design/icons";
-import { Tooltip } from "antd";
 import { useEffect, useRef, useState } from "react";
 
 import InlineEdit from "./setLayer/InlineEdit";
@@ -86,40 +86,54 @@ function SetLayer() {
               setCurrentElement(item.id);
             }}
           >
-            <Tooltip
-              className="w-1/6"
-              title={item.isHidden ? "隐藏" : "显示"}
-            >
-              <button
-                onClick={() => handleChange(item.id, "isHidden", !item.isHidden)}
-                className="m-2 rounded-btn border border-gray-300"
-              >
-                {item.isHidden ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-              </button>
-            </Tooltip>
-            <Tooltip
-              className="w-1/6"
-              title={item.isHidden ? "锁定" : "解锁"}
-            >
-              <button
-                onClick={() => handleChange(item.id, "isLocked", !item.isLocked)}
-                className="m-2 rounded-btn border border-gray-300"
-              >
-                {item.isLocked ? <LockOutlined /> : <UnlockOutlined />}
-              </button>
-            </Tooltip>
+            <div className="w-1/6 flex justify-center m-1 rounded-btn border border-gray-300">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <button onClick={() => handleChange(item.id, "isHidden", !item.isHidden)}>
+                      {item.isHidden ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{item.isHidden ? "隐藏" : "显示"}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+
+            <div className="w-1/6 flex justify-center m-1 rounded-btn border border-gray-300">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <button onClick={() => handleChange(item.id, "isLocked", !item.isLocked)}>
+                      {item.isLocked ? <LockOutlined /> : <UnlockOutlined />}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{item.isLocked ? "锁定" : "解锁"}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+
             <InlineEdit
               value={item.layerName}
               id={item.id}
             />
-            <Tooltip
-              className="w-1/6"
-              title="拖动排序"
-            >
-              <button className="m-2 rounded-btn border border-gray-300">
-                <DragOutlined />
-              </button>
-            </Tooltip>
+            <div className="w-1/6 flex justify-center m-1 rounded-btn border border-gray-300">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <button>
+                      <DragOutlined />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>拖动排序</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
           </div>
         ))}
       </div>

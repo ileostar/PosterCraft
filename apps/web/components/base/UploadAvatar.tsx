@@ -1,98 +1,115 @@
-import type { GetProp, UploadProps } from "antd";
-
+import { uploadFile } from "@/api/upload";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { Flex, message, Upload } from "antd";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
-
-type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
-
-const getBase64 = (img: FileType, callback: (url: string) => void) => {
-  const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result as string));
-  reader.readAsDataURL(img);
-};
-
-const beforeUpload = (file: FileType) => {
-  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-  if (!isJpgOrPng) {
-    message.error("You can only upload JPG/PNG file!");
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error("Image must smaller than 2MB!");
-  }
-  return isJpgOrPng && isLt2M;
-};
+import React, { useEffect, useRef, useState } from "react";
 
 interface ChildProps {
-  handleOssUrl: (msg: string) => void; // 根据需要调整参数类型
+  handleOssUrl: (msg: string) => void;
   img: string;
 }
 
 const UploadAvatar: React.FC<ChildProps> = ({ handleOssUrl, img }) => {
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string>();
+  const [imageUrl, setImageUrl] = useState<string>("");
 
-  const handleChange: UploadProps["onChange"] = (info) => {
-    handleOssUrl(info.file.response?.url);
-    if (info.file.status === "uploading") {
-      setLoading(true);
-      return;
-    }
-    if (info.file.status === "done") {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj as FileType, (url) => {
-        setLoading(false);
-        setImageUrl(url);
-      });
-    }
+  const inputRef = useRef<HTMLInputElement>(null);
+  const handleClickButton = () => {
+    inputRef.current?.click();
   };
 
-  const uploadButton = (
-    <button
-      style={{ border: 0, background: "none" }}
-      type="button"
-    >
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </button>
-  );
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    console.log(file);
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isJpgOrPng) {
+      console.log("待定");
+      console.log("You can only upload JPG/PNG file!");
+      return;
+    }
+    if (!isLt2M) {
+      console.log("待定");
+      console.log("Image must smaller than 2MB!");
+      return;
+    }
 
-  const [token, setToken] = useState<string>();
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await uploadFile(formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.data.msg != "ok") {
+        console.log("待定");
+        throw new Error("Network response was not ok");
+      }
+
+      handleOssUrl(response.data.data.url);
+      setImageUrl(response.data.data.url);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      console.log("待定");
+    }
+
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const s = "bearer " + window.localStorage.getItem("token");
-    setToken(s);
-    setImageUrl(img);
+    if (img) {
+      setImageUrl(img);
+    }
   }, [img]);
 
-  let headers: { Authorization?: string } = { Authorization: token };
-
   return (
-    <Upload
-      name="file"
-      headers={headers}
-      listType="picture-card"
-      className="avatar-uploader"
-      showUploadList={false}
-      action="http://127.0.0.1:3001/oss/upload"
-      beforeUpload={beforeUpload}
-      onChange={handleChange}
-    >
+    <div>
       {imageUrl ? (
-        <Image
-          src={imageUrl}
-          alt="avatar"
-          width={0}
-          height={0}
-          sizes="100vw"
-          className="w-full h-auto"
-        />
+        <button
+          className="w-24 h-24"
+          onClick={() => handleClickButton()}
+        >
+          <input
+            ref={inputRef}
+            type="file"
+            className="hidden"
+            onChange={(e) => handleFileChange(e)}
+            accept="image/jpeg, image/png"
+          ></input>
+          <Image
+            src={"imageUrl"}
+            alt="avatar"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-full h-auto"
+          />
+        </button>
       ) : (
-        uploadButton
+        <div>
+          <input
+            ref={inputRef}
+            type="file"
+            className="hidden"
+            onChange={(e) => handleFileChange(e)}
+            accept="image/jpeg, image/png"
+          ></input>
+          <button
+            style={{ background: "none", cursor: "pointer" }}
+            className=" border-2 border-solid bg-[#696969] rounded-btn hover:border-dotted w-24 h-24"
+            type="button"
+            onClick={() => handleClickButton()}
+          >
+            {loading ? <LoadingOutlined /> : <PlusOutlined />}
+          </button>
+        </div>
       )}
-    </Upload>
+    </div>
   );
 };
 

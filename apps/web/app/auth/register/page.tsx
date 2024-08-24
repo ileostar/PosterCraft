@@ -1,7 +1,6 @@
 "use client";
 
 import { defaultSignUp } from "@/api/auth";
-import { sendBySMS } from "@/api/sms";
 import MyFormField from "@/components/base/MyFormField";
 import Layout from "@/components/page-components/auth/AuthBackGround";
 import Oauth2 from "@/components/page-components/auth/Oauth2";
@@ -43,12 +42,12 @@ export default function Register() {
     },
   });
   async function onSubmit(values: loginFormSchemaType) {
-    const res = await defaultSignUp(
-      form.getValues("username"),
-      form.getValues("password"),
-      form.getValues("phone"),
-      form.getValues("code"),
-    );
+    const res = await defaultSignUp({
+      username: form.getValues("username"),
+      password: form.getValues("password"),
+      phone: form.getValues("phone"),
+      otp: form.getValues("code"),
+    });
     setTimeout(() => {
       router.push("/auth/login");
     }, 2000);
@@ -58,63 +57,61 @@ export default function Register() {
     <Layout>
       <div className="w-[92vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] xl:w-[25vw] min-w-[320px] card shrink-0 max-w-sm shadow-2xl bg-base-100 font-serif rounded-2xl">
         <Form {...form}>
-          <div>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="flex flex-col gap-2 p-8 bg-slate-100 rounded-2xl"
-            >
-              <div className="flex justify-center items-center ">
-                <p className="text-red-500 text-2xl card-title">Sign Up</p>
-              </div>
-              <div className="flex flex-col gap-1 mb-1">
-                <MyFormField
-                  form={form}
-                  name={"username"}
-                  placeholder={"请输入用户名"}
-                  label={"用户名"}
-                />
-                <MyFormField
-                  form={form}
-                  name={"password"}
-                  placeholder={"请输入密码"}
-                  label={"密码"}
-                />
-                <MyFormField
-                  form={form}
-                  name={"phone"}
-                  placeholder={"请输入手机号码"}
-                  label={"手机号码"}
-                />
-                <MyFormField
-                  form={form}
-                  name={"code"}
-                  placeholder={"请输入验证码"}
-                  label={"验证码"}
-                  isVerify={true}
-                />
-              </div>
-              <div className="flex justify-between mt-[5px]">
-                <Button
-                  className="btn w-full hover:bg-red-600  text-white"
-                  onClick={() => handleSign()}
-                  type="submit"
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-2 p-8 bg-slate-100 rounded-2xl"
+          >
+            <div className="flex justify-center items-center ">
+              <p className="text-red-500 text-2xl card-title">Sign Up</p>
+            </div>
+            <div className="flex flex-col gap-1 mb-1">
+              <MyFormField
+                form={form}
+                name={"username"}
+                placeholder={"请输入用户名"}
+                label={"用户名"}
+              />
+              <MyFormField
+                form={form}
+                name={"password"}
+                placeholder={"请输入密码"}
+                label={"密码"}
+              />
+              <MyFormField
+                form={form}
+                name={"phone"}
+                placeholder={"请输入手机号码"}
+                label={"手机号码"}
+              />
+              <MyFormField
+                form={form}
+                name={"code"}
+                placeholder={"请输入验证码"}
+                label={"验证码"}
+                isVerify={true}
+              />
+            </div>
+            <div className="flex justify-between mt-[5px]">
+              <Button
+                className="btn w-full hover:bg-red-600  text-white"
+                // onClick={() => handleSign()}
+                type="submit"
+              >
+                注册
+              </Button>
+            </div>
+            <div className="flex justify-between items-center">
+              <label className="label">
+                <Link
+                  href="/auth/login"
+                  className="label-text-alt no-underline link link-hover text-[#EF4444] "
                 >
-                  注册
-                </Button>
-              </div>
-              <div className="flex justify-between items-center">
-                <label className="label">
-                  <Link
-                    href="/auth/login"
-                    className="label-text-alt no-underline link link-hover text-[#EF4444] "
-                  >
-                    点此登录
-                  </Link>
-                </label>
-                <Oauth2 />
-              </div>
-            </form>
-          </div>
+                  点此登录
+                </Link>
+              </label>
+              <Oauth2 />
+            </div>
+          </form>
         </Form>
       </div>
     </Layout>

@@ -1,0 +1,24 @@
+{
+  "name": "@poster-craft/tailwind-config",
+  "main": "tailwind.config.ts",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "clean": "rm -rf .turbo",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.13",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "peerDependencies": {
+    "tailwindcss": "3.x"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

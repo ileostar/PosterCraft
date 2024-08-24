@@ -18,7 +18,7 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import Head from "../../components/page-components/index/Head";
+import Head from "../../components/page-components/index/Header";
 
 const FormSchema = z.object({
   username: z.string().min(1, {
@@ -159,11 +159,11 @@ function Index(props: any) {
    * 更新用户手机号码
    */
   const handleUpdatePhone = async () => {
-    const res = await updatePhone(
-      form_phone_update.getValues("phone"),
-      form_phone_update.getValues("code"),
-    );
-    if (res.msg === "手机号已存在") {
+    const res = await updatePhone({
+      phone: form_phone_update.getValues("phone"),
+      otp: form_phone_update.getValues("code"),
+    });
+    if (res.data.msg === "手机号已存在") {
       console.log("待定");
     }
   };
@@ -173,17 +173,17 @@ function Index(props: any) {
    */
   const handleUpdateEmail = async () => {
     const res = email
-      ? await updateEmail(
-          userId,
-          form_email_update.getValues("email"),
-          form_email_update.getValues("code"),
-        )
-      : await bindEmail(
-          userId,
-          form_email_update.getValues("email"),
-          form_email_update.getValues("code"),
-        );
-    if (res.msg === "邮箱已存在") {
+      ? await updateEmail({
+          userId: userId,
+          email: form_email_update.getValues("email"),
+          otp: form_email_update.getValues("code"),
+        })
+      : await bindEmail({
+          userId: userId,
+          email: form_email_update.getValues("email"),
+          otp: form_email_update.getValues("code"),
+        });
+    if (res.data.msg === "邮箱已存在") {
       console.log("待定");
     }
   };
@@ -198,13 +198,13 @@ function Index(props: any) {
 
   const getUserData = async (userId: string) => {
     const res = await getUserInfo(userId);
-    form.setValue("username", res?.data?.username);
-    form_phone.setValue("phone", res?.data?.phone);
-    form_email.setValue("email", res?.data?.email);
-    form.setValue("nickname", res?.data?.nickname);
-    form.setValue("avatar", res?.data?.avatar);
-    setAvatar(res?.data?.avatar);
-    setEmail(res?.data?.email);
+    form.setValue("username", res.data.data.username || "");
+    form_phone.setValue("phone", res.data.data.phone || "");
+    form_email.setValue("email", res.data.data.email || "");
+    form.setValue("nickname", res.data.data.nickname || "");
+    form.setValue("avatar", res.data.data.avatar || "");
+    setAvatar(res.data.data.avatar || "");
+    setEmail(res.data.data.email || "");
   };
 
   useEffect(() => {
@@ -223,9 +223,9 @@ function Index(props: any) {
   const handleSendCode = (mode: string) => {
     if (!isDisabled) {
       if (mode === "phone") {
-        sendBySMS(form_phone.getValues("phone"));
+        sendBySMS({ phone: form_phone.getValues("phone") });
       } else {
-        sendCodeByEmail(form_email.getValues("email"));
+        sendCodeByEmail({ email: form_email.getValues("email") });
       }
       setIsDisabled(true);
       setCountdown(60);
@@ -234,12 +234,12 @@ function Index(props: any) {
 
   const handleVerify = async (mode: string) => {
     if (mode === "phone") {
-      const res = await verifyPhone(
-        form_phone.getValues("phone"),
-        form_phone_verify.getValues("code"),
-      );
+      const res = await verifyPhone({
+        phone: form_phone.getValues("phone"),
+        otp: form_phone_verify.getValues("code"),
+      });
       console.log("res", res);
-      if (res.msg === "手机号校验成功") {
+      if (res.data.msg === "手机号校验成功") {
         CloseModal("modal_phone_verify");
         showModal("modal_phone_update");
       } else {
@@ -247,12 +247,12 @@ function Index(props: any) {
         console.log("待定");
       }
     } else {
-      const res = await verifyEmail(
-        form_email.getValues("email"),
-        form_email_verify.getValues("code"),
-      );
+      const res = await verifyEmail({
+        email: form_email.getValues("email"),
+        otp: form_email_verify.getValues("code"),
+      });
       console.log("res", res);
-      if (res.msg.include("校验成功")) {
+      if (res.data.msg.includes("校验成功")) {
         CloseModal("modal_email_verify");
         showModal("modal_email_update");
       } else {
@@ -314,7 +314,6 @@ function Index(props: any) {
     };
   }, []);
 
-   
   return (
     <AuthLayout>
       <div>
