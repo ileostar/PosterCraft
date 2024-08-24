@@ -82,7 +82,7 @@ const UploadAvatar: React.FC<ChildProps> = ({ handleOssUrl, img }) => {
             accept="image/jpeg, image/png"
           ></input>
           <Image
-            src={imageUrl}
+            src={"imageUrl"}
             alt="avatar"
             width={0}
             height={0}
