@@ -45,7 +45,7 @@ function Head({ mode }: Readonly<{ mode: string }>) {
             className="btn btn-ghost btn-circle"
           >
             <Link href="/myWork">
-              <span className="icon-[carbon--add-filled] text-blue-500"></span>
+              <span className="icon-[carbon--add-filled] text-4xl text-red-500"></span>
             </Link>
           </button>
         </div>
