@@ -36,7 +36,7 @@ function Tabs({ tabs }: TabsProps) {
           </button>
         ))}
       </div>
-      <div className="flex-1">
+      <div className="flex-1 pt-4">
         {/* 根据当前活动的标签页索引渲染对应的内容 */}
         {tabs[activeTabIndex]?.content && (
           <div className="h-full">{tabs[activeTabIndex].content}</div>

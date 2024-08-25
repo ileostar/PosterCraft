@@ -14,7 +14,7 @@ function Left(props: any) {
   ];
 
   return (
-    <div className="bg-white w-1/5 mt-3 mb-3">
+    <div className="bg-white w-1/5 mt-3 mb-3 overflow-auto">
       <Tab tabs={tabs} />
     </div>
   );

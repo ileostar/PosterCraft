@@ -1,5 +1,5 @@
 //真正渲染到画布时会过滤掉display:'flex'，justifyContent:'center'，alignItems: 'center'这3个属性
-export const textTemplate = [
+ const textTemplate = [
   {
     style: {
       width: "120px",
@@ -64,3 +64,5 @@ export const textTemplate = [
     text: "liuliudashun",
   },
 ];
+
+export default  textTemplate

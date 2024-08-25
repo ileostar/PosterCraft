@@ -1,5 +1,5 @@
 import { UseElementStore } from "@/store/element";
-import { textTemplate } from "@/template";
+import  textTemplate  from "@/template/textTemplate";
 import { ElementData } from "@/types/ElementType";
 import { v4 as uuidv4 } from "uuid";
 
@@ -73,6 +73,7 @@ function TextList() {
           key={item.id}
           onClick={(e) => handleClick(e)}
           style={item.style}
+          className="mb-3"
         >
           {item.text}
         </button>
