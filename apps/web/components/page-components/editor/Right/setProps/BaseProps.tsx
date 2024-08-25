@@ -38,21 +38,7 @@ function BaseProps() {
 
   const [textStyles, setTextStyles] = useState<TextStyleState>(initialState);
 
-  const reset = () => {
-    (textStyles.textarea = ""),
-      (textStyles.fontSize = 0),
-      (textStyles.fontFamily = ""),
-      (textStyles.fontStyle = ""),
-      (textStyles.fontWeight = ""),
-      (textStyles.textDecoration = ""),
-      (textStyles.lineHeight = 0),
-      (textStyles.textAlign = "center"),
-      (textStyles.color = "black"),
-      (textStyles.backgroundColor = "transparent");
-  };
-
   useEffect(() => {
-    reset();
     const res = getElement(currentElement);
     const resProps = res?.props;
     const resText = res?.text;

@@ -26,10 +26,7 @@ function ShadowProps() {
 
   const [shadowStyles, setShadowStyles] = useState<ShadowStyleState>(initialState);
 
-  const reset = () => {};
-
   useEffect(() => {
-    reset();
     const res = getElement(currentElement);
     const resProps = res?.props;
     setShadowStyles((prevStyles) => {
@@ -49,9 +46,7 @@ function ShadowProps() {
               case "color":
                 updatedStyles[key] = resProps.color;
                 break;
-              // 可以添加默认情况来处理未知属性
               default:
-                // 可以选择在这里处理未知的属性，或者什么都不做
                 break;
             }
           }

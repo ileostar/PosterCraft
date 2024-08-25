@@ -22,15 +22,7 @@ function BorderProps() {
 
   const [borderStyles, setBorderStyles] = useState<BorderStyleState>(initialState);
 
-  const reset = () => {
-    borderStyles.borderColor = "";
-    borderStyles.borderRadius = 0;
-    borderStyles.borderStyle = "";
-    borderStyles.borderWidth = 0;
-  };
-
   useEffect(() => {
-    reset();
     const res = getElement(currentElement);
     const resProps = res?.props;
     setBorderStyles((prevStyles) => {
