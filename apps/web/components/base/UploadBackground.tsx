@@ -1,6 +1,11 @@
 import { uploadFile } from "@/api/upload";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import Cropper from "cropperjs";
 import React, { useEffect, useRef, useState } from "react";
+
+import "cropperjs/dist/cropper.css";
+
+import Image from "next/image";
 
 import { Button } from "../ui/button";
 
@@ -69,6 +74,59 @@ const UploadBackground: React.FC<ChildProps> = ({ handleOssUrl, img, className }
     }
   }, [img]);
 
+  const [modal, setModal] = useState(false);
+  const crop = () => {
+    const modalElement = document.getElementById("crop_modal") as HTMLDialogElement | null;
+    if (modalElement) {
+      modalElement.showModal();
+      setModal(true);
+    }
+  };
+
+  const cropperImg = useRef<HTMLImageElement | null>(null);
+  const cropperRef = useRef<Cropper | null>(null);
+  const cropDataRef = useRef<{
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  } | null>(null);
+
+  useEffect(() => {
+    setImageUrl((value) => value.split("?")[0]);
+    if (cropperImg.current) {
+      cropperRef.current = new Cropper(cropperImg.current, {
+        crop(event) {
+          const { x, y, width, height } = event.detail;
+          cropDataRef.current = {
+            x: Math.floor(x),
+            y: Math.floor(y),
+            width: Math.floor(width),
+            height: Math.floor(height),
+          };
+        },
+      });
+    }
+
+    return () => {
+      if (cropperRef.current) {
+        cropperRef.current.destroy();
+      }
+    };
+  }, [modal, cropperImg.current]);
+
+  const handleCropperImg = () => {
+    if (cropDataRef) {
+      const { x, y, width, height } = cropDataRef.current!;
+      // let img=imageUrl.split("?")[0]
+      // setImageUrl(img);
+      const cropperURL =
+        imageUrl + `?x-oss-process=image/crop,x_${x},y_${y},w_${width},h_${height}`;
+      console.log(cropperURL);
+      handleOssUrl(cropperURL);
+    }
+  };
+
   return (
     <div className={className}>
       <div
@@ -115,13 +173,62 @@ const UploadBackground: React.FC<ChildProps> = ({ handleOssUrl, img, className }
         >
           上传图片
         </Button>
-        <Button className="rounded-full border-solid border-[#e11d48] bg-white text-[#e11d48] border-4 hover:text-white">
+        <Button
+          onClick={() => crop()}
+          className="rounded-full border-solid border-[#e11d48] bg-white text-[#e11d48] border-4 hover:text-white"
+        >
           裁剪图片
         </Button>
-        <Button className="rounded-full border-solid border-[#e11d48] bg-white text-[#e11d48] border-4 hover:text-white">
+        <Button
+          onClick={() => {
+            handleOssUrl("");
+            setImageUrl("");
+          }}
+          className="rounded-full border-solid border-[#e11d48] bg-white text-[#e11d48] border-4 hover:text-white"
+        >
           删除图片
         </Button>
       </div>
+
+      <dialog
+        id="crop_modal"
+        className="modal"
+      >
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">裁剪图片</h3>
+          <div>
+            <Image
+              src={imageUrl}
+              ref={cropperImg}
+              id="image"
+              alt="Image"
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="w-full h-auto max-w-full block"
+            />
+          </div>
+          <div className="modal-action">
+            <form method="dialog">
+              <button
+                className="btn"
+                onClick={() => setModal(false)}
+              >
+                取消
+              </button>
+              <button
+                className="btn"
+                onClick={() => {
+                  setModal(false);
+                  handleCropperImg();
+                }}
+              >
+                确认
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };

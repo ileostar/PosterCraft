@@ -17,7 +17,7 @@ function SetPage() {
 
   const { pageBackgroundStyle, setPageBackgroundStyle } = UseElementStore();
 
-  //子组件的回调函数
+  //上传图片的回调函数
   const handleOssUrl = (url: string) => {
     setPageBackgroundStyle({ ...pageBackgroundStyle, backgroundImage: `url(${url})` });
   };
@@ -68,7 +68,7 @@ function SetPage() {
           </div>
 
           <UploadBackground
-            className="flex justify-between gap-3 items-center my-4"
+            className="mt-8 flex justify-between gap-3 items-center my-4"
             handleOssUrl={handleOssUrl}
             img={pageBackgroundStyle.backgroundImage.replace(/url\(|\)/g, "")}
           />
