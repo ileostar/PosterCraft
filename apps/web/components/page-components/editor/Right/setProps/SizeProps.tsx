@@ -24,17 +24,7 @@ function SizeProps() {
 
   const [sizeStyles, setSizeStyles] = useState<SizeStyleState>(initialState);
 
-  const reset = () => {
-    sizeStyles.height = 0;
-    sizeStyles.width = 0;
-    sizeStyles.paddingTop = 0;
-    sizeStyles.paddingBottom = 0;
-    sizeStyles.paddingLeft = 0;
-    sizeStyles.paddingRight = 0;
-  };
-
   useEffect(() => {
-    reset();
     const res = getElement(currentElement);
     const resProps = res?.props;
     setSizeStyles((prevStyles) => {

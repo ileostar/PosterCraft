@@ -1,9 +1,10 @@
-export interface ElementStore {
-  Elements: ElementData[];
+export interface ElementStoreType {
+  Elements: ElementDataType[];
   currentElement: string;
+  pageBackgroundStyle: { [key: string]: string };
 }
 
-export interface ElementData {
+export interface ElementDataType {
   // 元素样式属性
   props: { [key: string]: any };
   // 元素id
@@ -21,3 +22,5 @@ export interface ElementData {
   // 图层名称
   layerName?: string;
 }
+
+

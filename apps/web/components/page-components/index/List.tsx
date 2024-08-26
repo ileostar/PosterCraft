@@ -33,11 +33,12 @@ const List: React.FC<ListProps> = ({ title, searchText }) => {
           />
         ))}
       </div>
-      <div className="join mt-2">
+      <div className="join mt-6 flex justify-end">
         <button className="join-item btn">«</button>
         <button className="join-item btn">Page 22</button>
         <button className="join-item btn">»</button>
       </div>
+      <div className="w-full h-24"></div>
     </div>
   );
 };

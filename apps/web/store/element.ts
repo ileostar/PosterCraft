@@ -1,10 +1,10 @@
+import { ElementDataType, ElementStoreType } from "@/types/ElementType";
 import { create } from "zustand";
 
-type ElementStore = {
-  Elements: ElementData[];
+interface ElementStore extends ElementStoreType {
+  setPageBackgroundStyle: (style: { [key: string]: string }) => void;
   setELements: (elements: ElementData[]) => void;
   // 当前选中的元素
-  currentElement: string;
   addElement: (element: ElementData) => void;
   deleteElement: (id: string) => void;
   updateElement: (
@@ -27,33 +27,16 @@ type ElementStore = {
   setCurrentSize: (height: any, width: any) => void;
   isCurrentLocked: boolean;
   setIsCurrentLocked: (mode: boolean) => void;
-};
+}
 
-type ElementData = {
-  // 元素样式属性
-  props: { [key: string]: any };
-  // 元素id
-  id: string;
-  // 元素类型：text,img,graph
-  type: "text" | "img" | "graph";
-  // 可选的text属性，类型为string或null
-  text?: string | null;
-  //跳转url
-  url?: string;
-  // 图层是否隐藏
-  isHidden?: boolean;
-  // 图层是否锁定
-  isLocked?: boolean;
-  // 图层名称
-  layerName?: string;
-};
+interface ElementData extends ElementDataType {}
 
 export const UseElementStore = create<ElementStore>((set, get) => ({
   Elements: [],
+  //设置整个元素列表
   setELements: (elements: ElementData[]) => {
     set({ Elements: elements });
   },
-  currentElement: "",
   // 添加元素
   addElement: (element: ElementData) =>
     set((state) => ({ Elements: [...state.Elements, element] })),
@@ -97,7 +80,8 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
     const element = state.Elements.find((item) => item.id === id);
     return element;
   },
-  // 当前选中的元素
+  currentElement: "",
+  // 设置当前选中的元素
   setCurrentElement: (elementId: string) => {
     set((state) => ({ currentElement: elementId }));
     const element = get().getElement(elementId);
@@ -117,4 +101,14 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
   // 判断当前元素属性是否被锁定
   setIsCurrentLocked: (isCurrentLocked: boolean) => set((state) => ({ isCurrentLocked })),
   isCurrentLocked: false,
+
+  // 页面背景默认样式
+  pageBackgroundStyle: {
+    backgroundColor: "",
+    backgroundImage: ``,
+    backgroundSize: "100% 100%",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+  },
+  setPageBackgroundStyle: (style: {}) => set((state) => ({ pageBackgroundStyle: style })),
 }));
