@@ -1,6 +1,6 @@
 import { UseElementStore } from "@/store/element";
 import  imgTemplate  from "@/template/imgTemplate";
-import { ElementData } from "@/types/ElementType";
+import { ElementDataType } from "@/types/ElementType";
 import { v4 as uuidv4 } from "uuid";
 
 function ImgList() {
@@ -13,7 +13,7 @@ function ImgList() {
     const styleObject = parseStyleStringToObject(targetStyle);
     console.log(styleObject);
     const id = uuidv4();
-    const element: ElementData = {
+    const element: ElementDataType = {
       props: styleObject,
       id: id,
       type: "img",

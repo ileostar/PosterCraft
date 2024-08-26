@@ -1,6 +1,6 @@
 import { UseElementStore } from "@/store/element";
 import  graphTemplate  from "@/template/graphTemplate";
-import { ElementData } from "@/types/ElementType";
+import { ElementDataType } from "@/types/ElementType";
 import { v4 as uuidv4 } from "uuid";
 
 function GraphList() {
@@ -13,7 +13,7 @@ function GraphList() {
     const styleObject = parseStyleStringToObject(targetStyle);
     console.log(styleObject);
     const id = uuidv4();
-    const element: ElementData = {
+    const element: ElementDataType = {
       props: styleObject,
       id: id,
       type: "graph",
