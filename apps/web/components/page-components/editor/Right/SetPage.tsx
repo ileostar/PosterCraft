@@ -1,6 +1,5 @@
 import ColorPicker from "@/components/base/ColorPicker";
 import UploadBackground from "@/components/base/UploadBackground";
-import { Button } from "@/components/ui/button";
 import { UseElementStore } from "@/store/element";
 import { useEffect, useRef, useState } from "react";
 

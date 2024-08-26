@@ -118,8 +118,6 @@ const UploadBackground: React.FC<ChildProps> = ({ handleOssUrl, img, className }
   const handleCropperImg = () => {
     if (cropDataRef) {
       const { x, y, width, height } = cropDataRef.current!;
-      // let img=imageUrl.split("?")[0]
-      // setImageUrl(img);
       const cropperURL =
         imageUrl + `?x-oss-process=image/crop,x_${x},y_${y},w_${width},h_${height}`;
       console.log(cropperURL);
