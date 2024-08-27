@@ -17,7 +17,13 @@ function PositionProps() {
 
   const [positionStyles, setPositionStyles] = useState<PositionStyleState>(initialState);
 
+  const reset = () => {
+    positionStyles.left = 0;
+    positionStyles.top = 0;
+  };
+
   useEffect(() => {
+    reset();
     const res = getElement(currentElement);
     const resProps = res?.props;
     setPositionStyles((prevStyles) => {

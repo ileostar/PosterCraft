@@ -1,13 +1,16 @@
 "use client";
 
+import useHotKey from "@/hooks/useHotKey";
 import { UseElementStore } from "@/store/element";
 
 import ChangePositionComponent from "../../base/ChangePositionComponent";
 import ResizeComponent from "../../base/ResizeComponent";
 
 function Middle(props: any) {
-  const { Elements, setIsElement, currentElement, setCurrentElement, pageBackgroundStyle  } =
+  const { Elements, setIsElement, currentElement, setCurrentElement, pageBackgroundStyle } =
     UseElementStore();
+
+    useHotKey();
 
   return (
     <button
@@ -21,7 +24,13 @@ function Middle(props: any) {
       <div
         id="mid-container"
         className="bg-white mt-5"
-        style={{ ...pageBackgroundStyle,width: "375px", height: "667px", position: "relative", overflow: "auto" }}
+        style={{
+          ...pageBackgroundStyle,
+          width: "375px",
+          height: "667px",
+          position: "relative",
+          overflow: "auto",
+        }}
       >
         {Elements.map((item: any) =>
           item.id == currentElement ? (

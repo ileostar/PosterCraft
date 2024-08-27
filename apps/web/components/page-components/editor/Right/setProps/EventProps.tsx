@@ -6,7 +6,13 @@ function EventProps() {
 
   const { updateElement, currentElement, getElement } = UseElementStore();
 
+  const reset = () => {
+    setClickURL("");
+  };
+
+
   useEffect(() => {
+    reset();
     const res = getElement(currentElement);
     const resUrl = res?.url;
     setClickURL(resUrl);

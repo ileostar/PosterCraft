@@ -26,7 +26,17 @@ function ShadowProps() {
 
   const [shadowStyles, setShadowStyles] = useState<ShadowStyleState>(initialState);
 
+  const reset = () => {
+    shadowStyles.hOffset = 0;
+    shadowStyles.vOffset = 0;
+    shadowStyles.blur = 0;
+    shadowStyles.spread = 0;
+    shadowStyles.color = "red";
+    shadowStyles.opacity = 100;
+  };
+
   useEffect(() => {
+    reset();
     const res = getElement(currentElement);
     const resProps = res?.props;
     setShadowStyles((prevStyles) => {
