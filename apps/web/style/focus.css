@@ -1,0 +1,8 @@
+:focus {
+    outline: none;
+    /* 移除默认的轮廓 */
+    border-color: transparent;
+    /* 移除边框颜色（如果元素有边框的话） */
+    box-shadow: none;
+    /* 移除阴影效果 */
+}

@@ -1,5 +1,5 @@
 import { UseElementStore } from "@/store/element";
-import hotkeys, { KeyHandler,HotkeysEvent } from "hotkeys-js";
+import hotkeys, { HotkeysEvent, KeyHandler } from "hotkeys-js";
 import { useEffect } from "react";
 
 const useBindHotKey = (keys: string, callback: KeyHandler) => {
@@ -14,11 +14,12 @@ const useBindHotKey = (keys: string, callback: KeyHandler) => {
 
 const wrap = (callback: KeyHandler) => {
   const wrapperFn = (e: KeyboardEvent, event: HotkeysEvent) => {
-    e.preventDefault()
-    callback(e, event)
-  }
-  return wrapperFn
-}
+    // e.stopImmediatePropagation();
+    e.preventDefault();
+    callback(e, event);
+  };
+  return wrapperFn;
+};
 
 const useHotKey = () => {
   const {
@@ -43,30 +44,42 @@ const useHotKey = () => {
   useBindHotKey("esc", () => {
     setCurrentElement("");
   });
-  useBindHotKey('up', wrap(() => {
-    setMoveComponent(currentElement, "Up",1)
-  }))
-  useBindHotKey('down', wrap(() => {
-    setMoveComponent(currentElement, "Down",1)
-  }))
-  useBindHotKey('left', wrap(() => {
-    setMoveComponent(currentElement, "Left",1)
-  }))
-  useBindHotKey('right', wrap(() => {
-    setMoveComponent(currentElement, "Right",1)
-  }))
-  useBindHotKey('shift+up', () => {
-    setMoveComponent(currentElement, "Up",10)
-  })
-  useBindHotKey('shift+down', () => {
-    setMoveComponent(currentElement, "Down",10)
-  })
-  useBindHotKey('shift+left', () => {
-    setMoveComponent(currentElement, "Left",10)
-  })
-  useBindHotKey('shift+right', () => {
-    setMoveComponent(currentElement, "Right",10)
-  })
+  useBindHotKey(
+    "up",
+    wrap(() => {
+      setMoveComponent(currentElement, "Up", 1);
+    }),
+  );
+  useBindHotKey(
+    "down",
+    wrap(() => {
+      setMoveComponent(currentElement, "Down", 1);
+    }),
+  );
+  useBindHotKey(
+    "left",
+    wrap(() => {
+      setMoveComponent(currentElement, "Left", 1);
+    }),
+  );
+  useBindHotKey(
+    "right",
+    wrap(() => {
+      setMoveComponent(currentElement, "Right", 1);
+    }),
+  );
+  useBindHotKey("shift+up", () => {
+    setMoveComponent(currentElement, "Up", 10);
+  });
+  useBindHotKey("shift+down", () => {
+    setMoveComponent(currentElement, "Down", 10);
+  });
+  useBindHotKey("shift+left", () => {
+    setMoveComponent(currentElement, "Left", 10);
+  });
+  useBindHotKey("shift+right", () => {
+    setMoveComponent(currentElement, "Right", 10);
+  });
 };
 
 export default useHotKey;

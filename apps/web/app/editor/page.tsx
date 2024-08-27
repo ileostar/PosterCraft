@@ -6,6 +6,8 @@ import Middle from "@/components/page-components/editor/Middle";
 import Right from "@/components/page-components/editor/Right";
 
 import Head from "../../components/page-components/index/Header";
+import "@/style/focus.css";
+
 
 function Index(props: any) {
   return (
