@@ -29,6 +29,8 @@ const useHotKey = () => {
     setPastedElement,
     setCopyElement,
     setMoveElement,
+    undo,
+    redo,
   } = UseElementStore();
 
   useBindHotKey("ctrl+c, command+c", () => {
@@ -81,10 +83,10 @@ const useHotKey = () => {
     setMoveElement(currentElement, "Right", 10);
   });
   useBindHotKey("ctrl+z", () => {
-    
+    undo()
   });
   useBindHotKey("ctrl+shift+x", () => {
-    
+    redo()
   });
 };
 

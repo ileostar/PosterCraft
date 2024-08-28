@@ -1,5 +1,5 @@
 import { UseElementStore } from "@/store/element";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 function SizeProps() {
   const { updateElement, currentElement, getElement, currentSize } = UseElementStore();
@@ -33,7 +33,6 @@ function SizeProps() {
     sizeStyles.paddingRight = 0;
   };
 
-
   useEffect(() => {
     reset();
     const res = getElement(currentElement);
@@ -61,23 +60,25 @@ function SizeProps() {
     });
   }, [currentElement, getElement, currentSize]);
 
-  const isFirstRender = useRef(true);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false; // 更新ref，表示这不是第一次渲染
-      return; // 跳过后续的逻辑
-    }
+  const handleUpdate = (updateKey: string, updateValue: any) => {
+    setSizeStyles((prevStyles) => ({
+      ...prevStyles,
+      [updateKey]: updateValue,
+    }));
     const style = {
-      height: sizeStyles.height + "px",
-      width: sizeStyles.width + "px",
-      paddingTop: sizeStyles.paddingTop + "px",
-      paddingBottom: sizeStyles.paddingBottom + "px",
-      paddingLeft: sizeStyles.paddingLeft + "px",
-      paddingRight: sizeStyles.paddingRight + "px",
+      height: updateKey == "height" ? updateValue + "px" : sizeStyles.height + "px",
+      width: updateKey == "width" ? updateValue + "px" : sizeStyles.width + "px",
+      paddingTop: updateKey == "paddingTop" ? updateValue + "px" : sizeStyles.paddingTop + "px",
+      paddingBottom:
+        updateKey == "paddingBottom" ? updateValue + "px" : sizeStyles.paddingBottom + "px",
+      paddingLeft: updateKey == "paddingLeft" ? updateValue + "px" : sizeStyles.paddingLeft + "px",
+      paddingRight:
+        updateKey == "paddingRight" ? updateValue + "px" : sizeStyles.paddingRight + "px",
     };
+
     updateElement(currentElement, style);
-  }, [sizeStyles, currentElement, updateElement]);
+  };
+
   return (
     <div className="py-1 px-6 ">
       <div className="flex justify-between items-center my-4">
@@ -91,12 +92,7 @@ function SizeProps() {
           type="number"
           id="height"
           value={sizeStyles.height}
-          onChange={(e) =>
-            setSizeStyles((prevStyles) => ({
-              ...prevStyles,
-              height: parseInt(e.target.value, 10),
-            }))
-          }
+          onChange={(e) => handleUpdate("height", parseInt(e.target.value, 10))}
           placeholder="Font size"
           className="input input-bordered w-2/3"
         />
@@ -113,12 +109,7 @@ function SizeProps() {
           type="number"
           id="width"
           value={sizeStyles.width}
-          onChange={(e) =>
-            setSizeStyles((prevStyles) => ({
-              ...prevStyles,
-              width: parseInt(e.target.value, 10),
-            }))
-          }
+          onChange={(e) => handleUpdate("width", parseInt(e.target.value, 10))}
           placeholder="Font size"
           className="input input-bordered w-2/3"
         />
@@ -135,12 +126,7 @@ function SizeProps() {
           type="text"
           id="paddingTop"
           value={sizeStyles.paddingTop}
-          onChange={(e) =>
-            setSizeStyles((prevStyles) => ({
-              ...prevStyles,
-              paddingTop: parseInt(e.target.value, 10),
-            }))
-          }
+          onChange={(e) => handleUpdate("paddingTop", parseInt(e.target.value, 10))}
           placeholder="Font size"
           className="input input-bordered w-2/3"
         />
@@ -157,12 +143,7 @@ function SizeProps() {
           type="text"
           id="paddingBottom"
           value={sizeStyles.paddingBottom}
-          onChange={(e) =>
-            setSizeStyles((prevStyles) => ({
-              ...prevStyles,
-              paddingBottom: parseInt(e.target.value, 10),
-            }))
-          }
+          onChange={(e) => handleUpdate("paddingBottom", parseInt(e.target.value, 10))}
           placeholder="Font size"
           className="input input-bordered w-2/3"
         />
@@ -179,12 +160,7 @@ function SizeProps() {
           type="text"
           id="paddingLeft"
           value={sizeStyles.paddingLeft}
-          onChange={(e) =>
-            setSizeStyles((prevStyles) => ({
-              ...prevStyles,
-              paddingLeft: parseInt(e.target.value, 10),
-            }))
-          }
+          onChange={(e) => handleUpdate("paddingLeft", parseInt(e.target.value, 10))}
           placeholder="Font size"
           className="input input-bordered w-2/3"
         />
@@ -201,12 +177,7 @@ function SizeProps() {
           type="text"
           id="paddingRight"
           value={sizeStyles.paddingRight}
-          onChange={(e) =>
-            setSizeStyles((prevStyles) => ({
-              ...prevStyles,
-              paddingRight: parseInt(e.target.value, 10),
-            }))
-          }
+          onChange={(e) => handleUpdate("paddingRight", parseInt(e.target.value, 10))}
           placeholder="Font size"
           className="input input-bordered w-2/3"
         />

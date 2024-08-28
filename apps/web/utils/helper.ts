@@ -35,6 +35,7 @@ export const insertAt = (arr: any[], index: number, newItem: any) => {
 export const debounceChange = (callback: (...args: any) => void, timeout = 1000) => {
   let timer = 0;
   return (...args: any) => {
+    console.log(timer)
     clearTimeout(timer);
     timer = window.setTimeout(() => {
       timer = 0;
@@ -43,34 +44,4 @@ export const debounceChange = (callback: (...args: any) => void, timeout = 1000)
   };
 };
 
-export function deepEqual(a: any, b: any) {
-  if (a === b) return true;
-
-  if (a == null || b == null) return false;
-
-  if (typeof a !== "object" || typeof b !== "object") return false;
-
-  // 处理数组
-  if (Array.isArray(a) && Array.isArray(b)) {
-    if (a.length !== b.length) return false;
-
-    for (let i = 0; i < a.length; i++) {
-      if (!deepEqual(a[i], b[i])) return false;
-    }
-    return true;
-  }
-
-  // 处理对象
-  const keysA = Object.keys(a);
-  const keysB = Object.keys(b);
-
-  if (keysA.length !== keysB.length) return false;
-
-  for (const key of keysA) {
-    if (!keysB.includes(key)) return false;
-
-    if (!deepEqual(a[key], b[key])) return false;
-  }
-
-  return true;
-}
+ 

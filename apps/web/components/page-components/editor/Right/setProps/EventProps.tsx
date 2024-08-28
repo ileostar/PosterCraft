@@ -1,5 +1,5 @@
 import { UseElementStore } from "@/store/element";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 function EventProps() {
   const [clickURL, setClickURL] = useState<string>("");
@@ -10,23 +10,12 @@ function EventProps() {
     setClickURL("");
   };
 
-
   useEffect(() => {
     reset();
     const res = getElement(currentElement);
     const resUrl = res?.url;
     setClickURL(resUrl);
   }, [currentElement, getElement]);
-
-  const isFirstRender = useRef(true);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false; // 更新ref，表示这不是第一次渲染
-      return; // 跳过后续的逻辑
-    }
-    updateElement(currentElement, undefined, undefined, clickURL);
-  }, [clickURL, currentElement, updateElement]);
 
   return (
     <div className="py-1 px-6 ">
@@ -41,7 +30,10 @@ function EventProps() {
           type="text"
           id="fontSize"
           value={clickURL}
-          onChange={(e) => setClickURL(e.target.value)}
+          onChange={(e) => {
+            setClickURL(e.target.value);
+            updateElement(currentElement, undefined, undefined, e.target.value);
+          }}
           placeholder="输入跳转URL"
           className="input input-bordered w-2/3"
         />

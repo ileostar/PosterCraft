@@ -4,6 +4,8 @@
     style: {
       width: "120px",
       height: "50px",
+      top: "0px",
+      left: "0px",
       borderStyle: "none",
       textAlign: "center",
       lineHeight: "50px",
@@ -19,6 +21,8 @@
     style: {
       width: "120px",
       height: "50px",
+      top: "0px",
+      left: "0px",
       borderStyle: "none",
       textAlign: "center",
       lineHeight: "50px",
@@ -51,6 +55,8 @@
     style: {
       width: "120px",
       height: "50px",
+      top: "0px",
+      left: "0px",
       borderStyle: "none",
       textAlign: "center",
       lineHeight: "50px",

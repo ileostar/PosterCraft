@@ -1,5 +1,5 @@
 import { ElementDataType, ElementStoreType } from "@/types/ElementType";
-import { insertAt,debounceChange,deepEqual } from "@/utils/helper";
+import { debounceChange, insertAt } from "@/utils/helper";
 import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 
@@ -74,9 +74,9 @@ interface ElementStore extends ElementStoreType {
   // 修改的历史记录
   modifyHistory: (history: HistoryProps, type: "undo" | "redo") => void;
   // 添加修改的历史记录
-  pushModifyHistory: (id:string,oldValue:{ [key: string]: string }|null,newValue:{ [key: string]: string }|null) => void;
+  pushModifyHistory: (id: string, oldValue: any, newValue: any) => void;
   //给函数增加防抖
-  pushHistoryDebounce: (id:string,oldValue:{ [key: string]: string }|null,newValue:{ [key: string]: string }|null) =>CallableFunction;
+  pushHistoryDebounce: (id: string, oldValue: any, newValue: any) => void;
   // 撤销操作
   undo: () => void;
   // 恢复操作
@@ -128,13 +128,17 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
     isLocked?: boolean,
     layerName?: string,
   ) => {
-    let oldValue=null;
-    let newValue=null;
+    let oldValue = {};
+    let newValue = {};
     set((state) => {
       const newState = state.Elements.map((item) => {
         if (item.id === id) {
-          oldValue={...item.props};
-          newValue={...item.props, ...props};
+          oldValue = { props: { ...item.props }, text: item.text, url: item.url };
+          newValue = {
+            props: { ...item.props, ...props },
+            text: text ?? item.text,
+            url: url ?? item.url,
+          };
           return {
             props: { ...item.props, ...props },
             id: item.id,
@@ -150,16 +154,14 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
       });
       return { Elements: newState };
     });
-    // console.log(oldValue,newValue);
-    if(!deepEqual(oldValue,newValue)){
-      console.log("oldValue",oldValue);
-      console.log("newValue",newValue);
-      get().pushModifyHistory(id,oldValue,newValue);
-      console.log('11');
+
+    if (!get().cachedOldValues) {
+      get().cachedOldValues = oldValue;
     }
-    // get().pushModifyHistory(id,oldValue,newValue);
-    // get().pushHistoryDebounce(id,oldValue,newValue);
-    console.log(get().histories);
+
+    if (layerName === undefined && isLocked == undefined && isHidden == undefined) {
+      get().pushHistoryDebounce(id, get().cachedOldValues, newValue);
+    }
   },
   // 获取元素
   getElement: (id: string) => {
@@ -273,20 +275,20 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
   },
   // 修改历史记录
   modifyHistory: (history: HistoryProps, type: "undo" | "redo") => {
-    const { elementId, data } = history
-    const { oldValue, newValue } = data
+    const { elementId, data } = history;
+    const { oldValue, newValue } = data;
     set((state) => {
       const newState = state.Elements.map((item) => {
         if (item.id === elementId) {
           return {
-            props: type === 'undo'?{ ...oldValue }:{ ...newValue },
+            props: type === "undo" ? { ...oldValue["props"] } : { ...newValue["props"] },
             id: item.id,
             type: item.type,
-            text:  item.text,
-            url: item.url,
-            isHidden:  item.isHidden,
+            text: type === "undo" ? oldValue["text"] : newValue["text"],
+            url: type === "undo" ? oldValue["url"] : newValue["url"],
+            isHidden: item.isHidden,
             isLocked: item.isLocked,
-            layerName:  item.layerName,
+            layerName: item.layerName,
           };
         }
         return item;
@@ -295,16 +297,19 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
     });
   },
   //保存所修改的历史记录
-  pushModifyHistory: (id:string,oldValue:{ [key: string]: string }|null,newValue:{ [key: string]: string }|null) => {
+  pushModifyHistory: (id: string, oldValue: any, newValue: any) => {
     get().pushHistory({
-      id: uuidv4(),   
-      elementId: id ,
-      type: 'update',
-      data: {  oldValue, newValue }
-    })
+      id: uuidv4(),
+      elementId: id,
+      type: "update",
+      data: { oldValue, newValue },
+    });
+    get().cachedOldValues = null;
   },
   //给函数增加防抖
-  pushHistoryDebounce :(id:string,oldValue:{ [key: string]: string }|null,newValue:{ [key: string]: string }|null)=>debounceChange(()=>get().pushModifyHistory(id,oldValue,newValue)),
+  pushHistoryDebounce: debounceChange((id: string, oldValue: any, newValue: any) => {
+    get().pushModifyHistory(id, oldValue, newValue);
+  }),
   //撤销操作
   undo: () => {
     if (get().historyIndex === -1) {
@@ -350,5 +355,3 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
     get().historyIndex++;
   },
 }));
-
- 

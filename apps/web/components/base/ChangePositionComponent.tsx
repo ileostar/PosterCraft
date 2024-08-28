@@ -1,5 +1,5 @@
 import { UseElementStore } from "@/store/element";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 
 //现在的位置=鼠标移动距离+原来的位置
 
@@ -8,13 +8,12 @@ function ChangePositionComponent({
 }: Readonly<{
   item: any;
 }>) {
-  const { setCurrentElement, setIsElement, currentElement, updateElement, setCurrentPosition } =
-    UseElementStore();
+  const { setCurrentElement, setIsElement, updateElement, setCurrentPosition } = UseElementStore();
 
   let top = item.props.top ? parseInt(item.props.top.replace(/(px|rem)/g, ""), 10) : 0;
   let left = item.props.left ? parseInt(item.props.left.replace(/(px|rem)/g, ""), 10) : 0;
 
-  const [position, setPosition] = useState({ x: left, y: top });
+  const position = { x: left, y: top };
   const draggableRef = useRef<HTMLButtonElement>(null);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,10 +36,15 @@ function ChangePositionComponent({
     };
 
     const handleMouseUp = () => {
-      setPosition({
-        x: left,
-        y: top,
-      });
+      position.x = left;
+      position.y = top;
+
+      const style = {
+        left: position.x + "px",
+        top: position.y + "px",
+      };
+      updateElement(item.id, style);
+      setCurrentPosition(position.x, position.y);
 
       // 移除mousemove和mouseup事件监听器
       document.removeEventListener("mousemove", handleMouseMove);
@@ -51,15 +55,6 @@ function ChangePositionComponent({
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
   };
-
-  useEffect(() => {
-    const style = {
-      left: position.x + "px",
-      top: position.y + "px",
-    };
-    updateElement(item.id, style);
-    setCurrentPosition(position.x, position.y);
-  }, [currentElement, position, setCurrentPosition, updateElement, item.id, setCurrentElement]);
 
   return (
     <button
