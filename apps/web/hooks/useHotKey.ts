@@ -26,17 +26,17 @@ const useHotKey = () => {
     currentElement,
     deleteElement,
     setCurrentElement,
-    setPastedComponent,
-    setCopyComponent,
-    setMoveComponent,
+    setPastedElement,
+    setCopyElement,
+    setMoveElement,
   } = UseElementStore();
 
   useBindHotKey("ctrl+c, command+c", () => {
     console.log(11);
-    setCopyComponent(currentElement);
+    setCopyElement(currentElement);
   });
   useBindHotKey("ctrl+v, command+v", () => {
-    setPastedComponent();
+    setPastedElement();
   });
   useBindHotKey("backspace, delete", () => {
     deleteElement(currentElement);
@@ -47,38 +47,44 @@ const useHotKey = () => {
   useBindHotKey(
     "up",
     wrap(() => {
-      setMoveComponent(currentElement, "Up", 1);
+      setMoveElement(currentElement, "Up", 1);
     }),
   );
   useBindHotKey(
     "down",
     wrap(() => {
-      setMoveComponent(currentElement, "Down", 1);
+      setMoveElement(currentElement, "Down", 1);
     }),
   );
   useBindHotKey(
     "left",
     wrap(() => {
-      setMoveComponent(currentElement, "Left", 1);
+      setMoveElement(currentElement, "Left", 1);
     }),
   );
   useBindHotKey(
     "right",
     wrap(() => {
-      setMoveComponent(currentElement, "Right", 1);
+      setMoveElement(currentElement, "Right", 1);
     }),
   );
   useBindHotKey("shift+up", () => {
-    setMoveComponent(currentElement, "Up", 10);
+    setMoveElement(currentElement, "Up", 10);
   });
   useBindHotKey("shift+down", () => {
-    setMoveComponent(currentElement, "Down", 10);
+    setMoveElement(currentElement, "Down", 10);
   });
   useBindHotKey("shift+left", () => {
-    setMoveComponent(currentElement, "Left", 10);
+    setMoveElement(currentElement, "Left", 10);
   });
   useBindHotKey("shift+right", () => {
-    setMoveComponent(currentElement, "Right", 10);
+    setMoveElement(currentElement, "Right", 10);
+  });
+  useBindHotKey("ctrl+z", () => {
+    
+  });
+  useBindHotKey("ctrl+shift+x", () => {
+    
   });
 };
 

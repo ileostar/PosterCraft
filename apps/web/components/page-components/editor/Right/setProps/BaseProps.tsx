@@ -52,7 +52,7 @@ function BaseProps() {
   };
 
   useEffect(() => {
-    reset()
+    reset();
     const res = getElement(currentElement);
     const resProps = res?.props;
     const resText = res?.text;
@@ -222,27 +222,6 @@ function BaseProps() {
           </Toggle>
         </div>
       </div>
-
-      {/* <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="lineHeight"
-          className="block mb-1 w-1/3"
-        >
-          行高：
-        </label>
-        <input
-          id="lineHeight"
-          type="range"
-          min={0}
-          max={100}
-          value={textStyles.lineHeight}
-          onChange={(e) => setTextStyles(prevStyles => ({
-            ...prevStyles,
-            lineHeight:parseInt(e.target.value, 10)
-          }))}
-          className="range range-xs w-2/3"
-        />
-      </div> */}
 
       <div className="flex justify-between items-center my-4">
         <label

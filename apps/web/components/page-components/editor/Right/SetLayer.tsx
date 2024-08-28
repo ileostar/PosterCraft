@@ -1,6 +1,6 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { UseElementStore } from "@/store/element";
-import { arrayMove } from "@/utils/arrayMove";
+import { arrayMove } from "@/utils/helper";
 import { getParentElement } from "@/utils/getParentElement";
 import {
   DragOutlined,

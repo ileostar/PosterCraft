@@ -5,9 +5,10 @@ import { UseElementStore } from "@/store/element";
 
 import ChangePositionComponent from "../../base/ChangePositionComponent";
 import ResizeComponent from "../../base/ResizeComponent";
+import { Button } from "@/components/ui/button";
 
 function Middle(props: any) {
-  const { Elements, setIsElement, currentElement, setCurrentElement, pageBackgroundStyle } =
+  const { Elements, setIsElement, currentElement, setCurrentElement, pageBackgroundStyle,redo,undo } =
     UseElementStore();
 
     useHotKey();
@@ -21,6 +22,8 @@ function Middle(props: any) {
       }}
     >
       <h3>海报区域</h3>
+      <Button onClick={()=>undo()}>撤销</Button>
+      <Button onClick={()=>redo()}>恢复</Button>
       <div
         id="mid-container"
         className="bg-white mt-5"
