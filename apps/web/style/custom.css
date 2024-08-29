@@ -1,0 +1,6 @@
+html {
+  height: 100%;
+  width: 100%;
+  scrollbar-width: none; /* firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
