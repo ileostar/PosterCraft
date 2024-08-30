@@ -9,12 +9,12 @@ type Oauth2DialogState = {
   setIsOpen: (isOpen: boolean) => void;
 };
 
-export const useGithubUsername = create<GithubUsernameState>((set, get) => ({
+export const useGithubUsername = create<GithubUsernameState>((set, _get) => ({
   githubUsername: "",
-  setGithubUsername: (name: string) => set((state) => ({ githubUsername: name })),
+  setGithubUsername: (name: string) => set((_state) => ({ githubUsername: name })),
 }));
 
-export const useOauth2Dialog = create<Oauth2DialogState>((set, get) => ({
+export const useOauth2Dialog = create<Oauth2DialogState>((set, _get) => ({
   isOpen: false,
-  setIsOpen: (a: boolean) => set((state) => ({ isOpen: a })),
+  setIsOpen: (a: boolean) => set((_state) => ({ isOpen: a })),
 }));

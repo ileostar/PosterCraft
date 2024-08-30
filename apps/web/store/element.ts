@@ -83,23 +83,25 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
   currentElement: "",
   // 设置当前选中的元素
   setCurrentElement: (elementId: string) => {
-    set((state) => ({ currentElement: elementId }));
+    set((_state) => ({ currentElement: elementId }));
     const element = get().getElement(elementId);
     if (element) {
       get().setIsCurrentLocked(element.isLocked);
     }
   },
   // 判断当前点击的是否是元素(1.背景 2.元素)
-  setIsElement: (isElement: boolean) => set((state) => ({ isElement })),
+  setIsElement: (isElement: boolean) => set((_state) => ({ isElement })),
   isElement: false,
   // 当拖动移动元素时，用于是否更新元素位置数据面板的判断
   currentPosition: { left: 0, top: 0 },
-  setCurrentPosition: (left: any, top: any) => set((state) => ({ currentPosition: { left, top } })),
+  setCurrentPosition: (left: any, top: any) =>
+    set((_state) => ({ currentPosition: { left, top } })),
   // 当拖动缩放元素时，用于是否更新元素尺寸数据面板的判断
   currentSize: { height: 0, width: 0 },
-  setCurrentSize: (height: any, width: any) => set((state) => ({ currentSize: { height, width } })),
+  setCurrentSize: (height: any, width: any) =>
+    set((_state) => ({ currentSize: { height, width } })),
   // 判断当前元素属性是否被锁定
-  setIsCurrentLocked: (isCurrentLocked: boolean) => set((state) => ({ isCurrentLocked })),
+  setIsCurrentLocked: (isCurrentLocked: boolean) => set((_state) => ({ isCurrentLocked })),
   isCurrentLocked: false,
 
   // 页面背景默认样式
@@ -110,5 +112,5 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
   },
-  setPageBackgroundStyle: (style: {}) => set((state) => ({ pageBackgroundStyle: style })),
+  setPageBackgroundStyle: (style: {}) => set((_state) => ({ pageBackgroundStyle: style })),
 }));

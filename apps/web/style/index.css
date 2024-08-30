@@ -7,11 +7,11 @@
   --border-angle: 0turn;
   background-image: conic-gradient(
       from var(--border-angle),
-      rgba(248, 249, 250, 0.9),
-      rgba(248, 249, 250, 0.9) 50%,
-      rgba(248, 249, 250, 0.9)
+      rgba(245, 247, 248, 0.95),
+      rgba(245, 247, 248, 0.95) 50%,
+      rgba(245, 247, 248, 0.95)
     ),
-    conic-gradient(from var(--border-angle), transparent 20%, #ff4343e9, transparent);
+    conic-gradient(from var(--border-angle), transparent 10%, #ff4343e9, transparent);
   background-size:
     calc(100% - (var(--border-size) * 2)) calc(100% - (var(--border-size) * 2)),
     cover;
