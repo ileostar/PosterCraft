@@ -19,7 +19,7 @@ const WorksList: React.FC<WorksListProps> = () => {
         ))}
       </BaseList>
       <div className="w-full flex items-center justify-center">
-        <Link href={"/template-list"}>
+        <Link href={"/works"}>
           <BaseButton className="mt-5">Discover More</BaseButton>
         </Link>
       </div>

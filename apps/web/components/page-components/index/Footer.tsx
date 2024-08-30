@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = () => {
@@ -18,39 +20,31 @@ const Footer: React.FC<FooterProps> = () => {
           </div>
           <div className="pb-6">
             <a
-              href="#"
+              href="/templates"
               className="text-sm leading-6 text-gray-600 hover:text-gray-400"
             >
-              Marketplace
+              Templates
             </a>
           </div>
           <div className="pb-6">
             <a
-              href="#"
+              href="/works"
               className="text-sm leading-6 text-gray-600 hover:text-gray-400"
             >
-              Collections
+              Works
             </a>
           </div>
           <div className="pb-6">
             <a
-              href="#"
+              href="/about"
               className="text-sm leading-6 text-gray-600 hover:text-gray-400"
             >
-              Community
-            </a>
-          </div>
-          <div className="pb-6">
-            <a
-              href="#"
-              className="text-sm leading-6 text-gray-600 hover:text-gray-400"
-            >
-              Connect Wallet
+              About
             </a>
           </div>
         </nav>
         <div className="mt-10 flex justify-center space-x-10">
-          <a
+          <Link
             href="#"
             className="text-gray-400 hover:text-gray-300"
           >
@@ -67,8 +61,8 @@ const Footer: React.FC<FooterProps> = () => {
                 clip-rule="evenodd"
               ></path>
             </svg>
-          </a>
-          <a
+          </Link>
+          <Link
             href="#"
             className="text-gray-400 hover:text-gray-300"
           >
@@ -85,9 +79,9 @@ const Footer: React.FC<FooterProps> = () => {
                 clip-rule="evenodd"
               ></path>
             </svg>
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href="https://www.twitter.com/030LeoStar"
             className="text-gray-400 hover:text-gray-300"
           >
             <span className="sr-only">X</span>
@@ -99,9 +93,9 @@ const Footer: React.FC<FooterProps> = () => {
             >
               <path d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z"></path>
             </svg>
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href="https://github.com/ileostar/PosterCraft"
             className="text-gray-400 hover:text-gray-300"
           >
             <span className="sr-only">GitHub</span>
@@ -117,8 +111,8 @@ const Footer: React.FC<FooterProps> = () => {
                 clip-rule="evenodd"
               ></path>
             </svg>
-          </a>
-          <a
+          </Link>
+          <Link
             href="#"
             className="text-gray-400 hover:text-gray-300"
           >
@@ -135,10 +129,10 @@ const Footer: React.FC<FooterProps> = () => {
                 clip-rule="evenodd"
               ></path>
             </svg>
-          </a>
+          </Link>
         </div>
         <p className="mt-10 text-center text-xs leading-5 text-gray-500">
-          © 2024 Naida, Inc. All rights reserved.
+          © 2024 LeoStar. All rights reserved.
         </p>
       </div>
     </footer>

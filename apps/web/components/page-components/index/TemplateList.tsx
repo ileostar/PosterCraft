@@ -22,7 +22,7 @@ const TemplateList: React.FC<TemplateListProps> = () => {
         ))}
       </BaseList>
       <div className="w-full flex items-center justify-center">
-        <Link href={"/template-list"}>
+        <Link href={"/templates"}>
           <BaseButton className="mt-5">Discover More</BaseButton>
         </Link>
       </div>
