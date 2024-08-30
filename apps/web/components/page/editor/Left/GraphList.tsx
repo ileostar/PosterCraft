@@ -1,9 +1,9 @@
 import { UseElementStore } from "@/store/element";
-import  textTemplate  from "@/template/textTemplate";
+import graphTemplate from "@/template/graphTemplate";
 import { ElementDataType } from "@/types/ElementType";
 import { v4 as uuidv4 } from "uuid";
 
-function TextList() {
+function GraphList() {
   const { setCurrentElement, addElement, setIsElement } = UseElementStore();
 
   const handleClick = (event: any) => {
@@ -16,8 +16,7 @@ function TextList() {
     const element: ElementDataType = {
       props: styleObject,
       id: id,
-      type: "text",
-      text: event.target.innerHTML,
+      type: "graph",
       isHidden: false,
       isLocked: false,
       layerName: "图层",
@@ -68,18 +67,16 @@ function TextList() {
 
   return (
     <div className="flex justify-center items-center flex-col">
-      {textTemplate.map((item: any) => (
+      {graphTemplate.map((item: any) => (
         <button
           key={item.id}
           onClick={(e) => handleClick(e)}
           style={item.style}
           className="mb-3"
-        >
-          {item.text}
-        </button>
+        ></button>
       ))}
     </div>
   );
 }
 
-export default TextList;
+export default GraphList;

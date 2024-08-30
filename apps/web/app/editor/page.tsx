@@ -1,11 +1,11 @@
 "use client";
 
 import AuthLayout from "@/components/base/AuthLayout";
-import Left from "@/components/page-components/editor/Left";
-import Middle from "@/components/page-components/editor/Middle";
-import Right from "@/components/page-components/editor/Right";
+import Left from "@/components/page/editor/Left";
+import Middle from "@/components/page/editor/Middle";
+import Right from "@/components/page/editor/Right";
 
-import Head from "../../components/page-components/index-old/Header";
+import Head from "../../components/page/index-old/Header";
 
 function Index(props: any) {
   return (

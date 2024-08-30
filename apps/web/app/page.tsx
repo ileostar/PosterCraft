@@ -1,9 +1,9 @@
-import Footer from "@/components/page-components/index/Footer";
-import Header from "@/components/page-components/index/Header";
-import Hero from "@/components/page-components/index/Hero";
-import Introduce from "@/components/page-components/index/Introduce";
-import TemplateList from "@/components/page-components/index/TemplateList";
-import WorksList from "@/components/page-components/index/WorksList";
+import Footer from "@/components/page/index/Footer";
+import Header from "@/components/page/index/Header";
+import Hero from "@/components/page/index/Hero";
+import Introduce from "@/components/page/index/Introduce";
+import TemplateList from "@/components/page/index/TemplateList";
+import WorksList from "@/components/page/index/WorksList";
 
 import "../style/index.css";
 

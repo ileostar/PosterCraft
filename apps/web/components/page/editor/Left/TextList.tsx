@@ -1,9 +1,9 @@
 import { UseElementStore } from "@/store/element";
-import  imgTemplate  from "@/template/imgTemplate";
+import textTemplate from "@/template/textTemplate";
 import { ElementDataType } from "@/types/ElementType";
 import { v4 as uuidv4 } from "uuid";
 
-function ImgList() {
+function TextList() {
   const { setCurrentElement, addElement, setIsElement } = UseElementStore();
 
   const handleClick = (event: any) => {
@@ -16,7 +16,8 @@ function ImgList() {
     const element: ElementDataType = {
       props: styleObject,
       id: id,
-      type: "img",
+      type: "text",
+      text: event.target.innerHTML,
       isHidden: false,
       isLocked: false,
       layerName: "图层",
@@ -67,17 +68,18 @@ function ImgList() {
 
   return (
     <div className="flex justify-center items-center flex-col">
-      {imgTemplate.map((item: any) => (
+      {textTemplate.map((item: any) => (
         <button
           key={item.id}
           onClick={(e) => handleClick(e)}
           style={item.style}
           className="mb-3"
         >
+          {item.text}
         </button>
       ))}
     </div>
   );
 }
 
-export default ImgList;
+export default TextList;

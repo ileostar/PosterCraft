@@ -1,9 +1,9 @@
 import { UseElementStore } from "@/store/element";
-import  graphTemplate  from "@/template/graphTemplate";
+import imgTemplate from "@/template/imgTemplate";
 import { ElementDataType } from "@/types/ElementType";
 import { v4 as uuidv4 } from "uuid";
 
-function GraphList() {
+function ImgList() {
   const { setCurrentElement, addElement, setIsElement } = UseElementStore();
 
   const handleClick = (event: any) => {
@@ -16,7 +16,7 @@ function GraphList() {
     const element: ElementDataType = {
       props: styleObject,
       id: id,
-      type: "graph",
+      type: "img",
       isHidden: false,
       isLocked: false,
       layerName: "图层",
@@ -67,17 +67,16 @@ function GraphList() {
 
   return (
     <div className="flex justify-center items-center flex-col">
-      {graphTemplate.map((item: any) => (
+      {imgTemplate.map((item: any) => (
         <button
           key={item.id}
           onClick={(e) => handleClick(e)}
           style={item.style}
           className="mb-3"
-        >
-        </button>
+        ></button>
       ))}
     </div>
   );
 }
 
-export default GraphList;
+export default ImgList;
