@@ -1,10 +1,12 @@
 {
+  "css.customData": [".vscode/tailwind.json"],
   "cSpell.words": [
     "ahooks",
     "aliyuncs",
     "autoincrement",
     "autorestart",
     "CICD",
+    "cropperjs",
     "ctsx",
     "customfav",
     "Dysmsapi",

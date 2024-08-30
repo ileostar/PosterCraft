@@ -18,7 +18,7 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import Head from "../../components/page-components/index/Header";
+import Head from "../../components/page-components/index-old/Header";
 
 const FormSchema = z.object({
   username: z.string().min(1, {

@@ -110,7 +110,12 @@ function Index(props: any) {
   );
 
   // return <div ref={threeDivRef}   style={{background: 'linear-gradient(to bottom, #11e8bb 0%, #8200c9 100%)'}} />;
-  return <div ref={threeDivRef} />;
+  return (
+    <div
+      className="w-full h-full overflow-visible"
+      ref={threeDivRef}
+    />
+  );
 }
 
 export default Index;
