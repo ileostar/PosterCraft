@@ -1,7 +1,10 @@
 "use client";
 
+import BaseGoToLogin from "@/components/base/BaseGoToLogin";
+import BaseLogout from "@/components/base/BaseLogout";
 import useDark from "@/hooks/useDark";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 interface HeaderProps {
@@ -11,12 +14,13 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ className }) => {
   const { toggleDark } = useDark();
   const [isOpen, setIsOpen] = useState(false);
+  const token = window.localStorage.getItem("token");
 
   return (
     <header className={`w-full mx-auto ${className}`}>
-      <div className="px-4 pt-4 min-[845px]:pt-9 transition-all">
+      <div className="px-4 pt-4 min-[845px]:pt-9 transition-all justify-between">
         <div className="flex justify-between">
-          <div className="flex">
+          <div className="flex w-72">
             <div className="logo flex flex-shrink-0 items-center text-white hover:text-[#E730CA] transition-colors">
               <Image
                 src="/favicon.png"
@@ -36,34 +40,34 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
           </div>
 
           <div className="hidden min-[845px]:flex sm:space-x-8">
-            <a
-              href="#"
+            <Link
+              href="/"
               className="relative text-[#E730CA] hover:text-[#E730CA] inline-flex items-center font-bold before:content-[''] before:absolute before:bottom-2.5 before:left-1/2 before:transform before:-translate-x-1/2 before:h-[1.5px] before:w-full before:bg-white"
               aria-current="page"
             >
               Home
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/templates"
               className="relative text-white hover:text-[#E730CA] inline-flex items-center font-bold before:content-[''] before:absolute before:bottom-2.5 before:left-1/2 before:transform before:-translate-x-1/2 before:h-[1.5px] before:w-0 before:bg-white before:transition-all before:hover:w-full before:duration-500"
             >
-              Marketplace
-            </a>
-            <a
-              href="#"
+              Templates
+            </Link>
+            <Link
+              href="/works"
               className="relative text-white hover:text-[#E730CA] inline-flex items-center font-bold before:content-[''] before:absolute before:bottom-2.5 before:left-1/2 before:transform before:-translate-x-1/2 before:h-[1.5px] before:w-0 before:bg-white before:transition-all before:hover:w-full before:duration-500"
             >
-              Collections
-            </a>
-            <a
-              href="#"
+              Works
+            </Link>
+            <Link
+              href="/about"
               className="relative text-white hover:text-[#E730CA] inline-flex items-center font-bold before:content-[''] before:absolute before:bottom-2.5 before:left-1/2 before:transform before:-translate-x-1/2 before:h-[1.5px] before:w-0 before:bg-white before:transition-all before:hover:w-full before:duration-500"
             >
-              Community
-            </a>
+              About
+            </Link>
           </div>
 
-          <div className="flex items-center space-x-7">
+          <div className="flex items-center gap-5 w-72 justify-end">
             <div className="relative hidden min-[845px]:flex bg-transparent rounded-lg overflow-hidden  font-semibold transition-all duration-700 will-change-transform">
               <span className="icon-[carbon--ibm-watson-language-translator] w-8 h-8 rounded-full cursor-pointer"></span>
             </div>
@@ -73,11 +77,23 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
                 className="h-8 w-8 dark:h-8 dark:w-8 icon-[carbon--haze-night] dark:icon-[carbon--sun] rounded-full cursor-pointer"
               ></span>
             </div>
-            <div className="avatar relative hidden min-[845px]:flex bg-transparent rounded-lg overflow-hidden  font-semibold transition-all duration-700 will-change-transform">
-              <div className="cursor-pointer w-10 h-10 rounded-full">
-                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-              </div>
-            </div>
+            {token ? (
+              <>
+                <div className="avatar relative hidden min-[845px]:flex bg-transparent rounded-lg overflow-hidden  font-semibold transition-all duration-700 will-change-transform">
+                  <div className="cursor-pointer w-10 h-10 rounded-full">
+                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  </div>
+                </div>
+                <BaseLogout className="hidden min-[845px]:flex" />
+              </>
+            ) : (
+              <Link
+                href="/auth/login"
+                className="relative hidden min-[845px]:flex overflow-hidden font-semibold transition-all duration-700 will-change-transform"
+              >
+                <BaseGoToLogin />
+              </Link>
+            )}
           </div>
 
           {/* 菜单 */}
@@ -163,7 +179,7 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
                       >
                         <li>
                           <a
-                            href="#"
+                            href="/"
                             className="bg-[#E730CA]/80 text-white group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                           >
                             Home
@@ -171,26 +187,26 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
                         </li>
                         <li>
                           <a
-                            href="#"
+                            href="/templates"
                             className="text-gray-300 hover:text-white hover:bg-[#E730CA]/80 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                           >
-                            Marketplace
+                            Templates
                           </a>
                         </li>
                         <li>
                           <a
-                            href="#"
+                            href="/works"
                             className="text-gray-300 hover:text-white hover:bg-[#E730CA]/80 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                           >
-                            Collections
+                            Works
                           </a>
                         </li>
                         <li>
                           <a
-                            href="#"
+                            href="/about"
                             className="text-gray-300 hover:text-white hover:bg-[#E730CA]/80 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                           >
-                            Community
+                            About
                           </a>
                         </li>
                       </ul>

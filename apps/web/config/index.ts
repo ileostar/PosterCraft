@@ -10,4 +10,5 @@ dotenv.configDotenv({
 export default {
   isDev: true,
   serverUrl: process.env.SERVER_URL || "http://120.0.0.1",
+  SITE_URL: process.env.SITE_URL || "http://localhost:3000",
 };

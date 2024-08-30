@@ -5,9 +5,9 @@ import { useEffect, useRef, useState } from "react";
 
 import ThreeModel from "../../model/MyModel";
 
-interface BannerProps {}
+interface HeroProps {}
 
-const Banner: React.FC<BannerProps> = () => {
+const Hero: React.FC<HeroProps> = () => {
   const boxRef = useRef<HTMLDivElement>(null); // 指定ref的类型为HTMLDivElement
   const [boxWidth, setBoxWidth] = useState<number | undefined>(undefined);
   const [boxHeight, setBoxHeight] = useState<number | undefined>();
@@ -41,7 +41,7 @@ const Banner: React.FC<BannerProps> = () => {
     );
   };
   return (
-    <div className="h-[80vh] my-12 mx-auto max-w-7xl px-6 sm:pl-5 sm:pr-0 space-y-20 sm:space-y-52 lg:space-y-0 lg:flex lg:items-center lg:pl-8">
+    <div className="h-[80vh] my-12 mx-auto max-w-7xl px-6 sm:pl-5 sm:pr-0 space-y-20 sm:space-y-52 lg:space-y-0 lg:flex lg:items-center lg:pl-8 overflow-hidden">
       <div className="w-full h-full flex flex-col md:flex-row justify-center items-center">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:flex-auto">
           <div className="flex">
@@ -89,9 +89,9 @@ const Banner: React.FC<BannerProps> = () => {
           </div>
         </div>
       </div>
-      <div className="w-full h-full hidden sm:justify-center sm:items-center sm:flex  ">
+      <div className="w-full h-full hidden sm:justify-center sm:items-center sm:flex">
         <div
-          className="flex-1 flex items-center justify-center w-3/5 h-4/5 overflow-visible  xl:min-w-[40vw] "
+          className="flex-1  md:items-center md:justify-center w-3/5 h-4/5 hidden md:flex  xl:min-w-[40vw]  "
           ref={boxRef}
         >
           {RenderThreeD()}
@@ -101,4 +101,4 @@ const Banner: React.FC<BannerProps> = () => {
   );
 };
 
-export default Banner;
+export default Hero;

@@ -72,7 +72,7 @@ export type FormSchemaType_email_verify = z.infer<typeof FormSchema_email_verify
 export type FormSchemaType_phone_update = z.infer<typeof FormSchema_phone_update>;
 export type FormSchemaType_email_update = z.infer<typeof FormSchema_email_update>;
 
-function Index(props: any) {
+function Index(_props: any) {
   const [userId, setUserId] = useState<string>("0");
   const [avatar, setAvatar] = useState<string>("");
   const [email, setEmail] = useState<string>("");

@@ -1,12 +1,17 @@
 .logo:hover .logo-svg {
   transform: rotateY(180deg);
 }
-.btn--animateglowPink {
+
+.btn--animateGlowPink {
   --border-size: 6px;
   --border-angle: 0turn;
-  z-index: 99;
-  background-image: conic-gradient(from var(--border-angle), #131313, #131313 50%, #131313),
-    conic-gradient(from var(--border-angle), transparent 20%, #d33cf2, transparent);
+  background-image: conic-gradient(
+      from var(--border-angle),
+      rgba(248, 249, 250, 0.9),
+      rgba(248, 249, 250, 0.9) 50%,
+      rgba(248, 249, 250, 0.9)
+    ),
+    conic-gradient(from var(--border-angle), transparent 20%, #ff4343e9, transparent);
   background-size:
     calc(100% - (var(--border-size) * 2)) calc(100% - (var(--border-size) * 2)),
     cover;
@@ -14,6 +19,12 @@
   background-repeat: no-repeat;
   animation: 8s linear infinite bg-spin;
 }
+
+.dark .btn--animateGlowPink {
+  background-image: conic-gradient(from var(--border-angle), #131313, #131313 50%, #131313),
+    conic-gradient(from var(--border-angle), transparent 20%, #d33cf2, transparent);
+}
+
 @keyframes bg-spin {
   to {
     --border-angle: 1turn;

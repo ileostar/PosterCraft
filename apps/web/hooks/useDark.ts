@@ -1,5 +1,5 @@
-import { useCookieState } from "ahooks";
-import { useEffect, useState } from "react";
+import { useLocalStorageState } from "ahooks";
+import { useEffect } from "react";
 
 import { isBrowser } from "../utils/isBrowser";
 
@@ -11,12 +11,11 @@ function getSystemDark() {
   return false;
 }
 export default function useDark() {
-  const [theme, setTheme] = useCookieState("theme-color", {
+  const [theme, setTheme] = useLocalStorageState("theme-color", {
     defaultValue: getSystemDark() ? "dark" : "light",
   });
   const dark = theme === "dark";
   const toggleDark = (status?: "dark" | "light") => {
-    console.log("toggleDark", status);
     status !== undefined ? setTheme(status) : setTheme(theme === "dark" ? "light" : "dark");
   };
 
