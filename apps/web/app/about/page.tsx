@@ -1,7 +1,18 @@
-interface AboutProps {}
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 
-const About: React.FC<AboutProps> = () => {
-  return <div>About</div>;
-};
+import "@/style/index.css";
 
-export default About;
+function Main() {
+  return (
+    <div className="min-h-svh overflow-hidden p-1.5 btn--animateGlowPink">
+      <Header className="max-w-7xl px-4 sm:px-8 md:px-12 xl:px-0 mx-auto" />
+      <main className="relative overflow-hidden max-w-7xl mx-auto px-4 sm:px-8 md:px-12 xl:px-0">
+        <div className="h-[100vh] text-center">About</div>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+export default Main;

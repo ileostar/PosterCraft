@@ -1,11 +1,11 @@
-import Footer from "@/components/page/index/Footer";
-import Header from "@/components/page/index/Header";
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 import Hero from "@/components/page/index/Hero";
 import Introduce from "@/components/page/index/Introduce";
 import TemplateList from "@/components/page/index/TemplateList";
 import WorksList from "@/components/page/index/WorksList";
 
-import "../style/index.css";
+import "@/style/index.css";
 
 function Main() {
   return (

@@ -1,7 +1,18 @@
-interface TemplatesProps {}
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 
-const Templates: React.FC<TemplatesProps> = () => {
-  return <div>templates</div>;
-};
+import "@/style/index.css";
 
-export default Templates;
+function Main() {
+  return (
+    <div className="min-h-svh overflow-hidden p-1.5 btn--animateGlowPink">
+      <Header className="max-w-7xl px-4 sm:px-8 md:px-12 xl:px-0 mx-auto" />
+      <main className="relative overflow-hidden max-w-7xl mx-auto px-4 sm:px-8 md:px-12 xl:px-0">
+        <div className="h-[100vh] text-center">templates</div>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+export default Main;
