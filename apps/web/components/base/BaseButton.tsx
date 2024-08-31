@@ -26,7 +26,7 @@ const BaseButton: React.FC<BaseButtonProps> = ({
   ) : (
     <div
       className={cn(
-        "rounded-xl px-3 py-2 font-semibold text-sm xl:text-base text-center hover:text-white border border-rose-400 dark:border-[#E730CA]  border-solid hover:bg-rose-400 dark:hover:bg-[#E730CA] focus-visible:outline-none focus-visible:outline-0 focus-visible:outline-offset-0 focus-visible:outline-transparent transition-colors bg-transparent text-rose-400 dark:text-[#E730CA] cursor-pointer",
+        "rounded-xl px-3 py-2 font-semibold text-sm xl:text-base text-center hover:text-white dark:hover:text-white border border-rose-400 dark:border-[#E730CA]  border-solid hover:bg-rose-400 dark:hover:bg-[#E730CA] focus-visible:outline-none focus-visible:outline-0 focus-visible:outline-offset-0 focus-visible:outline-transparent transition-colors bg-transparent text-rose-400 dark:text-[#E730CA] cursor-pointer",
         className,
       )}
       onClick={onClick}
