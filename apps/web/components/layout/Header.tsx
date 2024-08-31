@@ -11,7 +11,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ className }) => {
   return (
     <header className={`w-full mx-auto ${className}`}>
-      <nav className="px-4 pt-4 min-[845px]:pt-9 transition-all justify-between">
+      <nav className="px-4 pt-3 min-[845px]:pt-7 transition-all justify-between">
         <div className="flex justify-between">
           <BaseLogo />
           <BaseMenu />

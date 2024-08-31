@@ -1,3 +1,5 @@
+import BaseGrid from "./BaseGrid";
+
 interface BaseListsProps {
   title: string;
   children?: React.ReactNode;
@@ -13,11 +15,7 @@ const BaseList: React.FC<BaseListsProps> = ({ title, children }) => {
           type="text"
         />
       </div>
-      {children && (
-        <ul className="w-full mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {children}
-        </ul>
-      )}
+      {children && <BaseGrid>{children}</BaseGrid>}
     </div>
   );
 };

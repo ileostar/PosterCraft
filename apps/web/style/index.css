@@ -2,6 +2,24 @@
   transform: rotateY(180deg);
 }
 
+/* .btn--animateGlowPink {
+  --border-size: 6px;
+  --border-angle: 0turn;
+  background-image: conic-gradient(
+      from var(--border-angle),
+      rgba(245, 247, 248, 0.95),
+      rgba(245, 247, 248, 0.95) 50%,
+      rgba(245, 247, 248, 0.95)
+    ),
+    conic-gradient(from var(--border-angle), transparent 10%, #ff4343e9, transparent);
+  background-size:
+    calc(100% - (var(--border-size) * 2)) calc(100% - (var(--border-size) * 2)),
+    cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  animation: 8s linear infinite bg-spin;
+} */
+
 .btn--animateGlowPink {
   --border-size: 6px;
   --border-angle: 0turn;
