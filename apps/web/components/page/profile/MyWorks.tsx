@@ -1,3 +1,4 @@
+import BaseButton from "@/components/base/BaseButton";
 import BaseCard from "@/components/base/BaseCard";
 import BaseGrid from "@/components/base/BaseGrid";
 import {
@@ -16,12 +17,8 @@ const MyWorks: React.FC<MyWorksProps> = () => {
   return (
     <div className="w-full mt-8 flex flex-col gap-5">
       <ul className="flex items-center gap-2">
-        <li className="inline-block rounded-xl bg-[#E730CA] px-3 py-2 font-semibold text-sm xl:text-base text-white text-center border border-transparent focus-visible:outline-none focus-visible:outline-0 focus-visible:outline-offset-0 focus-visible:outline-transparent transition-colors">
-          My Works
-        </li>
-        <li className="rounded-xl px-3 py-2 font-semibold text-sm xl:text-base text-center hover:text-white border border-[#E730CA] border-solid hover:bg-[#E730CA] focus-visible:outline-none focus-visible:outline-0 focus-visible:outline-offset-0 focus-visible:outline-transparent transition-colors bg-transparent text-[#E730CA]">
-          My Templates
-        </li>
+        <BaseButton isStatic={true}>My Works</BaseButton>
+        <BaseButton>My Templates</BaseButton>
       </ul>
       <BaseGrid>
         {Array.from({ length: 8 }, (_, i) => i + 1).map((item, index) => (

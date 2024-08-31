@@ -4,7 +4,7 @@ interface ProjectCardProps {}
 
 const ProjectCard: React.FC<ProjectCardProps> = () => {
   return (
-    <div className="custom-card w-96 h-64">
+    <div className="custom-card w-96 h-64 shadow-lg shadow-black/35 dark:shadow-white/15">
       <div className="custom-border"></div>
       <div className="content">
         <div className="logo">

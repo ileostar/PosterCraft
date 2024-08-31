@@ -1,6 +1,6 @@
-import BaseButton from "@/components/base/BaseButton";
 import BaseCard from "@/components/base/BaseCard";
 import BaseList from "@/components/base/BaseList";
+import BaseButton from "@/components/shared/MoreButton";
 import Link from "next/link";
 
 interface WorksListProps {}
