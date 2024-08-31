@@ -5,7 +5,7 @@ interface BaseLogoutProps {
 const BaseLogout: React.FC<BaseLogoutProps> = ({ className }) => {
   return (
     <button
-      className={`group flex items-center justify-start w-10 h-10 bg-[#E730CA] rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1 ${className}`}
+      className={`group flex items-center justify-start w-10 h-10 bg-rose-400 dark:bg-[#E730CA] rounded-full cursor-pointer relative overflow-hidden transition-all duration-200 shadow-lg hover:w-32 hover:rounded-lg active:translate-x-1 active:translate-y-1 ${className}`}
     >
       <div className="flex items-center justify-center w-full transition-all duration-300 group-hover:justify-start group-hover:px-3">
         <svg

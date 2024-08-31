@@ -1,4 +1,4 @@
-export default function Planet({ ...config }) {
+export default function Planet() {
   return (
     <div
       className={`-mr-[36vh] animate-[spin_60s_linear_infinite] flex relative justify-center items-center w-[50vh] h-[50vh] md:w-[70vh] md:h-[70vh] bg-white border-[3px] border-red-200 rounded-full badge badge-primary badge-lg {...config}`}

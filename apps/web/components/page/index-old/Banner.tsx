@@ -7,7 +7,7 @@ import "../../../style/3d.css";
 import { Loading } from "@/components/base/Loading";
 import { useRouter } from "next/navigation";
 
-import ThreeD from "../../model/MyModel";
+import ThreeD from "../../base/BaseModel";
 
 function Banner(props: any) {
   const router = useRouter();

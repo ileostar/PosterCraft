@@ -13,15 +13,15 @@ const BaseInfo: React.FC<BaseCardProps> = ({ title, imgUrl, description }) => {
         alt={title}
       />
       <div className="block flex-1 bg-white h-[95px] px-4 glass">
-        <h4 className="text-xs font-bold text-[#161616] py-4 truncate max-w-[90%] 2xl:max-w-none">
+        <h4 className="text-xs font-bold text-white dark:text-[#161616] py-4 truncate max-w-[90%] 2xl:max-w-none">
           {title || "暂无标题"}
         </h4>
         <div className="flex items-center justify-between font-bold text-[0.625rem]">
           <div className="flex flex-col">
-            <span className="text-[#646464]">{description || "暂无描述"}</span>
+            <span className="text-white dark:text-[#646464]">{description || "暂无描述"}</span>
           </div>
-          <button className="text-[#161616] hover:text-[#E730CA] border rounded-full border-[#161616] border-solid hover:border-[#E730CA] w-12 h-6 transition-colors">
-            查看更多
+          <button className="text-white dark:text-[#161616] hover:bg-rose-500 dark:hover:text-[#E730CA] border rounded-full dark:border-[#161616] border-solid hover:border-rose-500 dark:hover:border-[#E730CA] w-16 h-6 transition-colors">
+            查看详情
           </button>
         </div>
       </div>

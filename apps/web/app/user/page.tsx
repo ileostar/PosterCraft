@@ -4,9 +4,9 @@ import { bindEmail, sendCodeByEmail, updateEmail, verifyEmail } from "@/api/emai
 import { sendBySMS, updatePhone, verifyPhone } from "@/api/sms";
 import { deleteUser, getUserInfo, updateUserInfo } from "@/api/user";
 import AuthLayout from "@/components/base/AuthLayout";
+import ThreeD from "@/components/base/BaseModel";
 import MyFormField from "@/components/base/MyFormField";
 import UploadAvatar from "@/components/base/UploadAvatar";
-import ThreeD from "@/components/model/MyModel";
 
 import "@/style/3d.css";
 

@@ -9,7 +9,7 @@ const BaseMenuImg: React.FC = () => {
       <button
         type="button"
         onClick={() => toggleMenu(true)}
-        className="relative items-center justify-center flex p-1 text-white hover:text-[#E730CA] focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0 transition-colors"
+        className="relative items-center justify-center flex p-1 text-gray-700 dark:text-white hover:text-[#E730CA] focus:outline-none focus:ring-0 focus:ring-transparent focus:ring-offset-0 transition-colors"
         aria-controls="mobile-menu"
         aria-expanded="false"
       >

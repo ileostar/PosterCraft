@@ -14,12 +14,12 @@ const BaseFeature: React.FC<BaseFeatureProps> = () => {
   return (
     <div className="flex items-center gap-5 w-72 justify-end">
       <div className="relative hidden min-[845px]:flex bg-transparent rounded-lg overflow-hidden  font-semibold transition-all duration-700 will-change-transform">
-        <span className="icon-[carbon--ibm-watson-language-translator] w-8 h-8 rounded-full cursor-pointer"></span>
+        <span className="icon-[carbon--ibm-watson-language-translator]  text-gray-700 dark:text-white w-8 h-8 rounded-full cursor-pointer"></span>
       </div>
-      <div className="relative hidden min-[845px]:flex bg-transparent rounded-lg overflow-hidden  font-semibold transition-all duration-700 will-change-transform">
+      <div className="relative hidden min-[845px]:flex bg-transparent rounded-lg overflow-hidden font-semibold transition-all duration-700 will-change-transform">
         <span
           onClick={() => toggleDark()}
-          className="h-8 w-8 dark:h-8 dark:w-8 icon-[carbon--haze-night] dark:icon-[carbon--sun] rounded-full cursor-pointer"
+          className="h-8 w-8 dark:h-8 dark:w-8 icon-[carbon--haze-night] dark:icon-[carbon--sun] text-gray-700 dark:text-white rounded-full cursor-pointer"
         ></span>
       </div>
       {token ? (

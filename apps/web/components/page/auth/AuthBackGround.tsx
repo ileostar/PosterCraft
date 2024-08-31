@@ -2,7 +2,7 @@ import { useIsServer } from "@/hooks/useIsServer";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
-import Planet from "../../animation/Planet";
+import Planet from "../../features/Planet";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { setTheme, theme } = useTheme();
