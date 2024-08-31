@@ -20,7 +20,7 @@ const BaseInfo: React.FC<BaseCardProps> = ({ title, imgUrl, description }) => {
           <div className="flex flex-col">
             <span className="text-white dark:text-[#646464]">{description || "暂无描述"}</span>
           </div>
-          <button className="text-white dark:text-[#161616] hover:bg-rose-500 dark:hover:text-[#E730CA] border rounded-full dark:border-[#161616] border-solid hover:border-rose-500 dark:hover:border-[#E730CA] w-16 h-6 transition-colors">
+          <button className="text-white dark:text-[#161616] hover:bg-rose-500 dark:hover:bg-[#E730CA] dark:hover:text-white border rounded-full dark:border-[#161616] border-solid hover:border-rose-500 dark:hover:border-[#E730CA] w-16 h-6 transition-colors">
             查看详情
           </button>
         </div>

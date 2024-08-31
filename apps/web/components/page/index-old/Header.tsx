@@ -1,9 +1,6 @@
 "use client";
 
 import Link from "next/link";
-
-import "@/style/header.css";
-
 import { useEffect } from "react";
 
 function Head({ mode }: Readonly<{ mode: string }>) {

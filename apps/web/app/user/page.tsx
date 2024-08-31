@@ -7,9 +7,6 @@ import AuthLayout from "@/components/base/AuthLayout";
 import ThreeD from "@/components/base/BaseModel";
 import MyFormField from "@/components/base/MyFormField";
 import UploadAvatar from "@/components/base/UploadAvatar";
-
-import "@/style/3d.css";
-
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";

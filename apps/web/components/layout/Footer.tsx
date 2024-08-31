@@ -32,7 +32,7 @@ const Footer: React.FC<FooterProps> = () => {
           ))}
         </div>
         <div className="mt-10 text-center text-xs leading-5 text-white dark:text-gray-500">
-          © 2024 LeoStar. All rights reserved.
+          Copyright © 2024 LeoStar. All rights reserved.
         </div>
       </div>
     </footer>

@@ -3,6 +3,7 @@
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
+import BaseDrawer from "./BaseDrawer";
 import BaseGoToLogin from "./BaseGoToLogin";
 import BaseLogout from "./BaseLogout";
 
@@ -23,20 +24,7 @@ const BaseFeature: React.FC<BaseFeatureProps> = () => {
         ></span>
       </div>
       {token ? (
-        <>
-          <div className="avatar relative hidden min-[845px]:flex bg-transparent rounded-lg  font-semibold transition-all duration-700 will-change-transform">
-            <Link
-              href={"/profile"}
-              className="cursor-pointer w-10 h-10 overflow-visible group"
-            >
-              <img
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                className="rounded-full w-full h-full  group-hover:scale-105 transition-transform duration-300"
-              />
-            </Link>
-          </div>
-          <BaseLogout className="hidden min-[845px]:flex" />
-        </>
+        <BaseDrawer />
       ) : (
         <Link
           href="/auth/login"
