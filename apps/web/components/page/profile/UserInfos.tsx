@@ -1,5 +1,5 @@
+import ProjectCard from "@/components/shared/ProjectCard";
 import Image from "next/image";
-import Link from "next/link";
 
 interface UserInfosProps {}
 
@@ -15,8 +15,8 @@ const userInfo = {
 
 const UserInfos: React.FC<UserInfosProps> = () => {
   return (
-    <div className="w-full bg-blue-200/40 h-[40vh]">
-      <div className="flex gap-3 h-14">
+    <div className="flex justify-between w-full h-[40vh]">
+      <div className="flex flex-1 gap-3 h-14">
         <Image
           src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
           className="rounded-full w-16 h-16  group-hover:scale-105 transition-transform duration-300"
@@ -30,6 +30,9 @@ const UserInfos: React.FC<UserInfosProps> = () => {
           </h3>
           <p className="text-sm text-gray-600/80 dark:text-gray-400/70">{userInfo.username}</p>
         </div>
+      </div>
+      <div className="flex flex-1 justify-center items-center w-full h-full pl-40">
+        <ProjectCard />
       </div>
     </div>
   );

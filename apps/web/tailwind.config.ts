@@ -28,19 +28,6 @@ const config = {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
-      btn: {
-        Animation: {
-          "--border-size": "6px",
-          "--border-angle": "0turn",
-          "background-image":
-            "conic-gradient(from var(--border-angle), #131313, #131313 50%, #131313),conic-gradient(from var(--border-angle), transparent 20%, #d33cf2, transparent)",
-          "background-size":
-            "calc(100% - (var(--border-size) * 2)) calc(100% - (var(--border-size) * 2)), cover",
-          "background-position": "center center",
-          "background-repeat": "no-repeat",
-          animation: "8s linear infinite bg-spin",
-        },
-      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
