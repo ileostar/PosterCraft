@@ -11,10 +11,7 @@ interface FormType {
 function renderSignIn({
   isPhoneMode,
   setIsPhoneMode,
-  isDisabled,
   form,
-  handleClick,
-  countdown,
 }: {
   isPhoneMode: boolean;
   setIsPhoneMode: (value: boolean) => void;

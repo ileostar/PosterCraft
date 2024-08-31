@@ -23,7 +23,7 @@ const ModelContainer: React.FC = () => {
   return (
     <div className="w-full h-full hidden sm:justify-center sm:items-center sm:flex">
       <div
-        className="flex-1 md:items-center md:justify-center w-4/5 h-full hidden md:flex xl:min-w-[40vw] rounded-full overflow-hidden"
+        className="flex-1 md:items-center md:justify-center max-w-[500px] max-h-[500px] w-4/5 h-full hidden md:flex xl:min-w-[40vw] rounded-full overflow-hidden"
         ref={boxRef}
       >
         <Suspense

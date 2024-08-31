@@ -51,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-US"
-      className={cn(GeistSans.variable, GeistMono.variable, "scroll-smooth")}
+      className={cn(GeistSans.variable, GeistMono.variable, "scroll-smooth", "dark")}
       suppressHydrationWarning
     >
       <body className="relative">

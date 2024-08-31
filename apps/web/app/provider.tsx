@@ -1,5 +1,3 @@
-"use client";
-
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "next-themes";
 
@@ -13,7 +11,7 @@ const Providers = (props: ProvidesProps) => {
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme="system"
+      defaultTheme="dark"
       enableSystem
       enableColorScheme
       disableTransitionOnChange

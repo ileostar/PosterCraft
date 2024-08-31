@@ -5,7 +5,7 @@ interface BaseInfoProps {
 
 const BaseInfo: React.FC<BaseInfoProps> = ({ icon, title }) => {
   return (
-    <div className="flex items-center justify-center bg-gray-600 h-full">
+    <div className="flex items-center justify-center bg-gray-300/50 rounded-xl h-full">
       {icon && (
         <img
           src={icon}
