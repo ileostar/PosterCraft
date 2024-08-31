@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import "../../style/card.css";
-import "../../style/scrollAnimate.css";
+import "@/style/card.css";
+import "@/style/scrollAnimate.css";
 
 import { useScrollAnimate } from "@/hooks/useScrollAnimate";
 import { useRef } from "react";
@@ -22,7 +21,7 @@ const PostCard: React.FC = () => {
     <div
       className="mt-36 xl:w-[24%] sm:w-[49%] md:w-[32%] w-full relative flex flex-col rounded-xl saturate-100 backdrop-blur-[10px] bg-clip-border text-gray-700 shadow-md shadow-gray-300/50 box"
       ref={boxRef}
-      onClick={()=>handleClick()}
+      onClick={() => handleClick()}
     >
       <div className="relative mx-4 -mt-32 h-60 sm:h-80 xl:h-96 overflow-hidden rounded-xl  bg-background/30  bg-clip-border text-white shadow-lg shadow-red-gray-500/40 bg-gradient-to-r from-red-500 to-red-600"></div>
       <div className="p-6">

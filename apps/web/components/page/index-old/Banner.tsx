@@ -1,11 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
-import "../../../style/3d.css";
-
 import { Loading } from "@/components/base/Loading";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 import ThreeD from "../../base/BaseModel";
 

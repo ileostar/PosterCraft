@@ -1,6 +1,7 @@
 import BaseButton from "@/components/base/BaseButton";
 import BaseCard from "@/components/base/BaseCard";
 import BaseGrid from "@/components/base/BaseGrid";
+import BaseSearch from "@/components/base/BaseSearch";
 import {
   Pagination,
   PaginationContent,
@@ -16,10 +17,13 @@ interface MyWorksProps {}
 const MyWorks: React.FC<MyWorksProps> = () => {
   return (
     <div className="w-full mt-8 flex flex-col gap-5">
-      <ul className="flex items-center gap-2">
-        <BaseButton isStatic={true}>My Works</BaseButton>
-        <BaseButton>My Templates</BaseButton>
-      </ul>
+      <div className="flex justify-between items-center">
+        <ul className="flex items-center gap-2">
+          <BaseButton isStatic={true}>My Works</BaseButton>
+          <BaseButton>My Templates</BaseButton>
+        </ul>
+        <BaseSearch></BaseSearch>
+      </div>
       <BaseGrid>
         {Array.from({ length: 8 }, (_, i) => i + 1).map((item, index) => (
           <BaseCard

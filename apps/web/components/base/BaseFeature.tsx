@@ -3,7 +3,7 @@
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
-import BaseDrawer from "./BaseDrawer";
+import BaseDrawer from "../layout/GlobalDrawer";
 import BaseGoToLogin from "./BaseGoToLogin";
 import BaseTooltips from "./BaseTooltip";
 
