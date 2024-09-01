@@ -2,10 +2,10 @@
 
 import { defaultSignIn, defaultSignUp, loginBySMS } from "@/api/auth";
 import { sendBySMS } from "@/api/sms";
-import MyFormField from "@/components/base/MyFormField";
-import Layout from "@/components/page-components/auth/AuthBackGround";
-import Oauth2 from "@/components/page-components/auth/Oauth2";
-import renderSignIn from "@/components/page-components/auth/SignIn";
+import MyFormField from "@/components/base/BaseFormField";
+import Layout from "@/components/page/auth/AuthBackGround";
+import Oauth2 from "@/components/page/auth/Oauth2";
+import renderSignIn from "@/components/page/auth/SignIn";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";

@@ -1,14 +1,14 @@
-import "../../style/loading.css";
+import "@/style/base/loading.css";
 
 export const Loading: React.FC = () => {
   return (
-    <div className="spinner">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+    <ul className="spinner">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
   );
 };

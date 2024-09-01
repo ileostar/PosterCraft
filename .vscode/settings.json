@@ -1,10 +1,13 @@
 {
+  "css.customData": [".vscode/tailwind.json"],
   "cSpell.words": [
     "ahooks",
     "aliyuncs",
     "autoincrement",
     "autorestart",
     "CICD",
+    "cleare",
+    "cropperjs",
     "ctsx",
     "customfav",
     "Dysmsapi",
@@ -29,6 +32,9 @@
     "veevalidate",
     "vercel",
     "webp",
+    "wireframe",
     "Woohoo"
-  ]
+  ],
+  "i18n-ally.localesPaths": ["apps/web/locales"],
+  "i18n-ally.keystyle": "nested"
 }
