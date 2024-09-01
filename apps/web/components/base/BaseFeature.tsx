@@ -1,7 +1,9 @@
 "use client";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 import BaseDrawer from "../layout/GlobalDrawer";
 import BaseGoToLogin from "./BaseGoToLogin";
@@ -10,8 +12,15 @@ import BaseTooltips from "./BaseTooltip";
 interface BaseFeatureProps {}
 
 const BaseFeature: React.FC<BaseFeatureProps> = () => {
-  const token = window.localStorage.getItem("token");
   const { theme, setTheme } = useTheme();
+  const [token, setToken] = useState<string | null>("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setToken(window.localStorage.getItem("token"));
+    }
+  }, []);
+
   return (
     <div className="flex items-center gap-5 w-72 justify-end">
       <div className="relative hidden min-[845px]:flex bg-transparent rounded-lg  font-semibold transition-all duration-700 will-change-transform">
@@ -43,13 +52,15 @@ const BaseFeature: React.FC<BaseFeatureProps> = () => {
       </div>
       {token ? (
         <BaseDrawer />
-      ) : (
+      ) : token !== "" ? (
         <Link
           href="/auth/login"
           className="relative hidden min-[845px]:flex overflow-hidden font-semibold transition-all duration-700 will-change-transform"
         >
           <BaseGoToLogin />
         </Link>
+      ) : (
+        <Skeleton className="w-10 h-10 rounded-full" />
       )}
     </div>
   );

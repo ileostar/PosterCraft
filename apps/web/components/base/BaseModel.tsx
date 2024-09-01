@@ -20,11 +20,26 @@ function Model(props: { boxWidth: number; boxHeight: number }) {
 
   const mouse = useRef({ x: 0, y: 0 });
 
+  const animate = useCallback(() => {
+    if (initialized && renderer && scene && camera && particle && inside && outside) {
+      requestAnimationFrame(animate);
+
+      if (interactive) {
+        animateInteractive(particle, inside, outside, mouse.current);
+      } else {
+        animateDefault(particle, inside, outside);
+      }
+
+      renderer.clear();
+      renderer.render(scene, camera);
+    }
+  }, [initialized, renderer, scene, camera, particle, inside, outside, interactive]);
+
   useEffect(() => {
     if (initialized && renderer && scene && camera) {
       animate();
     }
-  }, [initialized, renderer, scene, camera]);
+  }, [initialized, renderer, scene, camera, animate]);
 
   const onload = useCallback(
     (node: HTMLDivElement) => {
@@ -97,21 +112,6 @@ function Model(props: { boxWidth: number; boxHeight: number }) {
 
   const onMouseLeave = () => {
     setInteractive(false);
-  };
-
-  const animate = () => {
-    if (initialized && renderer && scene && camera && particle && inside && outside) {
-      requestAnimationFrame(animate);
-
-      if (interactive) {
-        animateInteractive(particle, inside, outside, mouse.current);
-      } else {
-        animateDefault(particle, inside, outside);
-      }
-
-      renderer.clear();
-      renderer.render(scene, camera);
-    }
   };
 
   const threeDivRef = useCallback(

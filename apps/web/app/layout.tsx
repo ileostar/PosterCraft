@@ -8,13 +8,11 @@ import "../style/custom.css";
 import "nprogress/nprogress.css";
 import "cropperjs/dist/cropper.css";
 
-import config from "@/config";
 import { cn } from "@/lib/utils";
 
 import Provider from "./provider";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(config.SITE_URL),
   title: "PosterCraft —— 海报编辑器",
   description: "海报编辑器",
   icons: [
