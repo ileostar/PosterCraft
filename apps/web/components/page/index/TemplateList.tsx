@@ -2,7 +2,7 @@
 
 import BaseCard from "@/components/base/BaseCard";
 import BaseList from "@/components/base/BaseList";
-import BaseButton from "@/components/shared/MoreButton";
+import MoreButton from "@/components/shared/MoreButton";
 import Link from "next/link";
 import React from "react";
 
@@ -23,7 +23,7 @@ const TemplateList: React.FC<TemplateListProps> = () => {
       </BaseList>
       <div className="w-full flex items-center justify-center">
         <Link href={"/templates"}>
-          <BaseButton className="mt-5">Discover More</BaseButton>
+          <MoreButton className="mt-5">Discover More</MoreButton>
         </Link>
       </div>
     </div>

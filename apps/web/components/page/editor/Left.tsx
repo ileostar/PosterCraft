@@ -1,6 +1,6 @@
 "use client";
 
-import Tab from "@/components/base/Tab";
+import Tab from "@/components/base/BaseTab";
 
 import GraphList from "./Left/GraphList";
 import ImgList from "./Left/ImgList";

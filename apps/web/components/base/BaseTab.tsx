@@ -10,7 +10,7 @@ interface TabsProps {
   readonly tabs: ReadonlyArray<Tab>; // 定义接收的props类型
 }
 
-function Tabs({ tabs }: TabsProps) {
+function BaseTab({ tabs }: TabsProps) {
   // 跟踪当前活动的标签页索引
   const [activeTabIndex, setActiveTabIndex] = useState(0); // 假设第一个标签页是活动的
 
@@ -46,4 +46,4 @@ function Tabs({ tabs }: TabsProps) {
   );
 }
 
-export default Tabs;
+export default BaseTab;

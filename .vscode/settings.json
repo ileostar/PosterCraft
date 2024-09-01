@@ -34,5 +34,7 @@
     "webp",
     "wireframe",
     "Woohoo"
-  ]
+  ],
+  "i18n-ally.localesPaths": ["apps/web/locales"],
+  "i18n-ally.keystyle": "nested"
 }

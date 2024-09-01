@@ -1,6 +1,6 @@
 "use client";
 
-import Tab from "@/components/base/Tab";
+import Tab from "@/components/base/BaseTab";
 import SetLayer from "@/components/page/editor/Right/SetLayer";
 import SetPage from "@/components/page/editor/Right/SetPage";
 import SetProps from "@/components/page/editor/Right/SetProps";

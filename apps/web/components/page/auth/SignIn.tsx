@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import MyFormField from "../../base/MyFormField";
+import MyFormField from "../../base/BaseFormField";
 
 interface FormType {
   [key: string]: any;

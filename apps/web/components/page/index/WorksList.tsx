@@ -1,6 +1,6 @@
 import BaseCard from "@/components/base/BaseCard";
 import BaseList from "@/components/base/BaseList";
-import BaseButton from "@/components/shared/MoreButton";
+import MoreButton from "@/components/shared/MoreButton";
 import Link from "next/link";
 
 interface WorksListProps {}
@@ -20,7 +20,7 @@ const WorksList: React.FC<WorksListProps> = () => {
       </BaseList>
       <div className="w-full flex items-center justify-center">
         <Link href={"/works"}>
-          <BaseButton className="mt-5">Discover More</BaseButton>
+          <MoreButton className="mt-5">Discover More</MoreButton>
         </Link>
       </div>
     </div>

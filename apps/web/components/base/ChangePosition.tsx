@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 //现在的位置=鼠标移动距离+原来的位置
 
-function ChangePositionComponent({
+function ChangePosition({
   item,
 }: Readonly<{
   item: any;
@@ -84,4 +84,4 @@ function ChangePositionComponent({
   );
 }
 
-export default ChangePositionComponent;
+export default ChangePosition;

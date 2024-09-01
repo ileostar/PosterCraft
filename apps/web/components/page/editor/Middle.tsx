@@ -2,7 +2,7 @@
 
 import { UseElementStore } from "@/store/element";
 
-import ChangePositionComponent from "../../base/ChangePositionComponent";
+import ChangePosition from "../../base/ChangePosition";
 import ResizeComponent from "../../base/ResizeComponent";
 
 function Middle(props: any) {
@@ -42,7 +42,7 @@ function Middle(props: any) {
               key={item.id}
               className={` ${item.isHidden ? "invisible" : ""}`}
             >
-              <ChangePositionComponent item={item} />
+              <ChangePosition item={item} />
             </div>
           ),
         )}

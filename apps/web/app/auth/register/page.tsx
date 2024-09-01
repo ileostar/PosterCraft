@@ -1,7 +1,7 @@
 "use client";
 
 import { defaultSignUp } from "@/api/auth";
-import MyFormField from "@/components/base/MyFormField";
+import MyFormField from "@/components/base/BaseFormField";
 import Layout from "@/components/page/auth/AuthBackGround";
 import Oauth2 from "@/components/page/auth/Oauth2";
 import { Button } from "@/components/ui/button";

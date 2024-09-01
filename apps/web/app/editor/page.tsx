@@ -1,6 +1,6 @@
 "use client";
 
-import AuthLayout from "@/components/base/AuthLayout";
+import AuthLayout from "@/components/layout/AuthLayout";
 import Left from "@/components/page/editor/Left";
 import Middle from "@/components/page/editor/Middle";
 import Right from "@/components/page/editor/Right";
