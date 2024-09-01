@@ -1,10 +1,4 @@
-import {
-  addLights,
-  animateDefault,
-  animateInteractive,
-  createMesh,
-  createParticles,
-} from "@/utils";
+import { addLights, animateDefault, createMesh, createParticles } from "@/utils";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
@@ -16,24 +10,17 @@ function Model(props: { boxWidth: number; boxHeight: number }) {
   const [outside, setOutside] = useState<THREE.Object3D | null>(null);
   const [particle, setParticle] = useState<THREE.Object3D | null>(null);
   const [initialized, setInitialized] = useState(false);
-  const [interactive, setInteractive] = useState(false);
-
-  const mouse = useRef({ x: 0, y: 0 });
 
   const animate = useCallback(() => {
     if (initialized && renderer && scene && camera && particle && inside && outside) {
       requestAnimationFrame(animate);
 
-      if (interactive) {
-        animateInteractive(particle, inside, outside, mouse.current);
-      } else {
-        animateDefault(particle, inside, outside);
-      }
+      animateDefault(particle, inside, outside);
 
       renderer.clear();
       renderer.render(scene, camera);
     }
-  }, [initialized, renderer, scene, camera, particle, inside, outside, interactive]);
+  }, [initialized, renderer, scene, camera, particle, inside, outside]);
 
   useEffect(() => {
     if (initialized && renderer && scene && camera) {
@@ -90,29 +77,12 @@ function Model(props: { boxWidth: number; boxHeight: number }) {
         createParticles(newParticle);
 
         setInitialized(true);
-
-        node.addEventListener("mousemove", onMouseMove);
-        node.addEventListener("mouseenter", onMouseEnter);
-        node.addEventListener("mouseleave", onMouseLeave);
       } catch (error) {
         console.error("Error initializing three.js:", error);
       }
     },
     [props.boxWidth, props.boxHeight],
   );
-
-  const onMouseMove = (event: MouseEvent) => {
-    mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
-  };
-
-  const onMouseEnter = () => {
-    setInteractive(true);
-  };
-
-  const onMouseLeave = () => {
-    setInteractive(false);
-  };
 
   const threeDivRef = useCallback(
     (node: HTMLDivElement | null) => {
