@@ -1,6 +1,6 @@
 import { UseElementStore } from "@/store/element";
-import imgTemplate from "@/template/imgTemplate";
-import { ElementDataType } from "@/types/ElementType";
+import { ElementDataType } from "@/types/element-type";
+import imgTemplate from "@/utils/template/imgTemplate";
 import { v4 as uuidv4 } from "uuid";
 
 function ImgList() {

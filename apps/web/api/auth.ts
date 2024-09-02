@@ -1,5 +1,5 @@
 import http from "@/utils/http";
-import { openCenteredOAuthPopup } from "@/utils/popup";
+import { openCenteredOAuthPopup } from "@/utils/others/popup";
 import io from "socket.io-client";
 
 import {

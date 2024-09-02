@@ -1,6 +1,6 @@
 import { UseElementStore } from "@/store/element";
-import graphTemplate from "@/template/graphTemplate";
-import { ElementDataType } from "@/types/ElementType";
+import { ElementDataType } from "@/types/element-type";
+import graphTemplate from "@/utils/template/graphTemplate";
 import { v4 as uuidv4 } from "uuid";
 
 function GraphList() {

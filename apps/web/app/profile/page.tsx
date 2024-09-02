@@ -3,8 +3,6 @@ import BaseLayout from "@/components/layouts/BaseLayout";
 import MyWorks from "@/components/pages/profile/MyWorks";
 import UserInfos from "@/components/pages/profile/UserInfos";
 
-import "@/style/index.css";
-
 function Main() {
   return (
     <BaseLayout>

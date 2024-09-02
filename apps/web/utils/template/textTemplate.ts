@@ -1,5 +1,5 @@
 //真正渲染到画布时会过滤掉display:'flex'，justifyContent:'center'，alignItems: 'center'这3个属性
- const textTemplate = [
+const textTemplate = [
   {
     style: {
       width: "120px",
@@ -65,4 +65,4 @@
   },
 ];
 
-export default  textTemplate
+export default textTemplate;

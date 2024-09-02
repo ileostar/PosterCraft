@@ -1,4 +1,4 @@
-import { addLights, animateDefault, createMesh, createParticles } from "@/utils";
+import { addLights, animateDefault, createMesh, createParticles } from "@/utils/model";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 

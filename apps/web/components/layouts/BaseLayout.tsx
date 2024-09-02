@@ -1,5 +1,7 @@
 import React from "react";
 
+import "@/styles/pages/base.css";
+
 import Footer from "./common/Footer";
 import Header from "./common/Header";
 

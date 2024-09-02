@@ -4,8 +4,6 @@ import Introduce from "@/components/pages/index/Introduce";
 import TemplateList from "@/components/pages/index/TemplateList";
 import WorksList from "@/components/pages/index/WorksList";
 
-import "@/style/index.css";
-
 function Main() {
   return (
     <BaseLayout>

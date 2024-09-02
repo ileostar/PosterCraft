@@ -76,19 +76,20 @@ const graphTemplate = [
       width: "120px",
       height: "120px",
       backgroundColor: "#50e3c2",
-      clipPath: "polygon( 50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
+      clipPath:
+        "polygon( 50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
     },
   },
-   //梯形
-   {
+  //梯形
+  {
     style: {
       width: "120px",
       height: "120px",
       backgroundColor: "#bd10e0",
-      clipPath: 'polygon(75% 0%, 25% 0%,0% 100%, 100% 100%)',
+      clipPath: "polygon(75% 0%, 25% 0%,0% 100%, 100% 100%)",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -100,7 +101,7 @@ const graphTemplate = [
       width: "120px",
       height: "120px",
       backgroundColor: "#8b572a",
-      clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+      clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -112,7 +113,7 @@ const graphTemplate = [
       width: "120px",
       height: "120px",
       backgroundColor: "#000000",
-      clipPath: 'polygon(0% 0%, 50% 0%, 100% 100%, 50% 100%)',
+      clipPath: "polygon(0% 0%, 50% 0%, 100% 100%, 50% 100%)",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",

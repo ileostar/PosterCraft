@@ -1,7 +1,7 @@
 "use client";
 
-import ThreeModel from "@/components/base/BaseModel";
 import { Loading } from "@/components/shared/Loading";
+import ThreeModel from "@/components/shared/Model";
 import { Suspense, useEffect, useRef, useState } from "react";
 
 const ModelContainer: React.FC = () => {

@@ -1,7 +1,7 @@
 import { UseElementStore } from "@/store/element";
 import React, { useEffect, useRef, useState } from "react";
 
-import "@/style/resizeBoxStyle.css";
+import "@/styles/base/resize-box.css";
 
 type directionType = "top-left" | "top-right" | "bottom-left" | "bottom-right";
 

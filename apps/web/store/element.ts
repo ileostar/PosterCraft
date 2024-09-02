@@ -1,4 +1,4 @@
-import { ElementDataType, ElementStoreType } from "@/types/ElementType";
+import { ElementDataType, ElementStoreType } from "@/types/element-type";
 import { create } from "zustand";
 
 interface ElementStore extends ElementStoreType {

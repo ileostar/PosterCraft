@@ -1,6 +1,6 @@
 import { UseElementStore } from "@/store/element";
-import textTemplate from "@/template/textTemplate";
-import { ElementDataType } from "@/types/ElementType";
+import { ElementDataType } from "@/types/element-type";
+import textTemplate from "@/utils/template/textTemplate";
 import { v4 as uuidv4 } from "uuid";
 
 function TextList() {

@@ -3,8 +3,8 @@ import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 
-import "../style/globals.css";
-import "../style/custom.css";
+import "../styles/globals.css";
+import "../styles/custom.css";
 import "nprogress/nprogress.css";
 import "cropperjs/dist/cropper.css";
 

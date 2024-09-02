@@ -1,4 +1,4 @@
-import "@/style/base/project-card.css";
+import "@/styles/base/project-card.css";
 
 interface ProjectCardProps {}
 

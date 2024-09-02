@@ -1,7 +1,7 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { UseElementStore } from "@/store/element";
-import { arrayMove } from "@/utils/arrayMove";
-import { getParentElement } from "@/utils/getParentElement";
+import { arrayMove } from "@/utils/others/arrayMove";
+import { getParentElement } from "@/utils/others/getParentElement";
 import {
   DragOutlined,
   EyeInvisibleOutlined,
@@ -75,7 +75,7 @@ function SetLayer() {
         {Elements.map((item, index) => (
           <div
             key={item.id}
-            className={`${item.id == dragData.currentDragId ? "border-red-500 bg-red-500 text-white" : "border-gray-950"} parentItem flex justify-around w-full h-12 relative border-t border-l border-r  ${
+            className={`${item.id == dragData.currentDragId ? "border-red-500 bg-red-500 text-white" : "border-gray-950 border-solid"} parentItem flex justify-around w-full h-12 relative border-t border-l border-r  ${
               index === Elements.length - 1 ? "border-b" : ""
             }`}
             style={{ zIndex: 10 }}

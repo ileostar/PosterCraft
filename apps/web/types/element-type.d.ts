@@ -22,5 +22,3 @@ export interface ElementDataType {
   // 图层名称
   layerName?: string;
 }
-
-

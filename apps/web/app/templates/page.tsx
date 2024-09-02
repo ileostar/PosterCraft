@@ -1,4 +1,5 @@
 import BaseCard from "@/components/base/BaseCard";
+import BaseLayout from "@/components/layouts/BaseLayout";
 import Banner from "@/components/shared/Banner";
 import BaseList from "@/components/shared/ShowLists";
 import {
@@ -10,10 +11,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-
-import "@/style/index.css";
-
-import BaseLayout from "@/components/layouts/BaseLayout";
 
 function Main() {
   return (

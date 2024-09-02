@@ -1,6 +1,6 @@
 "use client";
 
-import "@/style/base/search.css";
+import "@/styles/base/search.css";
 
 interface BaseSearchProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 

@@ -1,7 +1,5 @@
 import BaseLayout from "@/components/layouts/BaseLayout";
 
-import "@/style/index.css";
-
 function Main() {
   return (
     <BaseLayout>
