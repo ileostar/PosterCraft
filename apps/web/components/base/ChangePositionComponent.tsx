@@ -14,9 +14,9 @@ function ChangePositionComponent({
   let left = item.props.left ? parseInt(item.props.left.replace(/(px|rem)/g, ""), 10) : 0;
 
   const position = { x: left, y: top };
-  const draggableRef = useRef<HTMLButtonElement>(null);
+  const draggableRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     // 阻止默认行为（如选择文本）
     e.preventDefault();
     // 记录初始鼠标位置
@@ -57,8 +57,9 @@ function ChangePositionComponent({
   };
 
   return (
-    <button
+    <div
       ref={draggableRef}
+      id="basic-element"
       onMouseDown={handleMouseDown}
       onClick={(e) => {
         e.stopPropagation();
@@ -75,7 +76,7 @@ function ChangePositionComponent({
       }}
     >
       {item.type === "text" && item.text}
-    </button>
+    </div>
   );
 }
 

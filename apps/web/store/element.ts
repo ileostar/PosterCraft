@@ -312,6 +312,7 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
   }),
   //撤销操作
   undo: () => {
+    if(get().histories.length === 0) return;
     if (get().historyIndex === -1) {
       get().historyIndex = get().histories.length - 1;
     } else {

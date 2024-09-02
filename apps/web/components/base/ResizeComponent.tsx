@@ -32,7 +32,7 @@ function ResizeComponent({
   };
 
   const resizeBoxRef = useRef<HTMLDivElement>(null);
-  const contentBoxRef = useRef<HTMLButtonElement>(null);
+  const contentBoxRef = useRef<HTMLDivElement>(null);
 
   const calculateSize = (direction: directionType, e: MouseEvent, position: any) => {
     const { clientX, clientY } = e;
@@ -133,9 +133,11 @@ function ResizeComponent({
   return (
     <div
       className="draggable-item"
+      id="basic-element"
       ref={resizeBoxRef}
     >
-      <button
+      <div
+        id="basic-element"
         ref={contentBoxRef}
         onClick={(e) => {
           e.stopPropagation();
@@ -153,7 +155,7 @@ function ResizeComponent({
         }}
       >
         {item.type === "text" && item.text}
-      </button>
+      </div>
       <button
         className="resize-handle top-left"
         onClick={(e) => e.stopPropagation()}
