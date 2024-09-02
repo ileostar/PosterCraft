@@ -1,0 +1,39 @@
+.draggable-item {
+  position: absolute;
+  border: 2px dashed rgb(214, 24, 24);
+  /* 虚线边框 */
+  cursor: pointer;
+  /* 鼠标悬停时显示指针，表示可点击或可拖动 */
+}
+
+.draggable-item .resize-handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #ccc;
+  border-radius: 50%;
+}
+
+.draggable-item .top-left {
+  top: -5px;
+  left: -5px;
+  cursor: se-resize;
+}
+
+.draggable-item .top-right {
+  top: -5px;
+  right: -5px;
+  cursor: sw-resize;
+}
+
+.draggable-item .bottom-left {
+  bottom: -5px;
+  left: -5px;
+  cursor: ne-resize;
+}
+
+.draggable-item .bottom-right {
+  bottom: -5px;
+  right: -5px;
+  cursor: nw-resize;
+}

@@ -1,11 +1,9 @@
-"use client";
+import AuthLayout from "@/components/layouts/AuthLayout";
+import Left from "@/components/pages/editor/Left/index";
+import Middle from "@/components/pages/editor/Middle";
+import Right from "@/components/pages/editor/Right/index";
 
-import AuthLayout from "@/components/layout/AuthLayout";
-import Left from "@/components/page/editor/Left";
-import Middle from "@/components/page/editor/Middle";
-import Right from "@/components/page/editor/Right";
-
-function Index(props: any) {
+function Main() {
   return (
     <AuthLayout>
       <div className="h-screen flex flex-col">
@@ -19,4 +17,4 @@ function Index(props: any) {
   );
 }
 
-export default Index;
+export default Main;

@@ -2,21 +2,19 @@
 
 import { defaultSignIn, defaultSignUp, loginBySMS } from "@/api/auth";
 import { sendBySMS } from "@/api/sms";
-import MyFormField from "@/components/base/BaseFormField";
-import Layout from "@/components/page/auth/AuthBackGround";
-import Oauth2 from "@/components/page/auth/Oauth2";
-import renderSignIn from "@/components/page/auth/SignIn";
+import Layout from "@/components/pages/auth/AuthBackGround";
+import Oauth2 from "@/components/pages/auth/Oauth2";
+import renderSignIn from "@/components/pages/auth/SignIn";
+import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { toast } from "@/components/ui/use-toast";
+import { useGithubUsername, useOauth2Dialog } from "@/stores/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-import { useGithubUsername, useOauth2Dialog } from "../../../store/auth";
 
 const loginFormSchema = z.object({
   email: z.string().email({
@@ -182,13 +180,13 @@ export default function Login() {
         <div className="modal-box">
           <h3 className="font-bold text-lg">请绑定手机号!</h3>
           <Form {...form}>
-            <MyFormField
+            <CustomFormField
               form={form}
               name={"phone"}
               placeholder={"请输入手机号码"}
               label={"手机号码"}
             />
-            <MyFormField
+            <CustomFormField
               form={form}
               name={"code"}
               placeholder={"请输入验证码"}

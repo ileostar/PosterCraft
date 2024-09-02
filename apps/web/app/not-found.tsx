@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
-import "@/style/not-found.css";
+import "@/styles/pages/not-found.css";
 
-import GoHomepage from "@/components/page/not-found/GoHomepage";
+import GoHomepage from "@/components/pages/not-found/GoHomepage";
 
 export const metadata: Metadata = {
   title: "404",

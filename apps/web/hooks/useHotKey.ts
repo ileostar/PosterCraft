@@ -1,4 +1,4 @@
-import { UseElementStore } from "@/store/element";
+import { UseElementStore } from "@/stores/element";
 import hotkeys, { HotkeysEvent, KeyHandler } from "hotkeys-js";
 import { useEffect } from "react";
 
@@ -82,10 +82,10 @@ const useHotKey = () => {
     setMoveElement(currentElement, "Right", 10);
   });
   useBindHotKey("ctrl+z", () => {
-    undo()
+    undo();
   });
   useBindHotKey("ctrl+shift+x", () => {
-    redo()
+    redo();
   });
 };
 

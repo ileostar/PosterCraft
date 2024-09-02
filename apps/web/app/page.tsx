@@ -1,24 +1,17 @@
-import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
-import Hero from "@/components/page/index/Hero";
-import Introduce from "@/components/page/index/Introduce";
-import TemplateList from "@/components/page/index/TemplateList";
-import WorksList from "@/components/page/index/WorksList";
-
-import "@/style/index.css";
+import BaseLayout from "@/components/layouts/BaseLayout";
+import Hero from "@/components/pages/index/Hero";
+import Introduce from "@/components/pages/index/Introduce";
+import TemplateList from "@/components/pages/index/TemplateList";
+import WorksList from "@/components/pages/index/WorksList";
 
 function Main() {
   return (
-    <div className="min-h-svh overflow-hidden p-1.5 btn--animateGlowPink">
-      <Header className="max-w-7xl px-4 sm:px-8 md:px-12 xl:px-0 mx-auto" />
-      <main className="relative overflow-hidden max-w-7xl mt-5 mx-auto px-4 sm:px-8 md:px-12 xl:px-0">
-        <Hero />
-        <Introduce />
-        <WorksList />
-        <TemplateList />
-      </main>
-      <Footer />
-    </div>
+    <BaseLayout>
+      <Hero />
+      <Introduce />
+      <WorksList />
+      <TemplateList />
+    </BaseLayout>
   );
 }
 

@@ -1,12 +1,14 @@
 import type { Metadata, Viewport } from "next";
 
+import { Analytics } from "@vercel/analytics/react";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 
-import "../style/globals.css";
-import "../style/custom.css";
+import "@/styles/globals.css";
+import "@/styles/custom.css";
 import "nprogress/nprogress.css";
 import "cropperjs/dist/cropper.css";
+import "lenis/dist/lenis.css";
 
 import { cn } from "@/lib/utils";
 
@@ -49,11 +51,12 @@ export default function RootLayout({
   return (
     <html
       lang="en-US"
-      className={cn(GeistSans.variable, GeistMono.variable, "scroll-smooth", "dark")}
+      className={cn(GeistSans.variable, GeistMono.variable, "scroll-smooth")}
       suppressHydrationWarning
     >
       <body className="relative">
         <Provider>{children}</Provider>
+        <Analytics />
       </body>
     </html>
   );
