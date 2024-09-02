@@ -1,8 +1,8 @@
-import BaseFeature from "@/components/base/BaseFeature";
 import BaseLogo from "@/components/base/BaseLogo";
-import BaseMenu from "@/components/base/BaseMenu";
 import BaseMenuImg from "@/components/base/BaseMenuImg";
-import BaseSideMenu from "@/components/base/BaseSideMenu";
+import Feature from "@/components/shared/Feature";
+import BaseMenu from "@/components/shared/Menu";
+import SideMenu from "@/components/shared/SideMenu";
 
 interface HeaderProps {
   className?: string;
@@ -15,14 +15,14 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
         <div className="flex justify-between">
           <BaseLogo />
           <BaseMenu />
-          <BaseFeature />
+          <Feature />
 
           {/* 移动端侧边栏按钮 */}
           <BaseMenuImg />
         </div>
       </nav>
       {/* 兼容移动端侧边栏 */}
-      <BaseSideMenu />
+      <SideMenu />
     </header>
   );
 };

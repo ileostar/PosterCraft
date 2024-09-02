@@ -5,13 +5,13 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import BaseDrawer from "../layout/GlobalDrawer";
-import BaseGoToLogin from "./BaseGoToLogin";
-import BaseTooltips from "./BaseTooltip";
+import BaseGoToLogin from "../base/BaseGoToLogin";
+import BaseTooltips from "../base/BaseTooltip";
+import BaseDrawer from "../layouts/common/GlobalDrawer";
 
-interface BaseFeatureProps {}
+interface FeatureProps {}
 
-const BaseFeature: React.FC<BaseFeatureProps> = () => {
+const Feature: React.FC<FeatureProps> = () => {
   const { theme, setTheme } = useTheme();
   const [token, setToken] = useState<string | null>("");
 
@@ -66,4 +66,4 @@ const BaseFeature: React.FC<BaseFeatureProps> = () => {
   );
 };
 
-export default BaseFeature;
+export default Feature;

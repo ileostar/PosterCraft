@@ -1,5 +1,5 @@
-import ColorPicker from "@/components/base/ColorPicker";
-import UploadBackground from "@/components/base/UploadBackground";
+import ColorPicker from "@/components/shared/ColorPicker";
+import UploadBackground from "@/components/shared/UploadBackground";
 import { UseElementStore } from "@/store/element";
 import { useEffect, useRef, useState } from "react";
 

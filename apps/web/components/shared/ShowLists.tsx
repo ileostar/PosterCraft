@@ -1,13 +1,13 @@
-import BaseGrid from "./BaseGrid";
-import BaseSearch from "./BaseSearch";
+import BaseGrid from "../base/BaseGrid";
+import BaseSearch from "../base/BaseSearch";
 
-interface BaseListsProps {
+interface ShowListsProps {
   title: string;
   children?: React.ReactNode;
   onClick?: () => void;
 }
 
-const BaseList: React.FC<BaseListsProps> = ({ title, children, onClick }) => {
+const ShowLists: React.FC<ShowListsProps> = ({ title, children, onClick }) => {
   return (
     <div className="flex flex-col gap-2 items-center justify-center h-full">
       <div className="w-full flex justify-between items-center mt-5">
@@ -19,4 +19,4 @@ const BaseList: React.FC<BaseListsProps> = ({ title, children, onClick }) => {
   );
 };
 
-export default BaseList;
+export default ShowLists;

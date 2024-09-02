@@ -5,7 +5,7 @@ import { UseElementStore } from "@/store/element";
 import { Bold, Italic, Underline } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import ColorPicker from "../../../../base/ColorPicker";
+import ColorPicker from "../../../../shared/ColorPicker";
 
 function BaseProps() {
   const { updateElement, currentElement, getElement } = UseElementStore();

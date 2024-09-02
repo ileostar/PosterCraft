@@ -11,7 +11,7 @@ interface FormType {
   [key: string]: any;
 }
 
-function MyFormField({
+function CustomFormField({
   form,
   name,
   placeholder,
@@ -93,4 +93,4 @@ function MyFormField({
   );
 }
 
-export default MyFormField;
+export default CustomFormField;

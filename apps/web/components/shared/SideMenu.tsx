@@ -3,7 +3,7 @@
 import { useMenuOpen } from "@/store/menu";
 import Image from "next/image";
 
-const BaseSideMenu: React.FC = () => {
+const SideMenu: React.FC = () => {
   const { isMenuOpen, toggleMenu } = useMenuOpen();
 
   return (
@@ -103,4 +103,4 @@ const BaseSideMenu: React.FC = () => {
   );
 };
 
-export default BaseSideMenu;
+export default SideMenu;

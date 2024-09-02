@@ -2,8 +2,8 @@
 
 import { defaultSignUp } from "@/api/auth";
 import MyFormField from "@/components/base/BaseFormField";
-import Layout from "@/components/page/auth/AuthBackGround";
-import Oauth2 from "@/components/page/auth/Oauth2";
+import Layout from "@/components/pages/auth/AuthBackGround";
+import Oauth2 from "@/components/pages/auth/Oauth2";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";

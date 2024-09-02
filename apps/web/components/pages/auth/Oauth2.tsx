@@ -1,8 +1,8 @@
 "use client";
 
 import { githubSignIn } from "@/api/auth";
-import GithubIcon from "@/components/base/GithubIcon";
-import GoogleIcon from "@/components/base/GoogleIcon";
+import GithubIcon from "@/components/shared/GithubIcon";
+import GoogleIcon from "@/components/shared/GoogleIcon";
 import { useRouter } from "next/navigation";
 
 import { useGithubUsername, useOauth2Dialog } from "../../../store/auth";

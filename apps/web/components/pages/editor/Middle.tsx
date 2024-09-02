@@ -2,8 +2,8 @@
 
 import { UseElementStore } from "@/store/element";
 
-import ChangePosition from "../../base/ChangePosition";
-import ResizeComponent from "../../base/ResizeComponent";
+import ChangePosition from "../../shared/ChangePosition";
+import ResizeComponent from "../../shared/ResizeComponent";
 
 function Middle(props: any) {
   const { Elements, setIsElement, currentElement, setCurrentElement, pageBackgroundStyle } =

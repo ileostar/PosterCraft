@@ -1,7 +1,7 @@
 import { UseElementStore } from "@/store/element";
 import { useEffect, useRef, useState } from "react";
 
-import ColorPicker from "../../../../base/ColorPicker";
+import ColorPicker from "../../../../shared/ColorPicker";
 
 function BorderProps() {
   const { updateElement, currentElement, getElement } = UseElementStore();

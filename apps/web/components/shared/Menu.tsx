@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-interface BaseMenuProps {}
+interface MenuProps {}
 
-const Menu = [
+const Menus = [
   {
     href: "/",
     label: "Home",
@@ -24,12 +24,12 @@ const Menu = [
   },
 ];
 
-const BaseMenu: React.FC<BaseMenuProps> = () => {
+const Menu: React.FC<MenuProps> = () => {
   const pathname = usePathname();
 
   return (
     <div className="hidden min-[845px]:flex sm:space-x-8">
-      {Menu.map((item) => (
+      {Menus.map((item) => (
         <Link
           key={item.label}
           href={item.href}
@@ -43,4 +43,4 @@ const BaseMenu: React.FC<BaseMenuProps> = () => {
   );
 };
 
-export default BaseMenu;
+export default Menu;
