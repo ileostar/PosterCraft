@@ -77,7 +77,7 @@ function InlineEdit({
           ref={inputRef}
           value={innerValue}
           placeholder="文本不能为空"
-          className={`pl-2 text-sm w-full h-full border rounded-full ${getValidateCheck() ? "border-gray-500" : " border-red-500"}`}
+          className={`input input-bordered pl-2 text-sm w-full h-full border rounded-full ${getValidateCheck() ? "border-gray-500" : " border-red-500"}`}
           onChange={(e) => setInnerValue(e.target.value)}
         />
       ) : (

@@ -1,5 +1,5 @@
 import { UseElementStore } from "@/store/element";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import "@/style/resizeBoxStyle.css";
 
@@ -24,13 +24,6 @@ function ResizeComponent({
   let initTop = item.props.top ? parseInt(item.props.top.replace(/(px|rem)/g, ""), 10) - 2 : 0;
   let initLeft = item.props.left ? parseInt(item.props.left.replace(/(px|rem)/g, ""), 10) - 2 : 0;
 
-  const [realSize, setRealSize] = useState({
-    height: initHeight,
-    width: initWidth,
-    top: initTop,
-    left: initLeft,
-  });
-
   const tempSize = {
     height: initHeight,
     width: initWidth,
@@ -39,7 +32,7 @@ function ResizeComponent({
   };
 
   const resizeBoxRef = useRef<HTMLDivElement>(null);
-  const contentBoxRef = useRef<HTMLButtonElement>(null);
+  const contentBoxRef = useRef<HTMLDivElement>(null);
 
   const calculateSize = (direction: directionType, e: MouseEvent, position: any) => {
     const { clientX, clientY } = e;
@@ -107,12 +100,14 @@ function ResizeComponent({
     };
 
     const handleMouseUp = () => {
-      setRealSize({
-        width: tempSize.width,
-        height: tempSize.height,
-        left: tempSize.left,
-        top: tempSize.top,
-      });
+      const style = {
+        left: tempSize.left + "px",
+        top: tempSize.top + "px",
+        width: tempSize.width + "px",
+        height: tempSize.height + "px",
+      };
+      updateElement(item.id, style);
+      setCurrentSize(style.height, style.width);
 
       // 移除mousemove和mouseup事件监听器
       document.removeEventListener("mousemove", handleMouseMove);
@@ -135,23 +130,14 @@ function ResizeComponent({
     }
   }, [initHeight, initLeft, initTop, initWidth]);
 
-  useEffect(() => {
-    const style = {
-      left: realSize.left + "px",
-      top: realSize.top + "px",
-      width: realSize.width + "px",
-      height: realSize.height + "px",
-    };
-    updateElement(item.id, style);
-    setCurrentSize(style.height, style.width);
-  }, [updateElement, item.id, realSize, setCurrentSize]);
-
   return (
     <div
       className="draggable-item"
+      id="basic-element"
       ref={resizeBoxRef}
     >
-      <button
+      <div
+        id="basic-element"
         ref={contentBoxRef}
         onClick={(e) => {
           e.stopPropagation();
@@ -169,7 +155,7 @@ function ResizeComponent({
         }}
       >
         {item.type === "text" && item.text}
-      </button>
+      </div>
       <button
         className="resize-handle top-left"
         onClick={(e) => e.stopPropagation()}

@@ -1,9 +1,9 @@
 "use client";
 
 import Tab from "@/components/base/BaseTab";
-import SetLayer from "@/components/page/editor/Right/SetLayer";
-import SetPage from "@/components/page/editor/Right/SetPage";
-import SetProps from "@/components/page/editor/Right/SetProps";
+import SetLayer from "@/components/page/editor/Right/setLayer/index";
+import SetPage from "@/components/page/editor/Right/setPage/index";
+import SetProps from "@/components/page/editor/Right/setProps/index";
 import { UseElementStore } from "@/store/element";
 
 function Right(props: any) {

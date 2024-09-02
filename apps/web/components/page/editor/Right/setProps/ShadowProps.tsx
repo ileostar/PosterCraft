@@ -1,5 +1,5 @@
 import { UseElementStore } from "@/store/element";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import ColorPicker from "../../../../base/ColorPicker";
 
@@ -26,7 +26,17 @@ function ShadowProps() {
 
   const [shadowStyles, setShadowStyles] = useState<ShadowStyleState>(initialState);
 
+  const reset = () => {
+    shadowStyles.hOffset = 0;
+    shadowStyles.vOffset = 0;
+    shadowStyles.blur = 0;
+    shadowStyles.spread = 0;
+    shadowStyles.color = "red";
+    shadowStyles.opacity = 100;
+  };
+
   useEffect(() => {
+    reset();
     const res = getElement(currentElement);
     const resProps = res?.props;
     setShadowStyles((prevStyles) => {
@@ -57,20 +67,56 @@ function ShadowProps() {
     });
   }, [currentElement, getElement]);
 
-  const isFirstRender = useRef(true);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false; // 更新ref，表示这不是第一次渲染
-      return; // 跳过后续的逻辑
+  
+  const handleUpdate = (updateKey: string, updateValue: any) => {
+    setShadowStyles((prevStyles) => ({
+      ...prevStyles,
+      [updateKey]: updateValue,
+    }));
+    let style = {};
+    switch (updateKey) {
+      case "hOffset":
+        style = {
+          boxShadow: `${updateValue}px ${shadowStyles.vOffset}px ${shadowStyles.blur}px ${shadowStyles.spread}px ${shadowStyles.color}`,
+          opacity: shadowStyles.opacity / 100,
+        };
+        break;
+      case "vOffset":
+        style = {
+          boxShadow: `${shadowStyles.hOffset}px ${updateValue}px ${shadowStyles.blur}px ${shadowStyles.spread}px ${shadowStyles.color}`,
+          opacity: shadowStyles.opacity / 100,
+        };
+        break;
+      case "blur":
+        style = {
+          boxShadow: `${shadowStyles.hOffset}px ${shadowStyles.vOffset}px ${updateValue}px ${shadowStyles.spread}px ${shadowStyles.color}`,
+          opacity: shadowStyles.opacity / 100,
+        };
+        break;
+      case "spread":
+        style = {
+          boxShadow: `${shadowStyles.hOffset}px ${shadowStyles.vOffset}px ${shadowStyles.blur}px ${updateValue}px ${shadowStyles.color}`,
+          opacity: shadowStyles.opacity / 100,
+        };
+        break;
+      case "color":
+        style = {
+          boxShadow: `${shadowStyles.hOffset}px ${shadowStyles.vOffset}px ${shadowStyles.blur}px ${shadowStyles.spread}px ${updateValue}`,
+          opacity: shadowStyles.opacity / 100,
+        };
+        break;
+      case "opacity":
+        style = {
+          boxShadow: `${shadowStyles.hOffset}px ${shadowStyles.vOffset}px ${shadowStyles.blur}px ${shadowStyles.spread}px ${shadowStyles.color}`,
+          opacity: updateValue / 100,
+        };
+        break;
+      default:
+        break;
     }
-    const style = {
-      boxShadow: `${shadowStyles.hOffset}px ${shadowStyles.vOffset}px ${shadowStyles.blur}px ${shadowStyles.spread}px ${shadowStyles.color}`,
-      opacity: shadowStyles.opacity / 100,
-    };
 
     updateElement(currentElement, style);
-  }, [shadowStyles, currentElement, updateElement]);
+  };
 
   return (
     <div className="py-1 px-6 ">
@@ -87,12 +133,7 @@ function ShadowProps() {
           min={0}
           max={100}
           value={shadowStyles.hOffset}
-          onChange={(e) =>
-            setShadowStyles((prevStyles) => ({
-              ...prevStyles,
-              hOffset: parseInt(e.target.value, 10),
-            }))
-          }
+          onChange={(e) => handleUpdate("hOffset", parseInt(e.target.value, 10))}
           className="range range-xs w-2/3"
         />
       </div>
@@ -110,12 +151,7 @@ function ShadowProps() {
           min={0}
           max={100}
           value={shadowStyles.vOffset}
-          onChange={(e) =>
-            setShadowStyles((prevStyles) => ({
-              ...prevStyles,
-              vOffset: parseInt(e.target.value, 10),
-            }))
-          }
+          onChange={(e) => handleUpdate("vOffset", parseInt(e.target.value, 10))}
           className="range range-xs w-2/3"
         />
       </div>
@@ -131,12 +167,7 @@ function ShadowProps() {
           type="number"
           id="spread"
           value={shadowStyles.spread}
-          onChange={(e) =>
-            setShadowStyles((prevStyles) => ({
-              ...prevStyles,
-              spread: parseInt(e.target.value, 10),
-            }))
-          }
+          onChange={(e) => handleUpdate("spread", parseInt(e.target.value, 10))}
           placeholder="阴影大小"
           className="input input-bordered w-2/3"
         />
@@ -153,12 +184,7 @@ function ShadowProps() {
           type="number"
           id="blur"
           value={shadowStyles.blur}
-          onChange={(e) =>
-            setShadowStyles((prevStyles) => ({
-              ...prevStyles,
-              blur: parseInt(e.target.value, 10),
-            }))
-          }
+          onChange={(e) => handleUpdate("blur", parseInt(e.target.value, 10))}
           placeholder="字号大小"
           className="input input-bordered w-2/3"
         />
@@ -177,12 +203,7 @@ function ShadowProps() {
           min={0}
           max={100}
           value={shadowStyles.opacity}
-          onChange={(e) =>
-            setShadowStyles((prevStyles) => ({
-              ...prevStyles,
-              opacity: parseFloat(e.target.value),
-            }))
-          }
+          onChange={(e) => handleUpdate("opacity", parseFloat(e.target.value))}
           className="range range-xs w-2/3"
         />
       </div>
@@ -194,14 +215,7 @@ function ShadowProps() {
         >
           阴影颜色：
         </label>
-        <ColorPicker
-          changeColor={(e) =>
-            setShadowStyles((prevStyles) => ({
-              ...prevStyles,
-              color: e,
-            }))
-          }
-        />
+        <ColorPicker changeColor={(e) => handleUpdate("color", e)} />
       </div>
     </div>
   );
