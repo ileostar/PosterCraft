@@ -1,7 +1,6 @@
+import Planet from "@/components/shared/Planet";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-
-import Planet from "../../features/Planet";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   useTheme();

@@ -1,8 +1,7 @@
 "use client";
 
+import CustomFormField from "@/components/shared/CustomFormField";
 import Link from "next/link";
-
-import MyFormField from "../../base/BaseFormField";
 
 interface FormType {
   [key: string]: any;
@@ -23,13 +22,13 @@ function renderSignIn({
   if (isPhoneMode) {
     return (
       <div className="flex flex-col gap-1">
-        <MyFormField
+        <CustomFormField
           form={form}
           name={"phone"}
           placeholder={"请输入手机号码"}
           label={"手机号码"}
         />
-        <MyFormField
+        <CustomFormField
           form={form}
           name={"code"}
           placeholder={"请输入验证码"}
@@ -52,13 +51,13 @@ function renderSignIn({
   } else {
     return (
       <div className="flex flex-col gap-1">
-        <MyFormField
+        <CustomFormField
           form={form}
           name={"username"}
           placeholder={"请输入用户名/邮箱"}
           label={"用户名/邮箱"}
         />
-        <MyFormField
+        <CustomFormField
           form={form}
           name={"password"}
           placeholder={"请输入密码"}

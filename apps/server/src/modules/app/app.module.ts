@@ -14,7 +14,7 @@ import { OssModule } from '../oss/oss.module';
 import { TestModule } from '../test/test.module';
 import { WorkModule } from '../work/work.module';
 import { ChannelModule } from '../channel/channel.module';
-import { PageModule } from '../pages/page.module';
+import { PageModule } from '../page/page.module';
 import { TemplateModule } from '../template/template.module';
 import { GlobalConfig } from 'src/config';
 

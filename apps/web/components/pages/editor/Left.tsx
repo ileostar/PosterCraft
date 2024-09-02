@@ -1,6 +1,6 @@
 "use client";
 
-import Tab from "@/components/shared/BaseTab";
+import Tab from "@/components/shared/Tab";
 
 import GraphList from "./Left/GraphList";
 import ImgList from "./Left/ImgList";

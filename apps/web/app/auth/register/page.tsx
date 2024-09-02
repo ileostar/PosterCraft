@@ -1,9 +1,9 @@
 "use client";
 
 import { defaultSignUp } from "@/api/auth";
-import MyFormField from "@/components/base/BaseFormField";
 import Layout from "@/components/pages/auth/AuthBackGround";
 import Oauth2 from "@/components/pages/auth/Oauth2";
+import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -65,25 +65,25 @@ export default function Register() {
               <p className="text-red-500 text-2xl card-title">Sign Up</p>
             </div>
             <div className="flex flex-col gap-1 mb-1">
-              <MyFormField
+              <CustomFormField
                 form={form}
                 name={"username"}
                 placeholder={"请输入用户名"}
                 label={"用户名"}
               />
-              <MyFormField
+              <CustomFormField
                 form={form}
                 name={"password"}
                 placeholder={"请输入密码"}
                 label={"密码"}
               />
-              <MyFormField
+              <CustomFormField
                 form={form}
                 name={"phone"}
                 placeholder={"请输入手机号码"}
                 label={"手机号码"}
               />
-              <MyFormField
+              <CustomFormField
                 form={form}
                 name={"code"}
                 placeholder={"请输入验证码"}
