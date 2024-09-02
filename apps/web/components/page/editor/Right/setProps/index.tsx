@@ -6,12 +6,12 @@ import {
 } from "@/components/ui/accordion";
 import React, { useEffect, useRef, useState } from "react";
 
-import BaseProps from "./setProps/BaseProps";
-import BorderProps from "./setProps/BorderProps";
-import EventProps from "./setProps/EventProps";
-import PositionProps from "./setProps/PositionProps";
-import ShadowProps from "./setProps/ShadowProps";
-import SizeProps from "./setProps/SizeProps";
+import BaseProps from "./BaseProps";
+import BorderProps from "./BorderProps";
+import EventProps from "./EventProps";
+import PositionProps from "./PositionProps";
+import ShadowProps from "./ShadowProps";
+import SizeProps from "./SizeProps";
 
 function SetProps() {
   const parentRef = useRef<HTMLDivElement | null>(null);

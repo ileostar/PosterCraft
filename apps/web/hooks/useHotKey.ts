@@ -14,7 +14,6 @@ const useBindHotKey = (keys: string, callback: KeyHandler) => {
 
 const wrap = (callback: KeyHandler) => {
   const wrapperFn = (e: KeyboardEvent, event: HotkeysEvent) => {
-    // e.stopImmediatePropagation();
     e.preventDefault();
     callback(e, event);
   };

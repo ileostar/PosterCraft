@@ -1,5 +1,4 @@
 import { UseElementStore } from "@/store/element";
-import { getParentElement } from "@/utils/getParentElement";
 import { useEffect, useRef } from "react";
 
 export interface ActionItem {
@@ -16,7 +15,7 @@ function ContextMenu({ item }: Readonly<{ item: ActionItem[] }>) {
     const targetElement = e.target as HTMLElement;
     console.log(targetElement.id);
     if (targetElement.id !== "basic-element") {
-        return;
+      return;
     }
     e.preventDefault();
     const domElement = menuRef.current;
@@ -55,6 +54,7 @@ function ContextMenu({ item }: Readonly<{ item: ActionItem[] }>) {
         {item.map((items, index) => {
           return (
             <li
+              key={items.text}
               onClick={() => items.action(currentElement)}
               className={`px-4 py-2 bg-white hover:bg-gray-100 rounded-md cursor-pointer flex flex-row justify-between gap-10   ${index !== item.length - 1 ? "border-b border-gray-300" : ""}`}
             >
