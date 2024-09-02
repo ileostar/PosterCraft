@@ -11,7 +11,7 @@ import {
 } from "@ant-design/icons";
 import { useEffect, useRef, useState } from "react";
 
-import InlineEdit from "./setLayer/InlineEdit";
+import InlineEdit from "./InlineEdit";
 
 function SetLayer() {
   const { Elements, updateElement, setIsCurrentLocked, setCurrentElement, setELements } =
