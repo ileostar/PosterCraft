@@ -1,4 +1,4 @@
-import { UseElementStore } from "@/store/element";
+import { UseElementStore } from "@/stores/element";
 import { ElementDataType } from "@/types/element-type";
 import graphTemplate from "@/utils/template/graphTemplate";
 import { v4 as uuidv4 } from "uuid";

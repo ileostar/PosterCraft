@@ -2,11 +2,11 @@
 
 import Tab from "@/components/shared/Tab";
 
-import GraphList from "./Left/GraphList";
-import ImgList from "./Left/ImgList";
-import TextList from "./Left/TextList";
+import GraphList from "./GraphList";
+import ImgList from "./ImgList";
+import TextList from "./TextList";
 
-function Left(props: any) {
+function Left() {
   const tabs = [
     { id: 0, label: "文本", content: <TextList /> },
     { id: 1, label: "图片", content: <ImgList /> },

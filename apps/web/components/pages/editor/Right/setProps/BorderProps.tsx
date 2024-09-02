@@ -1,7 +1,8 @@
-import { UseElementStore } from "@/store/element";
-import { useEffect, useRef, useState } from "react";
+"use client";
 
-import ColorPicker from "../../../../shared/ColorPicker";
+import ColorPicker from "@/components/shared/ColorPicker";
+import { UseElementStore } from "@/stores/element";
+import { useCallback, useEffect, useState } from "react";
 
 function BorderProps() {
   const { updateElement, currentElement, getElement } = UseElementStore();
@@ -13,7 +14,7 @@ function BorderProps() {
     borderColor: string;
   }
 
-  const initialState = {
+  const initialState: BorderStyleState = {
     borderStyle: "",
     borderWidth: 0,
     borderRadius: 0,
@@ -25,6 +26,7 @@ function BorderProps() {
   useEffect(() => {
     const res = getElement(currentElement);
     const resProps = res?.props;
+
     setBorderStyles((prevStyles) => {
       const updatedStyles = { ...prevStyles };
       if (resProps) {
@@ -48,21 +50,24 @@ function BorderProps() {
     });
   }, [currentElement, getElement]);
 
-  const isFirstRender = useRef(true);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false; // 更新ref，表示这不是第一次渲染
-      return; // 跳过后续的逻辑
-    }
-    const style = {
-      borderWidth: borderStyles.borderWidth + "px",
-      borderStyle: borderStyles.borderStyle,
-      borderColor: borderStyles.borderColor,
-      borderRadius: borderStyles.borderRadius + "px",
-    };
-    updateElement(currentElement, style);
-  }, [borderStyles, currentElement, updateElement]);
+  const handleUpdate = useCallback(
+    (updateKey: string, updateValue: any) => {
+      setBorderStyles((prevStyles) => ({
+        ...prevStyles,
+        [updateKey]: updateValue,
+      }));
+      const style = {
+        borderWidth:
+          updateKey === "borderWidth" ? updateValue + "px" : borderStyles.borderWidth + "px",
+        borderStyle: updateKey === "borderStyle" ? updateValue : borderStyles.borderStyle,
+        borderColor: updateKey === "borderColor" ? updateValue : borderStyles.borderColor,
+        borderRadius:
+          updateKey === "borderRadius" ? updateValue + "px" : borderStyles.borderRadius + "px",
+      };
+      updateElement(currentElement, style);
+    },
+    [borderStyles, currentElement, updateElement],
+  );
 
   return (
     <div className="py-1 px-6 ">
@@ -76,19 +81,14 @@ function BorderProps() {
         <select
           id="borderStyle"
           value={borderStyles.borderStyle || ""}
-          onChange={(e) => {
-            setBorderStyles((prevStyles) => ({
-              ...prevStyles,
-              borderStyle: e.target.value,
-            }));
-          }}
+          onChange={(e) => handleUpdate("borderStyle", e.target.value)}
           className="select select-bordered w-2/3"
         >
           <option value="none">无边框</option>
           <option value="solid">实线</option>
           <option value="dashed">虚线</option>
           <option value="dotted">点线</option>
-          <option value="double">虚线</option>
+          <option value="double">双线</option>
         </select>
       </div>
 
@@ -105,12 +105,7 @@ function BorderProps() {
           min={0}
           max={50}
           value={borderStyles.borderWidth}
-          onChange={(e) => {
-            setBorderStyles((prevStyles) => ({
-              ...prevStyles,
-              borderWidth: parseInt(e.target.value, 10),
-            }));
-          }}
+          onChange={(e) => handleUpdate("borderWidth", parseInt(e.target.value, 10))}
           className="range range-xs w-2/3"
         />
       </div>
@@ -128,12 +123,7 @@ function BorderProps() {
           min={0}
           max={100}
           value={borderStyles.borderRadius}
-          onChange={(e) => {
-            setBorderStyles((prevStyles) => ({
-              ...prevStyles,
-              borderRadius: parseInt(e.target.value, 10),
-            }));
-          }}
+          onChange={(e) => handleUpdate("borderRadius", parseInt(e.target.value, 10))}
           className="range range-xs w-2/3"
         />
       </div>
@@ -145,14 +135,7 @@ function BorderProps() {
         >
           边框颜色：
         </label>
-        <ColorPicker
-          changeColor={(e) =>
-            setBorderStyles((prevStyles) => ({
-              ...prevStyles,
-              borderColor: e,
-            }))
-          }
-        />
+        <ColorPicker changeColor={(e) => handleUpdate("borderColor", e)} />
       </div>
     </div>
   );

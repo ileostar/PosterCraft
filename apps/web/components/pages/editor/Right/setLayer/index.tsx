@@ -1,7 +1,7 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { UseElementStore } from "@/store/element";
-import { arrayMove } from "@/utils/others/arrayMove";
+import { UseElementStore } from "@/stores/element";
 import { getParentElement } from "@/utils/others/getParentElement";
+import { arrayMove } from "@/utils/others/helper";
 import {
   DragOutlined,
   EyeInvisibleOutlined,
@@ -11,7 +11,7 @@ import {
 } from "@ant-design/icons";
 import { useEffect, useRef, useState } from "react";
 
-import InlineEdit from "./setLayer/InlineEdit";
+import InlineEdit from "./InlineEdit";
 
 function SetLayer() {
   const { Elements, updateElement, setIsCurrentLocked, setCurrentElement, setELements } =

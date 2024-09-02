@@ -1,6 +1,6 @@
 "use client";
 
-import { useMenuOpen } from "@/store/menu";
+import { useMenuOpen } from "@/stores/menu";
 
 const BaseMenuImg: React.FC = () => {
   const { toggleMenu } = useMenuOpen();

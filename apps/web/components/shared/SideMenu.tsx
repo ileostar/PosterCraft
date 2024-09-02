@@ -1,6 +1,6 @@
 "use client";
 
-import { useMenuOpen } from "@/store/menu";
+import { useMenuOpen } from "@/stores/menu";
 import Image from "next/image";
 
 const SideMenu: React.FC = () => {

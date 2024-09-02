@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 
 interface Tab {
@@ -10,7 +12,7 @@ interface TabsProps {
   readonly tabs: ReadonlyArray<Tab>; // 定义接收的props类型
 }
 
-function BaseTab({ tabs }: TabsProps) {
+function Tab({ tabs }: TabsProps) {
   // 跟踪当前活动的标签页索引
   const [activeTabIndex, setActiveTabIndex] = useState(0); // 假设第一个标签页是活动的
 
@@ -46,4 +48,4 @@ function BaseTab({ tabs }: TabsProps) {
   );
 }
 
-export default BaseTab;
+export default Tab;

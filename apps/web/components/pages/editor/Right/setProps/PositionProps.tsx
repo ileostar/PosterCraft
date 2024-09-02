@@ -1,5 +1,7 @@
-import { UseElementStore } from "@/store/element";
-import { useEffect, useRef, useState } from "react";
+"use client";
+
+import { UseElementStore } from "@/stores/element";
+import { useCallback, useEffect, useState } from "react";
 
 function PositionProps() {
   const { updateElement, currentElement, getElement, currentPosition, currentSize } =
@@ -10,7 +12,7 @@ function PositionProps() {
     top: number;
   }
 
-  const initialState = {
+  const initialState: PositionStyleState = {
     top: 0,
     left: 0,
   };
@@ -20,6 +22,7 @@ function PositionProps() {
   useEffect(() => {
     const res = getElement(currentElement);
     const resProps = res?.props;
+
     setPositionStyles((prevStyles) => {
       const updatedStyles = { ...prevStyles };
       if (resProps) {
@@ -44,19 +47,20 @@ function PositionProps() {
     });
   }, [currentElement, getElement, currentPosition, currentSize]);
 
-  const isFirstRender = useRef(true);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false; // 更新ref，表示这不是第一次渲染
-      return; // 跳过后续的逻辑
-    }
-    const style = {
-      left: positionStyles.left + "px",
-      top: positionStyles.top + "px",
-    };
-    updateElement(currentElement, style);
-  }, [positionStyles, updateElement]);
+  const handleUpdate = useCallback(
+    (updateKey: string, updateValue: any) => {
+      setPositionStyles((prevStyles) => ({
+        ...prevStyles,
+        [updateKey]: updateValue,
+      }));
+      const style = {
+        left: updateKey === "left" ? updateValue + "px" : positionStyles.left + "px",
+        top: updateKey === "top" ? updateValue + "px" : positionStyles.top + "px",
+      };
+      updateElement(currentElement, style);
+    },
+    [currentElement, positionStyles, updateElement],
+  );
 
   return (
     <div className="py-1 px-6 ">
@@ -71,12 +75,7 @@ function PositionProps() {
           type="number"
           id="left"
           value={positionStyles.left}
-          onChange={(e) =>
-            setPositionStyles((prevStyles) => ({
-              ...prevStyles,
-              left: parseInt(e.target.value, 10),
-            }))
-          }
+          onChange={(e) => handleUpdate("left", parseInt(e.target.value, 10))}
           placeholder="x轴坐标"
           className="input input-bordered w-2/3"
         />
@@ -93,12 +92,7 @@ function PositionProps() {
           type="number"
           id="top"
           value={positionStyles.top}
-          onChange={(e) =>
-            setPositionStyles((prevStyles) => ({
-              ...prevStyles,
-              top: parseInt(e.target.value, 10),
-            }))
-          }
+          onChange={(e) => handleUpdate("top", parseInt(e.target.value, 10))}
           placeholder="y轴坐标"
           className="input input-bordered w-2/3"
         />

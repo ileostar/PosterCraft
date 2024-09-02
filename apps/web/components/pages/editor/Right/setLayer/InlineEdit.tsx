@@ -1,7 +1,7 @@
 import useClickOutside from "@/hooks/useClickOutside";
 import useKeyPress from "@/hooks/useKeyPress";
-import { UseElementStore } from "@/store/element";
-import { useEffect, useRef, useState } from "react";
+import { UseElementStore } from "@/stores/element";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 function InlineEdit({
   value,
@@ -21,13 +21,13 @@ function InlineEdit({
 
   const isOutsideRef = useClickOutside(wrapper);
 
-  // 创建一个函数来计算validateCheck，这个函数可以在渲染时调用
-  const getValidateCheck = () => {
+  // 使用 useCallback 记忆 getValidateCheck 函数
+  const getValidateCheck = useCallback(() => {
     if (innerValue === undefined) {
       return false;
     }
     return innerValue.trim() !== "";
-  };
+  }, [innerValue]);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
@@ -64,7 +64,7 @@ function InlineEdit({
       updateElement(id, undefined, undefined, undefined, undefined, undefined, innerValue);
     }
     //  setIsOutside(false)
-  }, [isOutside]);
+  }, [getValidateCheck, id, innerValue, isEdited, isOutside, updateElement]);
 
   return (
     <div
@@ -77,7 +77,7 @@ function InlineEdit({
           ref={inputRef}
           value={innerValue}
           placeholder="文本不能为空"
-          className={`pl-2 text-sm w-full h-full border rounded-full ${getValidateCheck() ? "border-gray-500" : " border-red-500"}`}
+          className={`input input-bordered pl-2 text-sm w-full h-full border rounded-full ${getValidateCheck() ? "border-gray-500" : " border-red-500"}`}
           onChange={(e) => setInnerValue(e.target.value)}
         />
       ) : (
