@@ -1,12 +1,16 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
-import { Inter } from "next/font/google";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 
-import "./globals.css";
+import "../style/globals.css";
+import "../style/custom.css";
 import "nprogress/nprogress.css";
-import 'cropperjs/dist/cropper.css';
+import "cropperjs/dist/cropper.css";
 
-const inter = Inter({ subsets: ["latin"] });
+import { cn } from "@/lib/utils";
+
+import Provider from "./provider";
 
 export const metadata: Metadata = {
   title: "PosterCraft —— 海报编辑器",
@@ -17,6 +21,24 @@ export const metadata: Metadata = {
       url: "/favicon.png",
     },
   ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
 };
 
 export default function RootLayout({
@@ -25,8 +47,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html
+      lang="en-US"
+      className={cn(GeistSans.variable, GeistMono.variable, "scroll-smooth", "dark")}
+      suppressHydrationWarning
+    >
+      <body className="relative">
+        <Provider>{children}</Provider>
+      </body>
     </html>
   );
 }

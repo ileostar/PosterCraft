@@ -1,0 +1,118 @@
+.logo:hover .logo-svg {
+  transform: rotateY(180deg);
+}
+
+/* .btn--animateGlowPink {
+  --border-size: 6px;
+  --border-angle: 0turn;
+  background-image: conic-gradient(
+      from var(--border-angle),
+      rgba(245, 247, 248, 0.95),
+      rgba(245, 247, 248, 0.95) 50%,
+      rgba(245, 247, 248, 0.95)
+    ),
+    conic-gradient(from var(--border-angle), transparent 10%, #ff4343e9, transparent);
+  background-size:
+    calc(100% - (var(--border-size) * 2)) calc(100% - (var(--border-size) * 2)),
+    cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  animation: 8s linear infinite bg-spin;
+} */
+
+.btn--animateGlowPink {
+  --border-size: 6px;
+  --border-angle: 0turn;
+  background-image: conic-gradient(
+      from var(--border-angle),
+      rgba(245, 247, 248, 0.95),
+      rgba(245, 247, 248, 0.95) 50%,
+      rgba(245, 247, 248, 0.95)
+    ),
+    conic-gradient(from var(--border-angle), transparent 10%, #ff4343e9, transparent);
+  background-size:
+    calc(100% - (var(--border-size) * 2)) calc(100% - (var(--border-size) * 2)),
+    cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  animation: 8s linear infinite bg-spin;
+}
+
+.dark .btn--animateGlowPink {
+  background-image: conic-gradient(from var(--border-angle), #131313, #131313 50%, #131313),
+    conic-gradient(from var(--border-angle), transparent 20%, #d33cf2, transparent);
+}
+
+@keyframes bg-spin {
+  to {
+    --border-angle: 1turn;
+  }
+}
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0turn;
+}
+.circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-areas: "layer";
+  place-items: center;
+  border-radius: 50%;
+
+  --radius: 250px;
+  width: 100%;
+  min-height: 100%;
+  transition: all 0.3s ease;
+}
+.stat {
+  grid-area: layer;
+  --d: calc(var(--i) / var(--total));
+  --r-offset: -0.25turn;
+  --r-amount: 1turn;
+  --r: calc((var(--r-amount) * var(--d)) + var(--r-offset));
+  --transform: rotate(var(--r)) translate(var(--radius)) rotate(calc(-1 * var(--r)));
+  transform: var(--transform);
+}
+.glass {
+  background: rgba(255, 255, 255, 0.26) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(9.3px) !important;
+  -webkit-backdrop-filter: blur(9.3px) !important;
+}
+@media (max-width: 1280px) {
+  .stat {
+    --radius: 25vmin !important;
+  }
+}
+@keyframes float {
+  0% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+  }
+  50% {
+    box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+    transform: translatey(-5px);
+  }
+  100% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(0px);
+  }
+}
+@keyframes floatdown {
+  0% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(-5px);
+  }
+  50% {
+    box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+    transform: translatey(0px);
+  }
+  100% {
+    box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+    transform: translatey(-5px);
+  }
+}
