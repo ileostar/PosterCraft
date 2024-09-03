@@ -2,7 +2,6 @@
   "name": "poster-craft",
   "version": "0.0.1",
   "description": "Poster editor",
-  "type": "module",
   "license": "MIT",
   "packageManager": "pnpm@9.6.0",
   "bugs": {
