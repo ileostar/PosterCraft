@@ -68,12 +68,12 @@ function Middle(props: any) {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <button
+              <div
                 className="text-4xl hover:text-red-500"
                 onClick={() => undo()}
               >
                 <span className="icon-[carbon--skip-back-outline]"></span>
-              </button>
+              </div>
             </TooltipTrigger>
             <TooltipContent>
               <p>回退</p>
@@ -83,12 +83,12 @@ function Middle(props: any) {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <button
+              <div
                 className="text-4xl hover:text-red-500"
                 onClick={() => redo()}
               >
                 <span className="icon-[carbon--skip-forward-outline]"></span>
-              </button>
+              </div>
             </TooltipTrigger>
             <TooltipContent>
               <p>前进</p>
