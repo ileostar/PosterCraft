@@ -1,8 +1,8 @@
 import BaseLogo from "@/components/base/BaseLogo";
 import BaseMenuImg from "@/components/base/BaseMenuImg";
+import SideMenu from "@/components/layouts/common/SideMenu";
 import Feature from "@/components/shared/Feature";
 import BaseMenu from "@/components/shared/Menu";
-import SideMenu from "@/components/shared/SideMenu";
 
 interface HeaderProps {
   className?: string;

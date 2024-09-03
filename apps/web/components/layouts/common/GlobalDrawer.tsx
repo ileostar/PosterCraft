@@ -81,6 +81,18 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = () => {
                 开发文档
               </span>
             </Link>
+            <Link
+              href={config.DEV_DOCS}
+              className="flex items-center gap-3 rounded-xl hover:bg-gray-300/20 px-2 py-1"
+            >
+              <span className="icon-[carbon--logo-github] h-7 w-7 text-gray-600/80 dark:text-gray-300/70 font-bold"></span>
+              <Link
+                href={"https://github.com/ileostar/PosterCraft"}
+                className="text-gray-600/80 dark:text-gray-300/70 text-lg font-medium"
+              >
+                项目地址
+              </Link>
+            </Link>
             <div
               className="cursor-pointer flex items-center gap-3 rounded-xl hover:bg-gray-300/20 px-2 py-1"
               onClick={() => logout()}

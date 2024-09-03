@@ -25,6 +25,7 @@
     "build": "pnpm schema:build && turbo build --no-daemon",
     "build:server": "pnpm schema:build && pnpm -F server build",
     "build:web": "pnpm -F web build",
+    "prod:serve": "pnpm -F api start:prod:pm",
     "test:ci": "pnpm -F server test && pnpm -F web test:ci",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "docs:dev": "pnpm -F docs docs:dev",
