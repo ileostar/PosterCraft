@@ -2,7 +2,7 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTheme } from "next-themes";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { useEffect, useState } from "react";
 
 import BaseGoToLogin from "../base/BaseGoToLogin";

@@ -8,7 +8,7 @@ function Main() {
         defaultValue="account"
         className="flex gap-5"
       >
-        <TabsList className="flex flex-col gap-2 h-[50vh]  bg-white dark:bg-gray-200/10 p-3 w-[10vw] justify-start rounded-xl">
+        <TabsList className="flex flex-col gap-2 h-[50vh] bg-white dark:bg-[#293545]/30 p-3 w-[10vw] justify-start rounded-xl">
           <TabsTrigger
             className="w-full rounded-lg"
             value="profile"
@@ -29,23 +29,27 @@ function Main() {
           </TabsTrigger>
         </TabsList>
         <TabsContent
-          className="flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
+          className="flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-[#293545]/30 overflow-hidden"
           value="profile"
         >
-          <div className="flex flex-col gap-2 h-[100vh] w-full justify-start">profile settings</div>
+          <div className="flex flex-col gap-2 h-[100vh] w-full justify-start">
+            <h2>个人资料</h2>
+          </div>
         </TabsContent>
         <TabsContent
-          className="flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
+          className="flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-[#293545]/30 overflow-hidden"
           value="account"
         >
-          <div className="flex flex-col gap-2 h-[100vh] w-full justify-start">Account settings</div>
+          <div className="flex flex-col gap-2 h-[100vh] w-full justify-start">
+            <h2>账号设置</h2>
+          </div>
         </TabsContent>
         <TabsContent
-          className="flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
+          className="flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-[#293545]/30 overflow-hidden"
           value="password"
         >
           <div className="flex flex-col gap-2 h-[100vh] w-full justify-start">
-            password settings
+            <h2>密码设置</h2>
           </div>
         </TabsContent>
       </Tabs>

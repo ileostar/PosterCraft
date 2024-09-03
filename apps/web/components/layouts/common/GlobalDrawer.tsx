@@ -1,7 +1,7 @@
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import config from "@/config";
+import { Link } from "next-view-transitions";
 import Image from "next/image";
-import Link from "next/link";
 
 interface GlobalDrawerProps {}
 
@@ -64,7 +64,7 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = () => {
               </span>
             </Link>
             <Link
-              href={"profile"}
+              href={"user"}
               className="flex items-center gap-3 rounded-xl hover:bg-gray-300/20 px-2 py-1"
             >
               <span className="icon-[carbon--user-avatar] h-7 w-7 text-gray-600/80 dark:text-gray-300/70 font-bold"></span>
@@ -79,6 +79,15 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = () => {
               <span className="icon-[carbon--document-multiple-01] h-7 w-7 text-gray-600/80 dark:text-gray-300/70 font-bold"></span>
               <span className="text-gray-600/80 dark:text-gray-300/70 text-lg font-medium">
                 开发文档
+              </span>
+            </Link>
+            <Link
+              href={"https://github.com/ileostar/PosterCraft"}
+              className="flex items-center gap-3 rounded-xl hover:bg-gray-300/20 px-2 py-1"
+            >
+              <span className="icon-[carbon--logo-github] h-7 w-7 text-gray-600/80 dark:text-gray-300/70 font-bold"></span>
+              <span className="text-gray-600/80 dark:text-gray-300/70 text-lg font-medium">
+                项目地址
               </span>
             </Link>
             <div

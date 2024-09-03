@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
+import { ViewTransitions } from "next-view-transitions";
 
 import "@/styles/globals.css";
 import "@/styles/custom.css";
@@ -49,15 +50,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en-US"
-      className={cn(GeistSans.variable, GeistMono.variable, "scroll-smooth")}
-      suppressHydrationWarning
-    >
-      <body className="relative">
-        <Provider>{children}</Provider>
-        <Analytics />
-      </body>
-    </html>
+    <ViewTransitions>
+      <html
+        lang="en-US"
+        className={cn(GeistSans.variable, GeistMono.variable, "scroll-smooth")}
+        suppressHydrationWarning
+      >
+        <body className="relative">
+          <Provider>{children}</Provider>
+          <Analytics />
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
