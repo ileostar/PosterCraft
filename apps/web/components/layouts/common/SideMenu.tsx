@@ -3,8 +3,8 @@
 import { cn } from "@/lib/utils";
 import { useMenuOpen } from "@/stores/menu";
 import { useTheme } from "next-themes";
+import { Link } from "next-view-transitions";
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const Menus = [

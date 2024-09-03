@@ -16,7 +16,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ children }) => {
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2, // 滑动持续时间
-      easing: (t) => 1 - Math.pow(1 - t, 4), // 自定义缓动函数
+      easing: (t) => 1 - Math.pow(1 - t, 2), // 自定义缓动函数
       touchMultiplier: 2,
       infinite: false,
       smoothWheel: true,
@@ -24,10 +24,9 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ children }) => {
       lerp: 0.05, // 平滑度
       orientation: "vertical", // 滚动方向
       gestureOrientation: "vertical", // 手势方向
-      syncTouch: false, // 模拟触摸设备滚动
+      syncTouch: true, // 模拟触摸设备滚动
       syncTouchLerp: 0.1, // 同步触摸平滑度
-      touchInertiaMultiplier: 35, // 触摸惯性倍率
-      autoResize: true, // 自动调整大小
+      touchInertiaMultiplier: 5, // 触摸惯性倍率
       prevent: (node) => node.classList.contains("cookie-modal"), // 自定义阻止滚动平滑的逻辑
     });
 

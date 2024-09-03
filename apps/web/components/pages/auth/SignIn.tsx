@@ -1,7 +1,7 @@
 "use client";
 
 import CustomFormField from "@/components/shared/CustomFormField";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 
 interface FormType {
   [key: string]: any;
