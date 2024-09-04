@@ -16,6 +16,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import "@/styles/base/formFieldError.css";
+
 const loginFormSchema = z.object({
   email: z.string().email({
     message: "无效的邮箱格式",
@@ -29,9 +31,7 @@ const loginFormSchema = z.object({
   code: z.string().length(6, { message: "无效的验证码" }).regex(/^\d+$/, {
     message: "无效的验证码",
   }),
-  username: z.string(),
-  // .min(4, { message: "用户名长度不能少于4个字符" })
-  // .max(12, { message: "用户名长度不能超过20个字符" }),
+  username: z.string().min(1, { message: "用户名长度不能少于1个字符" }),
 });
 
 export type loginFormSchemaType = z.infer<typeof loginFormSchema>;
@@ -138,7 +138,7 @@ export default function Login() {
             className="flex flex-col gap-2 p-8 bg-slate-100 rounded-2xl"
           >
             <div className="flex justify-center items-center ">
-              <p className="text-red-500 text-2xl card-title">Sign In</p>
+              <div className="text-red-500 text-2xl card-title">Sign In</div>
             </div>
 
             {renderSignIn({
@@ -152,7 +152,8 @@ export default function Login() {
             <div className="flex justify-between mt-[5px]">
               <Button
                 className="btn w-full hover:bg-red-600 bg-[#EF4444] text-white"
-                onClick={() => handleSign()}
+                // onClick={() => handleSign()}
+                onClick={() => console.log(11)}
                 type="submit"
               >
                 登录

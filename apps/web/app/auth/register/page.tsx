@@ -12,6 +12,8 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import "@/styles/base/formFieldError.css";
+
 const registerFormSchema = z.object({
   phone: z.string().length(11, { message: "无效的手机号码" }).regex(/^\d+$/, {
     message: "无效的手机号码",
@@ -62,7 +64,7 @@ export default function Register() {
             className="flex flex-col gap-2 p-8 bg-slate-100 rounded-2xl"
           >
             <div className="flex justify-center items-center ">
-              <p className="text-red-500 text-2xl card-title">Sign Up</p>
+              <div className="text-red-500 text-2xl card-title">Sign Up</div>
             </div>
             <div className="flex flex-col gap-1 mb-1">
               <CustomFormField
