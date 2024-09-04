@@ -2,27 +2,12 @@ import ColorPicker from "@/components/shared/ColorPicker";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Toggle } from "@/components/ui/toggle";
-import { UseElementStore } from "@/stores/element";
 import { Bold, Italic, Underline } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+
+import useProps from "../../../../../hooks/useProps";
 
 function BaseProps() {
-  const { updateElement, currentElement, getElement } = UseElementStore();
-
-  interface TextStyleState {
-    textarea: string;
-    fontSize: number;
-    fontFamily: string;
-    fontStyle: string;
-    fontWeight: string;
-    textDecoration: string;
-    lineHeight: number;
-    textAlign: string;
-    color: string;
-    backgroundColor: string;
-  }
-
-  const initialState: TextStyleState = {
+  const initialState = {
     textarea: "",
     fontSize: 0,
     fontFamily: "",
@@ -35,68 +20,7 @@ function BaseProps() {
     backgroundColor: "transparent",
   };
 
-  const [textStyles, setTextStyles] = useState<TextStyleState>(initialState);
-
-  useEffect(() => {
-    const res = getElement(currentElement);
-    const resProps = res?.props;
-    const resText = res?.text;
-
-    setTextStyles((prevStyles) => {
-      const updatedStyles = { ...prevStyles };
-      if (resProps) {
-        Object.keys(resProps).forEach((key) => {
-          if (key in prevStyles) {
-            switch (key) {
-              case "lineHeight":
-              case "fontSize":
-                const num = parseFloat(resProps[key]);
-                updatedStyles[key] = !isNaN(num) ? num : prevStyles[key];
-                break;
-              case "textAlign":
-              case "fontFamily":
-              case "fontStyle":
-              case "fontWeight":
-              case "textDecoration":
-              case "color":
-              case "backgroundColor":
-                updatedStyles[key] = resProps[key];
-                break;
-            }
-          }
-        });
-      }
-      if (resText) {
-        updatedStyles.textarea = resText;
-      }
-
-      return updatedStyles;
-    });
-  }, [currentElement, getElement]);
-
-  const handleUpdate = useCallback(
-    (updateKey: string, updateValue: any) => {
-      setTextStyles((prevStyles) => ({
-        ...prevStyles,
-        [updateKey]: updateValue,
-      }));
-      const style = {
-        fontSize: updateKey === "fontSize" ? updateValue + "px" : textStyles.fontSize + "px",
-        fontFamily: updateKey === "fontFamily" ? updateValue : textStyles.fontFamily,
-        fontStyle: updateKey === "fontStyle" ? updateValue : textStyles.fontStyle,
-        fontWeight: updateKey === "fontWeight" ? updateValue : textStyles.fontWeight,
-        textDecoration: updateKey === "textDecoration" ? updateValue : textStyles.textDecoration,
-        lineHeight: updateKey === "lineHeight" ? updateValue + "px" : textStyles.lineHeight + "px",
-        textAlign: updateKey === "textAlign" ? updateValue : textStyles.textAlign,
-        color: updateKey === "color" ? updateValue : textStyles.color,
-        backgroundColor: updateKey === "backgroundColor" ? updateValue : textStyles.backgroundColor,
-      };
-      updateKey === "textarea"
-        ? updateElement(currentElement, style, updateValue)
-        : updateElement(currentElement, style, textStyles.textarea);
-    },
-    [currentElement, textStyles, updateElement],
-  );
+  const { elementStyle: textStyles, handleUpdate } = useProps(initialState, "baseProps");
 
   return (
     <div className="py-1 px-6 ">

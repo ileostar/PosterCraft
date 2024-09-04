@@ -2,19 +2,11 @@
 
 import ColorPicker from "@/components/shared/ColorPicker";
 import { UseElementStore } from "@/stores/element";
-import { useEffect, useState } from "react";
+
+import useProps from "../../../../../hooks/useProps";
 
 function ShadowProps() {
   const { updateElement, currentElement, getElement } = UseElementStore();
-
-  interface ShadowStyleState {
-    hOffset: number;
-    vOffset: number;
-    blur: number;
-    spread: number;
-    color: string;
-    opacity: number;
-  }
 
   const initialState = {
     hOffset: 0,
@@ -25,51 +17,13 @@ function ShadowProps() {
     opacity: 100,
   };
 
-  const [shadowStyles, setShadowStyles] = useState<ShadowStyleState>(initialState);
-
-  const reset = () => {
-    shadowStyles.hOffset = 0;
-    shadowStyles.vOffset = 0;
-    shadowStyles.blur = 0;
-    shadowStyles.spread = 0;
-    shadowStyles.color = "red";
-    shadowStyles.opacity = 100;
-  };
-
-  useEffect(() => {
-    reset();
-    const res = getElement(currentElement);
-    const resProps = res?.props;
-    setShadowStyles((prevStyles) => {
-      const updatedStyles = { ...prevStyles };
-      if (resProps) {
-        Object.keys(resProps).forEach((key) => {
-          if (key) {
-            switch (key) {
-              case "hOffset":
-              case "vOffset":
-              case "blur":
-              case "spread":
-              case "opacity":
-                const num = parseFloat(resProps[key]);
-                updatedStyles[key] = !isNaN(num) ? num : prevStyles[key];
-                break;
-              case "color":
-                updatedStyles[key] = resProps.color;
-                break;
-              default:
-                break;
-            }
-          }
-        });
-      }
-
-      return updatedStyles;
-    });
-  }, [currentElement, getElement]);
+  const { elementStyle: shadowStyles, setElementStyle: setShadowStyles } = useProps(
+    initialState,
+    "shadowProps",
+  );
 
   const handleUpdate = (updateKey: string, updateValue: any) => {
-    setShadowStyles((prevStyles) => ({
+    setShadowStyles((prevStyles: any) => ({
       ...prevStyles,
       [updateKey]: updateValue,
     }));

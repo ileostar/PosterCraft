@@ -1,20 +1,8 @@
 "use client";
 
-import { UseElementStore } from "@/stores/element";
-import { useEffect, useState } from "react";
+import useProps from "../../../../../hooks/useProps";
 
 function SizeProps() {
-  const { updateElement, currentElement, getElement, currentSize } = UseElementStore();
-
-  interface SizeStyleState {
-    height: number;
-    width: number;
-    paddingTop: number;
-    paddingBottom: number;
-    paddingLeft: number;
-    paddingRight: number;
-  }
-
   const initialState = {
     height: 0,
     width: 0,
@@ -24,62 +12,7 @@ function SizeProps() {
     paddingRight: 0,
   };
 
-  const [sizeStyles, setSizeStyles] = useState<SizeStyleState>(initialState);
-
-  const reset = () => {
-    sizeStyles.height = 0;
-    sizeStyles.width = 0;
-    sizeStyles.paddingTop = 0;
-    sizeStyles.paddingBottom = 0;
-    sizeStyles.paddingLeft = 0;
-    sizeStyles.paddingRight = 0;
-  };
-
-  useEffect(() => {
-    reset();
-    const res = getElement(currentElement);
-    const resProps = res?.props;
-    setSizeStyles((prevStyles) => {
-      const updatedStyles = { ...prevStyles };
-      if (resProps) {
-        Object.keys(resProps).forEach((key) => {
-          if (key in prevStyles) {
-            switch (key) {
-              case "height":
-              case "width":
-              case "paddingRight":
-              case "paddingLeft":
-              case "paddingBottom":
-              case "paddingTop":
-                const num = parseFloat(resProps[key]);
-                updatedStyles[key] = !isNaN(num) ? num : prevStyles[key];
-                break;
-            }
-          }
-        });
-      }
-      return updatedStyles;
-    });
-  }, [currentElement, getElement, currentSize]);
-
-  const handleUpdate = (updateKey: string, updateValue: any) => {
-    setSizeStyles((prevStyles) => ({
-      ...prevStyles,
-      [updateKey]: updateValue,
-    }));
-    const style = {
-      height: updateKey == "height" ? updateValue + "px" : sizeStyles.height + "px",
-      width: updateKey == "width" ? updateValue + "px" : sizeStyles.width + "px",
-      paddingTop: updateKey == "paddingTop" ? updateValue + "px" : sizeStyles.paddingTop + "px",
-      paddingBottom:
-        updateKey == "paddingBottom" ? updateValue + "px" : sizeStyles.paddingBottom + "px",
-      paddingLeft: updateKey == "paddingLeft" ? updateValue + "px" : sizeStyles.paddingLeft + "px",
-      paddingRight:
-        updateKey == "paddingRight" ? updateValue + "px" : sizeStyles.paddingRight + "px",
-    };
-
-    updateElement(currentElement, style);
-  };
+  const { elementStyle: sizeStyles, handleUpdate } = useProps(initialState, "sizeProps");
 
   return (
     <div className="py-1 px-6 ">
