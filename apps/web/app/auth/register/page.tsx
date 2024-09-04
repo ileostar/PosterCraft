@@ -14,6 +14,9 @@ import { z } from "zod";
 
 import "@/styles/base/formFieldError.css";
 
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
+
 const registerFormSchema = z.object({
   phone: z.string().length(11, { message: "无效的手机号码" }).regex(/^\d+$/, {
     message: "无效的手机号码",
@@ -34,6 +37,7 @@ export type loginFormSchemaType = z.infer<typeof registerFormSchema>;
 
 export default function Register() {
   const router = useRouter();
+  const { toast } = useToast();
   const form = useForm<loginFormSchemaType>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -44,15 +48,35 @@ export default function Register() {
     },
   });
   async function onSubmit(values: loginFormSchemaType) {
-    const res = await defaultSignUp({
-      username: form.getValues("username"),
-      password: form.getValues("password"),
-      phone: form.getValues("phone"),
-      otp: form.getValues("code"),
-    });
-    setTimeout(() => {
-      router.push("/auth/login");
-    }, 2000);
+    try {
+      const res = await defaultSignUp({
+        username: form.getValues("username"),
+        password: form.getValues("password"),
+        phone: form.getValues("phone"),
+        otp: form.getValues("code"),
+      });
+
+      if (res.data.code !== 200) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: res.data.msg,
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
+        return;
+      }
+
+      setTimeout(() => {
+        router.push("/auth/login");
+      }, 2000);
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error.msg,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    }
   }
 
   return (

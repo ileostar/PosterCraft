@@ -8,6 +8,7 @@ import renderSignIn from "@/components/pages/auth/SignIn";
 import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { useToast } from "@/components/ui/use-toast";
 import { useGithubUsername, useOauth2Dialog } from "@/stores/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -17,6 +18,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import "@/styles/base/formFieldError.css";
+
+import { ToastAction } from "@/components/ui/toast";
 
 const loginFormSchema = z.object({
   email: z.string().email({
@@ -31,13 +34,14 @@ const loginFormSchema = z.object({
   code: z.string().length(6, { message: "无效的验证码" }).regex(/^\d+$/, {
     message: "无效的验证码",
   }),
-  username: z.string().min(1, { message: "用户名长度不能少于1个字符" }),
+  username: z.string().min(2, { message: "用户名长度不能少于2个字符" }),
 });
 
 export type loginFormSchemaType = z.infer<typeof loginFormSchema>;
 
 export default function Login() {
   const router = useRouter();
+  const { toast } = useToast();
   const form = useForm<loginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -82,17 +86,37 @@ export default function Login() {
   }, [countdown]);
 
   const handleSign = async () => {
-    let res = isPhoneMode
-      ? await loginBySMS({ phone: form.getValues("phone"), otp: form.getValues("code") })
-      : await defaultSignIn({
-          identifier: form.getValues("username"),
-          password: form.getValues("password"),
+    try {
+      let res = isPhoneMode
+        ? await loginBySMS({ phone: form.getValues("phone"), otp: form.getValues("code") })
+        : await defaultSignIn({
+            identifier: form.getValues("username"),
+            password: form.getValues("password"),
+          });
+
+      if (res.data.code !== 200) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: res.data.msg,
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
         });
-    if (res.data.token) {
-      window.localStorage.setItem("token", res.data.token); //存入本地
+        return;
+      }
+
+      if (res.data.token) {
+        window.localStorage.setItem("token", res.data.token); //存入本地
+      }
+      window.localStorage.setItem("userId", res.data.data.userId);
+      router.push("/");
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error.msg,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
     }
-    window.localStorage.setItem("userId", res.data.data.userId);
-    router.push("/");
   };
   const { githubUsername } = useGithubUsername();
   const { setIsOpen, isOpen } = useOauth2Dialog();
@@ -152,8 +176,7 @@ export default function Login() {
             <div className="flex justify-between mt-[5px]">
               <Button
                 className="btn w-full hover:bg-red-600 bg-[#EF4444] text-white"
-                // onClick={() => handleSign()}
-                onClick={() => console.log(11)}
+                onClick={() => handleSign()}
                 type="submit"
               >
                 登录
