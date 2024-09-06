@@ -11,7 +11,10 @@ import "nprogress/nprogress.css";
 import "cropperjs/dist/cropper.css";
 import "lenis/dist/lenis.css";
 
+import { allLocaleCodes, availableLocalesMap, defaultLocale } from "@/config";
 import { cn } from "@/lib/utils";
+import { getLocale, unstable_setRequestLocale } from "next-intl/server";
+import { notFound } from "next/navigation";
 
 import Provider from "./provider";
 
@@ -44,11 +47,22 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+
+  if (!allLocaleCodes.includes(locale)) {
+    // Forces the current locale to be the Default Locale
+    unstable_setRequestLocale(defaultLocale?.code!);
+    // when the locale is not listed in the locales, return NotFound
+    return notFound();
+  }
+
+  // Configures the current Locale to be the given Locale of the Request
+  unstable_setRequestLocale(locale);
   return (
     <ViewTransitions>
       <html
