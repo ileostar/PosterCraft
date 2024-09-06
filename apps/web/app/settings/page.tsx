@@ -32,19 +32,19 @@ function Main() {
           </TabsTrigger>
         </TabsList>
         <TabsContent
-          className="max-sm:h-[80vh] flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
+          className="dark:bg-[url('/star.gif')] max-sm:h-[80vh] flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
           value="profile"
         >
           <Profile />
         </TabsContent>
         <TabsContent
-          className=" flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
+          className="dark:bg-[url('/star.gif')] flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
           value="account"
         >
           <Account />
         </TabsContent>
         <TabsContent
-          className="flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
+          className="dark:bg-[url('/star.gif')] flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
           value="password"
         >
           <div className="flex flex-col gap-2 h-[100vh] w-full justify-start">

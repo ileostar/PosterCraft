@@ -111,7 +111,7 @@ export default function Profile() {
   return (
     <div className="h-full flex flex-col justify-between max-sm:gap-6">
       <div className="flex justify-start items-center h-[10%] ">
-        <div className="text-[#f43f5e]  text-2xl card-title">My Card</div>
+        <div className="text-[#f43f5e] dark:text-[#d048ef]  text-2xl card-title">My Card</div>
       </div>
       <div className="h-[80%] flex flex-col justify-between max-sm:gap-2 items-center">
         <UploadAvatar

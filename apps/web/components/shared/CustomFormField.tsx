@@ -83,7 +83,9 @@ function CustomFormField({
         <FormItem>
           {isShowLabel ? (
             <FormLabel>
-              <span className={`${hidden ? "hidden" : ""} font-serif text-black`}>{label}</span>
+              <span className={`${hidden ? "hidden" : ""} font-serif text-black dark:text-white`}>
+                {label}
+              </span>
             </FormLabel>
           ) : null}
           <FormControl>

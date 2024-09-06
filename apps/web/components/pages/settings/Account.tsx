@@ -2,7 +2,7 @@
 
 import { bindEmail, updateEmail, verifyEmail } from "@/api/email";
 import { updatePhone, verifyPhone } from "@/api/sms";
-import { deleteUser, getUserInfo } from "@/api/user";
+import { getUserInfo } from "@/api/user";
 import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
@@ -39,7 +39,6 @@ export type emailFormSchemaType = z.infer<typeof emailFormSchema>;
 export default function Account({ className }: Readonly<{ className?: string }>) {
   const { toast } = useToast();
 
-  const [userId, setUserId] = useState<string>("0");
   const [isBindEmail, setIsBindEmail] = useState<boolean>(false);
   const [phoneStep, setPhoneStep] = useState<number>(0); //用于控制表单显示的步骤变化
   const [emailStep, setEmailStep] = useState<number>(0); //用于控制表单显示的步骤变化
@@ -81,7 +80,6 @@ export default function Account({ className }: Readonly<{ className?: string }>)
   useEffect(() => {
     const userId = window.localStorage.getItem("userId");
     if (userId !== null) {
-      setUserId(userId);
       getUserData(userId);
     }
   }, []);
@@ -247,13 +245,13 @@ export default function Account({ className }: Readonly<{ className?: string }>)
     <div className={`h-auto flex flex-col justify-between gap-10 ${className}`}>
       <div className=" flex flex-col justify-start gap-6 ">
         <div className="flex justify-start items-center ">
-          <div className="text-[#f43f5e]  text-xl card-title">绑定账号</div>
+          <div className="text-[#f43f5e] dark:text-[#d048ef] text-xl card-title">绑定账号</div>
         </div>
         <div className="flex flex-col justify-start gap-6">
           <Form {...phoneForm}>
             <form
               onSubmit={phoneForm.handleSubmit(onSubmitPhone, (errors) => console.log(errors))}
-              className="w-[40%] mx-auto flex flex-col gap-4 "
+              className=" sm:w-[40%] mx-auto flex flex-col gap-4 "
             >
               <CustomFormField
                 form={phoneForm}
@@ -276,7 +274,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
 
               <div className="w-full flex gap-4">
                 <Button
-                  className=" btn  max-sm:w-[60%] bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
+                  className=" btn bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
                   type="submit"
                 >
                   {phoneStep === 0 ? "更换手机号" : "下一步"}
@@ -285,7 +283,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
                   onClick={() => {
                     window.location.reload();
                   }}
-                  className=" btn  max-sm:w-[60%] bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
+                  className=" btn  bg-[#ebedef] dark:bg-[#727477]  hover:bg-red-600  text-black dark:text-white"
                 >
                   返回
                 </Button>
@@ -296,7 +294,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
           <Form {...emailForm}>
             <form
               onSubmit={emailForm.handleSubmit(onSubmitEmail)}
-              className="w-[40%] mx-auto flex flex-col gap-4 "
+              className="sm:w-[40%] mx-auto flex flex-col gap-4 "
             >
               <CustomFormField
                 form={emailForm}
@@ -319,7 +317,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
 
               <div className="w-full flex gap-4">
                 <Button
-                  className=" btn  max-sm:w-[60%] bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
+                  className=" btn  bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
                   type="submit"
                 >
                   {emailStep === 0 ? "更换邮箱" : "下一步"}
@@ -328,7 +326,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
                   onClick={() => {
                     window.location.reload();
                   }}
-                  className=" btn  max-sm:w-[60%] bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
+                  className=" btn  bg-[#ebedef] dark:bg-[#727477] hover:bg-red-600  text-black dark:text-white"
                 >
                   返回
                 </Button>
@@ -340,7 +338,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
 
       <div className="flex flex-col justify-start gap-6">
         <div className="flex justify-start items-center h-[10%] ">
-          <div className="text-[#f43f5e]  text-xl card-title">注销账号</div>
+          <div className="text-[#f43f5e] dark:text-[#d048ef]  text-xl card-title">注销账号</div>
         </div>
         <div className="w-[80%] mx-auto flex flex-col gap-4">
           <div>注销后账号所有数据将被销毁并不可找回，请谨慎操作。</div>
@@ -348,7 +346,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
             onClick={() => {
               window.location.reload();
             }}
-            className="w-[20%] btn bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
+            className="sm:w-[20%] btn bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
           >
             注销账号
           </Button>
