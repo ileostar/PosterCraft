@@ -8,20 +8,21 @@ const bundleAnalyzer = withBundleAnalyzer({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "poster-craft.oss-cn-shenzhen.aliyuncs.com",
-      },
-      {
-        protocol: "https",
-        hostname: "img.daisyui.com",
-      },
-      {
-        protocol: "https",
-        hostname: "cimg.co",
-      },
-    ],
+    // remotePatterns: [
+    //   {
+    //     protocol: "https",
+    //     hostname: "poster-craft.oss-cn-shenzhen.aliyuncs.com",
+    //   },
+    //   {
+    //     protocol: "https",
+    //     hostname: "img.daisyui.com",
+    //   },
+    //   {
+    //     protocol: "https",
+    //     hostname: "cimg.co",
+    //   },
+    // ],
+    domains: ["poster-craft.oss-cn-shenzhen.aliyuncs.com", "img.daisyui.com", "cimg.co"],
   },
 };
 
