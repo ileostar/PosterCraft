@@ -1,4 +1,4 @@
-import EditorHeader from "@/components/pages/editor/Header";
+import EditorHeader from "@/components/pages/editor/Header/index";
 
 interface EditorLayoutProps {
   children: React.ReactNode;

@@ -1,10 +1,14 @@
+"use client";
+
 import MenuItem from "@/components/shared/MenuItem";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { DrawerMenuItems } from "@/config";
-import { Link } from "next-view-transitions";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-interface GlobalDrawerProps {}
+interface GlobalDrawerProps {
+  className?: string;
+}
 
 // TODO 替换接口来的信息或者从store获取
 const userInfo = {
@@ -16,7 +20,7 @@ const userInfo = {
   address: "",
 };
 
-const GlobalDrawer: React.FC<GlobalDrawerProps> = () => {
+const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
   // TODO 退出登陆
   const logout = async () => {};
 
@@ -28,7 +32,10 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = () => {
             <div className="relative overflow-visible">
               <Image
                 src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                className="rounded-full w-10 h-10 group-hover:scale-105 transition-transform duration-300"
+                className={cn(
+                  "rounded-full w-10 h-10 group-hover:scale-105 transition-transform duration-300",
+                  className,
+                )}
                 alt={"avatar"}
                 width={100}
                 height={100}
