@@ -1,73 +1,18 @@
 "use client";
 
 import ColorPicker from "@/components/shared/ColorPicker";
-import { UseElementStore } from "@/stores/element";
-import { useCallback, useEffect, useState } from "react";
+
+import useProps from "../../../../../hooks/useProps";
 
 function BorderProps() {
-  const { updateElement, currentElement, getElement } = UseElementStore();
-
-  interface BorderStyleState {
-    borderStyle: string;
-    borderWidth: number;
-    borderRadius: number;
-    borderColor: string;
-  }
-
-  const initialState: BorderStyleState = {
+  const initialState = {
     borderStyle: "",
     borderWidth: 0,
     borderRadius: 0,
     borderColor: "",
   };
 
-  const [borderStyles, setBorderStyles] = useState<BorderStyleState>(initialState);
-
-  useEffect(() => {
-    const res = getElement(currentElement);
-    const resProps = res?.props;
-
-    setBorderStyles((prevStyles) => {
-      const updatedStyles = { ...prevStyles };
-      if (resProps) {
-        Object.keys(resProps).forEach((key) => {
-          if (key in prevStyles) {
-            switch (key) {
-              case "borderWidth":
-              case "borderRadius":
-                const num = parseFloat(resProps[key]);
-                updatedStyles[key] = !isNaN(num) ? num : prevStyles[key];
-                break;
-              case "borderStyle":
-              case "borderColor":
-                updatedStyles[key] = resProps[key];
-                break;
-            }
-          }
-        });
-      }
-      return updatedStyles;
-    });
-  }, [currentElement, getElement]);
-
-  const handleUpdate = useCallback(
-    (updateKey: string, updateValue: any) => {
-      setBorderStyles((prevStyles) => ({
-        ...prevStyles,
-        [updateKey]: updateValue,
-      }));
-      const style = {
-        borderWidth:
-          updateKey === "borderWidth" ? updateValue + "px" : borderStyles.borderWidth + "px",
-        borderStyle: updateKey === "borderStyle" ? updateValue : borderStyles.borderStyle,
-        borderColor: updateKey === "borderColor" ? updateValue : borderStyles.borderColor,
-        borderRadius:
-          updateKey === "borderRadius" ? updateValue + "px" : borderStyles.borderRadius + "px",
-      };
-      updateElement(currentElement, style);
-    },
-    [borderStyles, currentElement, updateElement],
-  );
+  const { elementStyle: borderStyles, handleUpdate } = useProps(initialState, "borderProps");
 
   return (
     <div className="py-1 px-6 ">

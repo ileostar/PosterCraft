@@ -59,7 +59,7 @@ function CustomFormField({
       render={({ field }) => (
         <FormItem>
           <FormLabel>
-            <span className="font-serif">{label}</span>
+            <span className="font-serif text-black">{label}</span>
           </FormLabel>
           <FormControl>
             {!isVerify ? (
