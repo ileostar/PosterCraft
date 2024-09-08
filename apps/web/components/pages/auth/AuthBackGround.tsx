@@ -9,8 +9,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="h-[100vh] w-[100vw] flex overflow-hidden">
         <div className="flex-1 bg-gradient-to-r from-red-600 to-red-500 bg-design">
           <div className="h-full flex flex-col justify-between p-5 text-white font-serif">
-            <p className="text-xl">POSTERCRAFT</p>
-            <p className="text-3xl">Lets Create Now！</p>
+            <div className="text-xl">POSTERCRAFT</div>
+            <div className="text-3xl">Lets Create Now！</div>
             <Link href="/">&lt; Home</Link>
           </div>
         </div>
@@ -79,7 +79,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </div>
             </div>
             <Planet />
-            <p>@Copyright LeoStar</p>
+            <div>@Copyright LeoStar</div>
           </div>
         </div>
       </div>

@@ -40,6 +40,7 @@ function renderSignIn({
             href="#"
             onClick={() => {
               setIsPhoneMode(!isPhoneMode);
+              form.reset();
             }}
             className="label-text-alt link link-hover text-[#EF4444] "
           >
@@ -69,6 +70,7 @@ function renderSignIn({
             href="#"
             onClick={() => {
               setIsPhoneMode(!isPhoneMode);
+              form.reset();
             }}
             className="label-text-alt link link-hover text-[#EF4444] "
           >
