@@ -109,22 +109,22 @@ export default function Profile() {
   };
 
   return (
-    <div className="h-full flex flex-col justify-between max-sm:gap-6">
-      <div className="flex justify-start items-center h-[10%] ">
-        <div className="text-[#f43f5e] dark:text-[#d048ef]  text-2xl card-title">My Card</div>
-      </div>
-      <div className="h-[80%] flex flex-col justify-between max-sm:gap-2 items-center">
-        <UploadAvatar
-          handleOssUrl={handleOssUrl}
-          img={avatar}
-        />
+    <div className="h-full flex flex-row justify-between">
+      <div className="h-full flex flex-1 flex-col justify-between max-sm:gap-6">
+        <div className="flex justify-start items-center h-[10%] ">
+          <div className="text-[#f43f5e] dark:text-[#d048ef]  text-2xl card-title">My Card</div>
+        </div>
+        <div className="h-[85%] flex flex-col justify-around max-sm:gap-2 items-center">
+          <UploadAvatar
+            handleOssUrl={handleOssUrl}
+            img={avatar}
+          />
 
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="w-[70%] h-[60%] mx-auto flex flex-col justify-between max-sm:gap-6"
-          >
-            <div className="grid grid-cols-1 gap-6  sm:grid-cols-2 ">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="w-[40%] mx-auto flex flex-col justify-between max-sm:gap-6"
+            >
               <CustomFormField
                 form={form}
                 name={"username"}
@@ -137,19 +137,20 @@ export default function Profile() {
                 placeholder={"请输入昵称"}
                 label={"昵称"}
               />
-            </div>
-            <div className="w-full flex justify-center">
-              <Button
-                className="mx-auto btn w-[20%] max-sm:w-[60%] bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
-                // onClick={() => handleSign()}
-                type="submit"
-              >
-                保存
-              </Button>
-            </div>
-          </form>
-        </Form>
+              <div className="w-full flex justify-center mt-5 mb-5">
+                <Button
+                  className="mx-auto btn w-[20%] max-sm:w-[60%] bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
+                  // onClick={() => handleSign()}
+                  type="submit"
+                >
+                  保存
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
       </div>
+      <div className="h-full flex-1  bg-blue-500/30 rounded-lg "></div>
     </div>
   );
 }

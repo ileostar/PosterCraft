@@ -82,9 +82,10 @@ export default function Account({ className }: Readonly<{ className?: string }>)
     if (userId !== null) {
       getUserData(userId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const doStep = async (step: number) => {
+  const executePhoneStep = async (step: number) => {
     switch (step) {
       case 0:
         setPhoneIsDisabled(true);
@@ -157,10 +158,10 @@ export default function Account({ className }: Readonly<{ className?: string }>)
   async function onSubmitPhone(values: phoneFormSchemaType) {
     console.log(values);
     setPhoneStep(phoneStep + 1);
-    doStep(phoneStep + 1); //因为setPhoneSteps是异步的，所以还需要直接+1
+    executePhoneStep(phoneStep + 1); //因为setPhoneSteps是异步的，所以还需要直接+1
   }
 
-  const doEmailStep = async (step: number) => {
+  const executeEmailStep = async (step: number) => {
     switch (step) {
       case 0:
         setEmailIsDisabled(true);
@@ -238,7 +239,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
   async function onSubmitEmail(values: emailFormSchemaType) {
     console.log(values);
     setEmailStep(emailStep + 1);
-    doEmailStep(emailStep + 1); //因为setPhoneSteps是异步的，所以还需要直接+1
+    executeEmailStep(emailStep + 1); //因为setPhoneSteps是异步的，所以还需要直接+1
   }
 
   return (
@@ -280,14 +281,16 @@ export default function Account({ className }: Readonly<{ className?: string }>)
                   >
                     {phoneStep === 0 ? "更换手机号" : "下一步"}
                   </Button>
-                  <Button
-                    onClick={() => {
-                      window.location.reload();
-                    }}
-                    className=" btn  bg-[#ebedef] dark:bg-[#727477]  hover:bg-red-600  text-black dark:text-white"
-                  >
-                    返回
-                  </Button>
+                  {phoneStep !== 0 ? (
+                    <Button
+                      onClick={() => {
+                        window.location.reload();
+                      }}
+                      className=" btn  bg-[#ebedef] dark:bg-[#727477]  hover:bg-red-600  text-black dark:text-white"
+                    >
+                      返回
+                    </Button>
+                  ) : null}
                 </div>
               </form>
             </Form>
@@ -323,14 +326,16 @@ export default function Account({ className }: Readonly<{ className?: string }>)
                   >
                     {emailStep === 0 ? "更换邮箱" : "下一步"}
                   </Button>
-                  <Button
-                    onClick={() => {
-                      window.location.reload();
-                    }}
-                    className=" btn  bg-[#ebedef] dark:bg-[#727477] hover:bg-red-600  text-black dark:text-white"
-                  >
-                    返回
-                  </Button>
+                  {emailStep !== 0 ? (
+                    <Button
+                      onClick={() => {
+                        window.location.reload();
+                      }}
+                      className=" btn  bg-[#ebedef] dark:bg-[#727477]  hover:bg-red-600  text-black dark:text-white"
+                    >
+                      返回
+                    </Button>
+                  ) : null}
                 </div>
               </form>
             </Form>
