@@ -86,8 +86,8 @@ const UploadAvatar: React.FC<ChildProps> = ({ handleOssUrl, img }) => {
             alt="avatar"
             width={0}
             height={0}
-            sizes="100vw"
-            className="w-full h-auto"
+            sizes="100vh"
+            className="w-full h-full"
           />
         </button>
       ) : (

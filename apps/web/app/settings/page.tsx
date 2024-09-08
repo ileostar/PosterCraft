@@ -1,4 +1,7 @@
 import BaseLayout from "@/components/layouts/BaseLayout";
+import Account from "@/components/pages/settings/Account";
+import Profile from "@/components/pages/settings/Profile";
+import Sidebar from "@/components/pages/settings/Sidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function Main() {
@@ -6,7 +9,7 @@ function Main() {
     <BaseLayout>
       <Tabs
         defaultValue="account"
-        className="flex gap-5"
+        className="flex max-sm:flex-col flex-row gap-5 mx-auto"
       >
         <TabsList className="flex flex-col gap-2 h-[50vh] bg-white dark:bg-[#293545]/30 p-3 w-[10vw] justify-start rounded-xl">
           <TabsTrigger
