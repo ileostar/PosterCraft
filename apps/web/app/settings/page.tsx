@@ -9,7 +9,7 @@ function Main() {
     <BaseLayout>
       <Tabs
         defaultValue="account"
-        className="flex max-sm:flex-col flex-row gap-5 w-[80%] mx-auto"
+        className="flex max-sm:flex-col flex-row gap-5 mx-auto"
       >
         <TabsList className="flex max-sm:flex-row flex-col gap-2 h-[50vh] max-sm:h-[10vh]  bg-white dark:bg-gray-200/10 p-3 w-[10vw] max-sm:w-[100%] justify-start rounded-xl">
           <TabsTrigger
@@ -32,19 +32,19 @@ function Main() {
           </TabsTrigger>
         </TabsList>
         <TabsContent
-          className="dark:bg-[url('/star.gif')] max-sm:h-[80vh] flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
+          className=" max-sm:h-[80vh] flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
           value="profile"
         >
           <Profile />
         </TabsContent>
         <TabsContent
-          className="dark:bg-[url('/star.gif')] flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
+          className=" flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
           value="account"
         >
           <Account />
         </TabsContent>
         <TabsContent
-          className="dark:bg-[url('/star.gif')] flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
+          className=" flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
           value="password"
         >
           <div className="flex flex-col gap-2 h-[100vh] w-full justify-start">
