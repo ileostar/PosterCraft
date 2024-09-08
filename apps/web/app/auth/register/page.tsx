@@ -55,8 +55,16 @@ export default function Register() {
         phone: form.getValues("phone"),
         otp: form.getValues("code"),
       });
-
-      if (res.data.code !== 200) {
+      if (res.data.code === 200) {
+        toast({
+          variant: "success",
+          title: "Success",
+          description: "注册成功,即将跳转至登录页...",
+        });
+        setTimeout(() => {
+          router.push("/auth/login");
+        }, 2000);
+      } else {
         toast({
           variant: "destructive",
           title: "Error",
@@ -65,10 +73,6 @@ export default function Register() {
         });
         return;
       }
-
-      setTimeout(() => {
-        router.push("/auth/login");
-      }, 2000);
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -102,6 +106,7 @@ export default function Register() {
                 name={"password"}
                 placeholder={"请输入密码"}
                 label={"密码"}
+                isPassword={true}
               />
               <CustomFormField
                 form={form}

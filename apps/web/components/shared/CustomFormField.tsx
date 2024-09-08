@@ -24,6 +24,7 @@ function CustomFormField({
   isShowLabel = true,
   countdownZero,
   isEmail,
+  isPassword,
 }: Readonly<{
   form: FormType;
   name: string;
@@ -36,6 +37,7 @@ function CustomFormField({
   hidden?: boolean;
   countdownZero?: boolean;
   isEmail?: boolean;
+  isPassword?: boolean;
 }>) {
   //按钮禁用
   const [isDisabled, setIsDisabled] = useState(false);
@@ -96,6 +98,7 @@ function CustomFormField({
                 placeholder={placeholder}
                 readOnly={readonly}
                 disabled={disabled}
+                type={isPassword ? "password" : "text"}
               />
             ) : (
               <div className={`${hidden ? "hidden" : ""} flex gap-3`}>

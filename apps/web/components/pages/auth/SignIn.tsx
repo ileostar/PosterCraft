@@ -63,6 +63,7 @@ function renderSignIn({
           name={"password"}
           placeholder={"请输入密码"}
           label={"密码"}
+          isPassword={true}
         />
 
         <label className="label justify-end">

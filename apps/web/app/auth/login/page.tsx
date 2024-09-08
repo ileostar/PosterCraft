@@ -93,8 +93,18 @@ export default function Login() {
             identifier: form.getValues("username"),
             password: form.getValues("password"),
           });
-
-      if (res.data.code !== 200) {
+      if (res.data.code === 200) {
+        toast({
+          variant: "success",
+          title: "Success",
+          description: "登录成功,即将跳转至主页...",
+        });
+        if (res.data.token) {
+          window.localStorage.setItem("token", res.data.token); //存入本地
+        }
+        window.localStorage.setItem("userId", res.data.data.userId);
+        router.push("/");
+      } else {
         toast({
           variant: "destructive",
           title: "Error",
@@ -103,12 +113,6 @@ export default function Login() {
         });
         return;
       }
-
-      if (res.data.token) {
-        window.localStorage.setItem("token", res.data.token); //存入本地
-      }
-      window.localStorage.setItem("userId", res.data.data.userId);
-      router.push("/");
     } catch (error: any) {
       toast({
         variant: "destructive",
