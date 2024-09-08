@@ -2,6 +2,11 @@ import { GlobalEnvConfig } from "../env";
 
 export const DrawerMenuItems = [
   {
+    href: "/settings",
+    iconClass: "icon-[carbon--settings]",
+    text: "设置",
+  },
+  {
     href: "/user",
     iconClass: "icon-[carbon--user-avatar]",
     text: "个人中心",

@@ -1,14 +1,5 @@
-import { fileURLToPath } from "node:url";
-
 import withBundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs";
-import createJiti from "jiti";
-import withNextIntl from "next-intl/plugin";
-
-// const jiti = createJiti(fileURLToPath(import.meta.url));
-// jiti('./src/env');
-
-const withNextIntlConfig = withNextIntl("./utils/i18n/index.ts");
 
 const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
@@ -34,20 +25,12 @@ const nextConfig = {
   },
 };
 
-/** @type {import('@sentry/cli').SentryCliOptions} */
-const sentrySettings = {
-  // We don't want Sentry to emit logs
-  silent: true,
-  // Define the Sentry Organisation
-  org: "leostar",
-  // Define the Sentry Project on our Sentry Organisation
-  project: "javascript-nextjs",
-};
-
-/** @type {import('@sentry/nextjs/types/config/types').UserSentryOptions} */
-const sentryConfig = {
+export default withSentryConfig(bundleAnalyzer(nextConfig), {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
+
+  org: "leostar",
+  project: "javascript-nextjs",
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
@@ -80,24 +63,4 @@ const sentryConfig = {
   // https://docs.sentry.io/product/crons/
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
-};
-
-// Next.js Configuration with `next.intl` enabled
-const nextWithIntl = withNextIntlConfig(nextConfig);
-
-// Next.js Configuration with `next.intl` and `bundle-analyzer` enabled
-const nextIntlWithBundleAnalyzer = bundleAnalyzer(nextWithIntl);
-
-// Next.js Configuration with `sentry` enabled
-const nextWithSentry = withSentryConfig(
-  // Next.js Config with i18n Configuration
-  nextIntlWithBundleAnalyzer,
-  // Default Sentry Settings
-  sentrySettings,
-  // Default Sentry Extension Configuration
-  sentryConfig,
-);
-
-// Decides whether enabling Sentry or not
-// By default we only want to enable Sentry within a Vercel Environment
-export default SENTRY_ENABLE ? nextWithSentry : nextIntlWithBundleAnalyzer;
+});
