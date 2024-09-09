@@ -6,15 +6,12 @@ import { getUserInfo } from "@/api/user";
 import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-import "@/styles/base/formFieldError.css";
-
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const phoneFormSchema = z.object({
   phone: z.string().regex(/^1[3-9]\d{9}$/, {

@@ -8,6 +8,7 @@ import renderSignIn from "@/components/pages/auth/SignIn";
 import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useGithubUsername, useOauth2Dialog } from "@/stores/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,10 +17,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-import "@/styles/base/formFieldError.css";
-
-import { ToastAction } from "@/components/ui/toast";
 
 const loginFormSchema = z.object({
   email: z.string().email({
