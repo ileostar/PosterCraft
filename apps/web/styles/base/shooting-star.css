@@ -1,0 +1,138 @@
+.stars {
+  position: fixed;
+  top: 20vh;
+  right: -20vw;
+  width: 80%;
+  height: 80%;
+  z-index: 0;
+  transform: rotate(-45deg);
+}
+
+.star {
+  --star-color: var(--primary-color);
+  --star-tail-length: 6em;
+  --star-tail-height: 2px;
+  --star-width: calc(var(--star-tail-length) / 6);
+  --fall-duration: 9s;
+  --tail-fade-duration: var(--fall-duration);
+
+  position: absolute;
+  top: var(--top-offset);
+  left: 0;
+  width: var(--star-tail-length);
+  height: var(--star-tail-height);
+  color: var(--star-color);
+  opacity: 0.8;
+  background: linear-gradient(45deg, currentColor, transparent);
+  border-radius: 50%;
+  filter: drop-shadow(0 0 6px currentColor);
+  transform: translate3d(104em, 0, 0);
+  animation:
+    fall var(--fall-duration) var(--fall-delay) linear infinite,
+    tail-fade var(--tail-fade-duration) var(--fall-delay) ease-out infinite;
+}
+
+@media screen and (max-width: 750px) {
+  .star {
+    /* 为移动设备优化性能，去掉tail-fade动画 */
+    animation: fall var(--fall-duration) var(--fall-delay) linear infinite;
+  }
+}
+
+/* 手动添加50个.nth-child规则，因为无法在CSS中使用循环 */
+.star:nth-child(n) {
+  --star-tail-length: 10em; /* 替换为随机范围值 */
+  --top-offset: 10vh; /* 替换为随机范围值 */
+  --fall-duration: 10s; /* 替换为随机范围值 */
+  --fall-delay: 1s; /* 替换为随机范围值 */
+}
+.star:nth-child(2n) {
+  --star-tail-length: 20em; /* 替换为随机范围值 */
+  --top-offset: 30vh; /* 替换为随机范围值 */
+  --fall-duration: 6s; /* 替换为随机范围值 */
+  --fall-delay: 2s; /* 替换为随机范围值 */
+}
+.star:nth-child(3n) {
+  --star-tail-length: 17em; /* 替换为随机范围值 */
+  --top-offset: 20vh; /* 替换为随机范围值 */
+  --fall-duration: 8s; /* 替换为随机范围值 */
+  --fall-delay: 1.8s; /* 替换为随机范围值 */
+}
+.star:nth-child(5n) {
+  --star-tail-length: 15em; /* 替换为随机范围值 */
+  --top-offset: 12vh; /* 替换为随机范围值 */
+  --fall-duration: 6s; /* 替换为随机范围值 */
+  --fall-delay: 1.4s; /* 替换为随机范围值 */
+}
+.star:nth-child(7n) {
+  --star-tail-length: 8em; /* 替换为随机范围值 */
+  --top-offset: 30vh; /* 替换为随机范围值 */
+  --fall-duration: 4s; /* 替换为随机范围值 */
+  --fall-delay: 1s; /* 替换为随机范围值 */
+}
+.star:nth-child(8n) {
+  --star-tail-length: 16em; /* 替换为随机范围值 */
+  --top-offset: 4vh; /* 替换为随机范围值 */
+  --fall-duration: 10s; /* 替换为随机范围值 */
+  --fall-delay: 1.6s; /* 替换为随机范围值 */
+}
+/* 重复上面的规则到第50个星星 */
+.star:nth-child(9n) {
+  /* 示例 */
+  --star-tail-length: 6.5em;
+  --top-offset: 20vh;
+  --fall-duration: 7s;
+  --fall-delay: 2s;
+}
+
+/* Add rest up to nth-child(50) with appropriate random values */
+
+.star::before,
+.star::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: calc(var(--star-width) / -2);
+  width: var(--star-width);
+  height: 100%;
+  background: linear-gradient(45deg, transparent, currentColor, transparent);
+  border-radius: inherit;
+  animation: blink 2s linear infinite;
+}
+
+.star::before {
+  transform: rotate(45deg);
+}
+
+.star::after {
+  transform: rotate(-45deg);
+}
+
+@keyframes fall {
+  to {
+    transform: translate3d(-30em, 0, 0);
+  }
+}
+
+@keyframes tail-fade {
+  0%,
+  50% {
+    width: var(--star-tail-length);
+    opacity: 1;
+  }
+  70%,
+  80% {
+    width: 0;
+    opacity: 0.4;
+  }
+  100% {
+    width: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.6;
+  }
+}
