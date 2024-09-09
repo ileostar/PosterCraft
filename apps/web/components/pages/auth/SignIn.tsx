@@ -42,7 +42,7 @@ function renderSignIn({
               setIsPhoneMode(!isPhoneMode);
               form.reset();
             }}
-            className="label-text-alt link link-hover text-[#EF4444] "
+            className="label-text-alt link link-hover text-[#EF4444] dark:text-white"
           >
             使用邮箱登录
           </Link>
@@ -72,7 +72,7 @@ function renderSignIn({
               setIsPhoneMode(!isPhoneMode);
               form.reset();
             }}
-            className="label-text-alt link link-hover text-[#EF4444] "
+            className="label-text-alt link link-hover text-[#EF4444] dark:text-white"
           >
             使用短信登录
           </Link>
