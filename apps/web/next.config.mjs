@@ -15,21 +15,20 @@ const withNextIntl = createNextIntlPlugin("./utils/i18n/request.ts");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    // remotePatterns: [
-    //   {
-    //     protocol: "https",
-    //     hostname: "poster-craft.oss-cn-shenzhen.aliyuncs.com",
-    //   },
-    //   {
-    //     protocol: "https",
-    //     hostname: "img.daisyui.com",
-    //   },
-    //   {
-    //     protocol: "https",
-    //     hostname: "cimg.co",
-    //   },
-    // ],
-    domains: ["poster-craft.oss-cn-shenzhen.aliyuncs.com", "img.daisyui.com", "cimg.co"],
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "poster-craft.oss-cn-shenzhen.aliyuncs.com",
+      },
+      {
+        protocol: "https",
+        hostname: "img.daisyui.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cimg.co",
+      },
+    ],
   },
 };
 
