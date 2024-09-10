@@ -47,14 +47,13 @@ export default function Profile() {
     form.setValue("avatar", res.data.data?.avatar || "");
     setAvatar(res.data.data?.avatar || "");
   };
-
   useEffect(() => {
     const userId = window.localStorage.getItem("userId");
     if (userId !== null) {
       setUserId(userId);
       getUserData(userId);
     }
-  }, [avatar]);
+  }, [avatar, form]);
 
   async function onSubmit(values: FormSchemaType) {
     try {

@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { useMenuOpen } from "@/stores/menu";
 import { Link } from "@/utils/i18n/routing";
 import { useTheme } from "next-themes";
@@ -82,6 +81,7 @@ const SideMenu: React.FC = () => {
                   {Menus.map((menu) => (
                     <Link
                       href={menu.href}
+                      key={menu.href}
                       className={`hover:bg-[#FB7185]/80 hover:text-white dark:hover:dark:bg-[#E730CA]/80 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold ",${pathname === menu.href ? " bg-[#FB7185] dark:bg-[#E730CA] text-white" : "text-gray-300"}`}
                     >
                       {menu.label}
