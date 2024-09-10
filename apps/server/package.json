@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "@alicloud/dysmsapi20170525": "3.0.0",
-    "@alicloud/openapi-client": "0.4.10",
+    "@alicloud/openapi-client": "0.4.11",
     "@alicloud/sms-sdk": "1.1.6",
     "@alicloud/tea-console": "1.0.0",
     "@alicloud/tea-typescript": "1.8.0",
