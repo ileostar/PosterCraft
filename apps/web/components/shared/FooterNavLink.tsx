@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/utils/i18n/routing";
 
 interface FooterNavLinkProps {
   href: string;

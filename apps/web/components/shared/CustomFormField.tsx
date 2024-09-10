@@ -1,5 +1,6 @@
 "use client";
 
+import { sendCodeByEmail } from "@/api/email";
 import { sendBySMS } from "@/api/sms";
 import { useEffect, useState } from "react";
 
@@ -17,7 +18,12 @@ function CustomFormField({
   placeholder,
   label,
   readonly,
+  disabled,
   isVerify,
+  hidden,
+  isShowLabel = true,
+  countdownZero,
+  isEmail,
 }: Readonly<{
   form: FormType;
   name: string;
@@ -25,6 +31,11 @@ function CustomFormField({
   label?: string;
   readonly?: boolean;
   isVerify?: boolean;
+  disabled?: boolean;
+  isShowLabel?: boolean;
+  hidden?: boolean;
+  countdownZero?: boolean;
+  isEmail?: boolean;
 }>) {
   //按钮禁用
   const [isDisabled, setIsDisabled] = useState(false);
@@ -34,7 +45,11 @@ function CustomFormField({
   // 发送验证码并启动倒计时
   const handleClick = () => {
     if (!isDisabled) {
-      sendBySMS({ phone: form.getValues("phone") });
+      if (isEmail) {
+        sendCodeByEmail({ email: form.getValues("email") });
+      } else {
+        sendBySMS({ phone: form.getValues("phone") });
+      }
       setIsDisabled(true);
       setCountdown(60);
     }
@@ -52,34 +67,49 @@ function CustomFormField({
       setIsDisabled(false);
     }
   }, [countdown]);
+
+  useEffect(() => {
+    if (countdownZero) {
+      setIsDisabled(false);
+      setCountdown(0);
+    }
+  }, [countdownZero]);
+
   return (
     <FormField
       control={form.control}
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>
-            <span className="font-serif text-black">{label}</span>
-          </FormLabel>
+          {isShowLabel ? (
+            <FormLabel>
+              <span className={`${hidden ? "hidden" : ""} font-serif text-black dark:text-white`}>
+                {label}
+              </span>
+            </FormLabel>
+          ) : null}
           <FormControl>
             {!isVerify ? (
               <Input
-                className="input-bordered"
+                className={`${hidden ? "hidden" : ""} input-bordered`}
                 {...field}
                 placeholder={placeholder}
                 readOnly={readonly}
+                disabled={disabled}
               />
             ) : (
-              <div className="flex gap-3">
+              <div className={`${hidden ? "hidden" : ""} flex gap-3`}>
                 <Input
-                  className="input-bordered"
+                  className={`input-bordered`}
                   {...field}
                   placeholder={placeholder}
                   readOnly={readonly}
+                  disabled={disabled}
                 />
                 <Button
                   onClick={handleClick}
                   disabled={isDisabled}
+                  className="text-white bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600"
                 >
                   {!isDisabled ? "发送验证码" : `${countdown}s后再试`}
                 </Button>

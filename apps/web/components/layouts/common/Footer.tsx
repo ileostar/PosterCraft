@@ -1,4 +1,4 @@
-import { navLinks, socialLinks } from "@/config/";
+import { FooterNavLinks, FooterSocialLinks } from "@/config/";
 
 import FooterNavLink from "../../shared/FooterNavLink";
 import SocialLink from "../../shared/SocialLink";
@@ -13,7 +13,7 @@ const Footer: React.FC<FooterProps> = () => {
           className="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
           aria-label="Footer"
         >
-          {navLinks.map((link) => (
+          {FooterNavLinks.map((link) => (
             <FooterNavLink
               key={link.href}
               href={link.href}
@@ -22,7 +22,7 @@ const Footer: React.FC<FooterProps> = () => {
           ))}
         </nav>
         <div className="mt-10 flex justify-center space-x-10">
-          {socialLinks.map((link) => (
+          {FooterSocialLinks.map((link) => (
             <SocialLink
               key={link.href}
               href={link.href}

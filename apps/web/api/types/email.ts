@@ -3,7 +3,6 @@ export type sendCodeByEmailBody = {
 };
 
 export type updateEmailBody = {
-  userId: string;
   email: string;
   otp: string;
 };

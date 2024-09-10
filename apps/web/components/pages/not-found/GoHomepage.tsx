@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { Link } from "@/utils/i18n/routing";
 
 interface GoHomepageProps {
   className?: string;

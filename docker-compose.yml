@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+  mysql:
+    restart: always
+    image: mysql:8.0
+    contanter_name: mysql8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - 3306:3306
+  redis:
+    image: redis:5-alpine
+    restart: always
+    volumes:
+      - data:/var/lib/redis
+    ports:
+      - 6379:6379
+  server:
+    build:
+      context: .
+      dockerfile: ./apps/server/Dockerfile
+    restart: always
+    environment:
+      # 根据需要设置环境变量
+      NODE_ENV: production
+      PORT: 3001
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3001:3001
+    depends_on:
+      - db
+  web:
+    build:
+      context: .
+      dockerfile: ./apps/web/Dockerfile
+    restart: always
+    environment:
+      # 根据需要设置环境变量
+      NODE_ENV: production
+      PORT: 3001
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+    depends_on:
+      - server
+
+volumes:
+  data:
+    driver: local
