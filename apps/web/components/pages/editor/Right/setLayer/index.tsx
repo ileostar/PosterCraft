@@ -2,14 +2,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { UseElementStore } from "@/stores/element";
 import { getParentElement } from "@/utils/others/getParentElement";
 import { arrayMove } from "@/utils/others/helper";
-import {
-  DragOutlined,
-  EyeInvisibleOutlined,
-  EyeOutlined,
-  LockOutlined,
-  UnlockOutlined,
-} from "@ant-design/icons";
 import { useEffect, useRef, useState } from "react";
+
+import "@/styles/base/hiddenScroll.css";
 
 import InlineEdit from "./InlineEdit";
 
@@ -68,15 +63,15 @@ function SetLayer() {
     >
       <div
         style={childStyle}
-        className="overflow-x-hidden"
+        className="overflow-x-hidden border border-gray-400 hiddenScrollbar"
         onDrop={(e) => onDrop(e)}
         onDragOver={(e) => onDragOver(e)}
       >
         {Elements.map((item, index) => (
           <div
             key={item.id}
-            className={`${item.id == dragData.currentDragId ? "border-red-500 bg-red-500 text-white" : "border-gray-950 border-solid"} parentItem flex justify-around w-full h-12 relative border-t border-l border-r  ${
-              index === Elements.length - 1 ? "border-b" : ""
+            className={`${item.id == dragData.currentDragId ? "border-red-500 bg-red-500 text-white" : "border-gray-300 border-solid"} parentItem flex justify-around w-full h-14 relative  ${
+              index === Elements.length - 1 ? "" : "border-b"
             }`}
             style={{ zIndex: 10 }}
             draggable
@@ -86,12 +81,19 @@ function SetLayer() {
               setCurrentElement(item.id);
             }}
           >
-            <div className="w-1/6 flex justify-center m-1 rounded-btn border border-gray-300">
+            <div className="w-1/6 flex justify-center m-2 rounded-btn border border-gray-400">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <button onClick={() => handleChange(item.id, "isHidden", !item.isHidden)}>
-                      {item.isHidden ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                    <button
+                      className="text-xl"
+                      onClick={() => handleChange(item.id, "isHidden", !item.isHidden)}
+                    >
+                      {item.isHidden ? (
+                        <span className="icon-[carbon--view-off]"></span>
+                      ) : (
+                        <span className="icon-[carbon--view]"></span>
+                      )}
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -101,12 +103,19 @@ function SetLayer() {
               </TooltipProvider>
             </div>
 
-            <div className="w-1/6 flex justify-center m-1 rounded-btn border border-gray-300">
+            <div className="w-1/6 flex justify-center m-2 rounded-btn border border-gray-300">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <button onClick={() => handleChange(item.id, "isLocked", !item.isLocked)}>
-                      {item.isLocked ? <LockOutlined /> : <UnlockOutlined />}
+                    <button
+                      className="text-xl"
+                      onClick={() => handleChange(item.id, "isLocked", !item.isLocked)}
+                    >
+                      {item.isLocked ? (
+                        <span className="icon-[carbon--locked]"></span>
+                      ) : (
+                        <span className="icon-[carbon--unlocked]"></span>
+                      )}
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -120,12 +129,12 @@ function SetLayer() {
               value={item.layerName}
               id={item.id}
             />
-            <div className="w-1/6 flex justify-center m-1 rounded-btn border border-gray-300">
+            <div className="w-1/6 flex justify-center m-2 rounded-btn border border-gray-300">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <button>
-                      <DragOutlined />
+                    <button className="text-xl">
+                      <span className="icon-[carbon--drag-vertical]"></span>
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>

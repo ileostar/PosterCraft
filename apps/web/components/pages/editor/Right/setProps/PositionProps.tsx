@@ -25,7 +25,7 @@ function PositionProps() {
           value={positionStyles.left}
           onChange={(e) => handleUpdate("left", parseInt(e.target.value, 10))}
           placeholder="x轴坐标"
-          className="input input-bordered w-2/3"
+          className="input input-bordered w-2/3 input-sm  max-w-xs"
         />
       </div>
 
@@ -42,7 +42,7 @@ function PositionProps() {
           value={positionStyles.top}
           onChange={(e) => handleUpdate("top", parseInt(e.target.value, 10))}
           placeholder="y轴坐标"
-          className="input input-bordered w-2/3"
+          className="input input-bordered w-2/3 input-sm  max-w-xs"
         />
       </div>
     </div>

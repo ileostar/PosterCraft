@@ -167,13 +167,13 @@ const UploadBackground: React.FC<ChildProps> = ({ handleOssUrl, img, className }
       <div className=" w-1/3 flex items-center flex-col gap-1">
         <Button
           onClick={() => handleClickButton()}
-          className="rounded-full border-solid border-[#e11d48] bg-white text-[#e11d48] border-4 hover:text-white"
+          className="rounded-full border-solid border-[#d2d4d7] bg-white text-[#828282] border-2 hover:text-white"
         >
           上传图片
         </Button>
         <Button
           onClick={() => crop()}
-          className="rounded-full border-solid border-[#e11d48] bg-white text-[#e11d48] border-4 hover:text-white"
+          className="rounded-full border-solid border-[#d2d4d7] bg-white text-[#828282] border-2 hover:text-white"
         >
           裁剪图片
         </Button>
@@ -182,7 +182,7 @@ const UploadBackground: React.FC<ChildProps> = ({ handleOssUrl, img, className }
             handleOssUrl("");
             setImageUrl("");
           }}
-          className="rounded-full border-solid border-[#e11d48] bg-white text-[#e11d48] border-4 hover:text-white"
+          className="rounded-full border-solid border-[#d2d4d7] bg-white text-[#828282] border-2 hover:text-white"
         >
           删除图片
         </Button>

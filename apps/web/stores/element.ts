@@ -81,6 +81,10 @@ interface ElementStore extends ElementStoreType {
   undo: () => void;
   // 恢复操作
   redo: () => void;
+  // 判断是否可以撤销操作
+  ifUndo: boolean;
+  // 判断是否可以恢复操作
+  ifRedo: boolean;
 }
 
 interface ElementData extends ElementDataType {}
@@ -274,6 +278,7 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
       get().histories.shift();
       get().histories.push(historyRecord);
     }
+    get().ifUndo = false;
   },
   // 修改历史记录
   modifyHistory: (history: HistoryProps, type: "undo" | "redo") => {
@@ -314,7 +319,6 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
   }),
   //撤销操作
   undo: () => {
-    if (get().histories.length === 0) return;
     if (get().historyIndex === -1) {
       get().historyIndex = get().histories.length - 1;
     } else {
@@ -334,12 +338,16 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
       default:
         break;
     }
+    if (get().histories.length === 0 || get().historyIndex === 0) {
+      get().ifUndo = true;
+      console.log("禁用");
+      return;
+    } else {
+      get().ifRedo = false;
+    }
   },
   //恢复操作
   redo: () => {
-    if (get().historyIndex === -1) {
-      return;
-    }
     const history = get().histories[get().historyIndex];
     switch (history.type) {
       case "add":
@@ -356,5 +364,14 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
         break;
     }
     get().historyIndex++;
+    if (get().historyIndex === -1 || get().historyIndex > get().histories.length - 1) {
+      get().ifRedo = true;
+      console.log("禁用");
+      return;
+    }
   },
+  // 判断是否可以撤销操作
+  ifUndo: true,
+  // 判断是否可以恢复操作
+  ifRedo: true,
 }));

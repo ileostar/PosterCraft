@@ -123,7 +123,7 @@ function ShadowProps() {
           value={shadowStyles.spread}
           onChange={(e) => handleUpdate("spread", parseInt(e.target.value, 10))}
           placeholder="阴影大小"
-          className="input input-bordered w-2/3"
+          className="input input-bordered w-2/3 input-sm  max-w-xs"
         />
       </div>
 
@@ -140,7 +140,7 @@ function ShadowProps() {
           value={shadowStyles.blur}
           onChange={(e) => handleUpdate("blur", parseInt(e.target.value, 10))}
           placeholder="字号大小"
-          className="input input-bordered w-2/3"
+          className="input input-bordered w-2/3 input-sm  max-w-xs"
         />
       </div>
 

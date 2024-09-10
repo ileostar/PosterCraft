@@ -6,6 +6,8 @@ import GraphList from "./GraphList";
 import ImgList from "./ImgList";
 import TextList from "./TextList";
 
+import "@/styles/base/hiddenScroll.css";
+
 function Left() {
   const tabs = [
     { id: 0, label: "文本", content: <TextList /> },
@@ -14,7 +16,7 @@ function Left() {
   ];
 
   return (
-    <div className="bg-white w-1/5 mt-3 mb-3 overflow-auto">
+    <div className="bg-white w-1/5  overflow-auto hiddenScrollbar">
       <Tab tabs={tabs} />
     </div>
   );
