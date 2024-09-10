@@ -2,8 +2,8 @@
 
 import { cn } from "@/lib/utils";
 import { useMenuOpen } from "@/stores/menu";
+import { Link } from "@/utils/i18n/routing";
 import { useTheme } from "next-themes";
-import { Link } from "next-view-transitions";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 

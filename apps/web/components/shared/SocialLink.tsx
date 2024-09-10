@@ -1,4 +1,4 @@
-import { Link } from "next-view-transitions";
+import { Link } from "@/utils/i18n/routing";
 
 interface SocialLinkProps {
   href: string;

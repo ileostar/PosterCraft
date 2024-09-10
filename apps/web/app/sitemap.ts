@@ -1,4 +1,4 @@
-import config from "@/config";
+import { GlobalEnvConfig } from "@/config";
 import { type MetadataRoute } from "next";
 
 const sitemap = (): MetadataRoute.Sitemap => {
@@ -11,7 +11,7 @@ const sitemap = (): MetadataRoute.Sitemap => {
     "/templates",
     "/works",
   ].map((route) => ({
-    url: `${config.SITE_URL}${route}`,
+    url: `${GlobalEnvConfig.SITE_URL}${route}`,
     lastModified: new Date().toISOString().split("T")[0],
   }));
 

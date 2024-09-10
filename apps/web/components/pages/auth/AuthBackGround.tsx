@@ -2,13 +2,21 @@
 
 import Planet from "@/components/shared/Planet";
 import ShootingStar from "@/components/shared/ShootingStar";
+import { Link, usePathname, useRouter } from "@/utils/i18n/routing";
+import { useLocale } from "next-intl";
 import { useTheme } from "next-themes";
-import { Link } from "next-view-transitions";
 import { useEffect, useState } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isClient, setIsClient] = useState(false);
-  const { theme, setTheme } = useTheme(); // 假设默认是light
+  const { theme, setTheme } = useTheme();
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const toggleLocale = () => {
+    router.push(pathname, { locale: locale === "en" ? "zh" : "en" });
+  };
 
   useEffect(() => {
     setIsClient(true);
@@ -33,7 +41,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 />
               </label>
               <label className="btn btn-circle  dark:bg-white/30 border-0 swap swap-rotate">
-                <span className="icon-[carbon--ibm-watson-language-translator]  text-red-500 dark:text-white w-7 h-7 rounded-full cursor-pointer"></span>
+                <span
+                  onClick={toggleLocale}
+                  className="icon-[carbon--ibm-watson-language-translator]  text-red-500 dark:text-white w-7 h-7 rounded-full cursor-pointer"
+                ></span>
               </label>
             </div>
             <Planet />

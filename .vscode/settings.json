@@ -34,6 +34,7 @@
     "shacdn",
     "shacdnui",
     "shenzhen",
+    "Transpiles",
     "unstorage",
     "usehooks",
     "veevalidate",
@@ -42,6 +43,13 @@
     "wireframe",
     "Woohoo"
   ],
-  "i18n-ally.localesPaths": ["apps/web/locales"],
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.localesPaths": "apps/web/locales",
+  "i18n-ally.enabledFrameworks": ["next-intl"],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.pathMatcher": "{locale}.json",
+  "i18n-ally.enabledParsers": ["ts", "js", "json"],
+  "i18n-ally.sortKeys": true,
+  "i18n-ally.sourceLanguage": "en",
+  "i18n-ally.displayLanguage": "en",
+  "i18n-ally.extract.keygenStyle": "camelCase"
 }

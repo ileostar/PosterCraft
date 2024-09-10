@@ -1,7 +1,7 @@
 "use client";
 
 import { HeaderMenus } from "@/config";
-import { Link } from "next-view-transitions";
+import { Link } from "@/utils/i18n/routing";
 import { usePathname } from "next/navigation";
 
 interface MenuProps {}

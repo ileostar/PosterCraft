@@ -3,9 +3,7 @@
 import MenuItem from "@/components/shared/MenuItem";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { GlobalEnvConfig } from "@/config";
-// import { DrawerMenuItems } from "@/config";
 import { cn } from "@/lib/utils";
-import { icons } from "lucide-react";
 import Image from "next/image";
 
 interface GlobalDrawerProps {
