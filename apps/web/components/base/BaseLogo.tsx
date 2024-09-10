@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Link } from "next-view-transitions";
+import { Link } from "@/utils/i18n/routing";
 import Image from "next/image";
 
 interface LogoProps {
@@ -15,7 +15,7 @@ const BaseLogo: React.FC<LogoProps> = ({ size = "large", className, ...props }) 
       className={cn("flex cursor-pointer", className)}
       {...props}
     >
-      <div className="logo flex flex-shrink-0 items-center text-white hover:text-[#E730CA] transition-colors">
+      <div className="w-72 flex flex-shrink-0 items-center text-white hover:text-[#E730CA] transition-colors">
         <Image
           src="/favicon.png"
           className="hidden md:block logo-svg transform hover: transition-transform duration-700 will-change-transform"

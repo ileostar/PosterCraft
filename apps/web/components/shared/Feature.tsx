@@ -1,8 +1,9 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { Link, usePathname, useRouter } from "@/utils/i18n/routing";
+import { useLocale } from "next-intl";
 import { useTheme } from "next-themes";
-import { Link } from "next-view-transitions";
 import { useEffect, useState } from "react";
 
 import BaseGoToLogin from "../base/BaseGoToLogin";
@@ -14,6 +15,14 @@ interface FeatureProps {}
 const Feature: React.FC<FeatureProps> = () => {
   const { theme, setTheme } = useTheme();
   const [token, setToken] = useState<string | null>("");
+
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const toggleLocale = () => {
+    router.push(pathname, { locale: locale === "en" ? "zh" : "en" });
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -36,7 +45,10 @@ const Feature: React.FC<FeatureProps> = () => {
           tooltipText={"Translate"}
           position={"bottom"}
         >
-          <span className="icon-[carbon--ibm-watson-language-translator]  text-gray-700 dark:text-white w-8 h-8 rounded-full cursor-pointer"></span>
+          <span
+            onClick={toggleLocale}
+            className="icon-[carbon--ibm-watson-language-translator]  text-gray-700 dark:text-white w-8 h-8 rounded-full cursor-pointer"
+          ></span>
         </BaseTooltips>
       </div>
       <div className="relative hidden min-[845px]:flex bg-transparent rounded-lg font-semibold transition-all duration-700 will-change-transform">

@@ -1,7 +1,7 @@
 "use client";
 
 import CustomFormField from "@/components/shared/CustomFormField";
-import { Link } from "next-view-transitions";
+import { Link } from "@/utils/i18n/routing";
 
 interface FormType {
   [key: string]: any;
@@ -42,7 +42,7 @@ function renderSignIn({
               setIsPhoneMode(!isPhoneMode);
               form.reset();
             }}
-            className="label-text-alt link link-hover text-[#EF4444] "
+            className="label-text-alt link link-hover text-[#EF4444] dark:text-white"
           >
             使用邮箱登录
           </Link>
@@ -73,7 +73,7 @@ function renderSignIn({
               setIsPhoneMode(!isPhoneMode);
               form.reset();
             }}
-            className="label-text-alt link link-hover text-[#EF4444] "
+            className="label-text-alt link link-hover text-[#EF4444] dark:text-white"
           >
             使用短信登录
           </Link>

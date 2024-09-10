@@ -6,15 +6,12 @@ import { getUserInfo } from "@/api/user";
 import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-import "@/styles/base/formFieldError.css";
-
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const phoneFormSchema = z.object({
   phone: z.string().regex(/^1[3-9]\d{9}$/, {
@@ -244,16 +241,16 @@ export default function Account({ className }: Readonly<{ className?: string }>)
 
   return (
     <div className={`h-full flex flex-row justify-between gap-10 ${className}`}>
-      <div className="flex-1 flex flex-col justify-between gap-10">
-        <div className=" flex flex-col justify-start gap-6 ">
+      <ul className="flex-1 flex flex-col justify-between gap-10">
+        <li className=" flex flex-col justify-start gap-6 ">
           <div className="flex justify-start items-center ">
             <div className="text-[#f43f5e] dark:text-[#d048ef] text-xl card-title">绑定账号</div>
           </div>
-          <div className="flex flex-col justify-start gap-6">
+          <div className="flex flex-col w-full justify-start gap-6">
             <Form {...phoneForm}>
               <form
                 onSubmit={phoneForm.handleSubmit(onSubmitPhone, (errors) => console.log(errors))}
-                className=" sm:w-[40%] mx-auto flex flex-col gap-4 "
+                className="w-[80%] flex flex-col gap-4"
               >
                 <CustomFormField
                   form={phoneForm}
@@ -262,7 +259,6 @@ export default function Account({ className }: Readonly<{ className?: string }>)
                   label={"绑定手机号"}
                   disabled={phoneDisabled}
                 />
-
                 <CustomFormField
                   form={phoneForm}
                   name={"otp"}
@@ -273,10 +269,9 @@ export default function Account({ className }: Readonly<{ className?: string }>)
                   hidden={phoneStep === 0 || phoneStep === 2}
                   countdownZero={countdownZero}
                 />
-
                 <div className="w-full flex gap-4">
                   <Button
-                    className=" btn bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
+                    className="btn bg-[#f43f5e] dark:bg-gradient-to-r from-violet-700 to-fuchsia-700 border-none hover:bg-red-600  text-white"
                     type="submit"
                   >
                     {phoneStep === 0 ? "更换手机号" : "下一步"}
@@ -298,7 +293,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
             <Form {...emailForm}>
               <form
                 onSubmit={emailForm.handleSubmit(onSubmitEmail)}
-                className="sm:w-[40%] mx-auto flex flex-col gap-4 "
+                className="w-[80%] flex flex-col gap-4  pr-10"
               >
                 <CustomFormField
                   form={emailForm}
@@ -321,7 +316,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
 
                 <div className="w-full flex gap-4">
                   <Button
-                    className=" btn  bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
+                    className=" btn  bg-[#f43f5e] dark:bg-gradient-to-r from-violet-700 to-fuchsia-700 border-none hover:bg-red-600  text-white"
                     type="submit"
                   >
                     {emailStep === 0 ? "更换邮箱" : "下一步"}
@@ -340,27 +335,27 @@ export default function Account({ className }: Readonly<{ className?: string }>)
               </form>
             </Form>
           </div>
-        </div>
-
-        <div className="flex flex-col justify-start gap-6">
+        </li>
+        <li className="flex flex-col justify-start gap-6">
           <div className="flex justify-start items-center h-[10%] ">
             <div className="text-[#f43f5e] dark:text-[#d048ef]  text-xl card-title">注销账号</div>
           </div>
-          <div className="w-[80%] mx-auto flex flex-col gap-4">
-            <div>注销后账号所有数据将被销毁并不可找回，请谨慎操作。</div>
+          <div className="w-auto flex flex-col gap-4">
             <Button
               onClick={() => {
                 window.location.reload();
               }}
-              className="sm:w-[20%] btn bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
+              className="sm:w-[20%] btn bg-[#f43f5e] dark:bg-gradient-to-r from-violet-700 to-fuchsia-700 border-none hover:bg-red-600  text-white"
             >
               注销账号
             </Button>
+            <div className="text-white/70 text-[10px] h-8 leading-8 px-2 rounded-md bg-gray-500/50">
+              Tips: 注销后账号所有数据将被销毁并不可找回，请谨慎操作。
+            </div>
           </div>
-        </div>
-      </div>
-
-      <div className="flex-1 h-full bg-blue-500/30 rounded-lg"></div>
+        </li>
+      </ul>
+      <div className="flex-1 h-full bg-purple-300/30 rounded-lg"></div>
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import BaseCard from "@/components/base/BaseCard";
 import MoreButton from "@/components/shared/MoreButton";
 import BaseList from "@/components/shared/ShowLists";
-import { Link } from "next-view-transitions";
+import { Link } from "@/utils/i18n/routing";
 import React from "react";
 
 interface TemplateListProps {}

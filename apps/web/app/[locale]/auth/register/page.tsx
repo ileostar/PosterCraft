@@ -6,16 +6,13 @@ import Oauth2 from "@/components/pages/auth/Oauth2";
 import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
+import { Link } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "next-view-transitions";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-import "@/styles/base/formFieldError.css";
-
-import { ToastAction } from "@/components/ui/toast";
-import { useToast } from "@/components/ui/use-toast";
 
 const registerFormSchema = z.object({
   phone: z.string().length(11, { message: "无效的手机号码" }).regex(/^\d+$/, {
@@ -85,14 +82,14 @@ export default function Register() {
 
   return (
     <Layout>
-      <div className="w-[92vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] xl:w-[25vw] min-w-[320px] card shrink-0 max-w-sm shadow-2xl bg-base-100 font-serif rounded-2xl">
+      <div className="w-[92vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] xl:w-[25vw] min-w-[320px] card shrink-0 max-w-sm shadow-2xl bg-base-100  dark:bg-[#FF33DE]/15 dark:backdrop-blur-3xl font-serif rounded-2xl">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-2 p-8 bg-slate-100 rounded-2xl"
+            className="flex flex-col gap-2 p-8 rounded-2xl"
           >
             <div className="flex justify-center items-center ">
-              <div className="text-red-500 text-2xl card-title">Sign Up</div>
+              <div className="text-red-500 dark:text-white text-2xl card-title">Sign Up</div>
             </div>
             <div className="flex flex-col gap-1 mb-1">
               <CustomFormField
@@ -124,7 +121,7 @@ export default function Register() {
             </div>
             <div className="flex justify-between mt-[5px]">
               <Button
-                className="btn w-full hover:bg-red-600  text-white"
+                className="btn w-full bg-red-600 dark:bg-[#8d1d7a] text-white"
                 // onClick={() => handleSign()}
                 type="submit"
               >
@@ -135,7 +132,7 @@ export default function Register() {
               <label className="label">
                 <Link
                   href="/auth/login"
-                  className="label-text-alt no-underline link link-hover text-[#EF4444] "
+                  className="label-text-alt no-underline link link-hover text-[#EF4444] dark:text-white"
                 >
                   点此登录
                 </Link>

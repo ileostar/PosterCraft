@@ -3,7 +3,7 @@ import BaseLayout from "@/components/layouts/BaseLayout";
 import MyWorks from "@/components/pages/user/MyWorks";
 import UserInfos from "@/components/pages/user/UserInfos";
 
-function Main() {
+function Main({ params }: { params: { userId: string } }) {
   return (
     <BaseLayout>
       <UserInfos />

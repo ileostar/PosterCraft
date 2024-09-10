@@ -1,13 +1,14 @@
-import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { Link } from "@/utils/i18n/routing";
 
 interface MenuItemProps {
   href?: string;
-  iconClass: string;
+  ClassName: string;
   text: string;
   onClick?: () => void;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ href, iconClass, text, onClick }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ href, ClassName, text, onClick }) => {
   const commonClasses = "flex items-center gap-3 rounded-xl hover:bg-gray-300/20 px-2 py-1";
   const iconAndTextClasses = "text-gray-600/80 dark:text-gray-300/70 text-lg font-medium";
 
@@ -16,7 +17,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ href, iconClass, text, onClick }) =
       href={href}
       className={commonClasses}
     >
-      <span className={`${iconClass} h-7 w-7 ${iconAndTextClasses} font-bold`}></span>
+      <span className={cn(`h-7 w-7 ${iconAndTextClasses} font-bold`, ClassName)}></span>
       <span className={iconAndTextClasses}>{text}</span>
     </Link>
   ) : (
@@ -24,7 +25,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ href, iconClass, text, onClick }) =
       className={commonClasses}
       onClick={onClick}
     >
-      <span className={`${iconClass} h-7 w-7 ${iconAndTextClasses} font-bold`}></span>
+      <span className={cn(`h-7 w-7 ${iconAndTextClasses} font-bold`, ClassName)}></span>
       <span className={iconAndTextClasses}>{text}</span>
     </div>
   );
