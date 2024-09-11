@@ -1,5 +1,6 @@
 "use client";
 
+import { getWork } from "@/api/work";
 import BaseTooltips from "@/components/base/BaseTooltip";
 import Dialog from "@/components/pages/editor/Middle/Dialog";
 import ChangePosition from "@/components/shared/ChangePosition";
@@ -8,11 +9,14 @@ import ResizeComponent from "@/components/shared/ResizeComponent";
 import useGetScreenRatio from "@/hooks/useGetScreenRatio";
 import useHotKey from "@/hooks/useHotKey";
 import { UseElementStore } from "@/stores/element";
+import { useEffect } from "react";
 
 function Middle(props: any) {
   const {
     Elements,
     setIsElement,
+    setPageBackgroundStyle,
+    setElements,
     currentElement,
     setCurrentElement,
     pageBackgroundStyle,
@@ -58,6 +62,30 @@ function Middle(props: any) {
       },
     },
   ];
+
+  const getTheWork = async () => {
+    const workId = localStorage.getItem("currentWorkId");
+    console.log(workId);
+    if (workId) {
+      const res = await getWork(workId);
+      setElements(res.data.data.content.Elements ?? []);
+      setPageBackgroundStyle({ ...res.data.data.content.pageBackgroundStyle });
+    } else {
+      setElements([]);
+      //设置默认背景样式
+      setPageBackgroundStyle({
+        backgroundColor: "",
+        backgroundImage: ``,
+        backgroundSize: "100% 100%",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      });
+    }
+  };
+
+  useEffect(() => {
+    getTheWork();
+  }, []);
 
   return (
     <div

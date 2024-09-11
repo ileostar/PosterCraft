@@ -176,7 +176,10 @@ function BaseProps() {
         >
           文字颜色：
         </label>
-        <ColorPicker changeColor={(e) => handleUpdate("color", e)} />
+        <ColorPicker
+          toColor={textStyles.color}
+          changeColor={(e) => handleUpdate("color", e)}
+        />
       </div>
 
       <div className="flex justify-between items-center my-4">
@@ -186,7 +189,10 @@ function BaseProps() {
         >
           背景颜色：
         </label>
-        <ColorPicker changeColor={(e) => handleUpdate("backgroundColor", e)} />
+        <ColorPicker
+          toColor={textStyles.backgroundColor}
+          changeColor={(e) => handleUpdate("backgroundColor", e)}
+        />
       </div>
     </div>
   );

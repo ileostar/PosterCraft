@@ -80,7 +80,10 @@ function BorderProps() {
         >
           边框颜色：
         </label>
-        <ColorPicker changeColor={(e) => handleUpdate("borderColor", e)} />
+        <ColorPicker
+          toColor={borderStyles.borderColor}
+          changeColor={(e) => handleUpdate("borderColor", e)}
+        />
       </div>
     </div>
   );

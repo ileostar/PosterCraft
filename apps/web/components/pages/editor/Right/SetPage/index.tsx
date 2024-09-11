@@ -41,6 +41,7 @@ function SetPage() {
               背景颜色：
             </label>
             <ColorPicker
+              toColor={pageBackgroundStyle.backgroundColor}
               changeColor={(e) =>
                 setPageBackgroundStyle({ ...pageBackgroundStyle, backgroundColor: e })
               }

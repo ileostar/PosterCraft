@@ -20,7 +20,7 @@ interface HistoryProps {
 
 interface ElementStore extends ElementStoreType {
   //设置整个元素列表
-  setELements: (elements: ElementData[]) => void;
+  setElements: (elements: ElementData[]) => void;
   // 添加元素
   addElement: (element: ElementData) => void;
   // 删除元素
@@ -92,7 +92,7 @@ interface ElementData extends ElementDataType {}
 export const UseElementStore = create<ElementStore>((set, get) => ({
   Elements: [],
   //设置整个元素列表
-  setELements: (elements: ElementData[]) => {
+  setElements: (elements: ElementData[]) => {
     set({ Elements: elements });
   },
   // 添加元素

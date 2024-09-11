@@ -169,7 +169,10 @@ function ShadowProps() {
         >
           阴影颜色：
         </label>
-        <ColorPicker changeColor={(e) => handleUpdate("color", e)} />
+        <ColorPicker
+          toColor={shadowStyles.color}
+          changeColor={(e) => handleUpdate("color", e)}
+        />
       </div>
     </div>
   );

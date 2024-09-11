@@ -1,19 +1,35 @@
+"use client";
+
+import { createWorkResponse } from "@/api/types/work";
+import { getWorkList } from "@/api/work";
 import BaseCard from "@/components/base/BaseCard";
 import MoreButton from "@/components/shared/MoreButton";
 import BaseList from "@/components/shared/ShowLists";
 import { Link } from "@/utils/i18n/routing";
+import { useEffect, useState } from "react";
 
 interface WorksListProps {}
 
 const WorksList: React.FC<WorksListProps> = () => {
+  const [workList, setWorkList] = useState<createWorkResponse[]>([]);
+
+  const getList = async (pageIndex?: number, pageSize?: number, title?: string) => {
+    const res = await getWorkList({ pageIndex, pageSize, title });
+    setWorkList(res.data.data.list);
+  };
+
+  useEffect(() => {
+    getList(1, 8);
+  }, []);
+
   return (
     <div className="w-full mt-10">
       <BaseList title="Works List">
-        {Array.from({ length: 8 }, (_, i) => i + 1).map((item, index) => (
+        {workList.map((item) => (
           <BaseCard
-            key={index}
-            title="Project Title"
-            description="Project Description"
+            key={item.workId}
+            title={item.title}
+            description={item.desc}
             imgUrl="https://cimg.co/news/100430/248406/polina-kondrashova-fhrwah2hmnm-unsplash.jpg"
           />
         ))}

@@ -37,7 +37,13 @@ const Feature: React.FC<FeatureProps> = () => {
           tooltipText={"Create Post"}
           position={"bottom"}
         >
-          <span className="icon-[carbon--add-alt] text-gray-700 dark:text-white w-8 h-8 rounded-full cursor-pointer"></span>
+          <span
+            onClick={() => {
+              localStorage.removeItem("currentWorkId");
+              router.push("/editor");
+            }}
+            className="icon-[carbon--add-alt] text-gray-700 dark:text-white w-8 h-8 rounded-full cursor-pointer"
+          ></span>
         </BaseTooltips>
       </div>
       <div className="relative hidden min-[845px]:flex bg-transparent rounded-lg  font-semibold transition-all duration-700 will-change-transform">

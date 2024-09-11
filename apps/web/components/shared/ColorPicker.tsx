@@ -1,9 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BlockPicker } from "react-color";
 
-const ColorPicker = ({ changeColor }: { changeColor: (value: string) => void }) => {
+const ColorPicker = ({
+  changeColor,
+  toColor,
+}: {
+  changeColor: (value: string) => void;
+  toColor: string;
+}) => {
   const [color, setColor] = useState("#000000");
 
   const handleChangeComplete = (color: any) => {
@@ -11,6 +17,10 @@ const ColorPicker = ({ changeColor }: { changeColor: (value: string) => void }) 
     setColor(color.hex);
     changeColor(color.hex);
   };
+
+  useEffect(() => {
+    setColor(toColor);
+  }, [toColor]);
 
   return (
     <div className="w-2/3">

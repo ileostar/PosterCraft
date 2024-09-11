@@ -9,7 +9,7 @@ import "@/styles/base/hiddenScroll.css";
 import InlineEdit from "./InlineEdit";
 
 function SetLayer() {
-  const { Elements, updateElement, setIsCurrentLocked, setCurrentElement, setELements } =
+  const { Elements, updateElement, setIsCurrentLocked, setCurrentElement, setElements } =
     UseElementStore();
   const parentRef = useRef<HTMLDivElement | null>(null);
   const [childStyle, setChildStyle] = useState({});
@@ -46,7 +46,7 @@ function SetLayer() {
       const moveIndex = Number(currentEle.dataset.index);
       let list = Elements;
       list = arrayMove(list, dragData.currentDragIndex, moveIndex);
-      setELements(list);
+      setElements(list);
     }
 
     setDragData({ ...dragData, currentDragId: "" });
