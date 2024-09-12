@@ -6,11 +6,19 @@ import BaseCard from "@/components/base/BaseCard";
 import MoreButton from "@/components/shared/MoreButton";
 import BaseList from "@/components/shared/ShowLists";
 import { Link } from "@/utils/i18n/routing";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface WorksListProps {}
 
 const WorksList: React.FC<WorksListProps> = () => {
+  const router = useRouter();
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    setToken(window.localStorage.getItem("token"));
+  }, []);
+
   const [workList, setWorkList] = useState<createWorkResponse[]>([]);
 
   const getList = async (pageIndex?: number, pageSize?: number, title?: string) => {
@@ -19,10 +27,17 @@ const WorksList: React.FC<WorksListProps> = () => {
   };
 
   useEffect(() => {
-    getList(1, 8);
-  }, []);
+    if (token) {
+      getList(1, 8);
+    }
+  }, [token]);
 
-  return (
+  const renderPoster = (item: any) => {
+    router.push("/editor");
+    localStorage.setItem("currentWorkId", item.workId);
+  };
+
+  return token ? (
     <div className="w-full mt-10">
       <BaseList title="Works List">
         {workList.map((item) => (
@@ -31,6 +46,7 @@ const WorksList: React.FC<WorksListProps> = () => {
             title={item.title}
             description={item.desc}
             imgUrl="https://cimg.co/news/100430/248406/polina-kondrashova-fhrwah2hmnm-unsplash.jpg"
+            onClick={() => renderPoster(item)}
           />
         ))}
       </BaseList>
@@ -40,7 +56,7 @@ const WorksList: React.FC<WorksListProps> = () => {
         </Link>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default WorksList;

@@ -53,7 +53,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ children }) => {
 
   return (
     <div className="min-h-svh overflow-hidden p-1.5 btn--animateGlowPink duration-300 ease-out">
-      <Header className="max-w-7xl px-4 sm:px-8 md:px-12 xl:px-0 mx-auto" />
+      <Header className="max-w-7xl px-4 sm:px-8 md:px-12 xl:px-0 mx-auto relative z-50" />
       <main className="scrollBox relative overflow-hidden mt-6 max-w-7xl mx-auto px-4 sm:px-8 md:px-12 xl:px-0">
         {children}
       </main>

@@ -1,6 +1,6 @@
 "use client";
 
-import { createWork } from "@/api/work";
+import { createWork, getWork, updateWork } from "@/api/work";
 import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,9 +12,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
+import { useToast } from "@/components/ui/use-toast";
 import { UseElementStore } from "@/stores/element";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -28,8 +29,8 @@ function DialogDemo({
   const FormSchema = z.object({
     title: z
       .string()
-      .min(4, { message: "标题不能少于4个字符" })
-      .max(12, { message: "标题不能超过20个字符" }),
+      .min(1, { message: "标题不能少于1个字符" })
+      .max(30, { message: "标题不能超过30个字符" }),
     desc: z.string(),
   });
 
@@ -43,26 +44,52 @@ function DialogDemo({
     },
   });
 
+  const { toast } = useToast();
+
   const [open, setOpen] = useState(false);
 
   async function onSubmit(values: FormSchemaType) {
+    const params = {
+      title: values.title,
+      desc: values.desc,
+      coverImg: "",
+      content: {
+        Elements,
+        pageBackgroundStyle,
+      },
+      isTemplate: false,
+      isPublic: false,
+      status: 1,
+    };
     try {
-      const res = await createWork({
-        title: values.title,
-        desc: values.desc,
-        coverImg: "",
-        content: {
-          Elements,
-          pageBackgroundStyle,
-        },
-        isTemplate: false,
-        isPublic: false,
-        status: 1,
-      });
-      console.log(res);
+      const workId = localStorage.getItem("currentWorkId");
+      const res = workId ? await updateWork(workId, params) : await createWork(params);
+      if (res.data.code === 200) {
+        toast({
+          variant: "success",
+          title: "Success",
+          description: "作品保存成功",
+        });
+      }
       setOpen(false);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
+
+  const getTheWork = async () => {
+    const workId = localStorage.getItem("currentWorkId");
+    if (workId) {
+      const res = await getWork(workId);
+      form.setValue("title", res.data.data.title);
+      form.setValue("desc", res.data.data.desc);
+    }
+  };
+
+  useEffect(() => {
+    getTheWork();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Dialog

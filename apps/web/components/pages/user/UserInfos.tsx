@@ -3,7 +3,9 @@ import ProjectCard from "@/components/shared/ProjectCard";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
-interface UserInfosProps {}
+interface UserInfosProps {
+  isMyself: boolean;
+}
 
 // TODO 替换接口来的信息或者从store获取
 const userInfo = {
@@ -14,7 +16,7 @@ const userInfo = {
   phone: "14709723891",
 };
 
-const UserInfos: React.FC<UserInfosProps> = () => {
+const UserInfos: React.FC<UserInfosProps> = (params) => {
   const t = useTranslations();
   return (
     <div className="flex flex-wrap justify-between w-full py-8">
@@ -40,10 +42,12 @@ const UserInfos: React.FC<UserInfosProps> = () => {
             <span className="text-sm text-gray-600/80 dark:text-gray-400/70">|</span>
             <span className="text-sm text-gray-600/80 dark:text-gray-400/70">{userInfo.phone}</span>
           </div>
-          <div className="flex justify-start gap-5">
-            <BaseButton>{t("editPersonalInformation")}</BaseButton>
-            <BaseButton>{t("share")}</BaseButton>
-          </div>
+          {params.isMyself ? (
+            <div className="flex justify-start gap-5">
+              <BaseButton>{t("editPersonalInformation")}</BaseButton>
+              <BaseButton>{t("share")}</BaseButton>
+            </div>
+          ) : null}
         </div>
       </div>
       <div className="flex flex-1 justify-end pr-5 items-center w-full h-full">

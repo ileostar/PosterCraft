@@ -5,47 +5,54 @@ import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/
 import { GlobalEnvConfig } from "@/config";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface GlobalDrawerProps {
   className?: string;
 }
 
-// TODO 替换接口来的信息或者从store获取
-const userInfo = {
-  avatar: "",
-  username: "LeoStar",
-  nickname: "LeoStar",
-  email: "",
-  phone: "",
-  address: "",
-};
-
-const DrawerMenuItems = [
-  {
-    href: "/settings",
-    iconClass: "icon-[carbon--settings]",
-    text: "设置",
-  },
-  {
-    href: "/user",
-    iconClass: "icon-[carbon--user-avatar]",
-    text: "个人中心",
-  },
-  {
-    href: GlobalEnvConfig.DEV_DOCS,
-    iconClass: "icon-[carbon--document-multiple-01]",
-    text: "开发文档",
-  },
-  {
-    href: "https://github.com/ileostar/PosterCraft",
-    iconClass: "icon-[carbon--logo-github]",
-    text: "项目地址",
-  },
-];
-
 const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
   // TODO 退出登陆
   const logout = async () => {};
+
+  const [userId, setUserId] = useState<string | null>(null);
+
+  // TODO 替换接口来的信息或者从store获取
+  const userInfo = {
+    avatar: "",
+    username: "LeoStar",
+    nickname: "LeoStar",
+    email: "",
+    phone: "",
+    address: "",
+  };
+
+  const DrawerMenuItems = [
+    {
+      href: "/settings",
+      iconClass: "icon-[carbon--settings]",
+      text: "设置",
+    },
+    {
+      href: `/user/${userId}`,
+      iconClass: "icon-[carbon--user-avatar]",
+      text: "个人中心",
+    },
+    {
+      href: GlobalEnvConfig.DEV_DOCS,
+      iconClass: "icon-[carbon--document-multiple-01]",
+      text: "开发文档",
+    },
+    {
+      href: "https://github.com/ileostar/PosterCraft",
+      iconClass: "icon-[carbon--logo-github]",
+      text: "项目地址",
+    },
+  ];
+
+  useEffect(() => {
+    setUserId(window.localStorage.getItem("userId"));
+  }, []);
 
   return (
     <Drawer direction="right">

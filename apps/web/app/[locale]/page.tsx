@@ -9,8 +9,8 @@ function Main() {
     <BaseLayout>
       <Hero />
       <Introduce />
-      <WorksList />
       <TemplateList />
+      <WorksList />
     </BaseLayout>
   );
 }

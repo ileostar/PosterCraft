@@ -9,6 +9,7 @@ import {
   getWorkListResponse,
   getWorkResponse,
   publishWorkToTemplateResponse,
+  updateWorkBody,
   updateWorkResponse,
 } from "./types/work";
 
@@ -33,8 +34,8 @@ export function getWork(workId: string) {
 }
 
 /** 更新单个工作区 */
-export function updateWork(workId: string) {
-  return http.put<ResponseData<updateWorkResponse>>(`/works/${workId}`);
+export function updateWork(workId: string, body: updateWorkBody) {
+  return http.put<ResponseData<updateWorkResponse>>(`/works/${workId}`, body);
 }
 
 /** 删除单个工作区 */
