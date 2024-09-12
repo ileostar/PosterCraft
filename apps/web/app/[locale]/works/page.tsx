@@ -29,6 +29,7 @@ function Main() {
 
   useEffect(() => {
     getList(1, pageSize, title);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [title]);
 
   const renderPoster = (item: any) => {
