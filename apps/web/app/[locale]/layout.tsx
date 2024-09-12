@@ -11,7 +11,6 @@ import "cropperjs/dist/cropper.css";
 import "lenis/dist/lenis.css";
 
 import { cn } from "@/lib/utils";
-import { getLocale } from "next-intl/server";
 
 import Provider from "./provider";
 
