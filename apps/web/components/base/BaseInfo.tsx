@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface BaseInfoProps {
   icon?: string;
@@ -8,19 +8,13 @@ interface BaseInfoProps {
 
 const BaseInfo: React.FC<BaseInfoProps> = ({ icon, title, content }) => {
   return (
-    <div className="flex items-center justify-center bg-gray-300/30 rounded-xl h-full">
+    <div className="flex items-center justify-center backdrop-blur-3xl  dark:backdrop-blur-xl bg-gray-300/30 dark:bg-gray-300/20 rounded-xl h-full p-5">
       {icon && (
-        <Image
-          src={icon}
-          alt="icon"
-          width={64}
-          height={64}
-          className="rounded-full"
-        />
+        <span className={cn("text-rose-400 dark:text-[#FF33DE] h-16 w-16 rounded-full", icon)} />
       )}
-      <div className="flex flex-col justify-center p-4">
-        <h3>{title}</h3>
-        <span>{content}</span>
+      <div className="flex flex-col justify-center p-5">
+        <h3 className="text-xl font-bold">{title}</h3>
+        <span className="text-sm text-gray-500 dark:text-white/60">{content}</span>
       </div>
     </div>
   );
