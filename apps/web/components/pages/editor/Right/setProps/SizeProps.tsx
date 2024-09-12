@@ -1,7 +1,5 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-
 import useProps from "../../../../../hooks/useProps";
 
 function SizeProps() {

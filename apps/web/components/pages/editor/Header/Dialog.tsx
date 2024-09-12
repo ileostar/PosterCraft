@@ -1,6 +1,6 @@
 "use client";
 
-import { createWork, getWork, publishWorkToTemplate, updateWork } from "@/api/work";
+import { createWork } from "@/api/work";
 import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +14,7 @@ import {
 import { Form } from "@/components/ui/form";
 import { UseElementStore } from "@/stores/element";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -44,16 +44,6 @@ function DialogDemo({
   });
 
   const [open, setOpen] = useState(false);
-
-  // const getTheWork = async () => {
-  //   const res = await getWork("623c04918a5e7d2f883b3443");
-  //   form.setValue("title", res.data.data.title);
-  //   form.setValue("desc",  res.data.data.desc);
-  // };
-
-  useEffect(() => {
-    // getTheWork();
-  }, []);
 
   async function onSubmit(values: FormSchemaType) {
     try {

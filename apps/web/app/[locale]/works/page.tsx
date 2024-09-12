@@ -15,8 +15,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { UseElementStore } from "@/stores/element";
-// import { useRouter } from "@/utils/i18n/routing"
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 

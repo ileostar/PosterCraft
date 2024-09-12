@@ -340,8 +340,6 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
     }
     if (get().histories.length === 0 || get().historyIndex === 0) {
       get().ifUndo = true;
-      console.log("禁用");
-      return;
     } else {
       get().ifRedo = false;
     }
@@ -366,8 +364,6 @@ export const UseElementStore = create<ElementStore>((set, get) => ({
     get().historyIndex++;
     if (get().historyIndex === -1 || get().historyIndex > get().histories.length - 1) {
       get().ifRedo = true;
-      console.log("禁用");
-      return;
     }
   },
   // 判断是否可以撤销操作

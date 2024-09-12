@@ -15,9 +15,9 @@ const EditorFeature: React.FC<EditorFeatureProps> = ({ className }) => {
           <button className="cursor-pointer bg-[#3D7FFF] relative items-center justify-center flex gap-2 rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-[#3D7FFF]/90 text-white h-7 px-3">
             <svg
               className="lucide lucide-rocket text-cyan-500 dark:text-cyan-400"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              stroke-width="2"
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              strokeWidth="2"
               stroke="#fff"
               fill="none"
               viewBox="0 0 24 24"
@@ -37,9 +37,9 @@ const EditorFeature: React.FC<EditorFeatureProps> = ({ className }) => {
         <button className="cursor-pointer bg-[#3D7FFF] relative items-center justify-center flex gap-2 rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-[#3D7FFF]/90 text-white h-7 px-3">
           <svg
             className="lucide lucide-rocket text-cyan-500 dark:text-cyan-400"
-            stroke-linejoin="round"
-            stroke-linecap="round"
-            stroke-width="2"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            strokeWidth="2"
             stroke="#fff"
             fill="none"
             viewBox="0 0 24 24"

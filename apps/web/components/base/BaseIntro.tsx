@@ -1,6 +1,6 @@
 "use client";
 
-import { Link, useRouter } from "@/utils/i18n/routing";
+import { Link } from "@/utils/i18n/routing";
 import { useTranslations } from "next-intl";
 
 import BaseTyped from "./BaseTyped";
@@ -10,7 +10,7 @@ interface BaseIntroProps {}
 const BaseIntro: React.FC<BaseIntroProps> = () => {
   const t = useTranslations();
 
-  const router = useRouter();
+  
 
   return (
     <div className="w-full h-full -mt-6 flex flex-col md:flex-row justify-center items-center">
@@ -47,15 +47,15 @@ const BaseIntro: React.FC<BaseIntroProps> = () => {
           ]}
         />
         <div className="mt-10 flex items-center gap-x-6">
-          <div
+          <Link
+            href={"/editor"}
             onClick={() => {
               localStorage.removeItem("currentWorkId");
-              router.push("/editor");
             }}
             className="rounded-xl bg-rose-400 dark:bg-[#E730CA] w-32 xl:w-40 py-2.5 font-semibold text-sm xl:text-base text-white hover:text-gray dark:text-white hover:text-gray-700 text-center border border-transparent hover:border-rose-400 dark:hover:border-[#E730CA]/60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-400 hover:bg-transparent dark:hover:bg-transparent focus-visible:outline-none focus-visible:outline-0 focus-visible:outline-offset-0 focus-visible:outline-transparent transition-colors"
           >
             {t("start-designing")}
-          </div>
+          </Link>
           <Link
             href={"/templates"}
             className="border border-rose-400 dark:border-[#E730CA] border-rose-500/50 dark:hover:border-[#E730CA]/30 bg-transparent hover:bg-rose-400/30 dark:hover:bg-[#E730CA]/30 rounded-xl w-36 xl:w-48 py-2.5 font-semibold leading-6 text-sm xl:text-base text-rose-400 dark:text-[#E730CA] hover:text-white text-center transition-colors"

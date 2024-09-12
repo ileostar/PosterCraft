@@ -6,12 +6,12 @@ import { getUserInfo } from "@/api/user";
 import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const phoneFormSchema = z.object({
   phone: z.string().regex(/^1[3-9]\d{9}$/, {
@@ -91,7 +91,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
         setPhoneIsDisabled(true);
         phoneForm.setValue("otp", ""); //初始化验证码
         break;
-      case 2:
+      case 2: {
         const res = await verifyPhone({
           phone: phoneForm.getValues("phone"),
           otp: phoneForm.getValues("otp"),
@@ -117,12 +117,13 @@ export default function Account({ className }: Readonly<{ className?: string }>)
         phoneForm.reset();
         phoneForm.setValue("otp", "000000"); //初始化验证码
         break;
+      }
       case 3:
         setPhoneIsDisabled(true);
         phoneForm.setValue("otp", ""); //初始化验证码
         setCountdownZero(true);
         break;
-      case 4:
+      case 4: {
         phoneForm.getValues("otp");
         phoneForm.getValues("phone");
         const resp = await updatePhone({
@@ -147,6 +148,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
           setPhoneStep(3);
         }
         break;
+      }
       default:
         break;
     }
@@ -168,6 +170,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
         emailForm.setValue("otp", ""); //初始化验证码
         break;
       case 2:
+      {
         const res = await verifyEmail({
           email: emailForm.getValues("email"),
           otp: emailForm.getValues("otp"),
@@ -193,12 +196,14 @@ export default function Account({ className }: Readonly<{ className?: string }>)
         emailForm.reset();
         emailForm.setValue("otp", "000000"); //初始化验证码
         break;
+        }
       case 3:
         setEmailIsDisabled(true);
         emailForm.setValue("otp", ""); //初始化验证码
         setCountdownZero(true);
         break;
       case 4:
+      {
         emailForm.getValues("otp");
         emailForm.getValues("email");
         const resp = isBindEmail
@@ -228,6 +233,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
           setEmailStep(3);
         }
         break;
+        }
       default:
         break;
     }

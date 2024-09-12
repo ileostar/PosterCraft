@@ -41,7 +41,20 @@ export type getWorkListResponse = {
   list: createWorkResponse[];
 };
 
-export type copyWorkResponse = createWorkResponse;
+export type copyWorkResponse = {
+  title: string;
+  desc: string;
+  coverImg: string;
+  content: object;
+  isTemplate: boolean;
+  isPublic: boolean;
+  isHot: boolean;
+  author: string;
+  copiedCount: number;
+  status: number;
+  userId: string;
+  workId: string;
+};;
 
 export type getWorkResponse = createWorkBody & {
   author: string;
@@ -49,7 +62,18 @@ export type getWorkResponse = createWorkBody & {
   workId: string;
 };
 
-export type updateWorkResponse = createWorkBody;
+export type updateWorkResponse = {
+  title: string;
+  desc: string;
+  coverImg: string;
+  content: {
+    Elements?: Array<ElementDataType>;
+    pageBackgroundStyle?: object;
+  };
+  isTemplate: boolean;
+  isPublic: boolean;
+  status: number;
+};;
 
 export type publishWorkToTemplateResponse = {
   url: string;
