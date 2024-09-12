@@ -13,7 +13,7 @@ const BaseLogo: React.FC<LogoProps> = ({ size = "large", className, ...props }) 
     <div className="w-72 flex items-center">
       <Link
         href="/"
-        className={cn("flex logo flex-shrink-0 items-center gap-3", className)}
+        className={cn("flex logo flex-shrink-0 items-center gap-3 outline-none", className)}
         {...props}
       >
         <Image

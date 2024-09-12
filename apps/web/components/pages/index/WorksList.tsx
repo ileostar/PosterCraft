@@ -39,7 +39,10 @@ const WorksList: React.FC<WorksListProps> = () => {
 
   return token ? (
     <div className="w-full mt-10">
-      <BaseList title="Works List">
+      <BaseList
+        hasSearch={false}
+        title="Works List"
+      >
         {workList.map((item) => (
           <BaseCard
             key={item.workId}

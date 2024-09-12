@@ -4,6 +4,9 @@ import MenuItem from "@/components/shared/MenuItem";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { GlobalEnvConfig } from "@/config";
 import { cn } from "@/lib/utils";
+import { usePathname, useRouter } from "@/utils/i18n/routing";
+import { useLocale } from "next-intl";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -14,6 +17,15 @@ interface GlobalDrawerProps {
 const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
   // TODO 退出登陆
   const logout = async () => {};
+  const { theme, setTheme } = useTheme();
+
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const toggleLocale = () => {
+    router.push(pathname, { locale: locale === "en" ? "zh" : "en" });
+  };
 
   const [userId, setUserId] = useState<string | null>(null);
 
@@ -100,6 +112,16 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
                 text={item.text}
               />
             ))}
+            <MenuItem
+              ClassName="icon-[carbon--ibm-watson-language-translator]"
+              text="切换语言"
+              onClick={() => toggleLocale()}
+            />
+            <MenuItem
+              ClassName="dark:h-7 dark:w-7 icon-[carbon--haze-night] dark:icon-[carbon--sun]"
+              text="主题切换"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            />
             <MenuItem
               ClassName="icon-[carbon--logout]"
               text="登出"
