@@ -2,7 +2,9 @@ import BaseButton from "@/components/base/BaseButton";
 import ProjectCard from "@/components/shared/ProjectCard";
 import Image from "next/image";
 
-interface UserInfosProps {}
+interface UserInfosProps {
+  isMyself: boolean;
+}
 
 // TODO 替换接口来的信息或者从store获取
 const userInfo = {
@@ -13,7 +15,7 @@ const userInfo = {
   phone: "14709723891",
 };
 
-const UserInfos: React.FC<UserInfosProps> = () => {
+const UserInfos: React.FC<UserInfosProps> = (params) => {
   return (
     <div className="flex flex-wrap justify-between w-full py-8">
       <div className="flex flex-col justify-between items-center flex-1 w-full h-full pl-5">
@@ -38,10 +40,12 @@ const UserInfos: React.FC<UserInfosProps> = () => {
             <span className="text-sm text-gray-600/80 dark:text-gray-400/70">|</span>
             <span className="text-sm text-gray-600/80 dark:text-gray-400/70">{userInfo.phone}</span>
           </div>
-          <div className="flex justify-start gap-5">
-            <BaseButton>编辑个人信息</BaseButton>
-            <BaseButton>分享</BaseButton>
-          </div>
+          {params.isMyself ? (
+            <div className="flex justify-start gap-5">
+              <BaseButton>编辑个人信息</BaseButton>
+              <BaseButton>分享</BaseButton>
+            </div>
+          ) : null}
         </div>
       </div>
       <div className="flex flex-1 justify-end pr-5 items-center w-full h-full">

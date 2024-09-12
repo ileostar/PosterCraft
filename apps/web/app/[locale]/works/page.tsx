@@ -5,16 +5,8 @@ import { getWorkList } from "@/api/work";
 import BaseCard from "@/components/base/BaseCard";
 import BaseLayout from "@/components/layouts/BaseLayout";
 import Banner from "@/components/shared/Banner";
+import CustomPagination from "@/components/shared/CustomPagination";
 import BaseList from "@/components/shared/ShowLists";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -31,6 +23,7 @@ function Main() {
     const res = await getWorkList({ pageIndex, pageSize, title });
     setWorkList(res.data.data.list);
     setPageIndex(pageIndex);
+    setPageSize(pageSize);
     setTotalPage(Math.ceil(res.data.data.count / pageSize));
   };
 
@@ -60,54 +53,13 @@ function Main() {
           />
         ))}
       </BaseList>
-      <Pagination className="mt-3">
-        <PaginationContent>
-          {pageIndex - 1 === 0 ? null : (
-            <PaginationItem>
-              <PaginationPrevious
-                href="#"
-                onClick={() => getList(pageIndex - 1, pageSize, title)}
-              />
-            </PaginationItem>
-          )}
-          {pageIndex - 1 === 0 ? null : (
-            <PaginationItem>
-              <PaginationLink
-                href="#"
-                onClick={() => getList(pageIndex - 1, pageSize, title)}
-              >
-                {pageIndex - 1}
-              </PaginationLink>
-            </PaginationItem>
-          )}
-          <PaginationItem className="bg-[#c8e0ef]">
-            <PaginationLink href="#">{pageIndex}</PaginationLink>
-          </PaginationItem>
-          {totalPage < pageIndex + 1 ? null : (
-            <PaginationItem>
-              <PaginationLink
-                href="#"
-                onClick={() => getList(pageIndex + 1, pageSize, title)}
-              >
-                {pageIndex + 1}
-              </PaginationLink>
-            </PaginationItem>
-          )}
-          {totalPage <= pageIndex + 1 ? null : (
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          )}
-          {totalPage < pageIndex + 1 ? null : (
-            <PaginationItem>
-              <PaginationNext
-                href="#"
-                onClick={() => getList(pageIndex + 1, pageSize, title)}
-              />
-            </PaginationItem>
-          )}
-        </PaginationContent>
-      </Pagination>
+      <CustomPagination
+        pageIndex={pageIndex}
+        pageSize={pageSize}
+        title={title}
+        totalPage={totalPage}
+        getList={getList}
+      />
     </BaseLayout>
   );
 }

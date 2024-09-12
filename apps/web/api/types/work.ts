@@ -54,13 +54,15 @@ export type copyWorkResponse = {
   status: number;
   userId: string;
   workId: string;
-};;
+};
 
 export type getWorkResponse = createWorkBody & {
   author: string;
   userId: string;
   workId: string;
 };
+
+export type updateWorkBody = createWorkBody;
 
 export type updateWorkResponse = {
   title: string;
@@ -73,7 +75,7 @@ export type updateWorkResponse = {
   isTemplate: boolean;
   isPublic: boolean;
   status: number;
-};;
+};
 
 export type publishWorkToTemplateResponse = {
   url: string;
