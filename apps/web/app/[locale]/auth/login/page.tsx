@@ -11,30 +11,12 @@ import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useGithubUsername, useOauth2Dialog } from "@/stores/auth";
+import { loginFormSchema, loginFormSchemaType } from "@/utils/formSchema";
 import { Link } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-const loginFormSchema = z.object({
-  email: z.string().email({
-    message: "无效的邮箱格式",
-  }),
-  phone: z.string().length(11, { message: "无效的手机号码" }).regex(/^\d+$/, {
-    message: "无效的手机号码",
-  }),
-  password: z.string().min(1, {
-    message: "不能为空",
-  }),
-  code: z.string().length(6, { message: "无效的验证码" }).regex(/^\d+$/, {
-    message: "无效的验证码",
-  }),
-  username: z.string().min(2, { message: "用户名长度不能少于2个字符" }),
-});
-
-export type loginFormSchemaType = z.infer<typeof loginFormSchema>;
 
 export default function Login() {
   const router = useRouter();
@@ -55,32 +37,6 @@ export default function Login() {
 
   //登录模式(是否为手机短信登录)
   const [isPhoneMode, setIsPhoneMode] = useState(false);
-  //按钮禁用
-  const [isDisabled, setIsDisabled] = useState(false);
-  //倒计时
-  const [countdown, setCountdown] = useState(0);
-
-  // 发送验证码并启动倒计时
-  const handleClick = () => {
-    if (!isDisabled) {
-      sendBySMS({ phone: form.getValues("phone") });
-      setIsDisabled(true);
-      setCountdown(60);
-    }
-  };
-  useEffect(() => {
-    if (countdown > 0) {
-      const intervalId = setInterval(() => {
-        setCountdown((prevCountdown) => prevCountdown - 1);
-      }, 1000);
-      return () => {
-        clearInterval(intervalId);
-      };
-    }
-    if (countdown === 0) {
-      setIsDisabled(false);
-    }
-  }, [countdown]);
 
   const handleSign = async () => {
     try {
@@ -110,13 +66,8 @@ export default function Login() {
         });
         return;
       }
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: error.msg,
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      });
+    } catch (error) {
+      console.log(error);
     }
   };
   const { githubUsername } = useGithubUsername();
@@ -169,10 +120,7 @@ export default function Login() {
             {renderSignIn({
               isPhoneMode,
               setIsPhoneMode,
-              isDisabled,
               form,
-              handleClick,
-              countdown,
             })}
             <div className="flex justify-between mt-[5px]">
               <Button

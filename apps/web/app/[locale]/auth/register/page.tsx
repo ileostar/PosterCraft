@@ -8,49 +8,31 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { registerFormSchema, registerFormSchemaType } from "@/utils/formSchema";
 import { Link } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-const registerFormSchema = z.object({
-  phone: z.string().length(11, { message: "无效的手机号码" }).regex(/^\d+$/, {
-    message: "无效的手机号码",
-  }),
-  password: z.string().min(1, {
-    message: "不能为空",
-  }),
-  code: z.string().length(6, { message: "无效的验证码" }).regex(/^\d+$/, {
-    message: "无效的验证码",
-  }),
-  username: z
-    .string()
-    .min(4, { message: "用户名长度不能少于4个字符" })
-    .max(12, { message: "用户名长度不能超过20个字符" }),
-});
-
-export type loginFormSchemaType = z.infer<typeof registerFormSchema>;
 
 export default function Register() {
   const router = useRouter();
   const { toast } = useToast();
-  const form = useForm<loginFormSchemaType>({
+  const form = useForm<registerFormSchemaType>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
       phone: "",
       password: "",
-      code: "",
+      otp: "",
       username: "",
     },
   });
-  async function onSubmit(values: loginFormSchemaType) {
+  async function onSubmit(values: registerFormSchemaType) {
     try {
       const res = await defaultSignUp({
-        username: form.getValues("username"),
-        password: form.getValues("password"),
-        phone: form.getValues("phone"),
-        otp: form.getValues("code"),
+        username: values.username,
+        password: values.password,
+        phone: values.phone,
+        otp: values.otp,
       });
       if (res.data.code === 200) {
         toast({
@@ -70,13 +52,8 @@ export default function Register() {
         });
         return;
       }
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: error.msg,
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      });
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -113,7 +90,7 @@ export default function Register() {
               />
               <CustomFormField
                 form={form}
-                name={"code"}
+                name={"otp"}
                 placeholder={"请输入验证码"}
                 label={"验证码"}
                 isVerify={true}
