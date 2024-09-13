@@ -1,7 +1,7 @@
 "use client";
 
 import { defaultSignUp } from "@/api/auth";
-import Layout from "@/components/pages/auth/AuthBackGround";
+import AuthLayout from "@/components/layouts/AuthLayout";
 import Oauth2 from "@/components/pages/auth/Oauth2";
 import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
@@ -81,7 +81,7 @@ export default function Register() {
   }
 
   return (
-    <Layout>
+    <AuthLayout>
       <div className="w-[92vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] xl:w-[25vw] min-w-[320px] card shrink-0 max-w-sm shadow-2xl bg-base-100  dark:bg-[#FF33DE]/15 dark:backdrop-blur-3xl font-serif rounded-2xl">
         <Form {...form}>
           <form
@@ -142,6 +142,6 @@ export default function Register() {
           </form>
         </Form>
       </div>
-    </Layout>
+    </AuthLayout>
   );
 }

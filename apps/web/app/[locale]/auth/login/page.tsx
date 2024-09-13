@@ -2,7 +2,7 @@
 
 import { defaultSignIn, defaultSignUp, loginBySMS } from "@/api/auth";
 import { sendBySMS } from "@/api/sms";
-import Layout from "@/components/pages/auth/AuthBackGround";
+import AuthLayout from "@/components/layouts/AuthLayout";
 import Oauth2 from "@/components/pages/auth/Oauth2";
 import renderSignIn from "@/components/pages/auth/SignIn";
 import CustomFormField from "@/components/shared/CustomFormField";
@@ -155,7 +155,7 @@ export default function Login() {
   }, [isOpen]);
 
   return (
-    <Layout>
+    <AuthLayout>
       <div className="w-[92vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] xl:w-[25vw] min-w-[320px] card shrink-0 max-w-sm shadow-2xl bg-base-100 dark:bg-[#FF33DE]/15 dark:backdrop-blur-3xl  font-serif rounded-2xl">
         <Form {...form}>
           <form
@@ -235,6 +235,6 @@ export default function Login() {
           </div>
         </div>
       </dialog>
-    </Layout>
+    </AuthLayout>
   );
 }

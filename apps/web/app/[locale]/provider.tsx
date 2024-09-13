@@ -1,6 +1,6 @@
 import { Toaster } from "@/components/ui/toaster";
 import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages } from "next-intl/server";
+import { getMessages } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
 
 type ProvidesProps = {

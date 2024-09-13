@@ -1,13 +1,12 @@
-import AuthLayout from "@/components/layouts/AuthLayout";
 import BaseLayout from "@/components/layouts/BaseLayout";
 import Account from "@/components/pages/settings/Account";
 import Profile from "@/components/pages/settings/Profile";
-import Sidebar from "@/components/pages/settings/Sidebar";
+import AuthGuard from "@/components/shared/AuthGuard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 function Main() {
   return (
-    <AuthLayout>
+    <AuthGuard>
       <BaseLayout>
         <Tabs
           defaultValue="account"
@@ -55,7 +54,7 @@ function Main() {
           </TabsContent>
         </Tabs>
       </BaseLayout>
-    </AuthLayout>
+    </AuthGuard>
   );
 }
 

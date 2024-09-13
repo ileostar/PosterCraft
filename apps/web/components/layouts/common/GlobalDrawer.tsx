@@ -2,7 +2,9 @@
 
 import MenuItem from "@/components/shared/MenuItem";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { useToast } from "@/components/ui/use-toast";
 import { GlobalEnvConfig } from "@/config";
+import { useToken } from "@/hooks/useToken";
 import { cn } from "@/lib/utils";
 import { usePathname, useRouter } from "@/utils/i18n/routing";
 import { useLocale } from "next-intl";
@@ -15,13 +17,22 @@ interface GlobalDrawerProps {
 }
 
 const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
-  // TODO 退出登陆
-  const logout = async () => {};
-  const { theme, setTheme } = useTheme();
-
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const { theme, setTheme } = useTheme();
+  const { toast } = useToast();
+  const [_, setToken] = useToken();
+  const logout = async () => {
+    setToken(null);
+    toast({
+      title: "登出成功",
+      description: "自动跳转到登录页面",
+    });
+    setTimeout(() => {
+      router.push("/auth/login");
+    }, 1000);
+  };
 
   const toggleLocale = () => {
     router.push(pathname, { locale: locale === "en" ? "zh" : "en" });
