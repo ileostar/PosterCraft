@@ -10,28 +10,32 @@ interface LogoProps {
 
 const BaseLogo: React.FC<LogoProps> = ({ size = "large", className, ...props }) => {
   return (
-    <Link
-      href="/"
-      className={cn("flex cursor-pointer", className)}
-      {...props}
-    >
-      <div className="w-72 flex flex-shrink-0 items-center text-white hover:text-[#E730CA] transition-colors">
+    <div className="w-72 flex items-center">
+      <Link
+        href="/"
+        className={cn("flex logo flex-shrink-0 items-center gap-3 outline-none", className)}
+        {...props}
+      >
         <Image
           src="/favicon.png"
-          className="hidden md:block logo-svg transform hover: transition-transform duration-700 will-change-transform"
-          width={size === "small" ? 32 : 52}
-          height={size === "small" ? 28 : 44}
+          width={size === "small" ? 32 : 40}
+          height={size === "small" ? 28 : 32}
           alt="Poster Craft Logo"
         />
-        <Image
-          src="/favicon.png"
-          className="md:hidden"
-          width={size === "small" ? 32 : 52}
-          height={size === "small" ? 28 : 44}
-          alt="Poster Craft Logo"
-        />
-      </div>
-    </Link>
+        <button
+          className="project-title h-7 pl-5 text-xl"
+          data-text="Awesome"
+        >
+          <span className="actual-text">&nbsp;PosterCraft&nbsp;</span>
+          <span
+            aria-hidden="true"
+            className="hover-text"
+          >
+            &nbsp;PosterCraft&nbsp;
+          </span>
+        </button>
+      </Link>
+    </div>
   );
 };
 

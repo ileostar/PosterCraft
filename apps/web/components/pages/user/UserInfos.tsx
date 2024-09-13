@@ -1,5 +1,6 @@
 import BaseButton from "@/components/base/BaseButton";
 import ProjectCard from "@/components/shared/ProjectCard";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 interface UserInfosProps {
@@ -16,6 +17,7 @@ const userInfo = {
 };
 
 const UserInfos: React.FC<UserInfosProps> = (params) => {
+  const t = useTranslations();
   return (
     <div className="flex flex-wrap justify-between w-full py-8">
       <div className="flex flex-col justify-between items-center flex-1 w-full h-full pl-5">
@@ -42,8 +44,8 @@ const UserInfos: React.FC<UserInfosProps> = (params) => {
           </div>
           {params.isMyself ? (
             <div className="flex justify-start gap-5">
-              <BaseButton>编辑个人信息</BaseButton>
-              <BaseButton>分享</BaseButton>
+              <BaseButton>{t("editPersonalInformation")}</BaseButton>
+              <BaseButton>{t("share")}</BaseButton>
             </div>
           ) : null}
         </div>

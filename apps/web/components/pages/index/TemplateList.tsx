@@ -32,7 +32,10 @@ const TemplateList: React.FC<TemplateListProps> = () => {
 
   return (
     <div className="w-full mt-10">
-      <BaseList title="Template List">
+      <BaseList
+        hasSearch={false}
+        title="Template List"
+      >
         {templateList.map((item) => (
           <BaseCard
             key={item.workId}

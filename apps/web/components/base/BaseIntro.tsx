@@ -10,10 +10,8 @@ interface BaseIntroProps {}
 const BaseIntro: React.FC<BaseIntroProps> = () => {
   const t = useTranslations();
 
-  
-
   return (
-    <div className="w-full h-full -mt-6 flex flex-col md:flex-row justify-center items-center">
+    <div className="w-full h-full -mt-8 lg:-mt-16 flex flex-col md:flex-row justify-center items-center">
       <div className="mx-auto max-w-2xl lg:mx-0 lg:flex-auto">
         <div className="flex">
           <div className="relative flex items-center gap-x-4 rounded-full px-4 py-1 leading-6 text-sm xl:text-base text-gray-700 dark:text-white xl:font-semibold border hover:bg-rose-400/60 dark:border-[#CACACA]/60 bg-transparent hover:bg-rose-400 dark:hover:bg-[#E730CA] hover:text-white hover:border-transparent transition-colors">

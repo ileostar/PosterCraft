@@ -61,7 +61,7 @@ const sentryConfig = {
   },
 
   // Tree shake Sentry stuff from the bundle
-  disableLogger: true,
+  disableLogger: false,
   // Applies same WebPack Transpilation as Next.js. Transpiles SDK to be compatible with IE11 (increases bundle size)
   transpileClientSDK: true,
   // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
