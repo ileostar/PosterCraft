@@ -1,6 +1,7 @@
 "use client";
 
 import { defaultSignUp } from "@/api/auth";
+import { defaultSignUpBody } from "@/api/types/auth";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import Oauth2 from "@/components/pages/auth/Oauth2";
 import CustomFormField from "@/components/shared/CustomFormField";
@@ -21,7 +22,7 @@ const registerFormSchema = z.object({
   password: z.string().min(1, {
     message: "不能为空",
   }),
-  code: z.string().length(6, { message: "无效的验证码" }).regex(/^\d+$/, {
+  otp: z.string().length(6, { message: "无效的验证码" }).regex(/^\d+$/, {
     message: "无效的验证码",
   }),
   username: z
@@ -30,28 +31,22 @@ const registerFormSchema = z.object({
     .max(12, { message: "用户名长度不能超过20个字符" }),
 });
 
-export type loginFormSchemaType = z.infer<typeof registerFormSchema>;
-
 export default function Register() {
   const router = useRouter();
   const { toast } = useToast();
-  const form = useForm<loginFormSchemaType>({
+  const form = useForm<defaultSignUpBody>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
       phone: "",
       password: "",
-      code: "",
+      otp: "",
       username: "",
     },
   });
-  async function onSubmit(values: loginFormSchemaType) {
+
+  async function onSubmit(values: defaultSignUpBody) {
     try {
-      const res = await defaultSignUp({
-        username: form.getValues("username"),
-        password: form.getValues("password"),
-        phone: form.getValues("phone"),
-        otp: form.getValues("code"),
-      });
+      const res = await defaultSignUp(values);
       if (res.data.code === 200) {
         toast({
           variant: "success",
@@ -70,13 +65,8 @@ export default function Register() {
         });
         return;
       }
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: error.msg,
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      });
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -113,7 +103,7 @@ export default function Register() {
               />
               <CustomFormField
                 form={form}
-                name={"code"}
+                name={"opt"}
                 placeholder={"请输入验证码"}
                 label={"验证码"}
                 isVerify={true}

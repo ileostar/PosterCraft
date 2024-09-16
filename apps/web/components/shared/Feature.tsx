@@ -23,6 +23,7 @@ const Feature: React.FC<FeatureProps> = () => {
   const toggleLocale = () => {
     router.push(pathname, { locale: locale === "en" ? "zh" : "en" });
   };
+
   return (
     <div className="flex items-center gap-5 w-72 justify-end">
       <div className="relative hidden min-[845px]:flex bg-transparent rounded-lg  font-semibold transition-all duration-700 will-change-transform">

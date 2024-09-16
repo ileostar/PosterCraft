@@ -5,6 +5,7 @@ import { getWorkList } from "@/api/work";
 import BaseCard from "@/components/base/BaseCard";
 import MoreButton from "@/components/shared/MoreButton";
 import BaseList from "@/components/shared/ShowLists";
+import { useToken } from "@/hooks/useToken";
 import { Link } from "@/utils/i18n/routing";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,11 +14,7 @@ interface WorksListProps {}
 
 const WorksList: React.FC<WorksListProps> = () => {
   const router = useRouter();
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    setToken(window.localStorage.getItem("token"));
-  }, []);
+  const [token] = useToken();
 
   const [workList, setWorkList] = useState<createWorkResponse[]>([]);
 

@@ -23,7 +23,7 @@ const ShowLists: React.FC<ShowListsProps> = ({
         {hasSearch && (
           <BaseSearch
             onClick={onClick}
-            onSearch={(e) => onSearch?.(e)}
+            onSearch={onSearch}
           />
         )}
       </div>

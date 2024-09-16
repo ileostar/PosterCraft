@@ -79,7 +79,6 @@ export default function Account({ className }: Readonly<{ className?: string }>)
     if (userId !== null) {
       getUserData(userId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const executePhoneStep = async (step: number) => {
@@ -169,8 +168,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
         setEmailIsDisabled(true);
         emailForm.setValue("otp", ""); //初始化验证码
         break;
-      case 2:
-      {
+      case 2: {
         const res = await verifyEmail({
           email: emailForm.getValues("email"),
           otp: emailForm.getValues("otp"),
@@ -196,14 +194,13 @@ export default function Account({ className }: Readonly<{ className?: string }>)
         emailForm.reset();
         emailForm.setValue("otp", "000000"); //初始化验证码
         break;
-        }
+      }
       case 3:
         setEmailIsDisabled(true);
         emailForm.setValue("otp", ""); //初始化验证码
         setCountdownZero(true);
         break;
-      case 4:
-      {
+      case 4: {
         emailForm.getValues("otp");
         emailForm.getValues("email");
         const resp = isBindEmail
@@ -233,7 +230,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
           setEmailStep(3);
         }
         break;
-        }
+      }
       default:
         break;
     }
