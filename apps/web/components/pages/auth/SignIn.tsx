@@ -14,10 +14,7 @@ function renderSignIn({
 }: {
   isPhoneMode: boolean;
   setIsPhoneMode: (value: boolean) => void;
-  isDisabled: boolean;
   form: FormType;
-  handleClick: () => void;
-  countdown: number;
 }) {
   if (isPhoneMode) {
     return (

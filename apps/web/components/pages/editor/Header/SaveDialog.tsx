@@ -72,8 +72,8 @@ function DialogDemo({
         });
       }
       setOpen(false);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      Error(error);
     }
   }
 

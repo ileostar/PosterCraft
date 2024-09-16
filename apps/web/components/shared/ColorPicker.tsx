@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { BlockPicker } from "react-color";
+import { TwitterPicker } from "react-color";
 
 const ColorPicker = ({
   changeColor,
@@ -24,7 +24,7 @@ const ColorPicker = ({
 
   return (
     <div className="w-2/3">
-      <BlockPicker
+      <TwitterPicker
         width="100%"
         color={color}
         onChangeComplete={handleChangeComplete}
