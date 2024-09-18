@@ -8,6 +8,7 @@ import BaseCard from "@/components/base/BaseCard";
 import BaseGrid from "@/components/base/BaseGrid";
 import BaseSearch from "@/components/base/BaseSearch";
 import CustomPagination from "@/components/shared/CustomPagination";
+import { useWorkStore } from "@/stores/work";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -17,6 +18,7 @@ interface MyWorksProps {
 
 const MyWorks: React.FC<MyWorksProps> = (params) => {
   const router = useRouter();
+  const { setWork } = useWorkStore();
 
   const [mode, setMode] = useState<"work" | "template">("template");
   const [renderList, setRenderList] = useState<createWorkResponse[]>([]);
@@ -43,7 +45,7 @@ const MyWorks: React.FC<MyWorksProps> = (params) => {
 
   const renderPoster = (item: any) => {
     router.push("/editor");
-    localStorage.setItem("currentWorkId", item.workId);
+    setWork(item.workId);
   };
 
   return (

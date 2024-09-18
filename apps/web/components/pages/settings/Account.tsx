@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { useUserStore } from "@/stores/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -35,6 +36,7 @@ export type emailFormSchemaType = z.infer<typeof emailFormSchema>;
 
 export default function Account({ className }: Readonly<{ className?: string }>) {
   const { toast } = useToast();
+  const { userId } = useUserStore();
 
   const [isBindEmail, setIsBindEmail] = useState<boolean>(false);
   const [phoneStep, setPhoneStep] = useState<number>(0); //用于控制表单显示的步骤变化
@@ -75,7 +77,6 @@ export default function Account({ className }: Readonly<{ className?: string }>)
   };
 
   useEffect(() => {
-    const userId = window.localStorage.getItem("userId");
     if (userId !== null) {
       getUserData(userId);
     }
@@ -169,8 +170,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
         setEmailIsDisabled(true);
         emailForm.setValue("otp", ""); //初始化验证码
         break;
-      case 2:
-      {
+      case 2: {
         const res = await verifyEmail({
           email: emailForm.getValues("email"),
           otp: emailForm.getValues("otp"),
@@ -196,14 +196,13 @@ export default function Account({ className }: Readonly<{ className?: string }>)
         emailForm.reset();
         emailForm.setValue("otp", "000000"); //初始化验证码
         break;
-        }
+      }
       case 3:
         setEmailIsDisabled(true);
         emailForm.setValue("otp", ""); //初始化验证码
         setCountdownZero(true);
         break;
-      case 4:
-      {
+      case 4: {
         emailForm.getValues("otp");
         emailForm.getValues("email");
         const resp = isBindEmail
@@ -233,7 +232,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
           setEmailStep(3);
         }
         break;
-        }
+      }
       default:
         break;
     }

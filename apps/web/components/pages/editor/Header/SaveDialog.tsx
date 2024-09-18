@@ -14,6 +14,7 @@ import {
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { UseElementStore } from "@/stores/element";
+import { useWorkStore } from "@/stores/work";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -25,6 +26,7 @@ function DialogDemo({
   children: React.ReactNode;
 }>) {
   const { Elements, pageBackgroundStyle } = UseElementStore();
+  const { currentWorkId } = useWorkStore();
 
   const FormSchema = z.object({
     title: z
@@ -62,8 +64,9 @@ function DialogDemo({
       status: 1,
     };
     try {
-      const workId = localStorage.getItem("currentWorkId");
-      const res = workId ? await updateWork(workId, params) : await createWork(params);
+      const res = currentWorkId
+        ? await updateWork(currentWorkId, params)
+        : await createWork(params);
       if (res.data.code === 200) {
         toast({
           variant: "success",
@@ -78,9 +81,8 @@ function DialogDemo({
   }
 
   const getTheWork = async () => {
-    const workId = localStorage.getItem("currentWorkId");
-    if (workId) {
-      const res = await getWork(workId);
+    if (currentWorkId) {
+      const res = await getWork(currentWorkId);
       form.setValue("title", res.data.data.title);
       form.setValue("desc", res.data.data.desc);
     }

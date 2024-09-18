@@ -6,11 +6,11 @@ import { useToast } from "@/components/ui/use-toast";
 import { GlobalEnvConfig } from "@/config";
 import { useToken } from "@/hooks/useToken";
 import { cn } from "@/lib/utils";
+import { useUserStore } from "@/stores/user";
 import { usePathname, useRouter } from "@/utils/i18n/routing";
 import { useLocale } from "next-intl";
 import { useTheme } from "next-themes";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 interface GlobalDrawerProps {
   className?: string;
@@ -23,6 +23,7 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
   const { theme, setTheme } = useTheme();
   const { toast } = useToast();
   const [_, setToken] = useToken();
+  const { userId } = useUserStore();
   const logout = async () => {
     setToken(null);
     toast({
@@ -37,8 +38,6 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
   const toggleLocale = () => {
     router.push(pathname, { locale: locale === "en" ? "zh" : "en" });
   };
-
-  const [userId, setUserId] = useState<string | null>(null);
 
   // TODO 替换接口来的信息或者从store获取
   const userInfo = {
@@ -72,10 +71,6 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
       text: "项目地址",
     },
   ];
-
-  useEffect(() => {
-    setUserId(window.localStorage.getItem("userId"));
-  }, []);
 
   return (
     <Drawer direction="right">

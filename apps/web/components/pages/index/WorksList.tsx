@@ -5,6 +5,8 @@ import { getWorkList } from "@/api/work";
 import BaseCard from "@/components/base/BaseCard";
 import MoreButton from "@/components/shared/MoreButton";
 import BaseList from "@/components/shared/ShowLists";
+import { useToken } from "@/hooks/useToken";
+import { useWorkStore } from "@/stores/work";
 import { Link } from "@/utils/i18n/routing";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,13 +15,9 @@ interface WorksListProps {}
 
 const WorksList: React.FC<WorksListProps> = () => {
   const router = useRouter();
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    setToken(window.localStorage.getItem("token"));
-  }, []);
-
+  const [token] = useToken();
   const [workList, setWorkList] = useState<createWorkResponse[]>([]);
+  const { setWork } = useWorkStore();
 
   const getList = async (pageIndex?: number, pageSize?: number, title?: string) => {
     const res = await getWorkList({ pageIndex, pageSize, title });
@@ -34,7 +32,7 @@ const WorksList: React.FC<WorksListProps> = () => {
 
   const renderPoster = (item: any) => {
     router.push("/editor");
-    localStorage.setItem("currentWorkId", item.workId);
+    setWork(item.workId);
   };
 
   return token ? (

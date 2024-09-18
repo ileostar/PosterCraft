@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { useUserStore } from "@/stores/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -27,8 +28,7 @@ export type FormSchemaType = z.infer<typeof FormSchema>;
 
 export default function Profile() {
   const { toast } = useToast();
-
-  const [userId, setUserId] = useState<string>("0");
+  const { userId } = useUserStore();
   const [avatar, setAvatar] = useState<string>("");
 
   const form = useForm<FormSchemaType>({
@@ -40,19 +40,18 @@ export default function Profile() {
     },
   });
 
-  const getUserData = async (userId: string) => {
-    const res = await getUserInfo(userId);
+  const getUserData = async (id: string) => {
+    const res = await getUserInfo(id);
     form.setValue("username", res.data.data?.username || "");
     form.setValue("nickname", res.data.data?.nickname || "");
     form.setValue("avatar", res.data.data?.avatar || "");
     setAvatar(res.data.data?.avatar || "");
   };
   useEffect(() => {
-    const userId = window.localStorage.getItem("userId");
     if (userId !== null) {
-      setUserId(userId);
       getUserData(userId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [avatar, form]);
 
   async function onSubmit(values: FormSchemaType) {
@@ -69,9 +68,7 @@ export default function Profile() {
           delete data[key];
         }
       });
-      const res = await updateUserInfo(userId, data);
-      // console.log(res);
-      console.log(res.data);
+      const res = await updateUserInfo(userId as string, data);
 
       if (res.data.code !== 200) {
         toast({

@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { useToken } from "@/hooks/useToken";
+import { useUserStore } from "@/stores/user";
 import { loginFormSchema, loginFormSchemaType } from "@/utils/formSchema";
 import { Link } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,6 +20,8 @@ import { useForm } from "react-hook-form";
 
 export default function Login() {
   const router = useRouter();
+  const [token, setTokenHandler] = useToken();
+  const { setUserId } = useUserStore();
   const { toast } = useToast();
   const form = useForm<loginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
@@ -51,9 +55,9 @@ export default function Login() {
           description: "登录成功,即将跳转至主页...",
         });
         if (res.data.token) {
-          window.localStorage.setItem("token", res.data.token); //存入本地
+          setTokenHandler(res.data.token);
         }
-        window.localStorage.setItem("userId", res.data.data.userId);
+        setUserId(res.data.data.userId);
         router.push("/");
       } else {
         toast({

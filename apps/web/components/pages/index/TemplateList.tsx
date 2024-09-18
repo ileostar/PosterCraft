@@ -5,6 +5,7 @@ import { createWorkResponse } from "@/api/types/work";
 import BaseCard from "@/components/base/BaseCard";
 import MoreButton from "@/components/shared/MoreButton";
 import BaseList from "@/components/shared/ShowLists";
+import { useWorkStore } from "@/stores/work";
 import { Link } from "@/utils/i18n/routing";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -13,6 +14,7 @@ interface TemplateListProps {}
 
 const TemplateList: React.FC<TemplateListProps> = () => {
   const router = useRouter();
+  const { setWork } = useWorkStore();
 
   const [templateList, setTemplateList] = useState<createWorkResponse[]>([]);
 
@@ -27,7 +29,7 @@ const TemplateList: React.FC<TemplateListProps> = () => {
 
   const renderPoster = (item: any) => {
     router.push("/editor");
-    localStorage.setItem("currentWorkId", item.workId);
+    setWork(item.workId);
   };
 
   return (
