@@ -1,21 +1,19 @@
 "use client";
 
-import { defaultSignIn, defaultSignUp, loginBySMS } from "@/api/auth";
-import { sendBySMS } from "@/api/sms";
+import { defaultSignIn, loginBySMS } from "@/api/auth";
 import AuthLayout from "@/components/layouts/AuthLayout";
+import Dialog from "@/components/pages/auth/Dialog";
 import Oauth2 from "@/components/pages/auth/Oauth2";
 import renderSignIn from "@/components/pages/auth/SignIn";
-import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
-import { useGithubUsername, useOauth2Dialog } from "@/stores/auth";
 import { loginFormSchema, loginFormSchemaType } from "@/utils/formSchema";
 import { Link } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Login() {
@@ -70,40 +68,6 @@ export default function Login() {
       console.log(error);
     }
   };
-  const { githubUsername } = useGithubUsername();
-  const { setIsOpen, isOpen } = useOauth2Dialog();
-
-  const addPhoneByGithub = async () => {
-    let res = await defaultSignUp({
-      username: githubUsername,
-      password: null,
-      phone: form.getValues("phone"),
-      otp: form.getValues("code"),
-    });
-    CloseModal();
-    router.push("/");
-  };
-
-  const showModal = () => {
-    const modalElement = document.getElementById("my_modal_1") as HTMLDialogElement | null;
-    if (modalElement) {
-      modalElement.showModal();
-    }
-  };
-
-  const CloseModal = () => {
-    const modalElement = document.getElementById("my_modal_1") as HTMLDialogElement | null;
-    if (modalElement) {
-      modalElement.close();
-    }
-    setIsOpen(false);
-  };
-
-  useEffect(() => {
-    if (isOpen) {
-      showModal();
-    }
-  }, [isOpen]);
 
   return (
     <AuthLayout>
@@ -146,43 +110,7 @@ export default function Login() {
         </Form>
       </div>
 
-      <dialog
-        id="my_modal_1"
-        className="modal"
-      >
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">请绑定手机号!</h3>
-          <Form {...form}>
-            <CustomFormField
-              form={form}
-              name={"phone"}
-              placeholder={"请输入手机号码"}
-              label={"手机号码"}
-            />
-            <CustomFormField
-              form={form}
-              name={"code"}
-              placeholder={"请输入验证码"}
-              label={"验证码"}
-              isVerify={true}
-            />
-          </Form>
-          <div className="modal-action">
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button
-                className="btn"
-                onClick={() => {
-                  addPhoneByGithub();
-                }}
-              >
-                {" "}
-                绑定
-              </button>
-            </form>
-          </div>
-        </div>
-      </dialog>
+      <Dialog />
     </AuthLayout>
   );
 }
