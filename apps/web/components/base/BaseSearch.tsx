@@ -62,7 +62,7 @@ const BaseSearch: React.FC<BaseSearchProps> = ({ className, onClick, onSearch, .
           type="text"
           name="text"
           autoComplete="on"
-          className={`input ${className}`}
+          className={`search-input ${className}`}
           // onClick={onClick}
           onChange={(e) => setInputValue(e.target.value)}
           value={inputValue}
