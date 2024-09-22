@@ -50,7 +50,7 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
             </div>
             <Planet />
             {isClient && theme === "light" ? "" : <ShootingStar />}
-            <div>@Copyright LeoStar</div>
+            <div>@Copyright LeoStar & kkkang</div>
           </div>
         </div>
       </div>

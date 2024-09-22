@@ -3,8 +3,10 @@ import Account from "@/components/pages/settings/Account";
 import Profile from "@/components/pages/settings/Profile";
 import AuthGuard from "@/components/shared/AuthGuard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useTranslations } from "next-intl";
 
 function Main() {
+  const t = useTranslations();
   return (
     <AuthGuard>
       <BaseLayout>
@@ -17,19 +19,19 @@ function Main() {
               className="w-full rounded-lg"
               value="profile"
             >
-              个人资料
+              {t("profile")}
             </TabsTrigger>
             <TabsTrigger
               className="w-full rounded-lg"
               value="account"
             >
-              账号设置
+              {t("account-setting")}
             </TabsTrigger>
             <TabsTrigger
               className="w-full rounded-lg"
               value="password"
             >
-              密码设置
+              {t("password-setting")}
             </TabsTrigger>
           </TabsList>
           <TabsContent

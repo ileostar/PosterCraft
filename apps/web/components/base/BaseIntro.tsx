@@ -21,7 +21,7 @@ const BaseIntro: React.FC<BaseIntroProps> = () => {
               href="#"
               className="flex items-center gap-x-1"
             >
-              New features added
+              {t("new-features-added")}
               <svg
                 className="-mr-2 h-5 w-5"
                 viewBox="0 0 20 20"
@@ -41,11 +41,7 @@ const BaseIntro: React.FC<BaseIntroProps> = () => {
           Create posters with{" "}
           <span className="text-rose-400 dark:text-[#FF33DE]">PosterCraft!</span>
         </h1>
-        <BaseTyped
-          strings={[
-            "Design and customize posters effortlessly with PosterCraft. Create professional posters in minutes.",
-          ]}
-        />
+        <BaseTyped strings={[t("desc")]} />
         <div className="mt-10 flex items-center gap-x-6">
           <Link
             href={"/editor"}

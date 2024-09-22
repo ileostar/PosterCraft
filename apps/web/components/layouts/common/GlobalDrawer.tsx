@@ -8,7 +8,7 @@ import { useToken } from "@/hooks/useToken";
 import { cn } from "@/lib/utils";
 import { useUserStore } from "@/stores/user";
 import { usePathname, useRouter } from "@/utils/i18n/routing";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 
@@ -17,15 +17,17 @@ interface GlobalDrawerProps {
 }
 
 const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
+  const t = useTranslations();
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const { toast } = useToast();
   const [_, setToken] = useToken();
-  const { userId } = useUserStore();
+  const { userId, setUserId } = useUserStore();
   const logout = async () => {
     setToken(null);
+    setUserId(null);
     toast({
       title: "登出成功",
       description: "自动跳转到登录页面",
@@ -53,22 +55,22 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
     {
       href: "/settings",
       iconClass: "icon-[carbon--settings]",
-      text: "设置",
+      text: t("settings"),
     },
     {
       href: `/user/${userId}`,
       iconClass: "icon-[carbon--user-avatar]",
-      text: "个人中心",
+      text: t("personal-center"),
     },
     {
       href: GlobalEnvConfig.DEV_DOCS,
       iconClass: "icon-[carbon--document-multiple-01]",
-      text: "开发文档",
+      text: t("develop-document"),
     },
     {
       href: "https://github.com/ileostar/PosterCraft",
       iconClass: "icon-[carbon--logo-github]",
-      text: "项目地址",
+      text: t("project-address"),
     },
   ];
 
@@ -120,17 +122,17 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
             ))}
             <MenuItem
               ClassName="icon-[carbon--ibm-watson-language-translator]"
-              text="切换语言"
+              text={t("language-switching")}
               onClick={() => toggleLocale()}
             />
             <MenuItem
               ClassName="dark:h-7 dark:w-7 icon-[carbon--haze-night] dark:icon-[carbon--sun]"
-              text="主题切换"
+              text={t("topic-switching")}
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             />
             <MenuItem
               ClassName="icon-[carbon--logout]"
-              text="登出"
+              text={t("log-out")}
               onClick={() => logout()}
             />
             <DrawerClose className="absolute top-3 right-3 z-50">

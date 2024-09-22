@@ -8,12 +8,14 @@ import BaseList from "@/components/shared/ShowLists";
 import { useToken } from "@/hooks/useToken";
 import { useWorkStore } from "@/stores/work";
 import { Link } from "@/utils/i18n/routing";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface WorksListProps {}
 
 const WorksList: React.FC<WorksListProps> = () => {
+  const t = useTranslations();
   const router = useRouter();
   const [token] = useToken();
   const [workList, setWorkList] = useState<createWorkResponse[]>([]);
@@ -39,7 +41,7 @@ const WorksList: React.FC<WorksListProps> = () => {
     <div className="w-full mt-10">
       <BaseList
         hasSearch={false}
-        title="Works List"
+        title={t("works-list")}
       >
         {workList.map((item) => (
           <BaseCard
@@ -53,7 +55,7 @@ const WorksList: React.FC<WorksListProps> = () => {
       </BaseList>
       <div className="w-full flex items-center justify-center">
         <Link href={"/works"}>
-          <MoreButton className="mt-5">Discover More</MoreButton>
+          <MoreButton className="mt-5">{t("discover-more")}</MoreButton>
         </Link>
       </div>
     </div>

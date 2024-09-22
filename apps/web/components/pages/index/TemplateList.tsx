@@ -7,12 +7,14 @@ import MoreButton from "@/components/shared/MoreButton";
 import BaseList from "@/components/shared/ShowLists";
 import { useWorkStore } from "@/stores/work";
 import { Link } from "@/utils/i18n/routing";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 interface TemplateListProps {}
 
 const TemplateList: React.FC<TemplateListProps> = () => {
+  const t = useTranslations();
   const router = useRouter();
   const { setWork } = useWorkStore();
 
@@ -36,7 +38,7 @@ const TemplateList: React.FC<TemplateListProps> = () => {
     <div className="w-full mt-10">
       <BaseList
         hasSearch={false}
-        title="Template List"
+        title={t("template-list")}
       >
         {templateList.map((item) => (
           <BaseCard
@@ -50,7 +52,7 @@ const TemplateList: React.FC<TemplateListProps> = () => {
       </BaseList>
       <div className="w-full flex items-center justify-center">
         <Link href={"/templates"}>
-          <MoreButton className="mt-5">Discover More</MoreButton>
+          <MoreButton className="mt-5">{t("discover-more")}</MoreButton>
         </Link>
       </div>
     </div>

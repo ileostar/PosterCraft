@@ -9,6 +9,7 @@ import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useUserStore } from "@/stores/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -27,6 +28,7 @@ const FormSchema = z.object({
 export type FormSchemaType = z.infer<typeof FormSchema>;
 
 export default function Profile() {
+  const t = useTranslations();
   const { toast } = useToast();
   const { userId } = useUserStore();
   const [avatar, setAvatar] = useState<string>("");
@@ -105,7 +107,9 @@ export default function Profile() {
     <div className="h-full flex flex-row justify-between">
       <div className="h-full flex flex-1 flex-col justify-between max-sm:gap-6">
         <div className="flex justify-start items-center h-[10%] ">
-          <div className="text-[#f43f5e] dark:text-[#d048ef]  text-2xl card-title">My Card</div>
+          <div className="text-[#f43f5e] dark:text-[#d048ef]  text-2xl card-title">
+            {t("my-card")}
+          </div>
         </div>
         <div className="h-[85%] flex flex-col justify-around max-sm:gap-2 items-center">
           <UploadAvatar

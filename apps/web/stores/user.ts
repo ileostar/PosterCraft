@@ -8,12 +8,10 @@ interface UserState {
 export const useUserStore = create<UserState>((set) => {
   let storage: Storage | null = null;
 
-  // 检查 localStorage 是否可用
   if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
     storage = window.localStorage;
   }
 
-  // 初始化 currentWorkId
   let userId: string | null = null;
   if (storage) {
     userId = storage.getItem("userId") || null;

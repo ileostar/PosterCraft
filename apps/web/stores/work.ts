@@ -8,12 +8,10 @@ interface WorkState {
 export const useWorkStore = create<WorkState>((set) => {
   let storage: Storage | null = null;
 
-  // 检查 localStorage 是否可用
   if (typeof window !== "undefined" && typeof window.localStorage !== "undefined") {
     storage = window.localStorage;
   }
 
-  // 初始化 currentWorkId
   let currentWorkId: string | null = null;
   if (storage) {
     currentWorkId = storage.getItem("currentWorkId") || null;
