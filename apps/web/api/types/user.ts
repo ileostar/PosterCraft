@@ -14,3 +14,12 @@ export type updateUserInfoBody = {
 };
 
 export type updateUserInfoResponse = updateUserInfoBody & { userId: string };
+
+export type addPasswordBody = {
+  password: string;
+};
+
+export type updatePasswordBody = {
+  oldPassword: string;
+  newPassword: string;
+};

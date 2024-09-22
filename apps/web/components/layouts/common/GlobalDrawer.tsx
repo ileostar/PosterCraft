@@ -1,5 +1,6 @@
 "use client";
 
+import { getUserInfo } from "@/api/user";
 import MenuItem from "@/components/shared/MenuItem";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { useToast } from "@/components/ui/use-toast";
@@ -11,6 +12,7 @@ import { usePathname, useRouter } from "@/utils/i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface GlobalDrawerProps {
   className?: string;
@@ -41,15 +43,12 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
     router.push(pathname, { locale: locale === "en" ? "zh" : "en" });
   };
 
-  // TODO 替换接口来的信息或者从store获取
-  const userInfo = {
-    avatar: "",
-    username: "LeoStar",
-    nickname: "LeoStar",
-    email: "",
-    phone: "",
-    address: "",
+  const Info = {
+    avatar: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp", //默认头像
+    username: "", //非空
+    nickname: "---", //默认昵称
   };
+  const [userInfo, setUserInfo] = useState(Info);
 
   const DrawerMenuItems = [
     {
@@ -74,6 +73,21 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
     },
   ];
 
+  const getUserData = async (id: string) => {
+    const res = await getUserInfo(id);
+    setUserInfo(() => ({
+      avatar: res.data.data.avatar || Info.avatar,
+      username: res.data.data.username || Info.username,
+      nickname: res.data.data.nickname || Info.nickname,
+    }));
+  };
+  useEffect(() => {
+    if (userId !== null) {
+      getUserData(userId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Drawer direction="right">
       <DrawerTrigger className="overflow-visible">
@@ -81,7 +95,7 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
           <div className="cursor-pointer group">
             <div className="relative overflow-visible">
               <Image
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src={userInfo.avatar}
                 className={cn(
                   "rounded-full w-10 h-10 group-hover:scale-105 transition-transform duration-300",
                   className,
@@ -98,7 +112,7 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
         <div className="relative w-full h-full">
           <div className="flex gap-3 h-14">
             <Image
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+              src={userInfo.avatar}
               className="rounded-full w-16 h-16  group-hover:scale-105 transition-transform duration-300"
               alt={"avatar"}
               width={100}

@@ -8,24 +8,11 @@ import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useUserStore } from "@/stores/user";
+import { userFormSchema, UserFormSchemaType } from "@/utils/formSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-const FormSchema = z.object({
-  username: z.string().min(1, {
-    message: "不能为空",
-  }),
-  // nickname: z.any(),
-  nickname: z.string().min(1, {
-    message: "不能为空",
-  }),
-  avatar: z.any(),
-});
-
-export type FormSchemaType = z.infer<typeof FormSchema>;
 
 export default function Profile() {
   const t = useTranslations();
@@ -33,8 +20,8 @@ export default function Profile() {
   const { userId } = useUserStore();
   const [avatar, setAvatar] = useState<string>("");
 
-  const form = useForm<FormSchemaType>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<UserFormSchemaType>({
+    resolver: zodResolver(userFormSchema),
     defaultValues: {
       username: "",
       nickname: "",
@@ -56,7 +43,7 @@ export default function Profile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [avatar, form]);
 
-  async function onSubmit(values: FormSchemaType) {
+  async function onSubmit(values: UserFormSchemaType) {
     try {
       let data: {
         [key: string]: string | number | undefined; // 添加索引签名以允许使用字符串作为键
@@ -107,7 +94,7 @@ export default function Profile() {
     <div className="h-full flex flex-row justify-between">
       <div className="h-full flex flex-1 flex-col justify-between max-sm:gap-6">
         <div className="flex justify-start items-center h-[10%] ">
-          <div className="text-[#f43f5e] dark:text-[#d048ef]  text-2xl card-title">
+          <div className="text-[#f43f5e] dark:text-[#d048ef]  text-xl card-title">
             {t("my-card")}
           </div>
         </div>

@@ -1,30 +1,56 @@
+"use client";
+
+import { getUserInfo } from "@/api/user";
 import BaseButton from "@/components/base/BaseButton";
 import ProjectCard from "@/components/shared/ProjectCard";
+import { useUserStore } from "@/stores/user";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface UserInfosProps {
   isMyself: boolean;
 }
 
-// TODO 替换接口来的信息或者从store获取
-const userInfo = {
-  avatar: "",
-  username: "LeoStar",
-  nickname: "LeoStar",
-  email: "hi@leostar.top",
-  phone: "14709723891",
-};
-
 const UserInfos: React.FC<UserInfosProps> = (params) => {
+  const router = useRouter();
   const t = useTranslations();
+  const { userId } = useUserStore();
+
+  const Info = {
+    avatar: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp", //默认头像
+    username: "", //非空
+    nickname: "---", //默认昵称
+    email: "---", //默认邮箱
+    phone: "", //非空
+  };
+  const [userInfo, setUserInfo] = useState(Info);
+
+  const getUserData = async (id: string) => {
+    const res = await getUserInfo(id);
+    setUserInfo(() => ({
+      avatar: res.data.data.avatar || Info.avatar,
+      username: res.data.data.username || Info.username,
+      nickname: res.data.data.nickname || Info.nickname,
+      email: res.data.data.email || Info.email,
+      phone: res.data.data.phone || Info.phone,
+    }));
+  };
+  useEffect(() => {
+    if (userId !== null) {
+      getUserData(userId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="flex flex-wrap justify-between w-full py-8">
       <div className="flex flex-col justify-between items-center flex-1 w-full h-full pl-5">
         <div className="w-full flex flex-col gap-8">
           <div className="flex gap-8 h-20 w-full m-15">
             <Image
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+              src={userInfo.avatar}
               className="rounded-full w-20 h-20  group-hover:scale-105 transition-transform duration-300"
               alt={"avatar"}
               width={100}
@@ -44,7 +70,9 @@ const UserInfos: React.FC<UserInfosProps> = (params) => {
           </div>
           {params.isMyself ? (
             <div className="flex justify-start gap-5">
-              <BaseButton>{t("editPersonalInformation")}</BaseButton>
+              <BaseButton onClick={() => router.push("../settings")}>
+                {t("editPersonalInformation")}
+              </BaseButton>
               <BaseButton>{t("share")}</BaseButton>
             </div>
           ) : null}

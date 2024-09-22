@@ -9,31 +9,16 @@ import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useUserStore } from "@/stores/user";
+import {
+  emailFormSchema,
+  emailFormSchemaType,
+  phoneFormSchema,
+  phoneFormSchemaType,
+} from "@/utils/formSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-const phoneFormSchema = z.object({
-  phone: z.string().regex(/^1[3-9]\d{9}$/, {
-    message: "手机号格式不正确",
-  }),
-  otp: z.string().length(6, { message: "无效的验证码" }).regex(/^\d+$/, {
-    message: "无效的验证码",
-  }),
-});
-const emailFormSchema = z.object({
-  email: z.string().email({
-    message: "无效的邮箱格式",
-  }),
-  otp: z.string().length(6, { message: "无效的验证码" }).regex(/^\d+$/, {
-    message: "无效的验证码",
-  }),
-});
-
-export type phoneFormSchemaType = z.infer<typeof phoneFormSchema>;
-export type emailFormSchemaType = z.infer<typeof emailFormSchema>;
 
 export default function Account({ className }: Readonly<{ className?: string }>) {
   const t = useTranslations();
