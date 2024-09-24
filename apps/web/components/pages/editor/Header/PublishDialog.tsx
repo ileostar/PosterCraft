@@ -12,6 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
+import { useWorkStore } from "@/stores/work";
 
 function DialogDemo({
   children,
@@ -19,11 +20,11 @@ function DialogDemo({
   children: React.ReactNode;
 }>) {
   const { toast } = useToast();
+  const { currentWorkId } = useWorkStore();
   const handleClick = async () => {
-    const workId = localStorage.getItem("currentWorkId");
     try {
-      if (workId) {
-        const res = await publishWorkToTemplate(workId);
+      if (currentWorkId) {
+        const res = await publishWorkToTemplate(currentWorkId);
         if (res.data.code === 200) {
           toast({
             variant: "success",

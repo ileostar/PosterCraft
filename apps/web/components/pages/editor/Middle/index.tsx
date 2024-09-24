@@ -9,6 +9,7 @@ import ResizeComponent from "@/components/shared/ResizeComponent";
 import useGetScreenRatio from "@/hooks/useGetScreenRatio";
 import useHotKey from "@/hooks/useHotKey";
 import { UseElementStore } from "@/stores/element";
+import { useWorkStore } from "@/stores/work";
 import { useEffect } from "react";
 
 function Middle(props: any) {
@@ -28,6 +29,7 @@ function Middle(props: any) {
     ifRedo,
     ifUndo,
   } = UseElementStore();
+  const { currentWorkId } = useWorkStore();
 
   useHotKey();
   const ratio = useGetScreenRatio();
@@ -64,10 +66,8 @@ function Middle(props: any) {
   ];
 
   const getTheWork = async () => {
-    const workId = localStorage.getItem("currentWorkId");
-    console.log(workId);
-    if (workId) {
-      const res = await getWork(workId);
+    if (currentWorkId) {
+      const res = await getWork(currentWorkId);
       setElements(res.data.data.content.Elements ?? []);
       setPageBackgroundStyle({ ...res.data.data.content.pageBackgroundStyle });
     } else {

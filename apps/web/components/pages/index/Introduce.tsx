@@ -1,31 +1,34 @@
 import BaseInfo from "@/components/base/BaseInfo";
+import { useTranslations } from "next-intl";
 
 interface IntroduceProps {}
 
-const infos = [
-  {
-    title: "直观的界面",
-    content: "用户友好的拖放界面，让您轻松创建精美海报！",
-    icon: "icon-[carbon--page-break]",
-  },
-  {
-    title: "丰富的模板",
-    content: "数百种精心设计的模板，满足各种场景需求！",
-    icon: "icon-[carbon--template]",
-  },
-  {
-    title: "兼容性强",
-    content: "支持日夜间模式切换，国际化语言切换！",
-    icon: "icon-[carbon--accessibility]",
-  },
-  {
-    title: "一键分享",
-    content: "轻松将您的作品分享到社交媒体或导出高质量图片！",
-    icon: "icon-[carbon--share]",
-  },
-];
-
 const Introduce: React.FC<IntroduceProps> = () => {
+  const t = useTranslations();
+
+  const infos = [
+    {
+      title: t("intuitive-page"),
+      content: t("intuitive-page-desc"),
+      icon: "icon-[carbon--page-break]",
+    },
+    {
+      title: t("rich-templates"),
+      content: t("rich-templates-desc"),
+      icon: "icon-[carbon--template]",
+    },
+    {
+      title: t("high-compatibility"),
+      content: t("high-compatibility-desc"),
+      icon: "icon-[carbon--accessibility]",
+    },
+    {
+      title: t("one-click-sharing"),
+      content: t("one-click-sharing-desc"),
+      icon: "icon-[carbon--share]",
+    },
+  ];
+
   return (
     <section className="w-full sm:p-5 mt-10 grid grid-cols-2 items-center gap-x-4 gap-y-6 sm:gap-x-5 sm:gap-y-7 lg:mx-0 lg:grid-cols-4">
       {infos.map((info, index) => (

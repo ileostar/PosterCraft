@@ -30,9 +30,9 @@ function MidDialog({
         </DialogHeader>
 
         <div className="w-[80%] mx-auto">
-          {Object.entries(renderContent).map(([key, value]) => (
+          {Object.entries(renderContent).map(([key, value], index) => (
             <div
-              key={key}
+              key={index}
               className="flex items-center justify-between"
             >
               <div className="text-sm text-gray-500 text-left">{key}</div>

@@ -2,6 +2,7 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToken } from "@/hooks/useToken";
+import { useWorkStore } from "@/stores/work";
 import { Link, usePathname, useRouter } from "@/utils/i18n/routing";
 import { useLocale } from "next-intl";
 import { useTheme } from "next-themes";
@@ -15,6 +16,7 @@ interface FeatureProps {}
 const Feature: React.FC<FeatureProps> = () => {
   const { theme, setTheme } = useTheme();
   const [token] = useToken();
+  const { setWork } = useWorkStore();
 
   const locale = useLocale();
   const router = useRouter();
@@ -33,7 +35,7 @@ const Feature: React.FC<FeatureProps> = () => {
         >
           <span
             onClick={() => {
-              localStorage.removeItem("currentWorkId");
+              setWork(null);
               router.push("/editor");
             }}
             className="icon-[carbon--add-alt] text-gray-700 dark:text-white w-8 h-8 rounded-full cursor-pointer"

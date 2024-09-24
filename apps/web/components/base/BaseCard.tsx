@@ -14,13 +14,13 @@ const BaseCard: React.FC<BaseCardProps> = ({
   onClick,
 }) => {
   return (
-    <div className="relative col-span-1 flex items-end w-full h-[315px] rounded-2xl 2xl:rounded-3xl bg-center bg-cover bg-no-repeat hover:scale-95 overflow-hidden transition-transform duration-300">
+    <div className="relative col-span-1 flex items-end w-full h-[535px] rounded-2xl 2xl:rounded-3xl bg-center bg-cover bg-no-repeat hover:scale-95 overflow-hidden transition-transform duration-300">
       <Image
         className="absolute top-0 left-0 w-full h-full object-cover"
         src={imgUrl}
         alt={title}
-        height={315}
-        width={400}
+        height={535}
+        width={302}
       />
       <div className="block flex-1 bg-white h-[95px] px-4 glass">
         <h4 className="text-xs font-bold text-white dark:text-[#161616] py-4 truncate max-w-[90%] 2xl:max-w-none">

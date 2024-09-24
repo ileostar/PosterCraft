@@ -12,7 +12,7 @@ const Menu: React.FC<MenuProps> = () => {
 
   return (
     <div className="hidden min-[845px]:flex sm:space-x-8">
-      {HeaderMenus.map((menu) => (
+      {HeaderMenus().map((menu) => (
         <Link
           key={menu.label}
           href={menu.href}

@@ -3,12 +3,14 @@
 import { githubSignIn } from "@/api/auth";
 import GithubIcon from "@/components/shared/GithubIcon";
 import GoogleIcon from "@/components/shared/GoogleIcon";
+import { useToken } from "@/hooks/useToken";
 import { useRouter } from "next/navigation";
 
 import { useGithubUsername, useOauth2Dialog } from "../../../stores/auth";
 
 function Oauth2() {
   const router = useRouter();
+  const [token, setTokenHandler] = useToken();
 
   const { setGithubUsername } = useGithubUsername();
   const { setIsOpen } = useOauth2Dialog();
@@ -16,7 +18,7 @@ function Oauth2() {
   const handleGithubSignIn = async () => {
     const res = await githubSignIn();
     if (res.data.isSignUp && res.token) {
-      window.localStorage.setItem("token", res.token);
+      setTokenHandler(res.token);
       router.push("/");
     } else {
       res.data.userData.username
