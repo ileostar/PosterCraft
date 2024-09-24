@@ -9,7 +9,8 @@ interface MenuItemProps {
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({ href, ClassName, text, onClick }) => {
-  const commonClasses = "flex items-center gap-3 rounded-xl hover:bg-gray-300/20 px-2 py-1";
+  const commonClasses =
+    "flex cursor-pointer items-center gap-3 rounded-xl hover:bg-gray-300/20 px-2 py-1";
   const iconAndTextClasses = "text-gray-600/80 dark:text-gray-300/70 text-lg font-medium";
 
   return href ? (

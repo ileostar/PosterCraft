@@ -1,20 +1,9 @@
-import { Inject, Injectable, Post } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { DB, DbType } from '../global/providers/db.provider';
 import { work } from '@poster-craft/schema';
 import { eq } from 'drizzle-orm';
-import LegoComponents from 'lego-components';
-import { createSSRApp } from 'vue';
-import { renderToString } from '@vue/server-renderer';
-
-type Content = {
-  components?: any;
-  props?: any;
-};
-
-interface WorkType {
-  [index: string]: unknown;
-  content: Content;
-}
+import ReactDOMServer from 'react-dom/server';
+import React from 'react';
 
 @Injectable()
 export class PageService {
@@ -58,6 +47,7 @@ export class PageService {
     });
     return styleArr.join(';');
   }
+
   async renderToPageData(query: { id: string; uuid: string }) {
     const currentWork = await this.db.query.work.findFirst({
       where: eq(work.uuid, query.uuid),
@@ -65,24 +55,11 @@ export class PageService {
     if (!currentWork) throw '工作区不存在';
     if (!currentWork.isPublic) throw '工作区未发布';
     const { title, desc, content } = currentWork;
-    this.px2vw(content && content?.components);
-    const vueApp = createSSRApp({
-      data: () => {
-        return {
-          components: (content && content?.components) || [],
-        };
-      },
-      template: '<final-page :components="components"></final-page>',
-    });
-    vueApp.use(LegoComponents);
-    const html = await renderToString(vueApp);
-    const bodyStyle = this.propsToStyle(content && content?.props);
+    const html = '';
     const result = {
       html,
       title,
       desc,
-      components: JSON.stringify((content && content?.components) || []),
-      bodyStyle,
     };
     return result;
   }

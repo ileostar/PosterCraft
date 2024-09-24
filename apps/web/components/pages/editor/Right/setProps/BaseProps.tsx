@@ -53,7 +53,7 @@ function BaseProps() {
           value={textStyles.fontSize}
           onChange={(e) => handleUpdate("fontSize", parseInt(e.target.value, 10))}
           placeholder="字号大小"
-          className="input input-bordered w-2/3"
+          className="input input-bordered w-2/3 input-sm  max-w-xs"
         />
       </div>
 
@@ -68,7 +68,7 @@ function BaseProps() {
           id="fontFamily"
           value={textStyles.fontFamily || ""}
           onChange={(e) => handleUpdate("fontFamily", e.target.value)}
-          className="select select-bordered w-2/3"
+          className="select select-bordered w-2/3 select-sm max-w-xs"
         >
           <option>无</option>
           <option>SimSun</option>
@@ -128,7 +128,7 @@ function BaseProps() {
           value={textStyles.lineHeight}
           onChange={(e) => handleUpdate("lineHeight", parseInt(e.target.value, 10))}
           placeholder="行高"
-          className="input input-bordered w-2/3"
+          className="input input-bordered w-2/3 input-sm  max-w-xs"
         />
       </div>
 
@@ -176,7 +176,10 @@ function BaseProps() {
         >
           文字颜色：
         </label>
-        <ColorPicker changeColor={(e) => handleUpdate("color", e)} />
+        <ColorPicker
+          toColor={textStyles.color}
+          changeColor={(e) => handleUpdate("color", e)}
+        />
       </div>
 
       <div className="flex justify-between items-center my-4">
@@ -186,7 +189,10 @@ function BaseProps() {
         >
           背景颜色：
         </label>
-        <ColorPicker changeColor={(e) => handleUpdate("backgroundColor", e)} />
+        <ColorPicker
+          toColor={textStyles.backgroundColor}
+          changeColor={(e) => handleUpdate("backgroundColor", e)}
+        />
       </div>
     </div>
   );

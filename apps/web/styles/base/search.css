@@ -20,7 +20,7 @@
   position: relative;
 }
 
-.input {
+.search-input {
   width: var(--width-input);
   border: solid 1.5px var(--default-color);
   border-radius: 80px;
@@ -46,14 +46,14 @@
   pointer-events: none;
 }
 
-.input:focus,
-input:valid {
+.search-input:focus,
+.search-input:valid {
   outline: none;
   border: 1.5px solid var(--color-active);
 }
 
-.input:focus ~ label,
-input:valid ~ label {
+.search-input:focus ~ label,
+.search-input:valid ~ label {
   transform: translateY(-50%) scale(0.8);
   background-color: var(--color-active);
   border-radius: 20px;
@@ -74,27 +74,27 @@ input:valid ~ label {
   opacity: 0;
 }
 
-.input:focus ~ .btn-box,
-input:valid ~ .btn-box {
+.search-input:focus ~ .btn-box,
+.search-input:valid ~ .btn-box {
   right: 10%;
   opacity: 1;
   transition-delay: 0s;
   transition: var(--transition);
 }
 
-.input:not(:focus) ~ .btn-box,
-input:not(:valid) ~ .btn-box {
+.search-input:not(:focus) ~ .btn-box,
+.search-input:not(:valid) ~ .btn-box {
   transition-property: right, opacity;
   transition-delay: 300ms;
 }
 
-.input:focus ~ .btn-box:hover,
-input:valid ~ .btn-box:hover {
+.search-input:focus ~ .btn-box:hover,
+.search-input:valid ~ .btn-box:hover {
   transform: scale(1.2);
 }
 
-.input:focus ~ .btn-box:hover:active,
-input:valid ~ .btn-box:hover:active {
+.search-input:focus ~ .btn-box:hover:active,
+.search-input:valid ~ .btn-box:hover:active {
   transform: scale(1);
 }
 
@@ -129,8 +129,8 @@ input:valid ~ .btn-box:hover:active {
   transition: var(--transition);
 }
 
-.input:focus ~ .btn-box:hover #svg-circle,
-input:valid ~ .btn-box:hover #svg-circle {
+.search-input:focus ~ .btn-box:hover #svg-circle,
+.search-input:valid ~ .btn-box:hover #svg-circle {
   fill: transparent;
 }
 
@@ -146,8 +146,8 @@ input:valid ~ .btn-box:hover #svg-circle {
   transition: var(--transition);
 }
 
-.input:focus ~ .btn-box-x,
-input:valid ~ .btn-box-x {
+.search-input:focus ~ .btn-box-x,
+.search-input:valid ~ .btn-box-x {
   opacity: 1;
   transform: rotate(0) scale(1);
 }

@@ -17,7 +17,7 @@ const useProps = (initialState: any, styleType: StyleType) => {
     for (const key in initialState) {
       elementStyle[key] = initialState[key];
     }
-  }, [initialState]);
+  }, [elementStyle, initialState]);
 
   useEffect(() => {
     reset();

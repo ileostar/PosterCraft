@@ -25,20 +25,20 @@ function Tab({ tabs }: TabsProps) {
     <div className="flex flex-col flex-1">
       <div
         role="tablist"
-        className="tabs tabs-bordered"
+        className="tabs tabs-bordered "
       >
         {tabs.map((tab: any) => (
           <button
             key={tab.id}
             role="tab"
-            className={`tab ${tab.id === activeTabIndex ? "tab-active" : ""}`}
+            className={`tab pt-2 pb-8 ${tab.id === activeTabIndex ? "tab-active" : ""}`}
             onClick={() => handleTabClick(tab.id)}
           >
             {tab.label}
           </button>
         ))}
       </div>
-      <div className="flex-1 pt-4">
+      <div className="flex-1">
         {/* 根据当前活动的标签页索引渲染对应的内容 */}
         {tabs[activeTabIndex]?.content && (
           <div className="h-full">{tabs[activeTabIndex].content}</div>

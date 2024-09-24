@@ -1,4 +1,3 @@
-//真正渲染到画布时会过滤掉display:'flex'，justifyContent:'center'，alignItems: 'center'这3个属性
 const textTemplate = [
   {
     style: {
@@ -9,10 +8,7 @@ const textTemplate = [
       borderStyle: "none",
       textAlign: "center",
       lineHeight: "50px",
-      display: "flex",
       fontFamily: "SimSun",
-      justifyContent: "center",
-      alignItems: "center",
       fontSize: 24,
     },
     text: "你好",
@@ -26,9 +22,6 @@ const textTemplate = [
       borderStyle: "none",
       textAlign: "center",
       lineHeight: "50px",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
       fontSize: 16,
     },
     text: "我们一起",
@@ -42,14 +35,12 @@ const textTemplate = [
       borderStyle: "none",
       textAlign: "center",
       lineHeight: "50px",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      fontSize: 24,
-      backgroundColor: "blue",
+      fontSize: 16,
+      backgroundColor: "#3d7fff",
+      borderRadius: "10px",
       color: "rgb(255,255,255)",
     },
-    text: "你好",
+    text: "发布",
   },
   {
     style: {
@@ -60,14 +51,11 @@ const textTemplate = [
       borderStyle: "none",
       textAlign: "center",
       lineHeight: "50px",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      fontSize: 24,
-      backgroundColor: "red",
-      color: "rgb(255,255,255)",
+      fontSize: 16,
+      textDecoration: "underline",
+      color: "#3d7fff",
     },
-    text: "liuliudashun",
+    text: "PosterCraft.com",
   },
 ];
 

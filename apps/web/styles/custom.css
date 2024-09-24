@@ -5,3 +5,52 @@ html {
   scrollbar-width: none; /* firefox */
   -ms-overflow-style: none; /* IE 10+ */
 }
+
+/* === removing default project-title style ===*/
+.project-title {
+  margin: 0;
+  background: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+/* project-title styling */
+.project-title {
+  --fs-size: 2em;
+  letter-spacing: 3px;
+  text-decoration: none;
+  font-family: "Arial";
+  position: relative;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text-stroke-color);
+}
+
+.project-title {
+  --animation-color: #fb7185;
+  --text-stroke-color: hsla(0, 0%, 49%, 0.6);
+}
+
+.dark .project-title {
+  --animation-color: #e730ca;
+  --text-stroke-color: hsla(0, 0%, 100%, 0.6);
+}
+
+/* this is the text, when you hover on project-title */
+.hover-text {
+  position: absolute;
+  box-sizing: border-box;
+  content: attr(data-text);
+  color: var(--animation-color);
+  width: 0%;
+  inset: 0;
+  border-right: var(--border-right) solid var(--animation-color);
+  overflow: hidden;
+  transition: 0.5s;
+  -webkit-text-stroke: 1px var(--animation-color);
+}
+/* hover */
+.project-title:hover .hover-text {
+  width: 100%;
+  filter: drop-shadow(0 0 23px var(--animation-color));
+}

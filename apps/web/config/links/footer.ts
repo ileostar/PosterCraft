@@ -1,9 +1,27 @@
-export const FooterNavLinks = [
-  { href: "/", label: "Home" },
-  { href: "/templates", label: "Templates" },
-  { href: "/works", label: "Works" },
-  { href: "/about", label: "About" },
-];
+import { useTranslations } from "next-intl";
+
+export const FooterNavLinks = () => {
+  const t = useTranslations();
+
+  return [
+    {
+      href: "/",
+      label: t("home"),
+    },
+    {
+      href: "/templates",
+      label: t("templates"),
+    },
+    {
+      href: "/works",
+      label: t("works"),
+    },
+    {
+      href: "/about",
+      label: t("about"),
+    },
+  ];
+};
 
 export const FooterSocialLinks = [
   { href: "#", icon: "Facebook", srOnlyText: "Facebook" },

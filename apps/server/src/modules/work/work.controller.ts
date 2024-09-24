@@ -3,11 +3,11 @@ import {
   Controller,
   Delete,
   Get,
-  Logger,
   Param,
   Post,
   Put,
   Query,
+  Redirect,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -35,7 +35,7 @@ import { APIResponse } from 'src/decorators/apiResponse.decorators';
 
 @ApiTags('🔧工作区模块')
 @ApiBearerAuth()
-@Controller('works')
+@Controller('work')
 export class WorkController {
   constructor(private readonly workService: WorkService) {}
 
@@ -83,7 +83,7 @@ export class WorkController {
     return this.workService.copyWork(workId, userInfo);
   }
 
-  @Get()
+  @Get('list')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: '获取工作区列表',

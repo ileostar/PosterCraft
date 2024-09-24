@@ -40,19 +40,18 @@
     "art-template": "4.13.2",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.1",
-    "ejs": "3.1.10",
     "ioredis": "5.4.1",
     "jose": "5.6.3",
-    "lego-components": "0.1.7",
     "mysql2": "3.11.0",
     "passport": "0.7.0",
     "passport-github-oauth20": "1.0.4",
     "passport-google-oauth20": "2.0.0",
     "passport-jwt": "4.0.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.1",
-    "uuid": "10.0.0",
-    "vue": "3.4.35"
+    "uuid": "10.0.0"
   },
   "devDependencies": {
     "@alicloud/dysmsapi20170525": "3.0.0",

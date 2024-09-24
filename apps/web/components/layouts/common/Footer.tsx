@@ -13,7 +13,7 @@ const Footer: React.FC<FooterProps> = () => {
           className="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
           aria-label="Footer"
         >
-          {FooterNavLinks.map((link) => (
+          {FooterNavLinks().map((link) => (
             <FooterNavLink
               key={link.href}
               href={link.href}
@@ -32,7 +32,7 @@ const Footer: React.FC<FooterProps> = () => {
           ))}
         </div>
         <div className="mt-10 text-center text-xs leading-5 text-white dark:text-gray-500">
-          Copyright © 2024 LeoStar. All rights reserved.
+          Copyright © 2024 LeoStar & kkkang. All rights reserved.
         </div>
       </div>
     </footer>

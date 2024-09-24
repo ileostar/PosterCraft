@@ -5,15 +5,15 @@ import { getUserInfoResponse, updateUserInfoBody, updateUserInfoResponse } from 
 
 /** 获取用户信息 */
 export function getUserInfo(userId: string) {
-  return http.get<ResponseData<getUserInfoResponse>>(`/users/${userId}`);
+  return http.get<ResponseData<getUserInfoResponse>>(`/user/${userId}`);
 }
 
 /** 更新用户信息 */
 export function updateUserInfo(userId: string, body: updateUserInfoBody) {
-  return http.put<ResponseData<updateUserInfoResponse>>(`/users/${userId}`, body);
+  return http.put<ResponseData<updateUserInfoResponse>>(`/user/${userId}`, body);
 }
 
 /** 删除用户信息 */
 export function deleteUser(userId: string) {
-  return http.delete<ResponseData<null>>(`/users/${userId}`);
+  return http.delete<ResponseData<null>>(`/user/${userId}`);
 }

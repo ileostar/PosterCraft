@@ -1,0 +1,6 @@
+.hiddenScrollbar {
+  scrollbar-width: none;
+  /* firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
+}

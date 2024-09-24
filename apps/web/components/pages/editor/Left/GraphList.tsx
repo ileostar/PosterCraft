@@ -33,15 +33,6 @@ function GraphList() {
     });
   };
 
-  //过滤掉flex布局属性
-  const filterFlexStyle = (str: string): string | null => {
-    if (str.includes("alignItems") || str.includes("justifyContent") || str.includes("display")) {
-      return null;
-    } else {
-      return str;
-    }
-  };
-
   // 将CSS样式字符串转换为对象
   const parseStyleStringToObject = (cssText: string): { [key: string]: any } => {
     const styles = cssText.split(";");
@@ -53,11 +44,9 @@ function GraphList() {
         const [key, value] = style.trim().split(":");
         //转成驼峰css
         const camelCaseKey = kebabCaseToCamelCase(key.trim());
-        // 过滤掉flex布局属性
-        const filterKey = filterFlexStyle(camelCaseKey);
         // 可能需要额外的处理来去除值两端的空格或引号等
-        if (filterKey) {
-          styleObject[filterKey] = value.trim().replace(/"/g, "").replace(/'/g, "");
+        if (camelCaseKey) {
+          styleObject[camelCaseKey] = value.trim().replace(/"/g, "").replace(/'/g, "");
         }
       }
     });
@@ -66,13 +55,13 @@ function GraphList() {
   };
 
   return (
-    <div className="flex justify-center items-center flex-col">
+    <div className="grid grid-cols-2 mt-4">
       {graphTemplate.map((item: any) => (
         <button
           key={item.id}
           onClick={(e) => handleClick(e)}
           style={item.style}
-          className="mb-3"
+          className="mx-auto my-4"
         ></button>
       ))}
     </div>

@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Post,
   Put,
   UseGuards,
 } from '@nestjs/common';
@@ -16,14 +17,21 @@ import {
   ApiTags,
   OmitType,
 } from '@nestjs/swagger';
-import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
+import {
+  AddPasswordDto,
+  ChangePasswordDto,
+  CreateUserDto,
+  UpdateUserDto,
+} from './dto/user.dto';
 import { number } from 'zod';
 import { JwtAuthGuard } from '../../guards/jwt.guard';
 import { APIResponse } from 'src/decorators/apiResponse.decorators';
+import { CallbackUserData } from '../auth/decorator/callback.decorator';
+import { JwtPayloadDto } from '../auth/dto/jwt.dto';
 
 @ApiBearerAuth()
 @ApiTags('😀用户信息模块')
-@Controller('users')
+@Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -71,7 +79,10 @@ export class UserController {
     required: true,
   })
   @ApiBody({ type: OmitType(UpdateUserDto, ['userId']) })
-  @ApiOperation({ summary: '更新用户信息', description: '测试' })
+  @ApiOperation({
+    summary: '更新用户信息',
+    description: '根据userId更新用户信息',
+  })
   @APIResponse(OmitType(UpdateUserDto, ['userId']))
   async updateUserInfos(
     @Param('userId') userId: string,
@@ -90,6 +101,73 @@ export class UserController {
     } catch (error) {
       return {
         msg: '更新用户信息失败：' + error,
+      };
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('password')
+  @ApiOperation({
+    summary: '检测用户密码状态',
+    description: '检测当前用户使用已设置密码',
+  })
+  @APIResponse()
+  async checkUserPasswordStatus(@CallbackUserData() userData: JwtPayloadDto) {
+    try {
+      const user = await this.userService.findUserByUserId(userData.userId);
+      if (!user) throw '用户Id不存在';
+      return {
+        code: 200,
+        data: {
+          hasPassword: user.password ? true : false,
+        },
+      };
+    } catch (error) {
+      return {
+        msg: '密码查询失败:' + error,
+      };
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('password')
+  @ApiBody({ type: AddPasswordDto })
+  @ApiOperation({ summary: '添加密码', description: '添加密码' })
+  @APIResponse()
+  async addPassword(
+    @Body() dto: AddPasswordDto,
+    @CallbackUserData() userData: JwtPayloadDto,
+  ) {
+    try {
+      await this.userService.addPassword(userData.userId, dto);
+      return {
+        code: 200,
+        msg: '密码添加成功！',
+      };
+    } catch (error) {
+      return {
+        msg: '密码添加失败：' + error,
+      };
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('password')
+  @ApiBody({ type: ChangePasswordDto })
+  @APIResponse()
+  async changePassword(
+    @Body() dto: ChangePasswordDto,
+    @CallbackUserData() userData: JwtPayloadDto,
+  ) {
+    try {
+      await this.userService.changePassword(userData.userId, dto);
+      return {
+        code: 200,
+        msg: '密码修改成功！',
+      };
+    } catch (error) {
+      return {
+        msg: '密码修改失败：' + error,
       };
     }
   }

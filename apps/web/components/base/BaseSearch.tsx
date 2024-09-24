@@ -2,7 +2,11 @@
 
 import "@/styles/base/search.css";
 
-interface BaseSearchProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+import { useState } from "react";
+
+interface BaseSearchProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  onSearch?: (e: any) => void;
+}
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
@@ -47,7 +51,9 @@ const ClearButton: React.FC<ButtonProps> = ({ className, onClick, ...rest }) => 
   </button>
 );
 
-const BaseSearch: React.FC<BaseSearchProps> = ({ className, onClick, ...rest }) => {
+const BaseSearch: React.FC<BaseSearchProps> = ({ className, onClick, onSearch, ...rest }) => {
+  const [inputValue, setInputValue] = useState("");
+
   return (
     <div className="search-panels">
       <div className="search-group">
@@ -58,11 +64,13 @@ const BaseSearch: React.FC<BaseSearchProps> = ({ className, onClick, ...rest }) 
           autoComplete="on"
           className={`input ${className}`}
           onClick={onClick}
+          onChange={(e) => setInputValue(e.target.value)}
+          value={inputValue}
           {...rest}
         />
         <label className="enter-label">Search</label>
         <div className="btn-box">
-          <SearchButton />
+          <SearchButton onClick={() => onSearch?.(inputValue)} />
         </div>
         <div className="btn-box-x">
           <ClearButton />

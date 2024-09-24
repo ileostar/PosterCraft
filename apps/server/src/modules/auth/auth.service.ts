@@ -1,9 +1,4 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { DefaultLoginDto, PhoneOtpLoginDto, RegisterDto } from './dto/auth.dto';
 import * as argon2 from 'argon2';
