@@ -1,5 +1,3 @@
-import { AxiosResponse } from "axios";
-
 export interface ResponseData<T> {
   code: number;
   msg: string;

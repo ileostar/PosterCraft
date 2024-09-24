@@ -10,7 +10,7 @@ import { useGithubUsername, useOauth2Dialog } from "../../../stores/auth";
 
 function Oauth2() {
   const router = useRouter();
-  const [token, setTokenHandler] = useToken();
+  const [_, setTokenHandler] = useToken();
 
   const { setGithubUsername } = useGithubUsername();
   const { setIsOpen } = useOauth2Dialog();
