@@ -1,6 +1,49 @@
 {
-  "editPersonalInformation": "Edit personal information",
-  "exploreTemplates": "Explore Templates",
-  "share": "Share",
-  "start-designing": "Start Designing"
+  "common": {
+    "editPersonalInformation": "Edit Personal Information",
+    "exploreTemplates": "Explore Templates",
+    "share": "Share",
+    "startDesigning": "Start Designing"
+  },
+  "login": {
+    "success": "Success",
+    "loginSuccess": "Login successful",
+    "error": "Error",
+    "tryAgain": "Try again",
+    "loginFailed": "Login failed",
+    "signIn": "Sign In",
+    "registerHere": "Register here",
+    "bindPhoneNumber": "Bind phone number",
+    "enterPhoneNumber": "Enter phone number",
+    "phoneNumber": "Phone number",
+    "enterVerificationCode": "Enter verification code",
+    "verificationCode": "Verification code",
+    "bind": "Bind",
+    "phoneBindSuccess": "Phone number bound successfully",
+    "phoneBindFailed": "Phone number binding failed"
+  },
+  "register": {
+    "signUp": "Sign Up",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "phone": "Phone Number",
+    "phonePlaceholder": "Enter your phone number",
+    "otp": "Verification Code",
+    "otpPlaceholder": "Enter verification code",
+    "register": "Register",
+    "loginLink": "Click here to login"
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "recentProjects": "Recent projects",
+    "createNewProject": "Create new project"
+  },
+  "editor": {
+    "save": "Save",
+    "undo": "Undo",
+    "redo": "Redo",
+    "export": "Export"
+  }
 }

@@ -17,7 +17,7 @@ const userInfo = {
 };
 
 const UserInfos: React.FC<UserInfosProps> = (params) => {
-  const t = useTranslations();
+  const t = useTranslations("common");
   return (
     <div className="flex flex-wrap justify-between w-full py-8">
       <div className="flex flex-col justify-between items-center flex-1 w-full h-full pl-5">

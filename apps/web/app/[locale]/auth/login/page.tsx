@@ -1,7 +1,6 @@
 "use client";
 
 import { defaultSignIn, defaultSignUp, loginBySMS } from "@/api/auth";
-import { sendBySMS } from "@/api/sms";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import Oauth2 from "@/components/pages/auth/Oauth2";
 import renderSignIn from "@/components/pages/auth/SignIn";
@@ -14,13 +13,19 @@ import { useGithubUsername, useOauth2Dialog } from "@/stores/auth";
 import { loginFormSchema, loginFormSchemaType } from "@/utils/formSchema";
 import { Link } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Login() {
   const router = useRouter();
   const { toast } = useToast();
+  const t = useTranslations("login");
+  const [isPhoneMode, setIsPhoneMode] = useState(false);
+  const { githubUsername } = useGithubUsername();
+  const { setIsOpen, isOpen } = useOauth2Dialog();
+
   const form = useForm<loginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -31,90 +36,90 @@ export default function Login() {
       username: "",
     },
   });
-  async function onSubmit(values: loginFormSchemaType) {
-    console.log(values);
-  }
 
-  //登录模式(是否为手机短信登录)
-  const [isPhoneMode, setIsPhoneMode] = useState(false);
-
-  const handleSign = async () => {
+  const handleSign = useCallback(async () => {
     try {
-      let res = isPhoneMode
-        ? await loginBySMS({ phone: form.getValues("phone"), otp: form.getValues("code") })
+      const values = form.getValues();
+      const res = isPhoneMode
+        ? await loginBySMS({ phone: values.phone, otp: values.code })
         : await defaultSignIn({
-            identifier: form.getValues("username"),
-            password: form.getValues("password"),
+            identifier: values.username,
+            password: values.password,
           });
+
       if (res.data.code === 200) {
         toast({
           variant: "success",
-          title: "Success",
-          description: "登录成功,即将跳转至主页...",
+          title: t("success"),
+          description: t("loginSuccess"),
         });
         if (res.data.token) {
-          window.localStorage.setItem("token", res.data.token); //存入本地
+          localStorage.setItem("token", res.data.token);
         }
-        window.localStorage.setItem("userId", res.data.data.userId);
+        localStorage.setItem("userId", res.data.data.userId);
         router.push("/");
       } else {
         toast({
           variant: "destructive",
-          title: "Error",
+          title: t("error"),
           description: res.data.msg,
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
+          action: <ToastAction altText={t("tryAgain")}>{t("tryAgain")}</ToastAction>,
         });
-        return;
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
-  };
-  const { githubUsername } = useGithubUsername();
-  const { setIsOpen, isOpen } = useOauth2Dialog();
+  }, [form, isPhoneMode, router, t, toast]);
 
-  const addPhoneByGithub = async () => {
-    let res = await defaultSignUp({
-      username: githubUsername,
-      password: null,
-      phone: form.getValues("phone"),
-      otp: form.getValues("code"),
-    });
-    CloseModal();
-    router.push("/");
-  };
+  const addPhoneByGithub = useCallback(async () => {
+    try {
+      const values = form.getValues();
+      await defaultSignUp({
+        username: githubUsername,
+        password: null,
+        phone: values.phone,
+        otp: values.code,
+      });
+      closeModal();
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+      toast({
+        variant: "destructive",
+        title: t("error"),
+        description: t("bindingFailed"),
+      });
+    }
+  }, [form, githubUsername, router, t, toast]);
 
-  const showModal = () => {
+  const showModal = useCallback(() => {
     const modalElement = document.getElementById("my_modal_1") as HTMLDialogElement | null;
     if (modalElement) {
       modalElement.showModal();
     }
-  };
+  }, []);
 
-  const CloseModal = () => {
+  const closeModal = useCallback(() => {
     const modalElement = document.getElementById("my_modal_1") as HTMLDialogElement | null;
     if (modalElement) {
       modalElement.close();
     }
     setIsOpen(false);
-  };
+  }, [setIsOpen]);
 
   useEffect(() => {
     if (isOpen) {
       showModal();
     }
-  }, [isOpen]);
+  }, [isOpen, showModal]);
 
   return (
     <AuthLayout>
-      <div className="w-[92vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] xl:w-[25vw] min-w-[320px] card shrink-0 max-w-sm shadow-2xl bg-base-100 dark:bg-[#FF33DE]/15 dark:backdrop-blur-3xl  font-serif rounded-2xl">
+      <div className="w-[92vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] xl:w-[25vw] min-w-[320px] card shrink-0 max-w-sm shadow-2xl bg-base-100 dark:bg-[#FF33DE]/15 dark:backdrop-blur-3xl font-serif rounded-2xl">
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-2 p-8 rounded-2xl"
-          >
-            <div className="flex justify-center items-center ">
-              <div className="text-red-500 dark:text-white text-2xl card-title">Sign In</div>
+          <form className="flex flex-col gap-2 p-8 rounded-2xl">
+            <div className="flex justify-center items-center">
+              <div className="text-red-500 dark:text-white text-2xl card-title">{t("signIn")}</div>
             </div>
 
             {renderSignIn({
@@ -125,10 +130,10 @@ export default function Login() {
             <div className="flex justify-between mt-[5px]">
               <Button
                 className="w-full hover:bg-red-600 bg-[#EF4444] dark:bg-[#8d1d7a] text-white"
-                onClick={() => handleSign()}
-                type="submit"
+                onClick={handleSign}
+                type="button"
               >
-                登 录
+                {t("signIn")}
               </Button>
             </div>
             <div className="flex justify-between items-center">
@@ -137,7 +142,7 @@ export default function Login() {
                   href="/auth/register"
                   className="label-text-alt link link-hover hover:text-gray-500 dark:hover:text-white/80 text-[#EF4444] dark:text-white"
                 >
-                  点此注册
+                  {t("registerHere")}
                 </Link>
               </label>
               <Oauth2 />
@@ -151,33 +156,29 @@ export default function Login() {
         className="modal"
       >
         <div className="modal-box">
-          <h3 className="font-bold text-lg">请绑定手机号!</h3>
+          <h3 className="font-bold text-lg">{t("bindPhoneNumber")}</h3>
           <Form {...form}>
             <CustomFormField
               form={form}
-              name={"phone"}
-              placeholder={"请输入手机号码"}
-              label={"手机号码"}
+              name="phone"
+              placeholder={t("enterPhoneNumber")}
+              label={t("phoneNumber")}
             />
             <CustomFormField
               form={form}
-              name={"code"}
-              placeholder={"请输入验证码"}
-              label={"验证码"}
+              name="code"
+              placeholder={t("enterVerificationCode")}
+              label={t("verificationCode")}
               isVerify={true}
             />
           </Form>
           <div className="modal-action">
             <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
               <button
                 className="btn"
-                onClick={() => {
-                  addPhoneByGithub();
-                }}
+                onClick={addPhoneByGithub}
               >
-                {" "}
-                绑定
+                {t("bind")}
               </button>
             </form>
           </div>

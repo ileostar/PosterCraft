@@ -1,6 +1,49 @@
 {
-  "editPersonalInformation": "编辑个人信息",
-  "exploreTemplates": "探索模版",
-  "share": "分享",
-  "start-designing": "开始设计"
+  "common": {
+    "editPersonalInformation": "编辑个人信息",
+    "exploreTemplates": "探索模板",
+    "share": "分享",
+    "startDesigning": "开始设计"
+  },
+  "login": {
+    "success": "成功",
+    "loginSuccess": "登录成功",
+    "error": "错误",
+    "tryAgain": "再试一次",
+    "loginFailed": "登录失败",
+    "signIn": "登录",
+    "registerHere": "点此注册",
+    "bindPhoneNumber": "绑定手机号",
+    "enterPhoneNumber": "输入手机号",
+    "phoneNumber": "手机号",
+    "enterVerificationCode": "输入验证码",
+    "verificationCode": "验证码",
+    "bind": "绑定",
+    "phoneBindSuccess": "手机号绑定成功",
+    "phoneBindFailed": "手机号绑定失败"
+  },
+  "register": {
+    "signUp": "注册",
+    "username": "用户名",
+    "usernamePlaceholder": "请输入用户名",
+    "password": "密码",
+    "passwordPlaceholder": "请输入密码",
+    "phone": "手机号码",
+    "phonePlaceholder": "请输入手机号码",
+    "otp": "验证码",
+    "otpPlaceholder": "请输入验证码",
+    "register": "注册",
+    "loginLink": "点此登录"
+  },
+  "dashboard": {
+    "welcome": "欢迎回来",
+    "recentProjects": "最近的项目",
+    "createNewProject": "创建新项目"
+  },
+  "editor": {
+    "save": "保存",
+    "undo": "撤销",
+    "redo": "重做",
+    "export": "导出"
+  }
 }

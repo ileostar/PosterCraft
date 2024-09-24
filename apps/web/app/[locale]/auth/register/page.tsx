@@ -12,12 +12,14 @@ import { useToast } from "@/components/ui/use-toast";
 import { registerFormSchema } from "@/utils/formSchema";
 import { Link } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export default function Register() {
   const router = useRouter();
   const { toast } = useToast();
+  const t = useTranslations("register");
   const form = useForm<defaultSignUpBody>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -63,43 +65,42 @@ export default function Register() {
             className="flex flex-col gap-2 p-8 rounded-2xl"
           >
             <div className="flex justify-center items-center ">
-              <div className="text-red-500 dark:text-white text-2xl card-title">Sign Up</div>
+              <div className="text-red-500 dark:text-white text-2xl card-title">{t("signUp")}</div>
             </div>
             <div className="flex flex-col gap-1 mb-1">
               <CustomFormField
                 form={form}
                 name={"username"}
-                placeholder={"请输入用户名"}
-                label={"用户名"}
+                placeholder={t("usernamePlaceholder")}
+                label={t("username")}
               />
               <CustomFormField
                 form={form}
                 name={"password"}
-                placeholder={"请输入密码"}
-                label={"密码"}
+                placeholder={t("passwordPlaceholder")}
+                label={t("password")}
                 isPassword={true}
               />
               <CustomFormField
                 form={form}
                 name={"phone"}
-                placeholder={"请输入手机号码"}
-                label={"手机号码"}
+                placeholder={t("phonePlaceholder")}
+                label={t("phone")}
               />
               <CustomFormField
                 form={form}
                 name={"otp"}
-                placeholder={"请输入验证码"}
-                label={"验证码"}
+                placeholder={t("otpPlaceholder")}
+                label={t("otp")}
                 isVerify={true}
               />
             </div>
             <div className="flex justify-between mt-[5px]">
               <Button
                 className="btn w-full bg-red-600 dark:bg-[#8d1d7a] text-white"
-                // onClick={() => handleSign()}
                 type="submit"
               >
-                注册
+                {t("register")}
               </Button>
             </div>
             <div className="flex justify-between items-center">
@@ -108,7 +109,7 @@ export default function Register() {
                   href="/auth/login"
                   className="label-text-alt no-underline link link-hover text-[#EF4444] dark:text-white"
                 >
-                  点此登录
+                  {t("loginLink")}
                 </Link>
               </label>
               <Oauth2 />
