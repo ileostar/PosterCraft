@@ -7,32 +7,21 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { useUserStore } from "@/stores/user";
+import { userFormSchema, UserFormSchemaType } from "@/utils/formSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-const FormSchema = z.object({
-  username: z.string().min(1, {
-    message: "不能为空",
-  }),
-  // nickname: z.any(),
-  nickname: z.string().min(1, {
-    message: "不能为空",
-  }),
-  avatar: z.any(),
-});
-
-export type FormSchemaType = z.infer<typeof FormSchema>;
 
 export default function Profile() {
+  const t = useTranslations();
   const { toast } = useToast();
-
-  const [userId, setUserId] = useState<string>("0");
+  const { userId } = useUserStore();
   const [avatar, setAvatar] = useState<string>("");
 
-  const form = useForm<FormSchemaType>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<UserFormSchemaType>({
+    resolver: zodResolver(userFormSchema),
     defaultValues: {
       username: "",
       nickname: "",
@@ -40,22 +29,21 @@ export default function Profile() {
     },
   });
 
-  const getUserData = async (userId: string) => {
-    const res = await getUserInfo(userId);
+  const getUserData = async (id: string) => {
+    const res = await getUserInfo(id);
     form.setValue("username", res.data.data?.username || "");
     form.setValue("nickname", res.data.data?.nickname || "");
     form.setValue("avatar", res.data.data?.avatar || "");
     setAvatar(res.data.data?.avatar || "");
   };
   useEffect(() => {
-    const userId = window.localStorage.getItem("userId");
     if (userId !== null) {
-      setUserId(userId);
       getUserData(userId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [avatar, form]);
 
-  async function onSubmit(values: FormSchemaType) {
+  async function onSubmit(values: UserFormSchemaType) {
     try {
       let data: {
         [key: string]: string | number | undefined; // 添加索引签名以允许使用字符串作为键
@@ -69,9 +57,7 @@ export default function Profile() {
           delete data[key];
         }
       });
-      const res = await updateUserInfo(userId, data);
-      // console.log(res);
-      console.log(res.data);
+      const res = await updateUserInfo(userId as string, data);
 
       if (res.data.code !== 200) {
         toast({
@@ -105,22 +91,24 @@ export default function Profile() {
   };
 
   return (
-    <div className="h-full flex flex-col justify-between max-sm:gap-6">
-      <div className="flex justify-start items-center h-[10%] ">
-        <div className="text-[#f43f5e] dark:text-[#d048ef]  text-2xl card-title">My Card</div>
-      </div>
-      <div className="h-[80%] flex flex-col justify-between max-sm:gap-2 items-center">
-        <UploadAvatar
-          handleOssUrl={handleOssUrl}
-          img={avatar}
-        />
+    <div className="h-full flex flex-row justify-between">
+      <div className="h-full flex flex-1 flex-col justify-between max-sm:gap-6">
+        <div className="flex justify-start items-center h-[10%] ">
+          <div className="text-[#f43f5e] dark:text-[#d048ef]  text-xl card-title">
+            {t("my-card")}
+          </div>
+        </div>
+        <div className="h-[85%] flex flex-col justify-around max-sm:gap-2 items-center">
+          <UploadAvatar
+            handleOssUrl={handleOssUrl}
+            img={avatar}
+          />
 
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="w-[70%] h-[60%] mx-auto flex flex-col justify-between max-sm:gap-6"
-          >
-            <div className="grid grid-cols-1 gap-6  sm:grid-cols-2 ">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="w-[40%] mx-auto flex flex-col justify-between max-sm:gap-6"
+            >
               <CustomFormField
                 form={form}
                 name={"username"}
@@ -133,19 +121,20 @@ export default function Profile() {
                 placeholder={"请输入昵称"}
                 label={"昵称"}
               />
-            </div>
-            <div className="w-full flex justify-center">
-              <Button
-                className="mx-auto btn w-[20%] max-sm:w-[60%] bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
-                // onClick={() => handleSign()}
-                type="submit"
-              >
-                保存
-              </Button>
-            </div>
-          </form>
-        </Form>
+              <div className="w-full flex justify-center mt-5 mb-5">
+                <Button
+                  className="mx-auto btn w-[20%] max-sm:w-[60%] bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
+                  // onClick={() => handleSign()}
+                  type="submit"
+                >
+                  保存
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
       </div>
+      <div className="h-full flex-1  bg-blue-500/30 rounded-lg "></div>
     </div>
   );
 }

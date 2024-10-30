@@ -2,26 +2,15 @@ import {
   ApiBearerAuth,
   ApiOperation,
   ApiParam,
-  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { PageService } from './page.service';
-import {
-  Controller,
-  Get,
-  Param,
-  Query,
-  Render,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Param, Render, Res } from '@nestjs/common';
 import { string } from 'zod';
-import { JwtAuthGuard } from 'src/guards/jwt.guard';
-import { APIResponse } from 'src/decorators/apiResponse.decorators';
 
 @ApiBearerAuth()
 @ApiTags('🔮H5渲染模块')
-@Controller('pages')
+@Controller('page')
 export class PageController {
   constructor(private readonly pageService: PageService) {}
 

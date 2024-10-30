@@ -14,10 +14,7 @@ function renderSignIn({
 }: {
   isPhoneMode: boolean;
   setIsPhoneMode: (value: boolean) => void;
-  isDisabled: boolean;
   form: FormType;
-  handleClick: () => void;
-  countdown: number;
 }) {
   if (isPhoneMode) {
     return (
@@ -63,6 +60,7 @@ function renderSignIn({
           name={"password"}
           placeholder={"请输入密码"}
           label={"密码"}
+          isPassword={true}
         />
 
         <label className="label justify-end">

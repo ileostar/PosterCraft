@@ -3,7 +3,12 @@ import { Inject, Injectable } from '@nestjs/common';
 import * as argon2 from 'argon2';
 import { eq } from 'drizzle-orm';
 import { DB, DbType } from 'src/modules/global/providers/db.provider';
-import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
+import {
+  AddPasswordDto,
+  ChangePasswordDto,
+  CreateUserDto,
+  UpdateUserDto,
+} from './dto/user.dto';
 import { CacheService } from '../cache/cache.service';
 import { PhoneOtpLoginDto, RegisterDto } from '../auth/dto/auth.dto';
 
@@ -39,6 +44,31 @@ export class UserService {
     }
     await this.db.update(user).set(dto).where(eq(user.id, dto.userId));
     return dto;
+  }
+
+  async addPassword(userId: string, dto: AddPasswordDto) {
+    if (dto.password.length < 6 || dto.password.length > 20)
+      throw '密码长度应在6-20位之间';
+    const currentUser = await this.findUserByUserId(userId);
+    if (!currentUser) throw '用户ID不存在';
+    if (currentUser.password) throw '用户已设置密码';
+    const hash = await argon2.hash(dto.password);
+    await this.db
+      .update(user)
+      .set({ password: hash })
+      .where(eq(user.id, userId));
+  }
+
+  async changePassword(userId: string, dto: ChangePasswordDto) {
+    const currentUser = await this.findUserByUserId(userId);
+    if (!user) throw '用户ID不存在';
+    if (argon2.verify(currentUser.password, dto.oldPassword))
+      throw '旧密码错误';
+    const hash = await argon2.hash(dto.newPassword);
+    await this.db
+      .update(user)
+      .set({ password: hash })
+      .where(eq(user.id, userId));
   }
 
   async findUserByUsername(username: string): Promise<any> {
@@ -77,7 +107,7 @@ export class UserService {
 
   async checkVerificationCode(
     dto: RegisterDto | PhoneOtpLoginDto,
-  ): Promise<Boolean> {
+  ): Promise<boolean> {
     const correctCode = await this.cacheService.getCache(dto.phone);
     return correctCode === dto.otp;
   }

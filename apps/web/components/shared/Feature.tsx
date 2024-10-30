@@ -1,10 +1,11 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { useToken } from "@/hooks/useToken";
+import { useWorkStore } from "@/stores/work";
 import { Link, usePathname, useRouter } from "@/utils/i18n/routing";
 import { useLocale } from "next-intl";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 
 import BaseGoToLogin from "../base/BaseGoToLogin";
 import BaseTooltips from "../base/BaseTooltip";
@@ -14,7 +15,8 @@ interface FeatureProps {}
 
 const Feature: React.FC<FeatureProps> = () => {
   const { theme, setTheme } = useTheme();
-  const [token, setToken] = useState<string | null>("");
+  const [token] = useToken();
+  const { setWork } = useWorkStore();
 
   const locale = useLocale();
   const router = useRouter();
@@ -24,12 +26,6 @@ const Feature: React.FC<FeatureProps> = () => {
     router.push(pathname, { locale: locale === "en" ? "zh" : "en" });
   };
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setToken(window.localStorage.getItem("token"));
-    }
-  }, []);
-
   return (
     <div className="flex items-center gap-5 w-72 justify-end">
       <div className="relative hidden min-[845px]:flex bg-transparent rounded-lg  font-semibold transition-all duration-700 will-change-transform">
@@ -37,7 +33,13 @@ const Feature: React.FC<FeatureProps> = () => {
           tooltipText={"Create Post"}
           position={"bottom"}
         >
-          <span className="icon-[carbon--add-alt] text-gray-700 dark:text-white w-8 h-8 rounded-full cursor-pointer"></span>
+          <span
+            onClick={() => {
+              setWork(null);
+              router.push("/editor");
+            }}
+            className="icon-[carbon--add-alt] text-gray-700 dark:text-white w-8 h-8 rounded-full cursor-pointer"
+          ></span>
         </BaseTooltips>
       </div>
       <div className="relative hidden min-[845px]:flex bg-transparent rounded-lg  font-semibold transition-all duration-700 will-change-transform">

@@ -29,7 +29,7 @@ function SizeProps() {
           value={sizeStyles.height}
           onChange={(e) => handleUpdate("height", parseInt(e.target.value, 10))}
           placeholder="Font size"
-          className="input input-bordered w-2/3"
+          className="input input-bordered w-2/3 input-sm  max-w-xs"
         />
       </div>
 
@@ -46,7 +46,7 @@ function SizeProps() {
           value={sizeStyles.width}
           onChange={(e) => handleUpdate("width", parseInt(e.target.value, 10))}
           placeholder="Font size"
-          className="input input-bordered w-2/3"
+          className="input input-bordered w-2/3 input-sm  max-w-xs"
         />
       </div>
 
@@ -63,7 +63,7 @@ function SizeProps() {
           value={sizeStyles.paddingTop}
           onChange={(e) => handleUpdate("paddingTop", parseInt(e.target.value, 10))}
           placeholder="Font size"
-          className="input input-bordered w-2/3"
+          className="input input-bordered w-2/3 input-sm  max-w-xs"
         />
       </div>
 
@@ -80,7 +80,7 @@ function SizeProps() {
           value={sizeStyles.paddingBottom}
           onChange={(e) => handleUpdate("paddingBottom", parseInt(e.target.value, 10))}
           placeholder="Font size"
-          className="input input-bordered w-2/3"
+          className="input input-bordered w-2/3 input-sm  max-w-xs"
         />
       </div>
 
@@ -97,7 +97,7 @@ function SizeProps() {
           value={sizeStyles.paddingLeft}
           onChange={(e) => handleUpdate("paddingLeft", parseInt(e.target.value, 10))}
           placeholder="Font size"
-          className="input input-bordered w-2/3"
+          className="input input-bordered w-2/3 input-sm  max-w-xs"
         />
       </div>
 
@@ -114,7 +114,7 @@ function SizeProps() {
           value={sizeStyles.paddingRight}
           onChange={(e) => handleUpdate("paddingRight", parseInt(e.target.value, 10))}
           placeholder="Font size"
-          className="input input-bordered w-2/3"
+          className="input input-bordered w-2/3 input-sm  max-w-xs"
         />
       </div>
     </div>

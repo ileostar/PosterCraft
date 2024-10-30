@@ -13,6 +13,8 @@ import PositionProps from "./PositionProps";
 import ShadowProps from "./ShadowProps";
 import SizeProps from "./SizeProps";
 
+import "@/styles/base/hiddenScroll.css";
+
 function SetProps() {
   const parentRef = useRef<HTMLDivElement | null>(null);
   const [childStyle, setChildStyle] = useState({});
@@ -26,12 +28,12 @@ function SetProps() {
 
   return (
     <div
-      className="h-full"
+      className="h-full "
       ref={parentRef}
     >
       <div
         style={childStyle}
-        className="overflow-x-hidden"
+        className="overflow-x-hidden hiddenScrollbar"
       >
         <Accordion
           type="single"
