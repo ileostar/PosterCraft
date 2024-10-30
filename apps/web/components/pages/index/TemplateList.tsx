@@ -22,7 +22,7 @@ const TemplateList: React.FC<TemplateListProps> = () => {
 
   const getList = async (pageIndex?: number, pageSize?: number, title?: string) => {
     const res = await getTemplateList({ pageIndex, pageSize, title });
-    setTemplateList(res.data.data.list);
+    setTemplateList(res.data.data?.list || []);
   };
 
   useEffect(() => {

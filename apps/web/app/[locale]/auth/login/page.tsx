@@ -57,7 +57,7 @@ export default function Login() {
         if (res.data.token) {
           setTokenHandler(res.data.token);
         }
-        setUserId(res.data.data.userId);
+        setUserId(res.data.data?.userId);
         router.push("/");
       } else {
         toast({

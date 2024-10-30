@@ -23,10 +23,10 @@ function Main() {
 
   const getList = async (pageIndex: number, pageSize: number, title?: string) => {
     const res = await getTemplateList({ pageIndex, pageSize, title });
-    setWorkList(res.data.data.list);
+    setWorkList(res.data.data?.list || []);
     setPageIndex(pageIndex);
     setPageSize(pageSize);
-    setTotalPage(Math.ceil(res.data.data.count / pageSize));
+    setTotalPage(Math.ceil(res.data.data?.count / pageSize));
   };
 
   useEffect(() => {

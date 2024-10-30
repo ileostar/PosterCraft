@@ -76,9 +76,9 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
   const getUserData = async (id: string) => {
     const res = await getUserInfo(id);
     setUserInfo(() => ({
-      avatar: res.data.data.avatar || Info.avatar,
-      username: res.data.data.username || Info.username,
-      nickname: res.data.data.nickname || Info.nickname,
+      avatar: res.data.data?.avatar || Info.avatar,
+      username: res.data.data?.username || Info.username,
+      nickname: res.data.data?.nickname || Info.nickname,
     }));
   };
   useEffect(() => {

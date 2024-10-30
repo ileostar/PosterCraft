@@ -30,11 +30,11 @@ const UserInfos: React.FC<UserInfosProps> = (params) => {
   const getUserData = async (id: string) => {
     const res = await getUserInfo(id);
     setUserInfo(() => ({
-      avatar: res.data.data.avatar || Info.avatar,
-      username: res.data.data.username || Info.username,
-      nickname: res.data.data.nickname || Info.nickname,
-      email: res.data.data.email || Info.email,
-      phone: res.data.data.phone || Info.phone,
+      avatar: res.data.data?.avatar || Info.avatar,
+      username: res.data.data?.username || Info.username,
+      nickname: res.data.data?.nickname || Info.nickname,
+      email: res.data.data?.email || Info.email,
+      phone: res.data.data?.phone || Info.phone,
     }));
   };
   useEffect(() => {

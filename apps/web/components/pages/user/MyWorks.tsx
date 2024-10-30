@@ -32,10 +32,10 @@ const MyWorks: React.FC<MyWorksProps> = (params) => {
       mode == "work"
         ? await getWorkList({ pageIndex, pageSize, title })
         : await getTemplateList({ pageIndex, pageSize, title });
-    setRenderList(res.data.data.list);
+    setRenderList(res.data.data?.list || []);
     setPageIndex(pageIndex);
     setPageSize(pageSize);
-    setTotalPage(Math.ceil(res.data.data.count / pageSize));
+    setTotalPage(Math.ceil(res.data.data?.count / pageSize));
   };
 
   useEffect(() => {

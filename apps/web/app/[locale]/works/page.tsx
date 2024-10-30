@@ -24,15 +24,14 @@ function Main() {
 
   const getList = async (pageIndex: number, pageSize: number, title?: string) => {
     const res = await getWorkList({ pageIndex, pageSize, title });
-    setWorkList(res.data.data.list);
+    setWorkList(res.data.data?.list || []);
     setPageIndex(pageIndex);
     setPageSize(pageSize);
-    setTotalPage(Math.ceil(res.data.data.count / pageSize));
+    setTotalPage(Math.ceil(res.data.data?.count / pageSize));
   };
 
   useEffect(() => {
     getList(1, pageSize, title);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [title]);
 
   const renderPoster = (item: any) => {

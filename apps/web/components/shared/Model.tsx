@@ -1,5 +1,5 @@
 import { addLights, animateDefault, createMesh, createParticles } from "@/utils/model";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import * as THREE from "three";
 
 function Model(props: { boxWidth: number; boxHeight: number }) {

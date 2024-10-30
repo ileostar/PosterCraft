@@ -24,7 +24,7 @@ const WorksList: React.FC<WorksListProps> = () => {
 
   const getList = async (pageIndex?: number, pageSize?: number, title?: string) => {
     const res = await getWorkList({ pageIndex, pageSize, title });
-    setWorkList(res.data.data.list);
+    setWorkList(res.data.data?.list || []);
   };
 
   useEffect(() => {

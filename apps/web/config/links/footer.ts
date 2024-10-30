@@ -16,10 +16,6 @@ export const FooterNavLinks = () => {
       href: "/works",
       label: t("works"),
     },
-    {
-      href: "/about",
-      label: t("about"),
-    },
   ];
 };
 
