@@ -107,7 +107,7 @@ export class UserService {
 
   async checkVerificationCode(
     dto: RegisterDto | PhoneOtpLoginDto,
-  ): Promise<Boolean> {
+  ): Promise<boolean> {
     const correctCode = await this.cacheService.getCache(dto.phone);
     return correctCode === dto.otp;
   }
