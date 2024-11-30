@@ -1,4 +1,4 @@
-import { uploadFile } from "@/api/upload";
+import { uploadFile } from "@/api/oss";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";

@@ -1,16 +1,16 @@
 import http from "@/utils/http";
 
 import { ResponseData } from "./types/common";
-import { getUserInfoResponse, updateUserInfoBody, updateUserInfoResponse } from "./types/user";
+import { GetUserInfoResponse, UpdateUserInfoBody, UpdateUserInfoResponse } from "./types/user";
 
 /** 获取用户信息 */
 export function getUserInfo(userId: string) {
-  return http.get<ResponseData<getUserInfoResponse>>(`/user/${userId}`);
+  return http.get<ResponseData<GetUserInfoResponse>>(`/user/${userId}`);
 }
 
 /** 更新用户信息 */
-export function updateUserInfo(userId: string, body: updateUserInfoBody) {
-  return http.put<ResponseData<updateUserInfoResponse>>(`/user/${userId}`, body);
+export function updateUserInfo(userId: string, body: UpdateUserInfoBody) {
+  return http.put<ResponseData<UpdateUserInfoResponse>>(`/user/${userId}`, body);
 }
 
 /** 删除用户信息 */

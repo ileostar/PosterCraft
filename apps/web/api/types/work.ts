@@ -1,6 +1,6 @@
 import { ElementDataType } from "@/types/element-type";
 
-export type createWorkBody = {
+export type CreateWorkBody = {
   title: string;
   desc: string;
   coverImg: string;
@@ -13,7 +13,7 @@ export type createWorkBody = {
   status: number;
 };
 
-export type createWorkResponse = {
+export type CreateWorkResponse = {
   title: string;
   desc: string;
   coverImg: string;
@@ -28,20 +28,20 @@ export type createWorkResponse = {
   workId: string;
 };
 
-export type getWorkListBody = {
+export type GetWorkListBody = {
   pageIndex?: number;
   pageSize?: number;
   title?: string;
 };
 
-export type getWorkListResponse = {
+export type GetWorkListResponse = {
   count: number;
   pageIndex?: number;
   pageSize?: number;
-  list: createWorkResponse[];
+  list: CreateWorkResponse[];
 };
 
-export type copyWorkResponse = {
+export type CopyWorkResponse = {
   title: string;
   desc: string;
   coverImg: string;
@@ -56,15 +56,15 @@ export type copyWorkResponse = {
   workId: string;
 };
 
-export type getWorkResponse = createWorkBody & {
+export type GetWorkResponse = CreateWorkBody & {
   author: string;
   userId: string;
   workId: string;
 };
 
-export type updateWorkBody = createWorkBody;
+export type UpdateWorkBody = CreateWorkBody;
 
-export type updateWorkResponse = {
+export type UpdateWorkResponse = {
   title: string;
   desc: string;
   coverImg: string;
@@ -77,7 +77,7 @@ export type updateWorkResponse = {
   status: number;
 };
 
-export type publishWorkToTemplateResponse = {
+export type WorkPreviewResponse = {
   url: string;
   pageId: string;
 };

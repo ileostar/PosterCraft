@@ -1,15 +1,15 @@
-export type sendCodeByEmailBody = {
+export type SendCodeByEmailBody = {
   email: string;
 };
 
-export type updateEmailBody = {
+export type UpdateEmailBody = {
   email: string;
   otp: string;
 };
 
-export type bindEmailBody = updateEmailBody;
+export type BindEmailBody = UpdateEmailBody;
 
-export type verifyEmailBody = {
+export type VerifyEmailBody = {
   email: string;
   otp: string;
 };

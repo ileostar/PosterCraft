@@ -1,10 +1,10 @@
-export type sendBySMSBody = {
+export type SendBySmsBody = {
   phone: string;
 };
 
-export type verifyPhoneBody = {
+export type VerifyPhoneBody = {
   phone: string;
   otp: string;
 };
 
-export type updatePhoneBody = verifyPhoneBody;
+export type UpdatePhoneBody = VerifyPhoneBody;

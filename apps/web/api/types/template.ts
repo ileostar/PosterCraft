@@ -1,4 +1,4 @@
-export type getTemplateResponse = {
+export type GetTemplateResponse = {
   title: string;
   desc: string;
   coverImg: string;
@@ -13,15 +13,15 @@ export type getTemplateResponse = {
   workId: string;
 };
 
-export type getTemplateListBody = {
+export type GetTemplateListBody = {
   title?: string;
   pageIndex?: number;
   pageSize?: number;
 };
 
-export type getTemplateListResponse = {
+export type GetTemplateListResponse = {
   count: number;
   pageIndex?: string;
   pageSize?: string;
-  list: getTemplateResponse[];
+  list: GetTemplateResponse[];
 };
