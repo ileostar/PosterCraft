@@ -37,7 +37,7 @@ export default function Login() {
     console.log(values);
   }
 
-  //登录模式(是否为手机短信登录)
+  /** 登录模式(是否为手机短信登录) */
   const [isPhoneMode, setIsPhoneMode] = useState(false);
 
   const handleSign = async () => {
@@ -113,7 +113,6 @@ export default function Login() {
           </form>
         </Form>
       </div>
-
       <Dialog />
     </AuthLayout>
   );

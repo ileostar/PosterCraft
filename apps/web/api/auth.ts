@@ -1,3 +1,4 @@
+import { GlobalEnvConfig } from "@/config";
 import http from "@/utils/http";
 import { openCenteredOAuthPopup } from "@/utils/others/popup";
 import io from "socket.io-client";
@@ -29,9 +30,13 @@ export function defaultSignUp(body: defaultSignUpBody) {
 
 /** github登录 */
 export async function githubSignIn(): Promise<GithubSignInResponse> {
-  const socket = io("http://localhost:3001");
+  const socket = io(GlobalEnvConfig.SERVER_URL);
 
-  const authWindow = openCenteredOAuthPopup("http://127.0.0.1:3001/auth/github/callback", 600, 500);
+  const authWindow = openCenteredOAuthPopup(
+    `${GlobalEnvConfig.SERVER_URL}/auth/github/callback`,
+    600,
+    500,
+  );
 
   socket.on("connect", () => {
     console.log("Connected to the server!");
