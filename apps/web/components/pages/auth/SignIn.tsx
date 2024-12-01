@@ -2,12 +2,13 @@
 
 import CustomFormField from "@/components/shared/CustomFormField";
 import { Link } from "@/utils/i18n/routing";
+import { useTranslations } from "next-intl";
 
 interface FormType {
   [key: string]: any;
 }
 
-function renderSignIn({
+const RenderSignIn = ({
   isPhoneMode,
   setIsPhoneMode,
   form,
@@ -15,21 +16,23 @@ function renderSignIn({
   isPhoneMode: boolean;
   setIsPhoneMode: (value: boolean) => void;
   form: FormType;
-}) {
+}) => {
+  const t = useTranslations();
+
   if (isPhoneMode) {
     return (
       <div className="flex flex-col gap-1">
         <CustomFormField
           form={form}
           name={"phone"}
-          placeholder={"请输入手机号码"}
-          label={"手机号码"}
+          placeholder={t("phonePlaceholder")}
+          label={t("phone")}
         />
         <CustomFormField
           form={form}
           name={"code"}
-          placeholder={"请输入验证码"}
-          label={"验证码"}
+          placeholder={t("otpPlaceholder")}
+          label={t("otp")}
           isVerify={true}
         />
         <label className="label justify-end">
@@ -41,7 +44,7 @@ function renderSignIn({
             }}
             className="label-text-alt link link-hover text-[#EF4444] dark:text-white"
           >
-            使用邮箱登录
+            {t("loginByUsernameOrEmail")}
           </Link>
         </label>
       </div>
@@ -52,14 +55,14 @@ function renderSignIn({
         <CustomFormField
           form={form}
           name={"username"}
-          placeholder={"请输入用户名/邮箱"}
-          label={"用户名/邮箱"}
+          placeholder={t("usernameOrEmailPlaceholder")}
+          label={t("usernameOrEmail")}
         />
         <CustomFormField
           form={form}
           name={"password"}
-          placeholder={"请输入密码"}
-          label={"密码"}
+          placeholder={t("passwordPlaceholder")}
+          label={t("password")}
           isPassword={true}
         />
 
@@ -72,12 +75,12 @@ function renderSignIn({
             }}
             className="label-text-alt link link-hover text-[#EF4444] dark:text-white"
           >
-            使用短信登录
+            {t("loginByPhone")}
           </Link>
         </label>
       </div>
     );
   }
-}
+};
 
-export default renderSignIn;
+export default RenderSignIn;

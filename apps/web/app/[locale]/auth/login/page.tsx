@@ -1,6 +1,5 @@
 "use client";
 
-import { defaultSignIn, loginBySMS } from "@/api/auth";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import Dialog from "@/components/pages/auth/Dialog";
 import Oauth2 from "@/components/pages/auth/Oauth2";
@@ -10,19 +9,51 @@ import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useToken } from "@/hooks/useToken";
+import { defaultSignIn, loginBySMS } from "@/http/auth";
 import { useUserStore } from "@/stores/user";
-import { loginFormSchema, loginFormSchemaType } from "@/utils/formSchema";
 import { Link } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 export default function Login() {
   const router = useRouter();
   const [_, setTokenHandler] = useToken();
   const { setUserId } = useUserStore();
   const { toast } = useToast();
+  const t = useTranslations();
+  const loginFormSchema = z.object({
+    email: z.string().email({
+      message: t("form.email.invalid"),
+    }),
+    phone: z
+      .string()
+      .length(11, {
+        message: t("form.phone.invalid"),
+      })
+      .regex(/^\d+$/, {
+        message: t("form.phone.invalid"),
+      }),
+    password: z.string().min(1, {
+      message: t("form.password.required"),
+    }),
+    code: z
+      .string()
+      .length(6, {
+        message: t("form.code.length"),
+      })
+      .regex(/^\d+$/, {
+        message: t("form.code.length"),
+      }),
+    username: z.string().min(2, {
+      message: t("form.username.minLength"),
+    }),
+  });
+
+  type loginFormSchemaType = z.infer<typeof loginFormSchema>;
   const form = useForm<loginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -37,7 +68,7 @@ export default function Login() {
     console.log(values);
   }
 
-  //登录模式(是否为手机短信登录)
+  /** 登录模式(是否为手机短信登录) */
   const [isPhoneMode, setIsPhoneMode] = useState(false);
 
   const handleSign = async () => {
@@ -52,12 +83,12 @@ export default function Login() {
         toast({
           variant: "success",
           title: "Success",
-          description: "登录成功,即将跳转至主页...",
+          description: t("loginSuccess"),
         });
         if (res.data.token) {
           setTokenHandler(res.data.token);
         }
-        setUserId(res.data.data.userId);
+        setUserId(res.data.data?.userId);
         router.push("/");
       } else {
         toast({
@@ -96,7 +127,7 @@ export default function Login() {
                 onClick={() => handleSign()}
                 type="submit"
               >
-                登 录
+                {t("login")}
               </Button>
             </div>
             <div className="flex justify-between items-center">
@@ -105,7 +136,7 @@ export default function Login() {
                   href="/auth/register"
                   className="label-text-alt link link-hover hover:text-gray-500 dark:hover:text-white/80 text-[#EF4444] dark:text-white"
                 >
-                  点此注册
+                  {t("registerLink")}
                 </Link>
               </label>
               <Oauth2 />
@@ -113,7 +144,6 @@ export default function Login() {
           </form>
         </Form>
       </div>
-
       <Dialog />
     </AuthLayout>
   );

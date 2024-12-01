@@ -39,7 +39,9 @@ function DialogDemo({
           description: "请先保存作品再发布",
         });
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

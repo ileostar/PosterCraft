@@ -1,4 +1,4 @@
-import { uploadFile } from "@/api/upload";
+import { uploadFile } from "@/http/oss";
 import html2canvas from "html2canvas-pro";
 
 export async function takeScreenshot() {

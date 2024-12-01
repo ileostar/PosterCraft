@@ -1,29 +1,18 @@
 "use client";
 
-import { bindEmail, updateEmail, verifyEmail } from "@/api/email";
-import { getUserInfo } from "@/api/user";
 import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { bindEmail, updateEmail, verifyEmail } from "@/http/email";
+import { getUserInfo } from "@/http/user";
 import { useUserStore } from "@/stores/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-const emailFormSchema = z.object({
-  email: z.string().email({
-    message: "无效的邮箱格式",
-  }),
-  otp: z.string().length(6, { message: "无效的验证码" }).regex(/^\d+$/, {
-    message: "无效的验证码",
-  }),
-});
-
-export type emailFormSchemaType = z.infer<typeof emailFormSchema>;
 
 export default function Account({ className }: Readonly<{ className?: string }>) {
   const t = useTranslations();
@@ -33,7 +22,21 @@ export default function Account({ className }: Readonly<{ className?: string }>)
   const [emailStep, setEmailStep] = useState<number>(0); //用于控制表单显示的步骤变化
   const [emailDisabled, setEmailIsDisabled] = useState<boolean>(true);
   const [countdownZero, setCountdownZero] = useState<boolean>(false); //用于控制验证码倒计时
+  const emailFormSchema = z.object({
+    email: z.string().email({
+      message: t("form.email.invalid"),
+    }),
+    otp: z
+      .string()
+      .length(6, {
+        message: t("form.code.length"),
+      })
+      .regex(/^\d+$/, {
+        message: t("form.code.length"),
+      }),
+  });
 
+  type emailFormSchemaType = z.infer<typeof emailFormSchema>;
   const emailForm = useForm<emailFormSchemaType>({
     resolver: zodResolver(emailFormSchema),
     defaultValues: {

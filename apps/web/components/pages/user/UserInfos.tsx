@@ -1,8 +1,8 @@
 "use client";
 
-import { getUserInfo } from "@/api/user";
 import BaseButton from "@/components/base/BaseButton";
 import ProjectCard from "@/components/shared/ProjectCard";
+import { getUserInfo } from "@/http/user";
 import { useUserStore } from "@/stores/user";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -30,11 +30,11 @@ const UserInfos: React.FC<UserInfosProps> = (params) => {
   const getUserData = async (id: string) => {
     const res = await getUserInfo(id);
     setUserInfo(() => ({
-      avatar: res.data.data.avatar || Info.avatar,
-      username: res.data.data.username || Info.username,
-      nickname: res.data.data.nickname || Info.nickname,
-      email: res.data.data.email || Info.email,
-      phone: res.data.data.phone || Info.phone,
+      avatar: res.data.data?.avatar || Info.avatar,
+      username: res.data.data?.username || Info.username,
+      nickname: res.data.data?.nickname || Info.nickname,
+      email: res.data.data?.email || Info.email,
+      phone: res.data.data?.phone || Info.phone,
     }));
   };
   useEffect(() => {

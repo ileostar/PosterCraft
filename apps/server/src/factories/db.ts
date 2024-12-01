@@ -12,6 +12,7 @@ async function createConnection() {
     uri: GlobalConfig.database_url,
     multipleStatements: true,
     waitForConnections: true,
+    connectTimeout: 10000, // 增加连接超时时间（毫秒）
     connectionLimit: 10,
     maxIdle: 10,
     idleTimeout: 60000,

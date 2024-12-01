@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { DB, DbType } from '../global/providers/db.provider';
 import { CreateChannelDto, UpdateChannelDto } from './dto/channel.dto';
 import { work } from '@poster-craft/schema';
-import { eq, sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { v6 as uuidV6 } from 'uuid';
 
 type ChannelProps = {

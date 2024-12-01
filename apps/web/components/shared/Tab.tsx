@@ -25,7 +25,7 @@ function Tab({ tabs }: TabsProps) {
     <div className="flex flex-col flex-1">
       <div
         role="tablist"
-        className="tabs tabs-bordered "
+        className="tabs tabs-bordered"
       >
         {tabs.map((tab: any) => (
           <button

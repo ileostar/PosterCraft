@@ -7,7 +7,6 @@ import {
   Post,
   Put,
   Query,
-  Redirect,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -84,7 +83,6 @@ export class WorkController {
   }
 
   @Get('list')
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: '获取工作区列表',
     description: '获取工作区列表',
@@ -114,7 +112,6 @@ export class WorkController {
   }
 
   @Get(':workId')
-  @UseGuards(JwtAuthGuard)
   @ApiParam({
     name: 'workId',
     description: '工作区Id',

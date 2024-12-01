@@ -22,18 +22,20 @@ const BaseLogo: React.FC<LogoProps> = ({ size = "large", className, ...props }) 
           height={size === "small" ? 28 : 32}
           alt="Poster Craft Logo"
         />
-        <button
-          className="project-title h-7 pl-5 text-xl"
-          data-text="Awesome"
-        >
-          <span className="actual-text">&nbsp;PosterCraft&nbsp;</span>
-          <span
-            aria-hidden="true"
-            className="hover-text"
+        {size === "large" && (
+          <button
+            className="project-title h-7 pl-5 text-xl"
+            data-text="Awesome"
           >
-            &nbsp;PosterCraft&nbsp;
-          </span>
-        </button>
+            <span className="actual-text">&nbsp;PosterCraft&nbsp;</span>
+            <span
+              aria-hidden="true"
+              className="hover-text"
+            >
+              &nbsp;PosterCraft&nbsp;
+            </span>
+          </button>
+        )}
       </Link>
     </div>
   );

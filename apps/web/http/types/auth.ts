@@ -1,11 +1,11 @@
 import { ResponseData } from "./common";
 
-export type defaultSignInBody = {
+export type DefaultSignInBody = {
   identifier: string;
   password: string;
 };
 
-export type defaultSignInResponse = {
+export type DefaultSignInResponse = {
   userId: string;
   userName: string;
   phone: string;
@@ -13,14 +13,14 @@ export type defaultSignInResponse = {
   email: string | null;
 };
 
-export type loginBySMSBody = {
+export type LoginBySmsBody = {
   phone: string;
   otp: string;
 };
 
-export type loginBySMSResponse = defaultSignInResponse;
+export type LoginBySmsResponse = DefaultSignInResponse;
 
-export type defaultSignUpBody = {
+export type DefaultSignUpBody = {
   username: string;
   password: string | null;
   phone: string;

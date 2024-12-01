@@ -1,8 +1,7 @@
-import { ApiBearerAuth, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { TemplateService } from './template.service';
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { string } from 'zod';
-import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { GetTemplateListDto } from './dto/template.dto';
 
 @ApiBearerAuth()
@@ -12,7 +11,6 @@ export class TemplateController {
   constructor(private readonly templateService: TemplateService) {}
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   async getTemplates(@Query() query: GetTemplateListDto) {
     try {
       const data = await this.templateService.getTemplatesList(query);
@@ -29,7 +27,6 @@ export class TemplateController {
   }
 
   @Get(':workId')
-  @UseGuards(JwtAuthGuard)
   @ApiParam({
     name: 'workId',
     required: true,

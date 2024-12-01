@@ -1,11 +1,11 @@
 "use client";
 
-import { getUserInfo } from "@/api/user";
 import MenuItem from "@/components/shared/MenuItem";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { useToast } from "@/components/ui/use-toast";
 import { GlobalEnvConfig } from "@/config";
 import { useToken } from "@/hooks/useToken";
+import { getUserInfo } from "@/http/user";
 import { cn } from "@/lib/utils";
 import { useUserStore } from "@/stores/user";
 import { usePathname, useRouter } from "@/utils/i18n/routing";
@@ -76,9 +76,9 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
   const getUserData = async (id: string) => {
     const res = await getUserInfo(id);
     setUserInfo(() => ({
-      avatar: res.data.data.avatar || Info.avatar,
-      username: res.data.data.username || Info.username,
-      nickname: res.data.data.nickname || Info.nickname,
+      avatar: res.data.data?.avatar || Info.avatar,
+      username: res.data.data?.username || Info.username,
+      nickname: res.data.data?.nickname || Info.nickname,
     }));
   };
   useEffect(() => {

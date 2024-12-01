@@ -1,19 +1,19 @@
 "use client";
 
-import { getTemplateList } from "@/api/template";
-import { createWorkResponse } from "@/api/types/work";
 import BaseCard from "@/components/base/BaseCard";
 import BaseLayout from "@/components/layouts/BaseLayout";
 import Banner from "@/components/shared/Banner";
 import CustomPagination from "@/components/shared/CustomPagination";
 import BaseList from "@/components/shared/ShowLists";
+import { getTemplateList } from "@/http/template";
+import { CreateWorkResponse } from "@/http/types/work";
 import { useWorkStore } from "@/stores/work";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 function Main() {
   const { setWork } = useWorkStore();
-  const [workList, setWorkList] = useState<createWorkResponse[]>([]);
+  const [workList, setWorkList] = useState<CreateWorkResponse[]>([]);
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(16);
   const [totalPage, setTotalPage] = useState(0);
@@ -22,11 +22,15 @@ function Main() {
   const router = useRouter();
 
   const getList = async (pageIndex: number, pageSize: number, title?: string) => {
-    const res = await getTemplateList({ pageIndex, pageSize, title });
-    setWorkList(res.data.data.list);
-    setPageIndex(pageIndex);
-    setPageSize(pageSize);
-    setTotalPage(Math.ceil(res.data.data.count / pageSize));
+    try {
+      const res = await getTemplateList({ pageIndex, pageSize, title });
+      setWorkList(res.data.data?.list || []);
+      setPageIndex(pageIndex);
+      setPageSize(pageSize);
+      setTotalPage(Math.ceil(res.data.data?.count / pageSize));
+    } catch (error) {
+      console.log("getTemplateList Error:", error);
+    }
   };
 
   useEffect(() => {

@@ -1,11 +1,11 @@
 "use client";
 
-import { createWorkResponse } from "@/api/types/work";
-import { getWorkList } from "@/api/work";
 import BaseCard from "@/components/base/BaseCard";
 import MoreButton from "@/components/shared/MoreButton";
 import BaseList from "@/components/shared/ShowLists";
 import { useToken } from "@/hooks/useToken";
+import { CreateWorkResponse } from "@/http/types/work";
+import { getWorkList } from "@/http/work";
 import { useWorkStore } from "@/stores/work";
 import { Link } from "@/utils/i18n/routing";
 import { useTranslations } from "next-intl";
@@ -19,12 +19,16 @@ const WorksList: React.FC<WorksListProps> = () => {
   const router = useRouter();
   const [token] = useToken();
 
-  const [workList, setWorkList] = useState<createWorkResponse[]>([]);
+  const [workList, setWorkList] = useState<CreateWorkResponse[]>([]);
   const { setWork } = useWorkStore();
 
   const getList = async (pageIndex?: number, pageSize?: number, title?: string) => {
-    const res = await getWorkList({ pageIndex, pageSize, title });
-    setWorkList(res.data.data.list);
+    try {
+      const res = await getWorkList({ pageIndex, pageSize, title });
+      setWorkList(res.data.data?.list || []);
+    } catch (error) {
+      console.log("getWorkList Error:", error);
+    }
   };
 
   useEffect(() => {

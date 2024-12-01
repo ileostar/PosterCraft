@@ -1,12 +1,14 @@
 "use client";
 
-import { sendCodeByEmail } from "@/api/email";
-import { sendBySMS } from "@/api/sms";
+import { sendCodeByEmail } from "@/http/email";
+import { sendBySMS } from "@/http/sms";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { Button } from "../ui/button";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
+import { toast } from "../ui/use-toast";
 
 interface FormType {
   [key: string]: any;
@@ -43,6 +45,7 @@ function CustomFormField({
   const [isDisabled, setIsDisabled] = useState(false);
   //倒计时
   const [countdown, setCountdown] = useState(0);
+  const t = useTranslations();
 
   // 发送验证码并启动倒计时
   const handleClick = () => {
@@ -52,6 +55,10 @@ function CustomFormField({
       } else {
         sendBySMS({ phone: form.getValues("phone") });
       }
+      toast({
+        title: "验证码已发送",
+        description: "请在1分钟内完成验证",
+      });
       setIsDisabled(true);
       setCountdown(60);
     }
@@ -114,7 +121,7 @@ function CustomFormField({
                   disabled={isDisabled}
                   className="text-white bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600"
                 >
-                  {!isDisabled ? "发送验证码" : `${countdown}s后再试`}
+                  {!isDisabled ? t("sendCode") : `${countdown}s后再试`}
                 </Button>
               </div>
             )}

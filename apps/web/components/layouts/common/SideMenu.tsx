@@ -19,10 +19,6 @@ const Menus = [
     href: "/works",
     label: "Works",
   },
-  {
-    href: "/about",
-    label: "About",
-  },
 ];
 
 const SideMenu: React.FC = () => {

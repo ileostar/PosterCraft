@@ -2,8 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { DB, DbType } from '../global/providers/db.provider';
 import { work } from '@poster-craft/schema';
 import { eq } from 'drizzle-orm';
-import ReactDOMServer from 'react-dom/server';
-import React from 'react';
 
 @Injectable()
 export class PageService {

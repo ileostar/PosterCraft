@@ -1,20 +1,20 @@
 "use client";
 
-import { createWorkResponse } from "@/api/types/work";
-import { getWorkList } from "@/api/work";
 import BaseCard from "@/components/base/BaseCard";
 import BaseLayout from "@/components/layouts/BaseLayout";
 import AuthGuard from "@/components/shared/AuthGuard";
 import Banner from "@/components/shared/Banner";
 import CustomPagination from "@/components/shared/CustomPagination";
 import BaseList from "@/components/shared/ShowLists";
+import { CreateWorkResponse } from "@/http/types/work";
+import { getWorkList } from "@/http/work";
 import { useWorkStore } from "@/stores/work";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 function Main() {
   const { setWork } = useWorkStore();
-  const [workList, setWorkList] = useState<createWorkResponse[]>([]);
+  const [workList, setWorkList] = useState<CreateWorkResponse[]>([]);
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(16);
   const [totalPage, setTotalPage] = useState(0);
@@ -22,18 +22,21 @@ function Main() {
 
   const router = useRouter();
 
-  const getList = async (pageIndex: number, pageSize: number, title?: string) => {
-    const res = await getWorkList({ pageIndex, pageSize, title });
-    setWorkList(res.data.data.list);
-    setPageIndex(pageIndex);
-    setPageSize(pageSize);
-    setTotalPage(Math.ceil(res.data.data.count / pageSize));
-  };
+  const getList = useCallback(async (pageIndex: number, pageSize: number, title?: string) => {
+    try {
+      const res = await getWorkList({ pageIndex, pageSize, title });
+      setWorkList(res.data.data?.list || []);
+      setPageIndex(pageIndex);
+      setPageSize(pageSize);
+      setTotalPage(Math.ceil(res.data.data?.count / pageSize));
+    } catch (error) {
+      console.log("getWorkList Error:", error);
+    }
+  }, []);
 
   useEffect(() => {
     getList(1, pageSize, title);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title]);
+  }, [title, pageSize, getList]);
 
   const renderPoster = (item: any) => {
     router.push("/editor");

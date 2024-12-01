@@ -17,9 +17,5 @@ export const HeaderMenus = () => {
       href: "/works",
       label: t("works"),
     },
-    {
-      href: "/about",
-      label: t("about"),
-    },
   ];
 };

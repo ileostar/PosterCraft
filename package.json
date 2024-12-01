@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Poster editor",
   "license": "MIT",
-  "packageManager": "pnpm@9.6.0",
+  "packageManager": "pnpm@9.14.4",
   "bugs": {
     "url": "https://github.com/ileostar/PosterCraft/issues"
   },
@@ -46,7 +46,7 @@
     "conventional-changelog-cli": "5.0.0",
     "dotenv": "16.4.5",
     "eslint": "9.8.0",
-    "knip": "^5.29.1",
+    "knip": "^5.38.3",
     "lint-staged": "15.2.8",
     "picocolors": "1.0.1",
     "prettier": "3.3.3",

@@ -1,5 +1,24 @@
 {
-  "about": "关于我们",
+  "loginSuccess": "登录成功，即将跳转至主页...",
+  "sendCode": "发送验证码",
+  "otherLoginWays": "其他登录方式",
+  "register": "注册",
+  "login": "登录",
+  "signUp": "注册",
+  "usernamePlaceholder": "请输入用户名",
+  "usernameOrEmail": "用户名/邮箱",
+  "usernameOrEmailPlaceholder": "请输入用户名/邮箱",
+  "loginByPhone": "使用手机号登录",
+  "loginByUsernameOrEmail": "使用用户名/邮箱登录",
+  "passwordPlaceholder": "请输入密码",
+  "phonePlaceholder": "请输入手机号码",
+  "otpPlaceholder": "请输入验证码",
+  "username": "用户名",
+  "password": "密码",
+  "phone": "手机号码",
+  "otp": "验证码",
+  "registerLink": "立即注册",
+  "loginLink": "已有账号？立即登录",
   "account-setting": "账号设置",
   "bind-account": "绑定账号",
   "change-email": "更换邮箱",
@@ -38,5 +57,50 @@
   "topic-switching": "主题切换",
   "verification-code": "验证码",
   "works": "作品集",
-  "works-list": "我的作品集"
+  "works-list": "我的作品集",
+  "form": {
+    "required": "此项为必填项",
+    "email": {
+      "invalid": "请输入有效的邮箱地址",
+      "required": "请输入邮箱地址"
+    },
+    "password": {
+      "required": "请输入密码",
+      "minLength": "密码长度至少为6位",
+      "maxLength": "密码长度不能超过20位",
+      "pattern": "密码必须包含字母和数字"
+    },
+    "username": {
+      "required": "请输入用户名",
+      "minLength": "用户名长度至少为2位",
+      "maxLength": "用户名长度不能超过20位"
+    },
+    "phone": {
+      "required": "请输入手机号码",
+      "invalid": "请输入有效的手机号码"
+    },
+    "code": {
+      "required": "请输入验证码",
+      "length": "验证码必须为6位数字"
+    },
+    "confirmPassword": {
+      "required": "请确认密码",
+      "notMatch": "两次输入的密码不一致"
+    }
+  },
+  "errors": {
+    "connection": {
+      "closed": "连接已关闭，请检查网络后重试",
+      "timeout": "连接超时，请稍后重试",
+      "failed": "连接失败，请检查网络设置"
+    },
+    "database": {
+      "connectionClosed": "数据库连接已断开，请刷新页面重试"
+    },
+    "common": {
+      "tryAgain": "出错了，请重试",
+      "networkError": "网络错误，请检查网络连接",
+      "serverError": "服务器错误，请稍后重试"
+    }
+  }
 }

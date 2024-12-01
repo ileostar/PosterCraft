@@ -1,4 +1,4 @@
-import { uploadFile } from "@/api/upload";
+import { uploadFile } from "@/http/oss";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import Cropper from "cropperjs";
 import React, { useEffect, useRef, useState } from "react";

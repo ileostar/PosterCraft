@@ -1,7 +1,5 @@
 "use client";
 
-import { defaultSignUp } from "@/api/auth";
-import { defaultSignUpBody } from "@/api/types/auth";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import Oauth2 from "@/components/pages/auth/Oauth2";
 import CustomFormField from "@/components/shared/CustomFormField";
@@ -9,18 +7,49 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
-import { registerFormSchema } from "@/utils/formSchema";
+import { defaultSignUp } from "@/http/auth";
+import { DefaultSignUpBody } from "@/http/types/auth";
 import { Link } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 export default function Register() {
   const router = useRouter();
   const { toast } = useToast();
-  const t = useTranslations("register");
-  const form = useForm<defaultSignUpBody>({
+  const t = useTranslations();
+
+  /** 表单验证相关 */
+  const registerFormSchema = z.object({
+    phone: z
+      .string()
+      .length(11, {
+        message: t("form.phone.invalid"),
+      })
+      .regex(/^\d+$/, {
+        message: t("form.phone.invalid"),
+      }),
+    password: z.string().min(1, {
+      message: t("form.required"),
+    }),
+    otp: z
+      .string()
+      .length(6, {
+        message: t("form.code.length"),
+      })
+      .regex(/^\d+$/, {
+        message: t("form.code.length"),
+      }),
+    username: z
+      .string()
+      .min(4, { message: t("form.username.minLength") })
+      .max(12, { message: t("form.username.maxLength") }),
+  });
+
+  /** 表单数据 */
+  const form = useForm<DefaultSignUpBody>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
       phone: "",
@@ -30,7 +59,7 @@ export default function Register() {
     },
   });
 
-  async function onSubmit(values: defaultSignUpBody) {
+  async function onSubmit(values: DefaultSignUpBody) {
     try {
       const res = await defaultSignUp(values);
       if (res.data.code === 200) {
@@ -97,7 +126,7 @@ export default function Register() {
             </div>
             <div className="flex justify-between mt-[5px]">
               <Button
-                className="btn w-full bg-red-600 dark:bg-[#8d1d7a] text-white"
+                className="btn w-full bg-red-600 hover:bg-red-500 dark:bg-[#8d1d7a] text-white"
                 type="submit"
               >
                 {t("register")}

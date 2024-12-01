@@ -1,4 +1,4 @@
-export type getUserInfoResponse = {
+export type GetUserInfoResponse = {
   avatar: string | null;
   nickname: string | null;
   username: string | null;
@@ -7,19 +7,19 @@ export type getUserInfoResponse = {
   role: string;
 };
 
-export type updateUserInfoBody = {
+export type UpdateUserInfoBody = {
   avatar?: string | undefined;
   nickname?: string | undefined;
   username?: string | undefined;
 };
 
-export type updateUserInfoResponse = updateUserInfoBody & { userId: string };
+export type UpdateUserInfoResponse = UpdateUserInfoBody & { userId: string };
 
-export type addPasswordBody = {
+export type AddPasswordBody = {
   password: string;
 };
 
-export type updatePasswordBody = {
+export type UpdatePasswordBody = {
   oldPassword: string;
   newPassword: string;
 };

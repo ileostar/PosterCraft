@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "framework": "nextjs",
+  "buildCommand": "cd ../.. && pnpm build -F web",
+  "installCommand": "cd ../.. && pnpm install",
+  "outputDirectory": ".next",
+  "regions": ["hkg1"],
+  "public": false,
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "github": {
+    "silent": true,
+    "autoAlias": true
+  }
+}
