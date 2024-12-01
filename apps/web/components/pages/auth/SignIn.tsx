@@ -24,13 +24,13 @@ function renderSignIn({
       <div className="flex flex-col gap-1">
         <CustomFormField
           form={form}
-          name={t("phone")}
+          name={"phone"}
           placeholder={t("phonePlaceholder")}
           label={t("phone")}
         />
         <CustomFormField
           form={form}
-          name={t("otp")}
+          name={"code"}
           placeholder={t("otpPlaceholder")}
           label={t("otp")}
           isVerify={true}
@@ -44,7 +44,7 @@ function renderSignIn({
             }}
             className="label-text-alt link link-hover text-[#EF4444] dark:text-white"
           >
-            {t("loginByEmail")}
+            {t("loginByUsernameOrEmail")}
           </Link>
         </label>
       </div>
@@ -75,7 +75,7 @@ function renderSignIn({
             }}
             className="label-text-alt link link-hover text-[#EF4444] dark:text-white"
           >
-            {t("loginByEmail")}
+            {t("loginByPhone")}
           </Link>
         </label>
       </div>

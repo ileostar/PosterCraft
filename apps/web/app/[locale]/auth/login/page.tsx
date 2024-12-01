@@ -54,7 +54,7 @@ export default function Login() {
         toast({
           variant: "success",
           title: "Success",
-          description: "登录成功,即将跳转至主页...",
+          description: t("loginSuccess"),
         });
         if (res.data.token) {
           setTokenHandler(res.data.token);
