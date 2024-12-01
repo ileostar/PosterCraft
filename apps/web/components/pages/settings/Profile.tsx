@@ -1,12 +1,12 @@
 "use client";
 
-import { getUserInfo, updateUserInfo } from "@/api/user";
 import CustomFormField from "@/components/shared/CustomFormField";
 import UploadAvatar from "@/components/shared/UploadAvatar";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { getUserInfo, updateUserInfo } from "@/http/user";
 import { useUserStore } from "@/stores/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";

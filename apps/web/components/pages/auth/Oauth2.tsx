@@ -1,9 +1,9 @@
 "use client";
 
-import { githubSignIn } from "@/api/auth";
 import GithubIcon from "@/components/shared/GithubIcon";
 import GoogleIcon from "@/components/shared/GoogleIcon";
 import { useToken } from "@/hooks/useToken";
+import { githubSignIn } from "@/http/auth";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 

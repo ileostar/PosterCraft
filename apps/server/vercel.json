@@ -1,16 +1,20 @@
 {
   "version": 2,
+  "framework": null,
+  "buildCommand": "cd ../.. && pnpm build -F server",
+  "installCommand": "cd ../.. && pnpm install",
   "builds": [
     {
-      "src": "src/main.ts",
+      "src": "dist/main.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "src/main.ts",
-      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH"]
+      "dest": "dist/main.js"
     }
-  ]
+  ],
+  "regions": ["hkg1"],
+  "public": false
 }

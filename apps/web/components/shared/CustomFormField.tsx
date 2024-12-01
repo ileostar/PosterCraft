@@ -1,7 +1,7 @@
 "use client";
 
-import { sendCodeByEmail } from "@/api/email";
-import { sendBySMS } from "@/api/sms";
+import { sendCodeByEmail } from "@/http/email";
+import { sendBySMS } from "@/http/sms";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 

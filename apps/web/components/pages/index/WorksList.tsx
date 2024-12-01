@@ -1,11 +1,11 @@
 "use client";
 
-import { CreateWorkResponse } from "@/api/types/work";
-import { getWorkList } from "@/api/work";
 import BaseCard from "@/components/base/BaseCard";
 import MoreButton from "@/components/shared/MoreButton";
 import BaseList from "@/components/shared/ShowLists";
 import { useToken } from "@/hooks/useToken";
+import { CreateWorkResponse } from "@/http/types/work";
+import { getWorkList } from "@/http/work";
 import { useWorkStore } from "@/stores/work";
 import { Link } from "@/utils/i18n/routing";
 import { useTranslations } from "next-intl";

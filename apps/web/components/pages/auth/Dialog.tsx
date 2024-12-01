@@ -1,11 +1,11 @@
 "use client";
 
-import { defaultSignUp } from "@/api/auth";
 import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
+import { defaultSignUp } from "@/http/auth";
 import { useGithubUsername, useOauth2Dialog } from "@/stores/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";

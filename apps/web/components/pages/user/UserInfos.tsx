@@ -1,8 +1,8 @@
 "use client";
 
-import { getUserInfo } from "@/api/user";
 import BaseButton from "@/components/base/BaseButton";
 import ProjectCard from "@/components/shared/ProjectCard";
+import { getUserInfo } from "@/http/user";
 import { useUserStore } from "@/stores/user";
 import { useTranslations } from "next-intl";
 import Image from "next/image";

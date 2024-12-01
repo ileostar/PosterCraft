@@ -1,6 +1,5 @@
 "use client";
 
-import { publishWorkToTemplate } from "@/api/work";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,6 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
+import { publishWorkToTemplate } from "@/http/work";
 import { useWorkStore } from "@/stores/work";
 
 function DialogDemo({

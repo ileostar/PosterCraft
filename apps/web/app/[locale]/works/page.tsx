@@ -1,13 +1,13 @@
 "use client";
 
-import { CreateWorkResponse } from "@/api/types/work";
-import { getWorkList } from "@/api/work";
 import BaseCard from "@/components/base/BaseCard";
 import BaseLayout from "@/components/layouts/BaseLayout";
 import AuthGuard from "@/components/shared/AuthGuard";
 import Banner from "@/components/shared/Banner";
 import CustomPagination from "@/components/shared/CustomPagination";
 import BaseList from "@/components/shared/ShowLists";
+import { CreateWorkResponse } from "@/http/types/work";
+import { getWorkList } from "@/http/work";
 import { useWorkStore } from "@/stores/work";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";

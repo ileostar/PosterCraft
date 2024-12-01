@@ -1,6 +1,5 @@
 "use client";
 
-import { defaultSignIn, loginBySMS } from "@/api/auth";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import Dialog from "@/components/pages/auth/Dialog";
 import Oauth2 from "@/components/pages/auth/Oauth2";
@@ -10,6 +9,7 @@ import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useToken } from "@/hooks/useToken";
+import { defaultSignIn, loginBySMS } from "@/http/auth";
 import { useUserStore } from "@/stores/user";
 import { Link } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";

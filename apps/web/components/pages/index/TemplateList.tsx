@@ -1,10 +1,10 @@
 "use client";
 
-import { getTemplateList } from "@/api/template";
-import { CreateWorkResponse } from "@/api/types/work";
 import BaseCard from "@/components/base/BaseCard";
 import MoreButton from "@/components/shared/MoreButton";
 import BaseList from "@/components/shared/ShowLists";
+import { getTemplateList } from "@/http/template";
+import { CreateWorkResponse } from "@/http/types/work";
 import { useWorkStore } from "@/stores/work";
 import { Link } from "@/utils/i18n/routing";
 import { useTranslations } from "next-intl";

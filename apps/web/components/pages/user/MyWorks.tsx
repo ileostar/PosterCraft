@@ -1,13 +1,13 @@
 "use client";
 
-import { getTemplateList } from "@/api/template";
-import { CreateWorkResponse } from "@/api/types/work";
-import { getWorkList } from "@/api/work";
 import BaseButton from "@/components/base/BaseButton";
 import BaseCard from "@/components/base/BaseCard";
 import BaseGrid from "@/components/base/BaseGrid";
 import BaseSearch from "@/components/base/BaseSearch";
 import CustomPagination from "@/components/shared/CustomPagination";
+import { getTemplateList } from "@/http/template";
+import { CreateWorkResponse } from "@/http/types/work";
+import { getWorkList } from "@/http/work";
 import { useWorkStore } from "@/stores/work";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

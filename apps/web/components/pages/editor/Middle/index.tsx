@@ -1,6 +1,5 @@
 "use client";
 
-import { getWork } from "@/api/work";
 import BaseTooltips from "@/components/base/BaseTooltip";
 import Dialog from "@/components/pages/editor/Middle/Dialog";
 import ChangePosition from "@/components/shared/ChangePosition";
@@ -8,6 +7,7 @@ import ContextMenu from "@/components/shared/ContextMenu";
 import ResizeComponent from "@/components/shared/ResizeComponent";
 import useGetScreenRatio from "@/hooks/useGetScreenRatio";
 import useHotKey from "@/hooks/useHotKey";
+import { getWork } from "@/http/work";
 import { UseElementStore } from "@/stores/element";
 import { useWorkStore } from "@/stores/work";
 import { useEffect } from "react";

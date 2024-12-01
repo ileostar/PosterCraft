@@ -1,7 +1,5 @@
 "use client";
 
-import { defaultSignUp } from "@/api/auth";
-import { DefaultSignUpBody } from "@/api/types/auth";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import Oauth2 from "@/components/pages/auth/Oauth2";
 import CustomFormField from "@/components/shared/CustomFormField";
@@ -9,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
+import { defaultSignUp } from "@/http/auth";
+import { DefaultSignUpBody } from "@/http/types/auth";
 import { Link } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
