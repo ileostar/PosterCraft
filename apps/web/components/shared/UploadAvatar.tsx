@@ -71,7 +71,7 @@ const UploadAvatar: React.FC<ChildProps> = ({ handleOssUrl, img }) => {
     <div>
       {imageUrl ? (
         <button
-          className="w-24 h-24"
+          className="w-24 rounded-full"
           onClick={() => handleClickButton()}
         >
           <input
@@ -101,7 +101,7 @@ const UploadAvatar: React.FC<ChildProps> = ({ handleOssUrl, img }) => {
           ></input>
           <button
             style={{ background: "none", cursor: "pointer" }}
-            className=" border-2 border-solid bg-[#696969] rounded-btn hover:border-dotted w-24 h-24"
+            className="border-2 border-solid !bg-gray-200/20 rounded-full hover:border-dotted w-24 h-24"
             type="button"
             onClick={() => handleClickButton()}
           >

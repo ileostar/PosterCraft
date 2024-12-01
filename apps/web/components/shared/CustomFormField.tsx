@@ -2,6 +2,7 @@
 
 import { sendCodeByEmail } from "@/api/email";
 import { sendBySMS } from "@/api/sms";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { Button } from "../ui/button";
@@ -43,6 +44,7 @@ function CustomFormField({
   const [isDisabled, setIsDisabled] = useState(false);
   //倒计时
   const [countdown, setCountdown] = useState(0);
+  const t = useTranslations();
 
   // 发送验证码并启动倒计时
   const handleClick = () => {
@@ -114,7 +116,7 @@ function CustomFormField({
                   disabled={isDisabled}
                   className="text-white bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600"
                 >
-                  {!isDisabled ? "发送验证码" : `${countdown}s后再试`}
+                  {!isDisabled ? t("sendCode") : `${countdown}s后再试`}
                 </Button>
               </div>
             )}

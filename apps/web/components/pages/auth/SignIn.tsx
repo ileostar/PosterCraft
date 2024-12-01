@@ -1,6 +1,7 @@
 "use client";
 
 import CustomFormField from "@/components/shared/CustomFormField";
+import { toast } from "@/components/ui/use-toast";
 import { Link } from "@/utils/i18n/routing";
 
 interface FormType {
@@ -37,6 +38,10 @@ function renderSignIn({
             href="#"
             onClick={() => {
               setIsPhoneMode(!isPhoneMode);
+              toast({
+                title: "短信已发送",
+                description: "请在1分钟内完成验证",
+              });
               form.reset();
             }}
             className="label-text-alt link link-hover text-[#EF4444] dark:text-white"

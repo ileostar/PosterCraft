@@ -12,7 +12,6 @@ export class TemplateController {
   constructor(private readonly templateService: TemplateService) {}
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   async getTemplates(@Query() query: GetTemplateListDto) {
     try {
       const data = await this.templateService.getTemplatesList(query);
@@ -29,7 +28,6 @@ export class TemplateController {
   }
 
   @Get(':workId')
-  @UseGuards(JwtAuthGuard)
   @ApiParam({
     name: 'workId',
     required: true,
