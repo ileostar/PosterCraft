@@ -126,7 +126,7 @@ export default function Register() {
             </div>
             <div className="flex justify-between mt-[5px]">
               <Button
-                className="btn w-full bg-red-600 dark:bg-[#8d1d7a] text-white"
+                className="btn w-full bg-red-600 hover:bg-red-500 dark:bg-[#8d1d7a] text-white"
                 type="submit"
               >
                 {t("register")}

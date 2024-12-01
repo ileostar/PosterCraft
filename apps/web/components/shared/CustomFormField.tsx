@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
+import { toast } from "../ui/use-toast";
 
 interface FormType {
   [key: string]: any;
@@ -54,6 +55,10 @@ function CustomFormField({
       } else {
         sendBySMS({ phone: form.getValues("phone") });
       }
+      toast({
+        title: "验证码已发送",
+        description: "请在1分钟内完成验证",
+      });
       setIsDisabled(true);
       setCountdown(60);
     }

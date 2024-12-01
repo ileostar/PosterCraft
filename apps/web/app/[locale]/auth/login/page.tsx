@@ -14,6 +14,7 @@ import { useUserStore } from "@/stores/user";
 import { loginFormSchema, loginFormSchemaType } from "@/utils/formSchema";
 import { Link } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -23,6 +24,7 @@ export default function Login() {
   const [_, setTokenHandler] = useToken();
   const { setUserId } = useUserStore();
   const { toast } = useToast();
+  const t = useTranslations();
   const form = useForm<loginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -96,7 +98,7 @@ export default function Login() {
                 onClick={() => handleSign()}
                 type="submit"
               >
-                登 录
+                {t("login")}
               </Button>
             </div>
             <div className="flex justify-between items-center">
@@ -105,7 +107,7 @@ export default function Login() {
                   href="/auth/register"
                   className="label-text-alt link link-hover hover:text-gray-500 dark:hover:text-white/80 text-[#EF4444] dark:text-white"
                 >
-                  点此注册
+                  {t("registerLink")}
                 </Link>
               </label>
               <Oauth2 />
