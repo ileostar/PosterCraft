@@ -23,8 +23,12 @@ const WorksList: React.FC<WorksListProps> = () => {
   const { setWork } = useWorkStore();
 
   const getList = async (pageIndex?: number, pageSize?: number, title?: string) => {
-    const res = await getWorkList({ pageIndex, pageSize, title });
-    setWorkList(res.data.data?.list || []);
+    try {
+      const res = await getWorkList({ pageIndex, pageSize, title });
+      setWorkList(res.data.data?.list || []);
+    } catch (error) {
+      console.log("getWorkList Error:", error);
+    }
   };
 
   useEffect(() => {

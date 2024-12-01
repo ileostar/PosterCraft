@@ -28,14 +28,18 @@ const MyWorks: React.FC<MyWorksProps> = (params) => {
   const [title, setTitle] = useState("");
 
   const getList = async (pageIndex: number, pageSize: number, title?: string) => {
-    const res =
-      mode == "work"
-        ? await getWorkList({ pageIndex, pageSize, title })
-        : await getTemplateList({ pageIndex, pageSize, title });
-    setRenderList(res.data.data?.list || []);
-    setPageIndex(pageIndex);
-    setPageSize(pageSize);
-    setTotalPage(Math.ceil(res.data.data?.count / pageSize));
+    try {
+      const res =
+        mode == "work"
+          ? await getWorkList({ pageIndex, pageSize, title })
+          : await getTemplateList({ pageIndex, pageSize, title });
+      setRenderList(res.data.data?.list || []);
+      setPageIndex(pageIndex);
+      setPageSize(pageSize);
+      setTotalPage(Math.ceil(res.data.data?.count / pageSize));
+    } catch (error) {
+      console.log("getList Error:", error);
+    }
   };
 
   useEffect(() => {

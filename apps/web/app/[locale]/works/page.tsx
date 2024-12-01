@@ -23,11 +23,15 @@ function Main() {
   const router = useRouter();
 
   const getList = async (pageIndex: number, pageSize: number, title?: string) => {
-    const res = await getWorkList({ pageIndex, pageSize, title });
-    setWorkList(res.data.data?.list || []);
-    setPageIndex(pageIndex);
-    setPageSize(pageSize);
-    setTotalPage(Math.ceil(res.data.data?.count / pageSize));
+    try {
+      const res = await getWorkList({ pageIndex, pageSize, title });
+      setWorkList(res.data.data?.list || []);
+      setPageIndex(pageIndex);
+      setPageSize(pageSize);
+      setTotalPage(Math.ceil(res.data.data?.count / pageSize));
+    } catch (error) {
+      console.log("getWorkList Error:", error);
+    }
   };
 
   useEffect(() => {

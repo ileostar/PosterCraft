@@ -1,8 +1,7 @@
-import { ApiBearerAuth, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { TemplateService } from './template.service';
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { string } from 'zod';
-import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { GetTemplateListDto } from './dto/template.dto';
 
 @ApiBearerAuth()

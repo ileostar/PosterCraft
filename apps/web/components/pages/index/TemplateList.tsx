@@ -21,8 +21,12 @@ const TemplateList: React.FC<TemplateListProps> = () => {
   const [templateList, setTemplateList] = useState<createWorkResponse[]>([]);
 
   const getList = async (pageIndex?: number, pageSize?: number, title?: string) => {
-    const res = await getTemplateList({ pageIndex, pageSize, title });
-    setTemplateList(res.data.data?.list || []);
+    try {
+      const res = await getTemplateList({ pageIndex, pageSize, title });
+      setTemplateList(res.data.data?.list || []);
+    } catch (error) {
+      console.log("getTemplateList Error:", error);
+    }
   };
 
   useEffect(() => {
