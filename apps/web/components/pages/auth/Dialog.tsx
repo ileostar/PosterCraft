@@ -7,13 +7,30 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { useGithubUsername, useOauth2Dialog } from "@/stores/auth";
-import { phoneFormSchema, phoneFormSchemaType } from "@/utils/formSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 function DialogDemo() {
+  const t = useTranslations();
+  const phoneFormSchema = z.object({
+    phone: z.string().regex(/^1[3-9]\d{9}$/, {
+      message: t("form.phone.invalid"),
+    }),
+    otp: z
+      .string()
+      .length(6, {
+        message: t("form.code.length"),
+      })
+      .regex(/^\d+$/, {
+        message: t("form.code.length"),
+      }),
+  });
+
+  type phoneFormSchemaType = z.infer<typeof phoneFormSchema>;
   const form = useForm<phoneFormSchemaType>({
     resolver: zodResolver(phoneFormSchema),
     defaultValues: {

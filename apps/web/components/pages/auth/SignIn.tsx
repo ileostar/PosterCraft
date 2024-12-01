@@ -8,7 +8,7 @@ interface FormType {
   [key: string]: any;
 }
 
-function renderSignIn({
+const RenderSignIn = ({
   isPhoneMode,
   setIsPhoneMode,
   form,
@@ -16,7 +16,7 @@ function renderSignIn({
   isPhoneMode: boolean;
   setIsPhoneMode: (value: boolean) => void;
   form: FormType;
-}) {
+}) => {
   const t = useTranslations();
 
   if (isPhoneMode) {
@@ -81,6 +81,6 @@ function renderSignIn({
       </div>
     );
   }
-}
+};
 
-export default renderSignIn;
+export default RenderSignIn;

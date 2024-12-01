@@ -87,5 +87,20 @@
       "required": "请确认密码",
       "notMatch": "两次输入的密码不一致"
     }
+  },
+  "errors": {
+    "connection": {
+      "closed": "连接已关闭，请检查网络后重试",
+      "timeout": "连接超时，请稍后重试",
+      "failed": "连接失败，请检查网络设置"
+    },
+    "database": {
+      "connectionClosed": "数据库连接已断开，请刷新页面重试"
+    },
+    "common": {
+      "tryAgain": "出错了，请重试",
+      "networkError": "网络错误，请检查网络连接",
+      "serverError": "服务器错误，请稍后重试"
+    }
   }
 }

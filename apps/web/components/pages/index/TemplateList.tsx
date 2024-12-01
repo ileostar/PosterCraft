@@ -1,7 +1,7 @@
 "use client";
 
 import { getTemplateList } from "@/api/template";
-import { createWorkResponse } from "@/api/types/work";
+import { CreateWorkResponse } from "@/api/types/work";
 import BaseCard from "@/components/base/BaseCard";
 import MoreButton from "@/components/shared/MoreButton";
 import BaseList from "@/components/shared/ShowLists";
@@ -18,7 +18,7 @@ const TemplateList: React.FC<TemplateListProps> = () => {
   const router = useRouter();
   const { setWork } = useWorkStore();
 
-  const [templateList, setTemplateList] = useState<createWorkResponse[]>([]);
+  const [templateList, setTemplateList] = useState<CreateWorkResponse[]>([]);
 
   const getList = async (pageIndex?: number, pageSize?: number, title?: string) => {
     try {

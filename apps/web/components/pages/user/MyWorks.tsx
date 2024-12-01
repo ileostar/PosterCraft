@@ -1,7 +1,7 @@
 "use client";
 
 import { getTemplateList } from "@/api/template";
-import { createWorkResponse } from "@/api/types/work";
+import { CreateWorkResponse } from "@/api/types/work";
 import { getWorkList } from "@/api/work";
 import BaseButton from "@/components/base/BaseButton";
 import BaseCard from "@/components/base/BaseCard";
@@ -21,7 +21,7 @@ const MyWorks: React.FC<MyWorksProps> = (params) => {
   const { setWork } = useWorkStore();
 
   const [mode, setMode] = useState<"work" | "template">("template");
-  const [renderList, setRenderList] = useState<createWorkResponse[]>([]);
+  const [renderList, setRenderList] = useState<CreateWorkResponse[]>([]);
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(16);
   const [totalPage, setTotalPage] = useState(0);

@@ -8,18 +8,27 @@ import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useUserStore } from "@/stores/user";
-import { userFormSchema, UserFormSchemaType } from "@/utils/formSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 export default function Profile() {
   const t = useTranslations();
   const { toast } = useToast();
   const { userId } = useUserStore();
   const [avatar, setAvatar] = useState<string>("");
-
+  const userFormSchema = z.object({
+    username: z.string().min(1, {
+      message: t("form.required"),
+    }),
+    nickname: z.string().min(1, {
+      message: t("form.required"),
+    }),
+    avatar: z.any(),
+  });
+  type UserFormSchemaType = z.infer<typeof userFormSchema>;
   const form = useForm<UserFormSchemaType>({
     resolver: zodResolver(userFormSchema),
     defaultValues: {
@@ -39,6 +48,7 @@ export default function Profile() {
 
   useEffect(() => {
     userId !== null && getUserData(userId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [avatar, form]);
 
   /** 更新用户信息 */

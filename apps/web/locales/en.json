@@ -87,5 +87,20 @@
       "required": "Please confirm your password",
       "notMatch": "The passwords entered twice do not match"
     }
+  },
+  "errors": {
+    "connection": {
+      "closed": "Connection closed, please check your network and try again",
+      "timeout": "Connection timeout, please try again later",
+      "failed": "Connection failed, please check network settings"
+    },
+    "database": {
+      "connectionClosed": "Database connection lost, please refresh and try again"
+    },
+    "common": {
+      "tryAgain": "Something went wrong, please try again",
+      "networkError": "Network error, please check your connection",
+      "serverError": "Server error, please try again later"
+    }
   }
 }

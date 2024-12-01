@@ -1,6 +1,6 @@
 "use client";
 
-import { createWorkResponse } from "@/api/types/work";
+import { CreateWorkResponse } from "@/api/types/work";
 import { getWorkList } from "@/api/work";
 import BaseCard from "@/components/base/BaseCard";
 import MoreButton from "@/components/shared/MoreButton";
@@ -19,7 +19,7 @@ const WorksList: React.FC<WorksListProps> = () => {
   const router = useRouter();
   const [token] = useToken();
 
-  const [workList, setWorkList] = useState<createWorkResponse[]>([]);
+  const [workList, setWorkList] = useState<CreateWorkResponse[]>([]);
   const { setWork } = useWorkStore();
 
   const getList = async (pageIndex?: number, pageSize?: number, title?: string) => {

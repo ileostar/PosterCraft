@@ -11,13 +11,13 @@ import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useToken } from "@/hooks/useToken";
 import { useUserStore } from "@/stores/user";
-import { loginFormSchema, loginFormSchemaType } from "@/utils/formSchema";
 import { Link } from "@/utils/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 export default function Login() {
   const router = useRouter();
@@ -25,6 +25,35 @@ export default function Login() {
   const { setUserId } = useUserStore();
   const { toast } = useToast();
   const t = useTranslations();
+  const loginFormSchema = z.object({
+    email: z.string().email({
+      message: t("form.email.invalid"),
+    }),
+    phone: z
+      .string()
+      .length(11, {
+        message: t("form.phone.invalid"),
+      })
+      .regex(/^\d+$/, {
+        message: t("form.phone.invalid"),
+      }),
+    password: z.string().min(1, {
+      message: t("form.password.required"),
+    }),
+    code: z
+      .string()
+      .length(6, {
+        message: t("form.code.length"),
+      })
+      .regex(/^\d+$/, {
+        message: t("form.code.length"),
+      }),
+    username: z.string().min(2, {
+      message: t("form.username.minLength"),
+    }),
+  });
+
+  type loginFormSchemaType = z.infer<typeof loginFormSchema>;
   const form = useForm<loginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
