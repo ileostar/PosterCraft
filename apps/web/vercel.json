@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "buildCommand": "pnpm build",
+  "installCommand": "pnpm install",
+  "framework": "nextjs",
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "continue": true
+    }
+  ],
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./",
+  "functions": {
+    "api/**/*": {
+      "runtime": false
+    }
+  },
+  "outputDirectory": ".next",
+  "regions": ["hkg1"],
+  "public": false,
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "github": {
+    "silent": true,
+    "autoAlias": true
+  }
+}
