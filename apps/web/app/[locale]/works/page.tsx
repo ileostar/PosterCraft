@@ -44,36 +44,34 @@ function Main() {
   };
 
   return (
-    <AuthGuard>
-      <BaseLayout>
-        <Banner className="h-[30vh] bg-sky-500/20 rounded-lg text-center text-white font-bold text-4xl py-10" />
-        <BaseList
-          title="All Works List ✨"
-          onSearch={(e: any) => setTitle(e)}
-        >
-          {workList.map((item) => (
-            <BaseCard
-              key={item.workId}
-              title={item.title}
-              description={item.desc}
-              imgUrl={
-                item.coverImg ||
-                "https://cimg.co/news/100430/248406/polina-kondrashova-fhrwah2hmnm-unsplash.jpg"
-              }
-              // imgUrl="https://cimg.co/news/100430/248406/polina-kondrashova-fhrwah2hmnm-unsplash.jpg"
-              onClick={() => renderPoster(item)}
-            />
-          ))}
-        </BaseList>
-        <CustomPagination
-          pageIndex={pageIndex}
-          pageSize={pageSize}
-          title={title}
-          totalPage={totalPage}
-          getList={getList}
-        />
-      </BaseLayout>
-    </AuthGuard>
+    <BaseLayout>
+      <Banner className="h-[30vh] bg-sky-500/20 rounded-lg text-center text-white font-bold text-4xl py-10" />
+      <BaseList
+        title="All Works List ✨"
+        onSearch={(e: any) => setTitle(e)}
+      >
+        {workList.map((item) => (
+          <BaseCard
+            key={item.workId}
+            title={item.title}
+            description={item.desc}
+            imgUrl={
+              item.coverImg ||
+              "https://cimg.co/news/100430/248406/polina-kondrashova-fhrwah2hmnm-unsplash.jpg"
+            }
+            // imgUrl="https://cimg.co/news/100430/248406/polina-kondrashova-fhrwah2hmnm-unsplash.jpg"
+            onClick={() => renderPoster(item)}
+          />
+        ))}
+      </BaseList>
+      <CustomPagination
+        pageIndex={pageIndex}
+        pageSize={pageSize}
+        title={title}
+        totalPage={totalPage}
+        getList={getList}
+      />
+    </BaseLayout>
   );
 }
 
