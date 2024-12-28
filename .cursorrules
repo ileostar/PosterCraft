@@ -1,0 +1,80 @@
+- 项目简介
+  一个基于Nextjs和Nestjs的海报生成器
+
+- 技术栈
+  - 整体技术栈
+    - Monorepo
+    - TypeScript
+    - Docker Compose
+    - TurboRepo
+    - Prettier
+  - 前端技术栈
+    - Next.js
+    - React
+    - Shadcn/ui
+    - Tailwindcss
+    - Three.js
+    - TypeScript
+    - ESLint
+    - socket.io
+    - gasp
+    - zustand
+    - zod
+    - next-intl
+    - Docker
+  - 后端技术栈
+    - Nestjs
+    - TypeScript
+    - Mysql
+    - Redis
+    - Socket.io
+    - Swagger
+    - Jest
+    - Docker
+    - Nginx
+
+- 文件结构
+  - apps/server Nestjs服务端
+  - apps/server/src/config 配置文件
+  - apps/server/src/common 公共文件
+  - apps/server/src/decorators 装饰器
+  - apps/server/src/exceptions 异常处理
+  - apps/server/src/guards 权限验证器
+  - apps/server/src/interceptors 拦截器
+  - apps/server/src/middlewares 中间件
+  - apps/server/src/modules 模块
+  - apps/server/src/pipes 管道
+  - apps/server/src/views 模板引擎
+  - apps/server/src/factories 工厂函数
+  - apps/server/test 测试代码
+  - apps/web Nextjs客户端
+  - apps/web/app 前端应用
+  - apps/web/components 前端组件
+  - apps/web/hooks 前端通用钩子
+  - apps/web/locales 前端国际化
+  - apps/web/stores 前端状态管理
+  - apps/web/styles 前端样式
+  - apps/web/http 前端接口
+  - apps/web/utils 前端工具函数
+  - apps/web/test 前端测试
+  - packages/db Mysql数据库
+  - packages/utils 文档库
+  - packages/schema schema数据表包
+  - packages/shared 公共文件包
+  - packages/ui 前端UI组件包
+
+- 编程规范
+  - TypeScript编写
+    - 避免使用any类型
+    - 如需使用any类型，使用 @ts-ignore 注释
+  - 代码注释
+    - 使用JSDoc语法
+  - 组件编写规范
+    - 组件拆分
+
+- 测试
+  - 后端使用Jest
+  - 前端使用Vitest和Cypress
+
+- 文档
+  - 后端使用Swagger
