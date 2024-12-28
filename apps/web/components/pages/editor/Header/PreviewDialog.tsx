@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -11,66 +10,108 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
-import { publishWorkToTemplate } from "@/http/work";
+import { getPreviewUrl } from "@/http/work";
+import { UseElementStore } from "@/stores/element";
 import { useWorkStore } from "@/stores/work";
+import { takeScreenshot } from "@/utils/others/takeScreenshot";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
-function DialogDemo({
+function PreviewDialog({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const { toast } = useToast();
   const { currentWorkId } = useWorkStore();
-  const handleClick = async () => {
+  const [imgUrl, setImgUrl] = useState("");
+  const [previewUrl, setPreviewUrl] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const getPreview = async () => {
     try {
-      if (currentWorkId) {
-        const res = await publishWorkToTemplate(currentWorkId);
-        if (res.data.code === 200) {
-          toast({
-            variant: "success",
-            title: "Success",
-            description: "作品发布成功",
-          });
-        }
-      } else {
+      if (!currentWorkId) {
         toast({
           variant: "destructive",
           title: "Error",
-          description: "请先保存作品再发布",
+          description: "请先保存作品",
         });
+        return;
+      }
+
+      // 获取预览图
+      const img = await takeScreenshot();
+      if (img) {
+        setImgUrl(img);
+      }
+
+      // 获取预览链接
+      const res = await getPreviewUrl(currentWorkId);
+      if (res.data.code === 200) {
+        setPreviewUrl(res.data.data.url);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "获取预览失败",
+      });
     }
   };
 
+  useEffect(() => {
+    if (open) {
+      getPreview();
+    }
+  }, [open]);
+
   return (
-    <Dialog>
+    <Dialog
+      open={open}
+      onOpenChange={setOpen}
+    >
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-[475px]">
         <DialogHeader>
-          <DialogTitle>tip</DialogTitle>
+          <DialogTitle>预览</DialogTitle>
         </DialogHeader>
 
-        <div className="w-[80%] mx-auto">
-          <DialogTitle> 确认要发布作品吗？</DialogTitle>
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-[150px] h-[267px] border border-gray-500">
+            <Image
+              className="w-full h-full object-cover"
+              src={imgUrl}
+              alt="预览"
+              width={0}
+              height={0}
+              sizes="100vh"
+            />
+          </div>
+
+          {previewUrl && (
+            <Button
+              type="button"
+              className="bg-[#3d7fff] text-white"
+              onClick={() => window.open(previewUrl)}
+            >
+              打开预览链接
+            </Button>
+          )}
         </div>
 
         <DialogFooter className="sm:justify-end">
-          <DialogClose asChild>
-            <Button
-              type="button"
-              onClick={handleClick}
-              className="bg-[#3d7fff] text-white"
-              variant="secondary"
-            >
-              确认
-            </Button>
-          </DialogClose>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => setOpen(false)}
+          >
+            关闭
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
 
-export default DialogDemo;
+export default PreviewDialog;

@@ -1,92 +1,90 @@
 import { UseElementStore } from "@/stores/element";
-import hotkeys, { HotkeysEvent, KeyHandler } from "hotkeys-js";
 import { useEffect } from "react";
 
-const useBindHotKey = (keys: string, callback: KeyHandler) => {
-  useEffect(() => {
-    hotkeys(keys, callback);
-
-    return () => {
-      hotkeys.unbind(keys, callback);
-    };
-  }, [callback, keys]);
-};
-
-const wrap = (callback: KeyHandler) => {
-  const wrapperFn = (e: KeyboardEvent, event: HotkeysEvent) => {
-    e.preventDefault();
-    callback(e, event);
-  };
-  return wrapperFn;
-};
-
-const useHotKey = () => {
+export default function useHotKey() {
   const {
     currentElement,
     deleteElement,
     setCurrentElement,
-    setPastedElement,
-    setCopyElement,
+    setCopyElement: copyComponent,
+    setPastedElement: pasteComponent,
     setMoveElement,
     undo,
     redo,
   } = UseElementStore();
 
-  useBindHotKey("ctrl+c, command+c", () => {
-    console.log(11);
-    setCopyElement(currentElement);
-  });
-  useBindHotKey("ctrl+v, command+v", () => {
-    setPastedElement();
-  });
-  useBindHotKey("backspace, delete", () => {
-    deleteElement(currentElement);
-  });
-  useBindHotKey("esc", () => {
-    setCurrentElement("");
-  });
-  useBindHotKey(
-    "up",
-    wrap(() => {
-      setMoveElement(currentElement, "Up", 1);
-    }),
-  );
-  useBindHotKey(
-    "down",
-    wrap(() => {
-      setMoveElement(currentElement, "Down", 1);
-    }),
-  );
-  useBindHotKey(
-    "left",
-    wrap(() => {
-      setMoveElement(currentElement, "Left", 1);
-    }),
-  );
-  useBindHotKey(
-    "right",
-    wrap(() => {
-      setMoveElement(currentElement, "Right", 1);
-    }),
-  );
-  useBindHotKey("shift+up", () => {
-    setMoveElement(currentElement, "Up", 10);
-  });
-  useBindHotKey("shift+down", () => {
-    setMoveElement(currentElement, "Down", 10);
-  });
-  useBindHotKey("shift+left", () => {
-    setMoveElement(currentElement, "Left", 10);
-  });
-  useBindHotKey("shift+right", () => {
-    setMoveElement(currentElement, "Right", 10);
-  });
-  useBindHotKey("ctrl+z", () => {
-    undo();
-  });
-  useBindHotKey("ctrl+shift+x", () => {
-    redo();
-  });
-};
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // 复制
+      if ((e.ctrlKey || e.metaKey) && e.key === "c") {
+        e.preventDefault();
+        if (currentElement) {
+          copyComponent(currentElement);
+        }
+      }
+      // 粘贴
+      if ((e.ctrlKey || e.metaKey) && e.key === "v") {
+        e.preventDefault();
+        pasteComponent();
+      }
+      // 删除
+      if (e.key === "Delete" || e.key === "Backspace") {
+        e.preventDefault();
+        if (currentElement) {
+          deleteElement(currentElement);
+        }
+      }
+      // 取消选中
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setCurrentElement("");
+      }
+      // 撤销
+      if ((e.ctrlKey || e.metaKey) && e.key === "z") {
+        e.preventDefault();
+        undo();
+      }
+      // 重做
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "z") {
+        e.preventDefault();
+        redo();
+      }
+      // 移动
+      if (currentElement) {
+        const amount = e.shiftKey ? 10 : 1;
+        switch (e.key) {
+          case "ArrowUp":
+            e.preventDefault();
+            setMoveElement(currentElement, "Up", amount);
+            break;
+          case "ArrowDown":
+            e.preventDefault();
+            setMoveElement(currentElement, "Down", amount);
+            break;
+          case "ArrowLeft":
+            e.preventDefault();
+            setMoveElement(currentElement, "Left", amount);
+            break;
+          case "ArrowRight":
+            e.preventDefault();
+            setMoveElement(currentElement, "Right", amount);
+            break;
+        }
+      }
+    };
 
-export default useHotKey;
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [
+    currentElement,
+    deleteElement,
+    setMoveElement,
+    redo,
+    copyComponent,
+    setCurrentElement,
+    pasteComponent,
+    undo,
+  ]);
+}
