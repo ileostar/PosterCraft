@@ -7,8 +7,10 @@ import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { getUserInfo, updateUserInfo } from "@/http/user";
+import profileAnimation from "@/public/animations/Marketing.json";
 import { useUserStore } from "@/stores/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Lottie from "lottie-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -88,7 +90,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="h-full flex flex-row justify-between">
+    <div className="h-full flex flex-row justify-between gap-8">
       <div className="h-full flex flex-1 flex-col justify-between max-sm:gap-6">
         <div className="flex justify-start items-center h-[10%] ">
           <div className="text-[#f43f5e] dark:text-[#d048ef]  text-xl card-title">
@@ -130,8 +132,18 @@ export default function Profile() {
           </Form>
         </div>
       </div>
-      {/* Lottie 动画占位 */}
-      <div className="h-full flex-1  bg-blue-500/30 rounded-lg "></div>
+
+      {/* Lottie 动画部分 */}
+      <div className="h-full flex-1 flex items-center justify-center rounded-lg bg-gradient-to-br from-pink-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900">
+        <Lottie
+          animationData={profileAnimation}
+          loop={true}
+          className="w-full h-full max-w-[400px]"
+          style={{
+            filter: "drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.1))",
+          }}
+        />
+      </div>
     </div>
   );
 }

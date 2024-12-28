@@ -74,5 +74,4 @@ function Main() {
     </BaseLayout>
   );
 }
-
 export default Main;

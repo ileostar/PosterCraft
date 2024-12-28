@@ -27,29 +27,14 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
   const { toast } = useToast();
   const [_, setToken] = useToken();
   const { userId, setUserId } = useUserStore();
-  const logout = async () => {
-    setToken(null);
-    setUserId(null);
-    toast({
-      title: "登出成功",
-      description: "自动跳转到登录页面",
-    });
-    setTimeout(() => {
-      router.push("/auth/login");
-    }, 1000);
-  };
-
-  const toggleLocale = () => {
-    router.push(pathname, { locale: locale === "en" ? "zh" : "en" });
-  };
-
   const Info = {
     avatar: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp", //默认头像
-    username: "", //非空
-    nickname: "---", //默认昵称
+    username: "游客", //非空
+    nickname: "默认昵称", //默认昵称
   };
   const [userInfo, setUserInfo] = useState(Info);
 
+  /** 静态侧边栏菜单 */
   const DrawerMenuItems = [
     {
       href: "/settings",
@@ -73,6 +58,7 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
     },
   ];
 
+  /** 侧边栏获取用户信息 */
   const getUserData = async (id: string) => {
     const res = await getUserInfo(id);
     setUserInfo(() => ({
@@ -81,11 +67,29 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
       nickname: res.data.data?.nickname || Info.nickname,
     }));
   };
+
+  /** 切换语言 */
+  function toggleLocale() {
+    router.push(pathname, { locale: locale === "en" ? "zh" : "en" });
+  }
+
+  /** 登出 */
+  function logout() {
+    setToken(null);
+    setUserId(null);
+    toast({
+      title: "登出成功",
+      description: "自动跳转到登录页面",
+    });
+    setTimeout(() => {
+      router.push("/auth/login");
+    }, 1000);
+  }
+
   useEffect(() => {
     if (userId !== null) {
       getUserData(userId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

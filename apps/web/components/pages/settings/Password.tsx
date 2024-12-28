@@ -7,8 +7,10 @@ import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { bindEmail, updateEmail, verifyEmail } from "@/http/email";
 import { getUserInfo } from "@/http/user";
+import profileAnimation from "@/public/animations/Security.json";
 import { useUserStore } from "@/stores/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Lottie from "lottie-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -203,7 +205,17 @@ export default function Account({ className }: Readonly<{ className?: string }>)
         </div>
       </div>
 
-      <div className="flex-1 h-full bg-blue-500/30 rounded-lg"></div>
+      {/* Lottie 动画部分 */}
+      <div className="h-full flex-1 flex items-center justify-center rounded-lg bg-gradient-to-br from-pink-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900">
+        <Lottie
+          animationData={profileAnimation}
+          loop={true}
+          className="w-full h-full max-w-[400px]"
+          style={{
+            filter: "drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.1))",
+          }}
+        />
+      </div>
     </div>
   );
 }
