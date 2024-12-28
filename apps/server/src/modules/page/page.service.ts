@@ -3,62 +3,98 @@ import { DB, DbType } from '../global/providers/db.provider';
 import { work } from '@poster-craft/schema';
 import { eq } from 'drizzle-orm';
 
+interface WorkContent {
+  Elements: any[];
+  pageBackgroundStyle: Record<string, any>;
+}
+
 @Injectable()
 export class PageService {
   constructor(@Inject(DB) private db: DbType) {}
 
-  px2vw(components = []) {
-    // '10px' '9.5px'
+  /**
+   * 将px转换为vw单位
+   */
+  px2vw(style: any = {}) {
     const reg = /^(\d+(\.\d+)?)px$/;
-    components.forEach((component: any = {}) => {
-      const props = component.props || {};
-      // 遍历组件的属性
-      Object.keys(props).forEach((key) => {
-        const val = props[key];
-        if (typeof val !== 'string') {
-          return;
-        }
-        // value 中没有 px，不是一个距离的属性
-        if (reg.test(val) === false) {
-          return;
-        }
-        const arr = val.match(reg) || [];
-        const numStr = arr[1];
-        const num = parseFloat(numStr);
-        // 计算出 vw，重新赋值
-        // 编辑器的画布宽度是 375
-        const vwNum = (num / 375) * 100;
-        props[key] = `${vwNum.toFixed(2)}vw`;
-      });
+    const newStyle = { ...style };
+
+    Object.keys(newStyle).forEach((key) => {
+      const val = newStyle[key];
+      if (typeof val !== 'string') return;
+      if (!reg.test(val)) return;
+
+      const arr = val.match(reg) || [];
+      const num = parseFloat(arr[1]);
+      const vwNum = (num / 375) * 100;
+      newStyle[key] = `${vwNum.toFixed(2)}vw`;
     });
-  }
-  propsToStyle(props = {}) {
-    const keys = Object.keys(props);
-    const styleArr = keys.map((key) => {
-      const formatKey = key.replace(
-        /[A-Z]/g,
-        (c) => `-${c.toLocaleLowerCase()}`,
-      );
-      // fontSize -> font-size
-      const value = props[key];
-      return `${formatKey}: ${value}`;
-    });
-    return styleArr.join(';');
+
+    return newStyle;
   }
 
+  /**
+   * 将样式对象转换为样式字符串
+   */
+  propsToStyle(props = {}) {
+    return Object.entries(props)
+      .map(([key, value]) => {
+        const formatKey = key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
+        return `${formatKey}: ${value}`;
+      })
+      .join(';');
+  }
+
+  /**
+   * 渲染元素HTML
+   */
+  renderElement(element: any) {
+    const { type, style, content, isHidden } = element;
+    if (isHidden) return '';
+
+    const vwStyle = this.px2vw(style);
+    const styleStr = this.propsToStyle(vwStyle);
+
+    switch (type) {
+      case 'text':
+        return `<div style="${styleStr}">${content}</div>`;
+      case 'image':
+        return `<img src="${content}" style="${styleStr}" />`;
+      case 'shape':
+        return `<div style="${styleStr}"></div>`;
+      default:
+        return '';
+    }
+  }
+
+  /**
+   * 渲染页面数据
+   */
   async renderToPageData(query: { id: string; uuid: string }) {
     const currentWork = await this.db.query.work.findFirst({
       where: eq(work.uuid, query.uuid),
     });
-    if (!currentWork) throw '工作区不存在';
-    if (!currentWork.isPublic) throw '工作区未发布';
+
+    if (!currentWork) throw '作品不存在';
+    if (!currentWork.isPublic) throw '作品未发布';
+
     const { title, desc, content } = currentWork;
-    const html = '';
-    const result = {
-      html,
-      title,
-      desc,
+    const { Elements = [], pageBackgroundStyle = {} } = content as WorkContent;
+
+    // 渲染元素
+    const elementsHtml = Elements.map((element) =>
+      this.renderElement(element),
+    ).join('');
+
+    // 处理背景样式
+    const bodyStyle = this.propsToStyle(pageBackgroundStyle);
+
+    return {
+      title: title || '海报预览',
+      desc: desc || '',
+      bodyStyle,
+      html: `<div class="poster-container">${elementsHtml}</div>`,
+      components: JSON.stringify(Elements),
     };
-    return result;
   }
 }

@@ -1,11 +1,12 @@
 import {
   Controller,
   Post,
+  Delete,
   UploadedFile,
-  HttpStatus,
-  Res,
   UseGuards,
   UseInterceptors,
+  Query,
+  Body,
 } from '@nestjs/common';
 import { OssService } from './oss.service';
 import {
@@ -14,12 +15,13 @@ import {
   ApiConsumes,
   ApiOperation,
   ApiTags,
+  ApiResponse,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../guards/jwt.guard';
-import { UpdateUploadDto } from './dto/oss.dto';
+import { UploadFileDto, UploadResponseDto } from './dto/oss.dto';
 import { FileInterceptor } from '@nest-lab/fastify-multer';
 
-@ApiTags('📦OSS对象存储模块')
+@ApiTags('📦 OSS模块')
 @ApiBearerAuth()
 @Controller('oss')
 export class OssController {
@@ -31,22 +33,34 @@ export class OssController {
   @ApiOperation({ summary: '上传文件' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
-    description: 'Upload file',
-    type: UpdateUploadDto,
+    description: '上传文件',
+    type: UploadFileDto,
   })
-  async uploadFile(@UploadedFile() file: Express.Multer.File) {
-    try {
-      const key = `${Date.now()}-${file.originalname}`;
-      console.log('111', file);
-      const result = await this.ossService.uploadFile(file, key);
-      return {
-        code: 200,
-        data: { url: result.url },
-      };
-    } catch (error) {
-      return {
-        msg: '上传出错：' + error,
-      };
-    }
+  @ApiResponse({
+    status: 200,
+    description: '上传成功',
+    type: UploadResponseDto,
+  })
+  async uploadFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Query('directory') directory?: string,
+  ) {
+    const result = await this.ossService.uploadFile(file, directory);
+    return {
+      code: 200,
+      msg: '上传成功',
+      data: result,
+    };
+  }
+
+  @Delete('delete')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '删除文件' })
+  async deleteFile(@Query('key') key: string) {
+    await this.ossService.deleteFile(key);
+    return {
+      code: 200,
+      msg: '删除成功',
+    };
   }
 }
