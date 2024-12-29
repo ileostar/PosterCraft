@@ -8,98 +8,74 @@ import ResizeComponent from "@/components/shared/ResizeComponent";
 import useGetScreenRatio from "@/hooks/useGetScreenRatio";
 import useHotKey from "@/hooks/useHotKey";
 import { getWork } from "@/http/work";
-import { UseElementStore } from "@/stores/element";
+import { useEditorStore } from "@/stores/editor";
 import { useWorkStore } from "@/stores/work";
 import { useEffect } from "react";
 
-function Middle(props: any) {
+function Middle() {
   const {
-    Elements,
-    setIsElement,
-    setPageBackgroundStyle,
-    setElements,
+    setActive,
+    components,
     currentElement,
-    setCurrentElement,
-    pageBackgroundStyle,
-    redo,
-    undo,
-    deleteElement,
-    setPastedElement,
-    setCopyElement,
-    ifRedo,
-    ifUndo,
-  } = UseElementStore();
-  const { currentWorkId } = useWorkStore();
+    page: { props: pageStyle },
+    updateWork,
+    copyComponent,
+    pasteComponent,
+    deleteComponent,
+  } = useEditorStore();
 
+  const { currentWorkId } = useWorkStore();
   useHotKey();
   const ratio = useGetScreenRatio();
 
-  const actionItem = [
+  /** 快捷键动作 */
+  const actionItems = [
     {
       hotkey: "ctrl+c",
       text: "复制图层",
       action: () => {
-        setCopyElement(currentElement);
+        copyComponent(currentElement);
       },
     },
     {
       hotkey: "ctrl+v",
       text: "粘贴图层",
       action: () => {
-        setPastedElement();
+        pasteComponent();
       },
     },
     {
       hotkey: "delete",
       text: "删除图层",
-      action: () => {
-        deleteElement(currentElement);
-      },
+      action: () => currentElement && deleteComponent(currentElement),
     },
     {
       hotkey: "esc",
       text: "取消选中",
       action: () => {
-        setCurrentElement("");
+        setActive("");
       },
     },
   ];
 
-  const getTheWork = async () => {
-    if (currentWorkId) {
+  /** 获取当前工作区内容 */
+  async function getCurrentWorkContent() {
+    if (currentWorkId && currentWorkId !== "") {
       const res = await getWork(currentWorkId);
-      setElements(res.data.data.content.Elements ?? []);
-      setPageBackgroundStyle({ ...res.data.data.content.pageBackgroundStyle });
-    } else {
-      setElements([]);
-      //设置默认背景样式
-      setPageBackgroundStyle({
-        backgroundColor: "",
-        backgroundImage: ``,
-        backgroundSize: "100% 100%",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-      });
+      updateWork(res.data);
     }
-  };
+  }
 
   useEffect(() => {
-    getTheWork();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getCurrentWorkContent();
   }, []);
 
   return (
     <div
       className="bg-gray-100 dark:bg-gray-900 w-3/5 flex justify-center items-center flex-col relative"
-      onClick={() => {
-        setIsElement(false);
-        setCurrentElement("");
-      }}
+      onClick={() => setActive("")}
     >
-      <h3 className={`${ratio > 1 ? "absolute top-10" : ""} text-gray-700 dark:text-gray-300`}>
-        海报区域
-      </h3>
-
+      {/* 操作栏 */}
       <div className="absolute right-8 top-14 flex flex-row">
         <BaseTooltips
           tooltipText={"快捷键提示"}
@@ -111,62 +87,34 @@ function Middle(props: any) {
             </button>
           </Dialog>
         </BaseTooltips>
-        <BaseTooltips
-          tooltipText={"回退"}
-          position={"top"}
-        >
-          <button
-            className={`mx-1 text-3xl ${!ifUndo && "hover:text-red-500"} ${ifUndo && "text-gray-400"}`}
-            disabled={ifUndo}
-            onClick={() => undo()}
-          >
-            <span className="icon-[carbon--previous-outline]"></span>
-          </button>
-        </BaseTooltips>
-        <BaseTooltips
-          tooltipText={"前进"}
-          position={"top"}
-        >
-          <button
-            className={`mx-1 text-3xl ${!ifRedo && "hover:text-red-500"} ${ifRedo && "text-gray-400"}`}
-            disabled={ifRedo}
-            onClick={() => redo()}
-          >
-            <span className="icon-[carbon--next-outline]"></span>
-          </button>
-        </BaseTooltips>
       </div>
 
+      {/* 编辑展示区 */}
       <div
         id="mid-container"
         className={`bg-white dark:bg-gray-800 mt-5 ${ratio > 1 ? "scale-[0.8]" : ""}`}
         style={{
-          ...pageBackgroundStyle,
+          ...pageStyle,
           width: "375px",
           height: "667px",
           position: "relative",
           overflow: "auto",
         }}
       >
-        <ContextMenu item={actionItem} />
+        <ContextMenu item={actionItems} />
 
-        {Elements.map((item: any) =>
-          item.id == currentElement ? (
-            <div
-              key={item.id}
-              className={` ${item.isHidden ? "invisible" : ""}`}
-            >
+        {components.map((item) => (
+          <div
+            key={item.id}
+            className={item.isHidden ? "invisible" : ""}
+          >
+            {item.id === currentElement ? (
               <ResizeComponent item={item} />
-            </div>
-          ) : (
-            <div
-              key={item.id}
-              className={` ${item.isHidden ? "invisible" : ""}`}
-            >
+            ) : (
               <ChangePosition item={item} />
-            </div>
-          ),
-        )}
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -1,10 +1,12 @@
 import { toast } from "@/components/ui/use-toast";
+import { ResponseData } from "@/http/types/common";
+import { GetWorkResponse } from "@/http/types/work";
 import { cloneDeep, insertAt } from "@/utils/others/helper";
 import { AllComponentProps } from "@/utils/template/defaultProps";
 import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 
-import { RespData, RespListData, RespWorkData } from "./respTypes";
+import { RespData, RespListData } from "./respTypes";
 
 /** 移动方向类型 */
 export type MoveDirection = "Up" | "Down" | "Left" | "Right";
@@ -155,9 +157,9 @@ interface EditorStore {
   updatePage: (data: { key: string; value: any; isRoot?: boolean; isSetting?: boolean }) => void;
   /** 重置编辑器 */
   resetEditor: () => void;
-  /** 获取工作 */
-  fetchWork: ({ data }: RespWorkData) => void;
-  /** 保存工作 */
+  /** 更新工作区 */
+  updateWork: (data: ResponseData<GetWorkResponse>) => void;
+  /** 保存工作区 */
   saveWork: () => void;
   /** 获取工作列表 */
   fetchChannels: ({ data }: RespListData<ChannelProps>) => void;
@@ -445,8 +447,8 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
       histories: [],
     }),
 
-  fetchWork: ({ data }: RespWorkData) => {
-    const { content, ...rest } = data;
+  updateWork: (res: ResponseData<GetWorkResponse>) => {
+    const { content, ...rest } = res.data;
     set((state) => ({
       page: { ...state.page, ...rest },
       components: content.components || [],

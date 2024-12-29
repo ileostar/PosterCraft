@@ -1,17 +1,19 @@
-import { ElementDataType } from "@/types/element-type";
+import { ComponentData, PageProps } from "@/stores/editor";
 
 export type CreateWorkBody = {
   title: string;
   desc: string;
   coverImg: string;
   content: {
-    Elements?: Array<ElementDataType>;
-    pageBackgroundStyle?: object;
+    components?: Array<ComponentData>;
+    props?: PageProps;
   };
   isTemplate: boolean;
   isPublic: boolean;
   status: number;
 };
+
+export type UpdateWorkResponse = CreateWorkBody;
 
 export type CreateWorkResponse = {
   title: string;
@@ -63,19 +65,6 @@ export type GetWorkResponse = CreateWorkBody & {
 };
 
 export type UpdateWorkBody = CreateWorkBody;
-
-export type UpdateWorkResponse = {
-  title: string;
-  desc: string;
-  coverImg: string;
-  content: {
-    Elements?: Array<ElementDataType>;
-    pageBackgroundStyle?: object;
-  };
-  isTemplate: boolean;
-  isPublic: boolean;
-  status: number;
-};
 
 export type WorkPreviewResponse = {
   url: string;

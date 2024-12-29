@@ -2,7 +2,7 @@
 
 import BaseLogo from "@/components/base/BaseLogo";
 import { Button } from "@/components/ui/button";
-import { UseElementStore } from "@/stores/element";
+import { useEditorStore } from "@/stores/editor";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ import EditorFeature from "./EditorFeature";
 import EditorName from "./EditorName";
 
 const EditorHeader = () => {
-  const { isDirty } = UseElementStore();
+  const { isDirty } = useEditorStore();
   const [showSaveReminder, setShowSaveReminder] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
