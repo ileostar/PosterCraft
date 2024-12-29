@@ -13,11 +13,14 @@ import {
   ApiBody,
   ApiConsumes,
   ApiOperation,
+  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../guards/jwt.guard';
-import { UpdateUploadDto } from './dto/oss.dto';
+import { UpdateUploadDto, UpdateUploadResponseDto } from './dto/oss.dto';
 import { FileInterceptor } from '@nest-lab/fastify-multer';
+import { APIResponse } from 'src/decorators/apiResponse.decorators';
+import { url } from 'inspector';
 
 @ApiTags('📦OSS对象存储模块')
 @ApiBearerAuth()
@@ -34,6 +37,7 @@ export class OssController {
     description: 'Upload file',
     type: UpdateUploadDto,
   })
+  @APIResponse(UpdateUploadResponseDto)
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
     try {
       const key = `${Date.now()}-${file.originalname}`;

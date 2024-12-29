@@ -16,7 +16,7 @@ function Left() {
   ];
 
   return (
-    <div className="bg-white w-1/5 overflow-auto hiddenScrollbar">
+    <div className="bg-white dark:bg-gray-800 w-1/5 overflow-auto hiddenScrollbar border-r border-gray-200 dark:border-gray-700">
       <Tab tabs={tabs} />
     </div>
   );

@@ -16,7 +16,7 @@ function Right(props: any) {
   ];
 
   return (
-    <div className="bg-[#ffffff] w-1/5 h-full flex">
+    <div className="bg-white dark:bg-gray-800 w-1/5 h-full flex border-l border-gray-200 dark:border-gray-700">
       <Tab tabs={tabs} />
     </div>
   );
