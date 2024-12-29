@@ -1,3 +1,4 @@
+import { useEditorStore } from "@/stores/editor";
 import { UseElementStore } from "@/stores/element";
 import React, { useRef } from "react";
 
@@ -8,7 +9,9 @@ function ChangePosition({
 }: Readonly<{
   item: any;
 }>) {
-  const { setCurrentElement, setIsElement, updateElement, setCurrentPosition } = UseElementStore();
+  console.log("item", item);
+
+  const { setActive, updateComponent } = useEditorStore();
 
   let top = item.props.top ? parseInt(item.props.top.replace(/(px|rem)/g, ""), 10) : 0;
   let left = item.props.left ? parseInt(item.props.left.replace(/(px|rem)/g, ""), 10) : 0;
@@ -43,8 +46,18 @@ function ChangePosition({
         left: position.x + "px",
         top: position.y + "px",
       };
-      updateElement(item.id, style);
-      setCurrentPosition(position.x, position.y);
+      updateComponent({
+        key: "top",
+        value: style.top,
+        id: item.id,
+        isRoot: true,
+      });
+      updateComponent({
+        key: "left",
+        value: style.left,
+        id: item.id,
+        isRoot: true,
+      });
 
       // 移除mousemove和mouseup事件监听器
       document.removeEventListener("mousemove", handleMouseMove);
@@ -63,8 +76,7 @@ function ChangePosition({
       onMouseDown={handleMouseDown}
       onClick={(e) => {
         e.stopPropagation();
-        setCurrentElement(item.id);
-        setIsElement(true);
+        setActive(item.id);
         if (item.url) {
           window.open(item.url);
         }
@@ -75,7 +87,7 @@ function ChangePosition({
         ...item.props,
       }}
     >
-      {item.type === "text" && item.text}
+      {item.name === "text" && item.props.text}
     </div>
   );
 }

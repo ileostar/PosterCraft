@@ -1,10 +1,9 @@
-import { UseElementStore } from "@/stores/element";
-import { ElementDataType } from "@/types/element-type";
-import imgTemplate from "@/utils/template/imgTemplate";
+import imgTemplate from "@/public/template/imgTemplate";
+import { ComponentData, useEditorStore } from "@/stores/editor";
 import { v4 as uuidv4 } from "uuid";
 
 function ImgList() {
-  const { setCurrentElement, addElement, setIsElement } = UseElementStore();
+  const { setActive, addComponent } = useEditorStore();
 
   const handleClick = (event: any) => {
     console.log(event.target.innerHTML);
@@ -13,17 +12,16 @@ function ImgList() {
     const styleObject = parseStyleStringToObject(targetStyle);
     console.log(styleObject);
     const id = uuidv4();
-    const element: ElementDataType = {
+    const element: ComponentData = {
       props: styleObject,
       id: id,
-      type: "img",
+      name: "image",
       isHidden: false,
       isLocked: false,
       layerName: "图层",
     };
-    addElement(element);
-    setCurrentElement(id);
-    setIsElement(true);
+    addComponent(element);
+    setActive(id);
   };
 
   // 将kebab-case转换为camelCase的函数

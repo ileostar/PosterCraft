@@ -154,7 +154,7 @@ function ResizeComponent({
           height: "100%",
         }}
       >
-        {item.type === "text" && item.text}
+        {item.type === "text" && item.props.text}
       </div>
       <button
         className="resize-handle top-left"

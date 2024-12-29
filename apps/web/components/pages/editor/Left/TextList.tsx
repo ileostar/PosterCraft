@@ -1,10 +1,9 @@
-import { UseElementStore } from "@/stores/element";
-import { ElementDataType } from "@/types/element-type";
-import textTemplate from "@/utils/template/textTemplate";
+import textTemplate from "@/public/template/textTemplate";
+import { ComponentData, useEditorStore } from "@/stores/editor";
 import { v4 as uuidv4 } from "uuid";
 
 function TextList() {
-  const { setCurrentElement, addElement, setIsElement } = UseElementStore();
+  const { setActive, addComponent } = useEditorStore();
 
   const handleClick = (event: any) => {
     console.log(event.target.innerHTML);
@@ -13,18 +12,19 @@ function TextList() {
     const styleObject = parseStyleStringToObject(targetStyle);
     console.log(styleObject);
     const id = uuidv4();
-    const element: ElementDataType = {
-      props: styleObject,
+    const element: ComponentData = {
+      props: {
+        ...styleObject,
+        text: event.target.innerHTML,
+      },
       id: id,
-      type: "text",
-      text: event.target.innerHTML,
+      name: "text",
       isHidden: false,
       isLocked: false,
       layerName: "图层",
     };
-    addElement(element);
-    setCurrentElement(id);
-    setIsElement(true);
+    addComponent(element);
+    setActive(id);
   };
 
   // 将kebab-case转换为camelCase的函数

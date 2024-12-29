@@ -2,7 +2,7 @@ import { toast } from "@/components/ui/use-toast";
 import { ResponseData } from "@/http/types/common";
 import { GetWorkResponse } from "@/http/types/work";
 import { cloneDeep, insertAt } from "@/utils/others/helper";
-import { AllComponentProps } from "@/utils/template/defaultProps";
+import { AllComponentProps } from "@poster-craft/bricks";
 import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 
@@ -44,7 +44,9 @@ export interface ChannelProps {
 /** 组件数据接口 */
 export interface ComponentData {
   /** 组件属性 */
-  props: Partial<Record<string, any>>;
+  props: Partial<AllComponentProps> & {
+    [key: string]: any;
+  };
   /** 组件ID */
   id: string;
   /** 组件类型 */
@@ -111,7 +113,7 @@ export interface PageData {
   };
 }
 
-/** 编辑器编辑���状态 */
+/** 编辑器编辑状态 */
 interface EditorStore {
   /** 组件列表 */
   components: ComponentData[];
@@ -188,6 +190,24 @@ const pageDefaultProps: PageProps = {
   height: "560px",
 };
 
+/** 修改历史记录 */
+const modifyHistory = (state: EditorStore, history: HistoryProps, type: "undo" | "redo") => {
+  const { componentId, data } = history;
+  const { key, oldValue, newValue } = data;
+  const newKey = key as keyof AllComponentProps | Array<keyof AllComponentProps>;
+  const updatedComponent = state.components.find((component) => component.id === componentId);
+  if (updatedComponent) {
+    // check if key is array
+    if (Array.isArray(newKey)) {
+      newKey.forEach((keyName, index) => {
+        updatedComponent.props[keyName] = type === "undo" ? oldValue[index] : newValue[index];
+      });
+    } else {
+      updatedComponent.props[newKey] = type === "undo" ? oldValue : newValue;
+    }
+  }
+};
+
 /**
  * 编辑器状态管理
  * @description 使用 Zustand 管理编辑器的状态和操作
@@ -212,6 +232,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
         ...component,
         layerName: `图层${state.components.length + 1}`,
       };
+      console.log("newComponent", newComponent);
 
       return {
         components: [...state.components, newComponent],
@@ -227,6 +248,8 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
         isDirty: true,
       };
     });
+
+    console.log("components", get().components);
   },
 
   setActive: (id) => set({ currentElement: id }),
@@ -249,16 +272,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
           newComponents = insertAt(state.components, history.index as number, history.data);
           break;
         case "modify":
-          const component = newComponents.find((c) => c.id === history.componentId);
-          if (component) {
-            if (Array.isArray(history.data.key)) {
-              history.data.key.forEach((k: string, i: number) => {
-                component.props[k] = history.data.oldValue[i];
-              });
-            } else {
-              component.props[history.data.key] = history.data.oldValue;
-            }
-          }
+          modifyHistory(state, history, "undo");
           break;
       }
 
@@ -288,16 +302,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
           newComponents = newComponents.filter((c) => c.id !== history.componentId);
           break;
         case "modify":
-          const component = newComponents.find((c) => c.id === history.componentId);
-          if (component) {
-            if (Array.isArray(history.data.key)) {
-              history.data.key.forEach((k: string, i: number) => {
-                component.props[k] = history.data.newValue[i];
-              });
-            } else {
-              component.props[history.data.key] = history.data.newValue;
-            }
-          }
+          modifyHistory(state, history, "redo");
           break;
       }
 
@@ -396,21 +401,27 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
 
   updateComponent: ({ key, value, id, isRoot }) =>
     set((state) => {
-      const components = [...state.components];
-      const component = components.find((c) => c.id === (id || state.currentElement));
-      if (!component) return state;
+      const updatedComponent = state.components.find((c) => c.id === (id || state.currentElement));
+      if (!updatedComponent) return state;
 
       if (isRoot) {
-        (component as any)[key] = value;
+        (updatedComponent as any)[key] = value;
       } else {
         if (Array.isArray(key) && Array.isArray(value)) {
           key.forEach((k, i) => {
-            component.props[k] = value[i];
+            updatedComponent.props[k] = value[i];
           });
         } else if (typeof key === "string") {
-          component.props[key] = value;
+          updatedComponent.props[key] = value;
         }
       }
+
+      const components = state.components.map((c) => {
+        if (c.id === updatedComponent.id) {
+          return updatedComponent;
+        }
+        return c;
+      });
 
       return {
         components,

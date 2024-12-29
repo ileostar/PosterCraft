@@ -68,6 +68,7 @@ function Middle() {
 
   useEffect(() => {
     getCurrentWorkContent();
+    console.log("lllllllllll", components);
   }, []);
 
   return (
