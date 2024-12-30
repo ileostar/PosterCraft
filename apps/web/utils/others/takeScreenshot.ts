@@ -3,7 +3,7 @@ import html2canvas from "html2canvas-pro";
 
 export async function takeScreenshot() {
   console.log("takeScreenshot");
-  const ele = document.getElementById("mid-container") as HTMLElement;
+  const ele = document.getElementById("canvas-area") as HTMLElement;
   const canvas = await html2canvas(ele, { width: 375, useCORS: true, scale: 1 });
   const canvasBlob = await getCanvasBlob(canvas);
   if (canvasBlob) {

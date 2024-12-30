@@ -37,7 +37,7 @@ function ResizeComponent({
   const calculateSize = (direction: directionType, e: MouseEvent, position: any) => {
     const { clientX, clientY } = e;
     const { right, bottom, left, top } = position;
-    const container = document.getElementById("mid-container") as HTMLDivElement;
+    const container = document.getElementById("canvas-area") as HTMLDivElement;
     const rightWidth = clientX - left;
     const leftWidth = right - clientX;
     const bottomHeight = clientY - top;

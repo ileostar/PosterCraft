@@ -4,12 +4,13 @@ import BaseTooltips from "@/components/base/BaseTooltip";
 import Dialog from "@/components/pages/editor/Middle/Dialog";
 import EditorWrapper from "@/components/pages/editor/Middle/EditorWrapper";
 import ContextMenu from "@/components/shared/ContextMenu";
-import useGetScreenRatio from "@/hooks/useGetScreenRatio";
 import useHotKey from "@/hooks/useHotKey";
 import { getWork } from "@/http/work";
 import { useEditorStore } from "@/stores/editor";
 import { useWorkStore } from "@/stores/work";
 import { useEffect } from "react";
+
+import "@/styles/pages/editor.css";
 
 function Middle() {
   const {
@@ -25,7 +26,6 @@ function Middle() {
 
   const { currentWorkId } = useWorkStore();
   useHotKey();
-  const ratio = useGetScreenRatio();
 
   /** 快捷键动作 */
   const actionItems = [
@@ -82,31 +82,28 @@ function Middle() {
         </BaseTooltips>
       </div>
 
+      <ContextMenu item={actionItems} />
       {/* 编辑展示区 */}
       <div
-        id="mid-container"
-        className={`bg-white dark:bg-gray-800 mt-5 ${ratio > 1 ? "scale-[0.8]" : ""}`}
-        style={{
-          ...pageStyle,
-          width: "375px",
-          height: "667px",
-          position: "relative",
-          overflow: "auto",
-        }}
+        id="canvas-area"
+        className="preview-list"
       >
-        <ContextMenu item={actionItems} />
-
-        {components.map((component) => (
-          <EditorWrapper
-            key={component.id}
-            id={component.id}
-            type={component.name}
-            active={currentElement === component.id}
-            hidden={component.isHidden}
-            props={component.props}
-            onSetActive={setActive}
-          />
-        ))}
+        <div
+          className="body-container"
+          style={pageStyle}
+        >
+          {components.map((component) => (
+            <EditorWrapper
+              key={component.id}
+              id={component.id}
+              type={component.name}
+              active={currentElement === component.id}
+              hidden={component.isHidden}
+              props={component.props}
+              onSetActive={setActive}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

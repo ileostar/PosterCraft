@@ -187,7 +187,7 @@ const pageDefaultProps: PageProps = {
   backgroundImage: "",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
-  height: "560px",
+  height: "520px",
 };
 
 /** 修改历史记录 */
