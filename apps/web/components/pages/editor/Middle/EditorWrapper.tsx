@@ -5,8 +5,7 @@ import { AllComponentProps } from "@poster-craft/bricks";
 import { pickBy } from "lodash-es";
 import React, { useRef, useState } from "react";
 
-import "@/styles/base/resize-box.css";
-import "@/styles/editor.css";
+import "@/styles/pages/editor-wrapper.css";
 
 interface EditorWrapperProps {
   id: string;
