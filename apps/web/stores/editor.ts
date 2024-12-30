@@ -154,7 +154,7 @@ interface EditorStore {
   /** 移动组件 */
   moveComponent: (data: { direction: MoveDirection; amount: number; id: string }) => void;
   /** 更新组件 */
-  updateComponent: (data: { key: string; value: any; id?: string; isRoot?: boolean }) => void;
+  updateComponent: (data: UpdateComponentData) => void;
   /** 更新页面 */
   updatePage: (data: { key: string; value: any; isRoot?: boolean; isSetting?: boolean }) => void;
   /** 重置编辑器 */
@@ -399,20 +399,20 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
     }
   },
 
-  updateComponent: ({ key, value, id, isRoot }) =>
+  updateComponent: ({ key, value, id, isRoot }: UpdateComponentData) =>
     set((state) => {
       const updatedComponent = state.components.find((c) => c.id === (id || state.currentElement));
       if (!updatedComponent) return state;
 
       if (isRoot) {
-        (updatedComponent as any)[key] = value;
+        (updatedComponent as any)[key as string] = value;
       } else {
         if (Array.isArray(key) && Array.isArray(value)) {
           key.forEach((k, i) => {
             updatedComponent.props[k] = value[i];
           });
         } else if (typeof key === "string") {
-          updatedComponent.props[key] = value;
+          updatedComponent.props[key as string] = value;
         }
       }
 

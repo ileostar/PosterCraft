@@ -10,16 +10,14 @@ interface LImageProps extends Partial<CommonComponentProps> {
   isEditing?: boolean;
 }
 
-const LImage: React.FC<LImageProps> = ({ src, ...props }) => {
+const LImage: React.FC<LImageProps> = ({ ...props }) => {
   const { styleProps, handleClick } = useComponentCommon(props, imageStylePropsNames);
 
   return (
-    <img
+    <div
       style={styleProps as CSSProperties}
       className="l-image-component"
       onClick={handleClick}
-      src={src}
-      alt=""
     />
   );
 };

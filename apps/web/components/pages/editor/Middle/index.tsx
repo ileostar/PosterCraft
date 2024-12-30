@@ -2,9 +2,8 @@
 
 import BaseTooltips from "@/components/base/BaseTooltip";
 import Dialog from "@/components/pages/editor/Middle/Dialog";
-import ChangePosition from "@/components/shared/ChangePosition";
+import EditorWrapper from "@/components/pages/editor/Middle/EditorWrapper";
 import ContextMenu from "@/components/shared/ContextMenu";
-import ResizeComponent from "@/components/shared/ResizeComponent";
 import useGetScreenRatio from "@/hooks/useGetScreenRatio";
 import useHotKey from "@/hooks/useHotKey";
 import { getWork } from "@/http/work";
@@ -33,16 +32,12 @@ function Middle() {
     {
       hotkey: "ctrl+c",
       text: "复制图层",
-      action: () => {
-        copyComponent(currentElement);
-      },
+      action: () => copyComponent(currentElement),
     },
     {
       hotkey: "ctrl+v",
       text: "粘贴图层",
-      action: () => {
-        pasteComponent();
-      },
+      action: () => pasteComponent(),
     },
     {
       hotkey: "delete",
@@ -52,9 +47,7 @@ function Middle() {
     {
       hotkey: "esc",
       text: "取消选中",
-      action: () => {
-        setActive("");
-      },
+      action: () => setActive(""),
     },
   ];
 
@@ -68,7 +61,6 @@ function Middle() {
 
   useEffect(() => {
     getCurrentWorkContent();
-    console.log("lllllllllll", components);
   }, []);
 
   return (
@@ -104,17 +96,16 @@ function Middle() {
       >
         <ContextMenu item={actionItems} />
 
-        {components.map((item) => (
-          <div
-            key={item.id}
-            className={item.isHidden ? "invisible" : ""}
-          >
-            {item.id === currentElement ? (
-              <ResizeComponent item={item} />
-            ) : (
-              <ChangePosition item={item} />
-            )}
-          </div>
+        {components.map((component) => (
+          <EditorWrapper
+            key={component.id}
+            id={component.id}
+            type={component.name}
+            active={currentElement === component.id}
+            hidden={component.isHidden}
+            props={component.props}
+            onSetActive={setActive}
+          />
         ))}
       </div>
     </div>
