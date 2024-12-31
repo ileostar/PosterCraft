@@ -24,7 +24,10 @@ function TextList() {
       layerName: "图层",
     };
     addComponent(element);
-    setActive(id);
+    // 延迟一帧设置active，确保组件已经渲染
+    requestAnimationFrame(() => {
+      setActive(id);
+    });
   };
 
   // 将kebab-case转换为camelCase的函数

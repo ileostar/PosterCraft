@@ -197,14 +197,61 @@ const pageDefaultProps: PageProps = {
   height: "520px",
 };
 
+/** 防抖函数 */
+const debounceChange = (callback: (...args: any[]) => void, timeout = 1000) => {
+  let timer = 0;
+  return (...args: any[]) => {
+    clearTimeout(timer);
+    timer = window.setTimeout(() => {
+      timer = 0;
+      callback(...args);
+    }, timeout);
+  };
+};
+
+/** 添加历史记录 */
+const pushHistory = (state: EditorStore, historyRecord: HistoryProps) => {
+  // 检查历史索引是否已移动
+  if (state.historyIndex !== -1) {
+    // 如果已移动，删除索引之后的所有记录
+    state.histories = state.histories.slice(0, state.historyIndex);
+    // 重置历史索引
+    state.historyIndex = -1;
+  }
+
+  // 检查历史记录长度
+  if (state.histories.length < state.maxHistoryNumber) {
+    state.histories.push(historyRecord);
+  } else {
+    // 超过最大数量时，移除最早的记录并添加新记录
+    state.histories.shift();
+    state.histories.push(historyRecord);
+  }
+};
+
+/** 添加修改历史记录 */
+const pushModifyHistory = (state: EditorStore, { key, value, id }: UpdateComponentData) => {
+  pushHistory(state, {
+    id: uuidv4(),
+    componentId: id || state.currentElement,
+    type: "modify",
+    data: { oldValue: state.cachedOldValues, newValue: value, key },
+  });
+  state.cachedOldValues = null;
+};
+
+/** 防抖处理历史记录 */
+const pushHistoryDebounce = debounceChange(pushModifyHistory);
+
 /** 修改历史记录 */
 const modifyHistory = (state: EditorStore, history: HistoryProps, type: "undo" | "redo") => {
   const { componentId, data } = history;
   const { key, oldValue, newValue } = data;
   const newKey = key as keyof AllComponentProps | Array<keyof AllComponentProps>;
   const updatedComponent = state.components.find((component) => component.id === componentId);
+
   if (updatedComponent) {
-    // check if key is array
+    // 检查key是否为数组
     if (Array.isArray(newKey)) {
       newKey.forEach((keyName, index) => {
         updatedComponent.props[keyName] = type === "undo" ? oldValue[index] : newValue[index];
@@ -239,7 +286,6 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
         ...component,
         layerName: `图层${state.components.length + 1}`,
       };
-      console.log("newComponent", newComponent);
 
       return {
         components: [...state.components, newComponent],
@@ -255,8 +301,6 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
         isDirty: true,
       };
     });
-
-    console.log("components", get().components);
   },
 
   setActive: (id) => set({ currentElement: id }),
@@ -423,20 +467,26 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
         }
       }
 
-      const components = state.components.map((c) => {
-        if (c.id === updatedComponent.id) {
-          return updatedComponent;
-        }
-        return c;
-      });
+      // 添加历史记录
+      pushHistoryDebounce(state, { key, value, id });
 
       return {
-        components,
+        components: state.components.map((c) =>
+          c.id === updatedComponent.id ? updatedComponent : c,
+        ),
         isDirty: true,
       };
     }),
 
-  setComponents: (components: ComponentData[]) => set({ components }),
+  setComponents: (components: ComponentData[]) =>
+    set((state) => {
+      pushHistoryDebounce(state, {
+        key: "components",
+        value: components,
+        id: state.currentElement,
+      });
+      return { components };
+    }),
 
   updatePage: ({ key, value, isRoot, isSetting }) =>
     set((state) => {

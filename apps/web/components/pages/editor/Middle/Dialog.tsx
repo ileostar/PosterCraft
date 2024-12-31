@@ -18,7 +18,6 @@ function MidDialog({
     取消选中元素: "Esc",
     撤销: "Ctrl+Z",
     上下左右移动一像素: "⬆⬇⬅➡",
-    上下左右移动十像素: "Shift+⬆⬇⬅➡",
   };
 
   return (

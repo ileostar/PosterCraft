@@ -32,7 +32,7 @@ function InlineEdit({ value, id }: Readonly<InlineEditProps>) {
       isRoot: true,
     });
     setIsEditing(false);
-  }, [editValue, id, isValidValue, updateComponent]);
+  }, [editValue]);
 
   const handleEdit = (e: React.MouseEvent) => {
     e.preventDefault();

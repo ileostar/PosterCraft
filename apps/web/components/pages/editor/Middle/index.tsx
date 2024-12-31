@@ -3,7 +3,6 @@
 import BaseTooltips from "@/components/base/BaseTooltip";
 import Dialog from "@/components/pages/editor/Middle/Dialog";
 import EditorWrapper from "@/components/pages/editor/Middle/EditorWrapper";
-import ContextMenu from "@/components/shared/ContextMenu";
 import useHotKey from "@/hooks/useHotKey";
 import { getWork } from "@/http/work";
 import { useEditorStore } from "@/stores/editor";
@@ -18,38 +17,13 @@ function Middle() {
     components,
     currentElement,
     page: { props: pageStyle },
+    redo,
+    undo,
     updateWork,
-    copyComponent,
-    pasteComponent,
-    deleteComponent,
   } = useEditorStore();
 
   const { currentWorkId } = useWorkStore();
   useHotKey();
-
-  /** 快捷键动作 */
-  const actionItems = [
-    {
-      hotkey: "ctrl+c",
-      text: "复制图层",
-      action: () => copyComponent(currentElement),
-    },
-    {
-      hotkey: "ctrl+v",
-      text: "粘贴图层",
-      action: () => pasteComponent(),
-    },
-    {
-      hotkey: "delete",
-      text: "删除图层",
-      action: () => currentElement && deleteComponent(currentElement),
-    },
-    {
-      hotkey: "esc",
-      text: "取消选中",
-      action: () => setActive(""),
-    },
-  ];
 
   /** 获取当前工作区内容 */
   async function getCurrentWorkContent() {
@@ -80,9 +54,32 @@ function Middle() {
             </button>
           </Dialog>
         </BaseTooltips>
+        {/* 撤销 */}
+        <BaseTooltips
+          tooltipText={"撤销"}
+          position={"top"}
+        >
+          <button
+            className="mx-1 text-3xl text-gray-600 dark:text-gray-400 hover:text-primary"
+            onClick={undo}
+          >
+            <span className="icon-[carbon--undo]"></span>
+          </button>
+        </BaseTooltips>
+        {/* 重做 */}
+        <BaseTooltips
+          tooltipText={"重做"}
+          position={"top"}
+        >
+          <button
+            className="mx-1 text-3xl text-gray-600 dark:text-gray-400 hover:text-primary"
+            onClick={redo}
+          >
+            <span className="icon-[carbon--redo]"></span>
+          </button>
+        </BaseTooltips>
       </div>
 
-      <ContextMenu item={actionItems} />
       {/* 编辑展示区 */}
       <div
         id="canvas-area"

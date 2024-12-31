@@ -3,7 +3,7 @@
 import { useEditorStore } from "@/stores/editor";
 import { AllComponentProps } from "@poster-craft/bricks";
 import { pickBy } from "lodash-es";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import "@/styles/pages/editor-wrapper.css";
 
@@ -39,7 +39,6 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
     top: initTop,
     left: initLeft,
   };
-
   /** 元素实例 */
   const elementRef = useRef<HTMLDivElement>(null);
 
@@ -101,6 +100,31 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
     };
     document.addEventListener("mousemove", handleMove);
     document.addEventListener("mouseup", handleMouseUp);
+  };
+  /** 处理键盘按键 */
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!active) return;
+    e.stopPropagation();
+    setActive(id);
+
+    const keyMap: Record<string, { left: number; top: number }> = {
+      ArrowUp: { left: 0, top: -1 },
+      ArrowDown: { left: 0, top: 1 },
+      ArrowLeft: { left: -1, top: 0 },
+      ArrowRight: { left: 1, top: 0 },
+    };
+
+    if (e.key in keyMap) {
+      const currentLeft = Number(props?.left?.replace("px", "") ?? 0);
+      const currentTop = Number(props?.top?.replace("px", "") ?? 0);
+      const { left: moveLeft, top: moveTop } = keyMap[e.key];
+
+      updatePosition({
+        left: currentLeft + moveLeft,
+        top: currentTop + moveTop,
+        id,
+      });
+    }
   };
   /** 计算移动元素的尺寸 */
   const calculateSize = (direction: directionType, e: MouseEvent, position: any) => {
@@ -181,6 +205,13 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
     document.addEventListener("mouseup", handleMouseUp);
   };
 
+  /** 添加元素时自动聚焦 */
+  useEffect(() => {
+    if (active && elementRef.current) {
+      elementRef.current.focus();
+    }
+  }, [active]);
+
   return hidden ? null : (
     <div
       ref={elementRef}
@@ -188,6 +219,7 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
       style={{
         ...props,
         cursor: active ? "move" : "grab",
+        outline: "none",
       }}
       onClick={(e) => {
         e.stopPropagation();
@@ -196,7 +228,9 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
           window.open(props.url);
         }
       }}
+      onKeyDown={handleKeyDown}
       onMouseDown={handleDragElement}
+      tabIndex={0}
     >
       {type === "text" && props.text}
       {active && (

@@ -1,90 +1,53 @@
-import { UseElementStore } from "@/stores/element";
+import { ComponentData, useEditorStore } from "@/stores/editor";
+import hotkeys from "hotkeys-js";
 import { useEffect } from "react";
 
 export default function useHotKey() {
   const {
     currentElement,
-    deleteElement,
-    setCurrentElement,
-    setCopyElement: copyComponent,
-    setPastedElement: pasteComponent,
-    setMoveElement,
-    undo,
-    redo,
-  } = UseElementStore();
+    getCurrentElement,
+    copyComponent,
+    pasteComponent,
+    deleteComponent,
+    setActive,
+    updateComponent,
+  } = useEditorStore();
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // 复制
-      if ((e.ctrlKey || e.metaKey) && e.key === "c") {
-        e.preventDefault();
-        if (currentElement) {
-          copyComponent(currentElement);
-        }
-      }
-      // 粘贴
-      if ((e.ctrlKey || e.metaKey) && e.key === "v") {
-        e.preventDefault();
-        pasteComponent();
-      }
-      // 删除
-      if (e.key === "Delete" || e.key === "Backspace") {
-        e.preventDefault();
-        if (currentElement) {
-          deleteElement(currentElement);
-        }
-      }
-      // 取消选中
-      if (e.key === "Escape") {
-        e.preventDefault();
-        setCurrentElement("");
-      }
-      // 撤销
-      if ((e.ctrlKey || e.metaKey) && e.key === "z") {
-        e.preventDefault();
-        undo();
-      }
-      // 重做
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "z") {
-        e.preventDefault();
-        redo();
-      }
-      // 移动
+    // 复制
+    hotkeys("ctrl+c, command+c", (e) => {
+      e.preventDefault();
       if (currentElement) {
-        const amount = e.shiftKey ? 10 : 1;
-        switch (e.key) {
-          case "ArrowUp":
-            e.preventDefault();
-            setMoveElement(currentElement, "Up", amount);
-            break;
-          case "ArrowDown":
-            e.preventDefault();
-            setMoveElement(currentElement, "Down", amount);
-            break;
-          case "ArrowLeft":
-            e.preventDefault();
-            setMoveElement(currentElement, "Left", amount);
-            break;
-          case "ArrowRight":
-            e.preventDefault();
-            setMoveElement(currentElement, "Right", amount);
-            break;
-        }
+        copyComponent(currentElement);
       }
-    };
+    });
 
-    document.addEventListener("keydown", handleKeyDown);
+    // 粘贴
+    hotkeys("ctrl+v, command+v", (e) => {
+      e.preventDefault();
+      pasteComponent();
+    });
+
+    // 删除
+    hotkeys("del, backspace", (e) => {
+      e.preventDefault();
+      if (currentElement) {
+        deleteComponent(currentElement);
+      }
+    });
+
+    // 取消选中
+    hotkeys("esc", (e) => {
+      e.preventDefault();
+      setActive("");
+    });
+
+    // 清理函数
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      hotkeys.unbind("ctrl+c, command+c");
+      hotkeys.unbind("ctrl+v, command+v");
+      hotkeys.unbind("del, backspace");
+      hotkeys.unbind("esc");
     };
-  }, [
-    currentElement,
-    deleteElement,
-    setMoveElement,
-    redo,
-    copyComponent,
-    setCurrentElement,
-    pasteComponent,
-    undo,
-  ]);
+  }, [currentElement, copyComponent, pasteComponent, deleteComponent, setActive, updateComponent]);
 }
