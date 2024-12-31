@@ -1,6 +1,13 @@
 "use client";
 
-import useProps from "../../../../../hooks/useProps";
+import useProps from "@/hooks/useProps";
+import { useMemo } from "react";
+
+interface PositionControl {
+  id: string;
+  label: string;
+  placeholder: string;
+}
 
 function PositionProps() {
   const initialState = {
@@ -10,41 +17,31 @@ function PositionProps() {
 
   const { elementStyle: positionStyles, handleUpdate } = useProps(initialState, "positionProps");
 
-  return (
-    <div className="py-1 px-6 ">
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="left"
-          className="block mb-1 w-1/3"
-        >
-          X轴坐标：
-        </label>
-        <input
-          type="number"
-          id="left"
-          value={positionStyles.left}
-          onChange={(e) => handleUpdate("left", parseInt(e.target.value, 10))}
-          placeholder="x轴坐标"
-          className="input input-bordered w-2/3 input-sm  max-w-xs"
-        />
-      </div>
+  const controls: PositionControl[] = useMemo(
+    () => [
+      { id: "left", label: "X轴坐标", placeholder: "x轴坐标" },
+      { id: "top", label: "Y轴坐标", placeholder: "y轴坐标" },
+    ],
+    [],
+  );
 
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="top"
-          className="block mb-1 w-1/3"
+  return (
+    <div className="py-1 px-6">
+      {controls.map(({ id, label, placeholder }) => (
+        <div
+          key={id}
+          className="flex justify-between items-center my-4"
         >
-          y轴坐标：
-        </label>
-        <input
-          type="number"
-          id="top"
-          value={positionStyles.top}
-          onChange={(e) => handleUpdate("top", parseInt(e.target.value, 10))}
-          placeholder="y轴坐标"
-          className="input input-bordered w-2/3 input-sm  max-w-xs"
-        />
-      </div>
+          <label className="block mb-1 w-1/3">{label}：</label>
+          <input
+            type="number"
+            value={positionStyles[id]}
+            onChange={(e) => handleUpdate(id, parseInt(e.target.value, 10))}
+            placeholder={placeholder}
+            className="input input-bordered w-2/3 input-sm max-w-xs"
+          />
+        </div>
+      ))}
     </div>
   );
 }

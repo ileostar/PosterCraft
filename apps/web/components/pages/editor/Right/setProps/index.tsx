@@ -1,10 +1,12 @@
+"use client";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import React, { useEffect, useRef, useState } from "react";
+import { CSSProperties, useCallback, useEffect, useRef, useState } from "react";
 
 import BaseProps from "./BaseProps";
 import BorderProps from "./BorderProps";
@@ -15,66 +17,72 @@ import SizeProps from "./SizeProps";
 
 import "@/styles/base/hiddenScroll.css";
 
+interface PropSection {
+  id: string;
+  title: string;
+  component: React.ReactNode;
+}
+
 function SetProps() {
   const parentRef = useRef<HTMLDivElement | null>(null);
-  const [childStyle, setChildStyle] = useState({});
+  const [containerStyle, setContainerStyle] = useState<CSSProperties>({
+    maxHeight: "0px",
+    overflowY: "auto",
+  });
 
-  useEffect(() => {
+  // 属性面板配置
+  const propSections: PropSection[] = [
+    { id: "item-1", title: "基本属性", component: <BaseProps /> },
+    { id: "item-2", title: "尺寸", component: <SizeProps /> },
+    { id: "item-3", title: "边框", component: <BorderProps /> },
+    { id: "item-4", title: "位置", component: <PositionProps /> },
+    { id: "item-5", title: "阴影与透明度", component: <ShadowProps /> },
+    { id: "item-6", title: "事件功能", component: <EventProps /> },
+  ];
+
+  // 更新容器高度
+  const updateContainerHeight = useCallback(() => {
     if (parentRef.current) {
       const parentHeight = parentRef.current.offsetHeight;
-      setChildStyle({ maxHeight: `${parentHeight}px`, overflowY: "auto" });
+      setContainerStyle({
+        maxHeight: `${parentHeight}px`,
+        overflowY: "auto",
+      });
     }
   }, []);
 
+  // 监听父容器高度变化
+  useEffect(() => {
+    updateContainerHeight();
+    window.addEventListener("resize", updateContainerHeight);
+
+    return () => {
+      window.removeEventListener("resize", updateContainerHeight);
+    };
+  }, [updateContainerHeight]);
+
   return (
     <div
-      className="h-full "
+      className="h-full"
       ref={parentRef}
     >
       <div
-        style={childStyle}
+        style={containerStyle}
         className="overflow-x-hidden hiddenScrollbar"
       >
         <Accordion
           type="single"
           collapsible
         >
-          <AccordionItem value="item-1">
-            <AccordionTrigger>基本属性</AccordionTrigger>
-            <AccordionContent>
-              <BaseProps />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-2">
-            <AccordionTrigger>尺寸</AccordionTrigger>
-            <AccordionContent>
-              <SizeProps />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-3">
-            <AccordionTrigger>边框</AccordionTrigger>
-            <AccordionContent>
-              <BorderProps />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-4">
-            <AccordionTrigger>位置</AccordionTrigger>
-            <AccordionContent>
-              <PositionProps />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-5">
-            <AccordionTrigger>阴影与透明度</AccordionTrigger>
-            <AccordionContent>
-              <ShadowProps />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-6">
-            <AccordionTrigger>事件功能</AccordionTrigger>
-            <AccordionContent>
-              <EventProps />
-            </AccordionContent>
-          </AccordionItem>
+          {propSections.map(({ id, title, component }) => (
+            <AccordionItem
+              key={id}
+              value={id}
+            >
+              <AccordionTrigger>{title}</AccordionTrigger>
+              <AccordionContent>{component}</AccordionContent>
+            </AccordionItem>
+          ))}
         </Accordion>
       </div>
     </div>

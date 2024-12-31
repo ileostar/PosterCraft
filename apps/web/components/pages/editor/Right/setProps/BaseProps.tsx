@@ -1,9 +1,20 @@
+"use client";
+
 import ColorPicker from "@/components/shared/ColorPicker";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Toggle } from "@/components/ui/toggle";
 import useProps from "@/hooks/useProps";
 import { Bold, Italic, Underline } from "lucide-react";
+import { useMemo } from "react";
+
+interface TextControl {
+  id: string;
+  label: string;
+  type: "text" | "number" | "select" | "radio" | "color" | "toggle";
+  options?: { value: string; label: string }[];
+  toggles?: { icon: React.ReactNode; key: string; value: string }[];
+}
 
 function BaseProps() {
   const initialState = {
@@ -21,178 +32,180 @@ function BaseProps() {
 
   const { elementStyle: textStyles, handleUpdate } = useProps(initialState, "baseProps");
 
+  const textControls: TextControl[] = useMemo(
+    () => [
+      {
+        id: "text",
+        label: "文本",
+        type: "text",
+      },
+      {
+        id: "fontSize",
+        label: "字号",
+        type: "number",
+      },
+      {
+        id: "fontFamily",
+        label: "字体",
+        type: "select",
+        options: [
+          { value: "", label: "无" },
+          { value: "SimSun", label: "SimSun" },
+          { value: "SimHei", label: "SimHei" },
+          { value: "KaiTi", label: "KaiTi" },
+        ],
+      },
+      {
+        id: "fontStyle",
+        label: "字样",
+        type: "toggle",
+        toggles: [
+          { icon: <Bold className="h-4 w-4" />, key: "fontWeight", value: "bold" },
+          { icon: <Italic className="h-4 w-4" />, key: "fontStyle", value: "italic" },
+          { icon: <Underline className="h-4 w-4" />, key: "textDecoration", value: "underline" },
+        ],
+      },
+      {
+        id: "lineHeight",
+        label: "行高",
+        type: "number",
+      },
+      {
+        id: "textAlign",
+        label: "对齐",
+        type: "radio",
+        options: [
+          { value: "left", label: "左对齐" },
+          { value: "center", label: "居中对齐" },
+          { value: "right", label: "右对齐" },
+        ],
+      },
+      {
+        id: "color",
+        label: "文字颜色",
+        type: "color",
+      },
+      {
+        id: "backgroundColor",
+        label: "背景颜色",
+        type: "color",
+      },
+    ],
+    [],
+  );
+
+  const renderControl = (control: TextControl) => {
+    const { id, label, type, options, toggles } = control;
+
+    const commonProps = {
+      className: "w-2/3",
+      value: String(textStyles[id]),
+      onChange: (e: any) => handleUpdate(id, e.target?.value ?? e),
+    };
+
+    switch (type) {
+      case "text":
+        return (
+          <textarea
+            {...commonProps}
+            className="textarea textarea-bordered w-2/3"
+            placeholder="文本内容"
+          />
+        );
+
+      case "number":
+        return (
+          <input
+            type="number"
+            {...commonProps}
+            className="input input-bordered w-2/3 input-sm max-w-xs"
+            placeholder={label}
+          />
+        );
+
+      case "select":
+        return (
+          <select
+            {...commonProps}
+            className="select select-bordered w-2/3 select-sm max-w-xs"
+          >
+            {options?.map(({ value, label }) => (
+              <option
+                key={value}
+                value={value}
+              >
+                {label}
+              </option>
+            ))}
+          </select>
+        );
+
+      case "toggle":
+        return (
+          <div className="w-2/3">
+            {toggles?.map(({ icon, key, value }) => (
+              <Toggle
+                key={key}
+                aria-label={`Toggle ${key}`}
+                onClick={() => handleUpdate(key, textStyles[key] === value ? "" : value)}
+              >
+                {icon}
+              </Toggle>
+            ))}
+          </div>
+        );
+
+      case "radio":
+        return (
+          <RadioGroup
+            {...commonProps}
+            onValueChange={(e) => handleUpdate(id, e)}
+            defaultValue={String(textStyles[id])}
+          >
+            {options?.map(({ value, label }) => (
+              <div
+                key={value}
+                className="flex items-center space-x-2"
+              >
+                <RadioGroupItem
+                  value={value}
+                  id={value}
+                />
+                <Label htmlFor={value}>{label}</Label>
+              </div>
+            ))}
+          </RadioGroup>
+        );
+
+      case "color":
+        return (
+          <ColorPicker
+            toColor={String(textStyles[id])}
+            changeColor={(e) => handleUpdate(id, e)}
+          />
+        );
+
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className="py-1 px-6 ">
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="textarea"
-          className="block mb-1 w-1/3"
+    <div className="py-1 px-6">
+      {textControls.map((control) => (
+        <div
+          key={control.id}
+          className="flex justify-between items-center my-4"
         >
-          文本：
-        </label>
-        <textarea
-          id="textarea"
-          value={textStyles.textarea}
-          className="textarea textarea-bordered w-2/3"
-          onChange={(e) => handleUpdate("textarea", e.target.value)}
-          placeholder="文本内容"
-        />
-      </div>
-
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="fontSize"
-          className="block mb-1 w-1/3"
-        >
-          字号：
-        </label>
-        <input
-          type="number"
-          id="fontSize"
-          value={textStyles.fontSize}
-          onChange={(e) => handleUpdate("fontSize", parseInt(e.target.value, 10))}
-          placeholder="字号大小"
-          className="input input-bordered w-2/3 input-sm  max-w-xs"
-        />
-      </div>
-
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="fontFamily"
-          className="block mb-1 w-1/3"
-        >
-          字体：
-        </label>
-        <select
-          id="fontFamily"
-          value={textStyles.fontFamily || ""}
-          onChange={(e) => handleUpdate("fontFamily", e.target.value)}
-          className="select select-bordered w-2/3 select-sm max-w-xs"
-        >
-          <option>无</option>
-          <option>SimSun</option>
-          <option>SimHei</option>
-          <option>KaiTi</option>
-        </select>
-      </div>
-
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="fontStyle"
-          className="block mb-1 w-1/3"
-        >
-          字样：
-        </label>
-        <div className="w-2/3">
-          <Toggle
-            aria-label="Toggle bold"
-            onClick={() =>
-              handleUpdate("fontWeight", textStyles.fontWeight === "bold" ? "" : "bold")
-            }
+          <label
+            htmlFor={control.id}
+            className="block mb-1 w-1/3"
           >
-            <Bold className="h-4 w-4" />
-          </Toggle>
-          <Toggle
-            aria-label="Toggle italic"
-            onClick={() =>
-              handleUpdate("fontStyle", textStyles.fontStyle === "italic" ? "" : "italic")
-            }
-          >
-            <Italic className="h-4 w-4" />
-          </Toggle>
-          <Toggle
-            aria-label="Toggle underline"
-            onClick={() =>
-              handleUpdate(
-                "textDecoration",
-                textStyles.textDecoration === "underline" ? "" : "underline",
-              )
-            }
-          >
-            <Underline className="h-4 w-4" />
-          </Toggle>
+            {control.label}：
+          </label>
+          {renderControl(control)}
         </div>
-      </div>
-
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="lineHeight"
-          className="block mb-1 w-1/3"
-        >
-          行高：
-        </label>
-        <input
-          type="number"
-          id="lineHeight"
-          value={textStyles.lineHeight}
-          onChange={(e) => handleUpdate("lineHeight", parseInt(e.target.value, 10))}
-          placeholder="行高"
-          className="input input-bordered w-2/3 input-sm  max-w-xs"
-        />
-      </div>
-
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="radio"
-          className="block mb-1 w-1/3"
-        >
-          对齐：
-        </label>
-        <RadioGroup
-          defaultValue={textStyles.textAlign}
-          id="radio"
-          onValueChange={(e) => handleUpdate("textAlign", e)}
-          className="w-2/3"
-        >
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem
-              value="left"
-              id="left"
-            />
-            <Label htmlFor="left">左对齐</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem
-              value="center"
-              id="center"
-            />
-            <Label htmlFor="center">居中对齐</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem
-              value="right"
-              id="right"
-            />
-            <Label htmlFor="right">右对齐</Label>
-          </div>
-        </RadioGroup>
-      </div>
-
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="color"
-          className="block mb-1 w-1/3"
-        >
-          文字颜色：
-        </label>
-        <ColorPicker
-          toColor={textStyles.color}
-          changeColor={(e) => handleUpdate("color", e)}
-        />
-      </div>
-
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="color"
-          className="block mb-1 w-1/3"
-        >
-          背景颜色：
-        </label>
-        <ColorPicker
-          toColor={textStyles.backgroundColor}
-          changeColor={(e) => handleUpdate("backgroundColor", e)}
-        />
-      </div>
+      ))}
     </div>
   );
 }

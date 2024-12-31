@@ -1,5 +1,6 @@
-import { UseElementStore } from "@/stores/element";
-import { useCallback, useEffect, useState } from "react";
+import { useEditorStore } from "@/stores/editor";
+import { AllComponentProps } from "@poster-craft/bricks";
+import { useCallback, useEffect, useRef } from "react";
 
 type StyleType =
   | "baseProps"
@@ -9,71 +10,69 @@ type StyleType =
   | "borderProps"
   | "sizeProps";
 
-const useProps = (initialState: any, styleType: StyleType) => {
-  const { updateElement, currentElement, getElement } = UseElementStore();
-  const [elementStyle, setElementStyle] = useState(initialState);
+interface StyleState {
+  [key: string]: string | number;
+}
 
+const useProps = (initialState: StyleState, styleType: StyleType) => {
+  const { updateComponent, currentElement, getElement } = useEditorStore();
+  const styleRef = useRef<StyleState>(initialState);
+
+  // 重置样式状态
   const reset = useCallback(() => {
-    for (const key in initialState) {
-      elementStyle[key] = initialState[key];
-    }
-  }, [elementStyle, initialState]);
+    styleRef.current = initialState;
+  }, [initialState]);
 
+  // 监听当前元素变化，更新样式
   useEffect(() => {
     reset();
-    const res = getElement(currentElement);
-    const resProps = res?.props;
-    const resText = res?.text;
-    setElementStyle((prevStyles: any) => {
-      const updatedStyles = { ...prevStyles };
-      if (resProps) {
-        Object.keys(resProps).forEach((key) => {
-          if (key in prevStyles) {
-            if (typeof initialState[key] === "number") {
-              const num = parseFloat(resProps[key]);
-              updatedStyles[key] = !isNaN(num) ? num : prevStyles[key];
-            } else {
-              updatedStyles[key] = resProps[key];
-            }
-          }
-        });
-      }
+    const element = getElement(currentElement);
+    if (!element) return;
 
-      if (styleType === "baseProps" && resText) {
-        updatedStyles.textarea = resText;
-      }
+    const { props: elementProps } = element;
 
-      return updatedStyles;
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentElement, getElement]);
-
-  const handleUpdate = useCallback(
-    (updateKey: string, updateValue: any) => {
-      setElementStyle((prevStyles: any) => ({
-        ...prevStyles,
-        [updateKey]: updateValue,
-      }));
-
-      let style: { [key: string]: any } = {};
-      for (const key in initialState) {
+    // 更新属性值
+    Object.keys(styleRef.current).forEach((key) => {
+      if (key in elementProps) {
         if (typeof initialState[key] === "number") {
-          style[key] = updateKey === key ? `${updateValue}px` : `${elementStyle[key]}px`;
+          const value = parseFloat(elementProps[key]);
+          styleRef.current[key] = !isNaN(value) ? value : styleRef.current[key];
         } else {
-          style[key] = updateKey === key ? updateValue : elementStyle[key];
+          styleRef.current[key] = elementProps[key];
         }
       }
+    });
 
-      if (updateKey === "textarea") {
-        updateElement(currentElement, style, updateValue);
-      } else {
-        updateElement(currentElement, style);
-      }
+    // 处理文本内容
+    if (styleType === "baseProps" && elementProps.text) {
+      styleRef.current.textarea = elementProps.text;
+    }
+  }, [currentElement, getElement, initialState, styleType, reset]);
+
+  // 处理样式更新
+  const handleUpdate = useCallback(
+    (key: string, value: string | number) => {
+      // 更新本地状态
+      styleRef.current[key] = value;
+
+      // 处理普通样式更新
+      const formattedValue = typeof value === "number" ? `${value}px` : value;
+      updateComponent({
+        key: key as keyof AllComponentProps,
+        value: formattedValue,
+        id: currentElement,
+      });
     },
-    [currentElement, updateElement, elementStyle, initialState],
+    [currentElement, updateComponent],
   );
 
-  return { elementStyle, setElementStyle, handleUpdate };
+  return {
+    elementStyle: styleRef.current,
+    setElementStyle: (value: StyleState) => {
+      styleRef.current = value;
+    },
+    handleUpdate,
+  };
 };
 
 export default useProps;

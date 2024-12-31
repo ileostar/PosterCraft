@@ -1,13 +1,19 @@
 "use client";
 
 import ColorPicker from "@/components/shared/ColorPicker";
-import { UseElementStore } from "@/stores/element";
+import useProps from "@/hooks/useProps";
+import { useMemo } from "react";
 
-import useProps from "../../../../../hooks/useProps";
+interface ShadowControl {
+  id: string;
+  label: string;
+  type: "range" | "number" | "color";
+  min?: number;
+  max?: number;
+  placeholder?: string;
+}
 
 function ShadowProps() {
-  const { updateElement, currentElement, getElement } = UseElementStore();
-
   const initialState = {
     hOffset: 0,
     vOffset: 0,
@@ -17,163 +23,103 @@ function ShadowProps() {
     opacity: 100,
   };
 
-  const { elementStyle: shadowStyles, setElementStyle: setShadowStyles } = useProps(
-    initialState,
-    "shadowProps",
+  const { elementStyle: shadowStyles, handleUpdate } = useProps(initialState, "shadowProps");
+
+  const controls: ShadowControl[] = useMemo(
+    () => [
+      {
+        id: "hOffset",
+        label: "阴影水平偏移",
+        type: "range",
+        min: 0,
+        max: 100,
+      },
+      {
+        id: "vOffset",
+        label: "阴影竖直偏移",
+        type: "range",
+        min: 0,
+        max: 100,
+      },
+      {
+        id: "spread",
+        label: "阴影大小",
+        type: "number",
+        placeholder: "阴影大小",
+      },
+      {
+        id: "blur",
+        label: "阴影模糊",
+        type: "number",
+        placeholder: "阴影模糊",
+      },
+      {
+        id: "opacity",
+        label: "透明度",
+        type: "range",
+        min: 0,
+        max: 100,
+      },
+      {
+        id: "color",
+        label: "阴影颜色",
+        type: "color",
+      },
+    ],
+    [],
   );
 
-  const handleUpdate = (updateKey: string, updateValue: any) => {
-    setShadowStyles((prevStyles: any) => ({
-      ...prevStyles,
-      [updateKey]: updateValue,
-    }));
-    let style = {};
-    switch (updateKey) {
-      case "hOffset":
-        style = {
-          boxShadow: `${updateValue}px ${shadowStyles.vOffset}px ${shadowStyles.blur}px ${shadowStyles.spread}px ${shadowStyles.color}`,
-          opacity: shadowStyles.opacity / 100,
-        };
-        break;
-      case "vOffset":
-        style = {
-          boxShadow: `${shadowStyles.hOffset}px ${updateValue}px ${shadowStyles.blur}px ${shadowStyles.spread}px ${shadowStyles.color}`,
-          opacity: shadowStyles.opacity / 100,
-        };
-        break;
-      case "blur":
-        style = {
-          boxShadow: `${shadowStyles.hOffset}px ${shadowStyles.vOffset}px ${updateValue}px ${shadowStyles.spread}px ${shadowStyles.color}`,
-          opacity: shadowStyles.opacity / 100,
-        };
-        break;
-      case "spread":
-        style = {
-          boxShadow: `${shadowStyles.hOffset}px ${shadowStyles.vOffset}px ${shadowStyles.blur}px ${updateValue}px ${shadowStyles.color}`,
-          opacity: shadowStyles.opacity / 100,
-        };
-        break;
-      case "color":
-        style = {
-          boxShadow: `${shadowStyles.hOffset}px ${shadowStyles.vOffset}px ${shadowStyles.blur}px ${shadowStyles.spread}px ${updateValue}`,
-          opacity: shadowStyles.opacity / 100,
-        };
-        break;
-      case "opacity":
-        style = {
-          boxShadow: `${shadowStyles.hOffset}px ${shadowStyles.vOffset}px ${shadowStyles.blur}px ${shadowStyles.spread}px ${shadowStyles.color}`,
-          opacity: updateValue / 100,
-        };
-        break;
-      default:
-        break;
-    }
+  const renderControl = (control: ShadowControl) => {
+    const { id, type, min, max, placeholder } = control;
 
-    updateElement(currentElement, style);
+    switch (type) {
+      case "range":
+        return (
+          <input
+            type="range"
+            min={min}
+            max={max}
+            value={shadowStyles[id]}
+            onChange={(e) => handleUpdate(id, parseInt(e.target.value, 10))}
+            className="range range-xs w-2/3"
+          />
+        );
+
+      case "number":
+        return (
+          <input
+            type="number"
+            value={shadowStyles[id]}
+            onChange={(e) => handleUpdate(id, parseInt(e.target.value, 10))}
+            placeholder={placeholder}
+            className="input input-bordered w-2/3 input-sm max-w-xs"
+          />
+        );
+
+      case "color":
+        return (
+          <ColorPicker
+            toColor={String(shadowStyles[id])}
+            changeColor={(e) => handleUpdate(id, e)}
+          />
+        );
+
+      default:
+        return null;
+    }
   };
 
   return (
-    <div className="py-1 px-6 ">
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="hOffset"
-          className="block mb-1 w-1/3"
+    <div className="py-1 px-6">
+      {controls.map((control) => (
+        <div
+          key={control.id}
+          className="flex justify-between items-center my-4"
         >
-          阴影水平偏移：
-        </label>
-        <input
-          id="hOffset"
-          type="range"
-          min={0}
-          max={100}
-          value={shadowStyles.hOffset}
-          onChange={(e) => handleUpdate("hOffset", parseInt(e.target.value, 10))}
-          className="range range-xs w-2/3"
-        />
-      </div>
-
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="vOffset"
-          className="block mb-1 w-1/3"
-        >
-          阴影竖直偏移：
-        </label>
-        <input
-          id="vOffset"
-          type="range"
-          min={0}
-          max={100}
-          value={shadowStyles.vOffset}
-          onChange={(e) => handleUpdate("vOffset", parseInt(e.target.value, 10))}
-          className="range range-xs w-2/3"
-        />
-      </div>
-
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="spread"
-          className="block mb-1 w-1/3"
-        >
-          阴影大小：
-        </label>
-        <input
-          type="number"
-          id="spread"
-          value={shadowStyles.spread}
-          onChange={(e) => handleUpdate("spread", parseInt(e.target.value, 10))}
-          placeholder="阴影大小"
-          className="input input-bordered w-2/3 input-sm  max-w-xs"
-        />
-      </div>
-
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="blur"
-          className="block mb-1 w-1/3"
-        >
-          阴影模糊：
-        </label>
-        <input
-          type="number"
-          id="blur"
-          value={shadowStyles.blur}
-          onChange={(e) => handleUpdate("blur", parseInt(e.target.value, 10))}
-          placeholder="字号大小"
-          className="input input-bordered w-2/3 input-sm  max-w-xs"
-        />
-      </div>
-
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="opacity"
-          className="block mb-1 w-1/3"
-        >
-          透明度：
-        </label>
-        <input
-          id="opacity"
-          type="range"
-          min={0}
-          max={100}
-          value={shadowStyles.opacity}
-          onChange={(e) => handleUpdate("opacity", parseFloat(e.target.value))}
-          className="range range-xs w-2/3"
-        />
-      </div>
-
-      <div className="flex justify-between items-center my-4">
-        <label
-          htmlFor="color"
-          className="block mb-1 w-1/3"
-        >
-          阴影颜色：
-        </label>
-        <ColorPicker
-          toColor={shadowStyles.color}
-          changeColor={(e) => handleUpdate("color", e)}
-        />
-      </div>
+          <label className="block mb-1 w-1/3">{control.label}：</label>
+          {renderControl(control)}
+        </div>
+      ))}
     </div>
   );
 }
