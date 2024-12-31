@@ -1,8 +1,7 @@
 "use client";
 
 import ColorPicker from "@/components/shared/ColorPicker";
-
-import useProps from "../../../../../hooks/useProps";
+import useProps from "@/hooks/useProps";
 
 function BorderProps() {
   const initialState = {

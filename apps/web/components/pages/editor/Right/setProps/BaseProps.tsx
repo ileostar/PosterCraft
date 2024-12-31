@@ -2,9 +2,8 @@ import ColorPicker from "@/components/shared/ColorPicker";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Toggle } from "@/components/ui/toggle";
+import useProps from "@/hooks/useProps";
 import { Bold, Italic, Underline } from "lucide-react";
-
-import useProps from "../../../../../hooks/useProps";
 
 function BaseProps() {
   const initialState = {
