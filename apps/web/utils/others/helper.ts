@@ -11,6 +11,7 @@ import QRCode from "qrcode";
  * @param fromIndex - 要移动元素的原始位置
  * @param toIndex - 要移动到的目标位置
  * @returns 移动后的新数组
+ * @example arrayMove([1, 2, 3, 4], 1, 3); // [1, 3, 2, 4]
  */
 export function arrayMove<T>(list: T[], fromIndex: number, toIndex: number): T[] {
   const element = list[fromIndex];
@@ -25,6 +26,7 @@ export function arrayMove<T>(list: T[], fromIndex: number, toIndex: number): T[]
  * @param index - 插入位置
  * @param newItem - 要插入的新元素
  * @returns 插入新元素后的新数组
+ * @example insertAt([1, 2, 3, 4], 1, 5); // [1, 5, 2, 3, 4]
  */
 export const insertAt = <T>(arr: T[], index: number, newItem: T): T[] => {
   return [...arr.slice(0, index), newItem, ...arr.slice(index)];
@@ -34,6 +36,7 @@ export const insertAt = <T>(arr: T[], index: number, newItem: T): T[] => {
  * 深拷贝对象
  * @param obj - 要拷贝的对象
  * @returns 深拷贝后的新对象
+ * @example cloneDeep({ a: 1, b: 2 }); // { a: 1, b: 2 }
  */
 export const cloneDeep = <T>(obj: T): T => JSON.parse(JSON.stringify(obj));
 
@@ -42,6 +45,7 @@ export const cloneDeep = <T>(obj: T): T => JSON.parse(JSON.stringify(obj));
  * @param callback - 要执行的回调函数
  * @param timeout - 延迟时间(ms)
  * @returns 防抖处理后的函数
+ * @example debounceChange(() => {}, 1000); // () => {}
  */
 export const debounceChange = (callback: (...args: any[]) => void, timeout = 1000) => {
   let timer = 0;
@@ -72,6 +76,7 @@ type ErrorType = "size" | "format" | null;
  * @param file - 要上传的文件
  * @param condition - 检查条件
  * @returns 检查结果
+ * @example beforeUploadCheck(new File([], "test.png"), { format: ["image/jpeg", "image/png"], size: 1 }); // { passed: true, error: null }
  */
 export function beforeUploadCheck(file: File, condition: CheckCondition) {
   const { format, size } = condition;
@@ -92,6 +97,7 @@ export function beforeUploadCheck(file: File, condition: CheckCondition) {
  * 通用文件上传检查
  * @param file - 要上传的文件
  * @returns 是否通过检查
+ * @example commonUploadCheck(new File([], "test.png")); // true
  */
 export const commonUploadCheck = (file: File): boolean => {
   const result = beforeUploadCheck(file, {
@@ -122,6 +128,7 @@ export const commonUploadCheck = (file: File): boolean => {
  * 获取图片尺寸
  * @param url - 图片URL或File对象
  * @returns Promise<{width: number, height: number}>
+ * @example getImageDimensions("https://picsum.photos/200/300"); // { width: 200, height: 300 }
  */
 export const getImageDimensions = (url: string | File) => {
   return new Promise<{ width: number; height: number }>((resolve, reject) => {
@@ -142,6 +149,7 @@ export const getImageDimensions = (url: string | File) => {
  * @param element - 起始元素
  * @param className - 要查找的类名
  * @returns 找到的父元素或null
+ * @example getParentElement(document.body, "container"); // <body>
  */
 export const getParentElement = (element: HTMLElement, className: string): HTMLElement | null => {
   while (element) {
@@ -157,6 +165,7 @@ export const getParentElement = (element: HTMLElement, className: string): HTMLE
  * 验证手机号
  * @param mobile - 手机号
  * @returns 是否为有效的手机号
+ * @example isMobile("18888888888"); // true
  */
 export function isMobile(mobile: string): boolean {
   return /^1[3-9]\d{9}$/.test(mobile);
@@ -168,6 +177,7 @@ export function isMobile(mobile: string): boolean {
  * @param url - 上传地址
  * @param fileName - 文件名
  * @returns Promise<上传结果>
+ * @example uploadFile(new File([], "test.png"), "/utils/upload-img", "test.png"); // { data: { url: "https://picsum.photos/200/300" } }
  */
 export async function uploadFile<R = any>(
   file: Blob,
@@ -189,6 +199,7 @@ export async function uploadFile<R = any>(
  * 获取Canvas的Blob数据
  * @param canvas - Canvas元素
  * @returns Promise<Blob | null>
+ * @example getCanvasBlob(document.createElement("canvas")); // null
  */
 function getCanvasBlob(canvas: HTMLCanvasElement): Promise<Blob | null> {
   return new Promise((resolve) => {
@@ -200,6 +211,7 @@ function getCanvasBlob(canvas: HTMLCanvasElement): Promise<Blob | null> {
  * 截图并上传
  * @param ele - 要截图的元素
  * @returns Promise<上传结果>
+ * @example takeScreenshotAndUpload(document.body); // { data: { url: "https://picsum.photos/200/300" } }
  */
 export async function takeScreenshotAndUpload(ele: HTMLElement) {
   const canvas = await html2canvas(ele, {
@@ -220,6 +232,7 @@ export async function takeScreenshotAndUpload(ele: HTMLElement) {
  * @param url - 要生成二维码的URL
  * @param width - 二维码宽度
  * @returns Promise<void>
+ * @example generateQRCode("canvas", "https://picsum.photos/200/300"); // Promise<void>
  */
 export function generateQRCode(id: string, url: string, width = 100) {
   const ele = document.getElementById(id) as HTMLCanvasElement;
@@ -230,6 +243,7 @@ export function generateQRCode(id: string, url: string, width = 100) {
  * 复制文本到剪贴板
  * @param text - 要复制的文本
  * @returns 是否复制成功
+ * @example copyToClipboard("test"); // true
  */
 export function copyToClipboard(text: string): boolean {
   const textarea = document.createElement("textarea");
@@ -253,6 +267,7 @@ export function copyToClipboard(text: string): boolean {
  * 延时函数
  * @param ms - 延时时间(ms)
  * @returns Promise<void>
+ * @example timeout(1000); // Promise<void>
  */
 export function timeout(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -262,6 +277,7 @@ export function timeout(ms: number): Promise<void> {
  * 对象转查询字符串
  * @param queryObj - 查询对象
  * @returns 查询字符串
+ * @example objToQueryString({ a: 1, b: 2 }); // "a=1&b=2"
  */
 export const objToQueryString = (queryObj: Record<string, any>): string => {
   return Object.keys(queryObj)
@@ -273,6 +289,7 @@ export const objToQueryString = (queryObj: Record<string, any>): string => {
  * 下载文件
  * @param src - 文件地址
  * @param fileName - 文件名
+ * @example downloadFile("https://picsum.photos/200/300"); // void
  */
 export const downloadFile = (src: string, fileName = "default.png"): void => {
   const link = document.createElement("a");
@@ -302,6 +319,7 @@ export const downloadFile = (src: string, fileName = "default.png"): void => {
 /**
  * 下载图片
  * @param url - 图片地址
+ * @example downloadImage("https://picsum.photos/200/300"); // void
  */
 export const downloadImage = (url: string): void => {
   const fileName = url.substring(url.lastIndexOf("/") + 1);

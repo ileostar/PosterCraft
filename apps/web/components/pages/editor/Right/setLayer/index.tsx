@@ -1,60 +1,113 @@
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { UseElementStore } from "@/stores/element";
-import { getParentElement } from "@/utils/others/getParentElement";
-import { arrayMove } from "@/utils/others/helper";
-import { useEffect, useRef, useState } from "react";
+"use client";
 
-import "@/styles/base/hiddenScroll.css";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useEditorStore } from "@/stores/editor";
+import { arrayMove } from "@/utils/others/helper";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import InlineEdit from "./InlineEdit";
 
-function SetLayer() {
-  const { Elements, updateElement, setIsCurrentLocked, setCurrentElement, setElements } =
-    UseElementStore();
-  const parentRef = useRef<HTMLDivElement | null>(null);
-  const [childStyle, setChildStyle] = useState({});
+interface LayerItem {
+  id: string;
+  isHidden?: boolean;
+  isLocked?: boolean;
+  layerName?: string;
+}
 
-  useEffect(() => {
+interface LayerAction {
+  type: "isHidden" | "isLocked";
+  icon: (value: boolean) => string;
+  tooltip: (value: boolean) => string;
+}
+
+function SetLayer() {
+  const { components, updateComponent, setActive, setComponents } = useEditorStore();
+  const parentRef = useRef<HTMLDivElement | null>(null);
+  const [containerStyle, setContainerStyle] = useState({
+    maxHeight: "0px",
+    overflowY: "auto" as const,
+  });
+
+  const layerActions: LayerAction[] = [
+    {
+      type: "isHidden",
+      icon: (value) => `icon-[carbon--view${value ? "-off" : ""}]`,
+      tooltip: (value) => (value ? "显示图层" : "隐藏图层"),
+    },
+    {
+      type: "isLocked",
+      icon: (value) => `icon-[carbon--locked${value ? "" : "-unlocked"}]`,
+      tooltip: (value) => (value ? "解锁图层" : "锁定图层"),
+    },
+  ];
+
+  /** 更新容器高度 */
+  const updateContainerHeight = useCallback(() => {
     if (parentRef.current) {
       const parentHeight = parentRef.current.offsetHeight;
-      setChildStyle({ maxHeight: `${parentHeight}px`, overflowY: "auto" });
+      setContainerStyle({
+        maxHeight: `${parentHeight}px`,
+        overflowY: "auto",
+      });
     }
   }, []);
 
-  const handleChange = (id: string, key: string, value: boolean) => {
-    if (key === "isHidden") {
-      updateElement(id, undefined, undefined, undefined, value);
-    } else if (key === "isLocked") {
-      setIsCurrentLocked(value);
-      updateElement(id, undefined, undefined, undefined, undefined, value);
-    }
-  };
+  /** 处理图层属性更新 */
+  const handleLayerUpdate = useCallback(
+    (id: string, key: "isHidden" | "isLocked", value: boolean) => {
+      updateComponent({
+        key,
+        value,
+        id,
+        isRoot: true,
+      });
+    },
+    [updateComponent],
+  );
 
-  const data = {
-    currentDragId: "",
-    currentDragIndex: -1,
-  };
-  const [dragData, setDragData] = useState(data);
+  /** 处理图层拖拽 */
+  const handleDragEnd = useCallback(
+    (fromIndex: number, toIndex: number) => {
+      setComponents(arrayMove([...components], fromIndex, toIndex));
+    },
+    [components, setComponents],
+  );
 
-  const onDragStart = (e: React.DragEvent<HTMLDivElement>, id: string, index: number) => {
-    setDragData({ ...dragData, currentDragId: id, currentDragIndex: index });
-  };
+  /** 渲染图层操作按钮 */
+  const renderActionButton = useCallback(
+    (item: LayerItem, action: LayerAction) => {
+      const value = item[action.type];
+      return (
+        <div className="w-1/6 flex justify-center">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <button
+                  className="text-xl"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLayerUpdate(item.id, action.type, !value);
+                  }}
+                >
+                  <span className={action.icon(!!value)} />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{action.tooltip(!!value)}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+      );
+    },
+    [handleLayerUpdate],
+  );
 
-  const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    const currentEle = getParentElement(e.target as HTMLElement, "parentItem");
-    if (currentEle?.dataset?.index) {
-      const moveIndex = Number(currentEle.dataset.index);
-      let list = Elements;
-      list = arrayMove(list, dragData.currentDragIndex, moveIndex);
-      setElements(list);
-    }
-
-    setDragData({ ...dragData, currentDragId: "" });
-  };
-
-  const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  };
+  useEffect(() => {
+    updateContainerHeight();
+    window.addEventListener("resize", updateContainerHeight);
+    return () => window.removeEventListener("resize", updateContainerHeight);
+  }, [updateContainerHeight]);
 
   return (
     <div
@@ -62,69 +115,16 @@ function SetLayer() {
       ref={parentRef}
     >
       <div
-        style={childStyle}
-        className={`overflow-x-hidden border-t-0 border-b border-l border-r border-[#d2d4d7] hiddenScrollbar`}
-        onDrop={(e) => onDrop(e)}
-        onDragOver={(e) => onDragOver(e)}
+        style={containerStyle}
+        className="overflow-x-hidden hiddenScrollbar"
       >
-        {Elements.map((item, index) => (
+        {components.map((item: LayerItem, index) => (
           <div
             key={item.id}
-            className={`${item.id == dragData.currentDragId ? "border-red-500 bg-red-500 text-white" : "border-gray-300 border-solid"} parentItem flex justify-around w-full h-14 relative  ${
-              index === Elements.length - 1 ? "" : "border-b"
-            }`}
-            style={{ zIndex: 10 }}
-            draggable
-            onDragStart={(event) => onDragStart(event, item.id, index)}
-            data-index={index}
-            onMouseDown={() => {
-              setCurrentElement(item.id);
-            }}
+            className="flex justify-between items-center hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+            onClick={() => setActive(item.id)}
           >
-            <div className="w-1/6 flex justify-center m-2 rounded-btn border border-gray-400">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <button
-                      className="text-xl"
-                      onClick={() => handleChange(item.id, "isHidden", !item.isHidden)}
-                    >
-                      {item.isHidden ? (
-                        <span className="icon-[carbon--view-off]"></span>
-                      ) : (
-                        <span className="icon-[carbon--view]"></span>
-                      )}
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{item.isHidden ? "隐藏" : "显示"}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
-
-            <div className="w-1/6 flex justify-center m-2 rounded-btn border border-gray-300">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <button
-                      className="text-xl"
-                      onClick={() => handleChange(item.id, "isLocked", !item.isLocked)}
-                    >
-                      {item.isLocked ? (
-                        <span className="icon-[carbon--locked]"></span>
-                      ) : (
-                        <span className="icon-[carbon--unlocked]"></span>
-                      )}
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{item.isLocked ? "锁定" : "解锁"}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
-
+            {layerActions.map((action) => renderActionButton(item, action))}
             <InlineEdit
               value={item.layerName}
               id={item.id}
@@ -133,8 +133,13 @@ function SetLayer() {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <button className="text-xl">
-                      <span className="icon-[carbon--drag-vertical]"></span>
+                    <button
+                      className="text-xl"
+                      draggable
+                      onDragStart={() => {}}
+                      onDragEnd={() => handleDragEnd(index, index)}
+                    >
+                      <span className="icon-[carbon--drag-vertical]" />
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>
