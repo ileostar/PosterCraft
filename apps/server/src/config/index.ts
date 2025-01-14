@@ -1,13 +1,35 @@
+const fs = require('fs');
 const path = require('path');
 const dotenv = require('dotenv');
 
-const envName = process.env.NODE_ENV === 'production' ? '.env.prod' : '.env';
+let envFile: string;
+
+(() => {
+  console.log(
+    '.env.dev:',
+    fs.existsSync(path.resolve(__dirname, `../../.env.dev`)),
+  );
+  const currentEnv = process.env.NODE_ENV;
+  switch (currentEnv) {
+    case 'production':
+      envFile = '.env.prod';
+      break;
+    case 'development':
+      envFile = fs.existsSync(path.resolve(__dirname, `../../.env.dev`))
+        ? '.env.dev'
+        : '.env';
+      break;
+    default:
+      envFile = '.env';
+      break;
+  }
+})();
 
 dotenv.configDotenv({
-  path: path.resolve(__dirname, `../../${envName}`),
+  path: path.resolve(__dirname, `../../${envFile}`),
 });
 
-console.log('--------Current Env--------:', process.env.NODE_ENV);
+console.log('--------Current EnvFile--------:', envFile);
 
 export const GlobalConfig = {
   /** 项目名称 */ projectName: 'PosterCraft Server',

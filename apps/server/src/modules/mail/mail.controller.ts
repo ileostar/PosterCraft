@@ -1,5 +1,11 @@
 import { Body, Controller, Post, Put, Query, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { MailService } from './mail.service';
 import {
   BindEmailDto,
@@ -17,8 +23,6 @@ export class MailController {
   constructor(private mailService: MailService) {}
 
   @Post('sendCode')
-  @UseGuards(JwtAuthGuard)
-  @ApiBody({ type: SendCodeByEmailDto })
   @ApiOperation({
     summary: '发送邮箱验证码',
     description: '发送邮箱验证码并返回',

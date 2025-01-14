@@ -239,8 +239,6 @@ const pushModifyHistory = (
     replace?: boolean | undefined,
   ) => void,
 ) => {
-  console.log("pushModifyHistory");
-  console.log("cachedOldValues:", state.cachedOldValues);
   pushHistory(state, {
     id: uuidv4(),
     componentId: id || state.currentElement,
@@ -368,7 +366,8 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
           newComponents = newComponents.filter((c) => c.id !== history.componentId);
           break;
         case "modify":
-          newComponents = modifyHistory(state, history, "undo");
+          debugger;
+          newComponents = modifyHistory(state, history, "redo");
           break;
       }
 
@@ -449,6 +448,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
       if (isRoot) {
         (updatedComponent as any)[key as string] = value;
       } else {
+        console.log("key:", key, "value:", value);
         const oldValue = Array.isArray(key)
           ? key.map((key) => updatedComponent.props[key])
           : updatedComponent.props[key];
@@ -467,7 +467,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
 
       // 添加历史记录
       pushHistoryDebounce(state, { key, value, id }, set);
-
+      console.log("history", state.histories);
       return {
         components: state.components.map((c) =>
           c.id === updatedComponent.id ? updatedComponent : c,

@@ -58,19 +58,17 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
   /** 更新元素位置 */
   const updatePosition = (
     data: { left: number; top: number; id: string },
-    resize?: {
-      keysArr: Array<keyof AllComponentProps>;
-      valuesArr: Array<string>;
-    },
+    resize?: Array<string>,
   ) => {
     const { id } = data;
     const updatedData = pickBy<number>(data, (v, k) => k !== "id");
     const keysArr = Object.keys(updatedData) as Array<keyof AllComponentProps>;
     const valuesArr = Object.values(updatedData).map((v) => v + "px");
     if (resize) {
+      console.log("resize:", resize);
       updateComponent({
-        key: [...keysArr, ...resize.keysArr],
-        value: [...valuesArr, ...resize.valuesArr],
+        key: [...keysArr, "width", "height"],
+        value: [...valuesArr, resize[resize.length - 2], resize[resize.length - 1]],
         id,
       });
     } else {
@@ -186,10 +184,7 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
     e.stopPropagation();
     setActive(id);
     const { left, top, bottom, right } = elementRef.current!.getBoundingClientRect();
-    const updatedArr = {
-      keysArr: [] as Array<keyof AllComponentProps>,
-      valuesArr: [] as Array<string>,
-    };
+    let updatedArr: Array<string> = [];
     // 监听mousemove和mouseup事件
     const handleMouseMove = (moveEvent: MouseEvent) => {
       const size = calculateSize(direction, moveEvent, { left, top, bottom, right });
@@ -208,12 +203,9 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
         tempSize.height = Math.floor(size.height) - 4;
         tempSize.left = size.left ? size.left + 2 : initLeft + 2;
         tempSize.top = size.top ? size.top + 2 : initTop + 2;
-        updatedArr.keysArr.push("width");
-        updatedArr.keysArr.push("height");
-        updatedArr.valuesArr.push(size.width + "px");
-        updatedArr.valuesArr.push(size.height + "px");
+        updatedArr.push(size.width + "px");
+        updatedArr.push(size.height + "px");
       }
-      // TODO 添加到历史记录
     };
     const handleMouseUp = () => {
       updatePosition(
@@ -224,6 +216,7 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
         },
         updatedArr,
       );
+      updatedArr = [];
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
