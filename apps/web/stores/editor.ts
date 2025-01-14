@@ -228,28 +228,42 @@ const pushHistory = (state: EditorStore, historyRecord: HistoryProps) => {
 };
 
 /** 添加修改历史记录 */
-const pushModifyHistory = (state: EditorStore, { key, value, id }: UpdateComponentData) => {
+const pushModifyHistory = (
+  state: EditorStore,
+  { key, value, id }: UpdateComponentData,
+  set: (
+    partial:
+      | EditorStore
+      | Partial<EditorStore>
+      | ((state: EditorStore) => EditorStore | Partial<EditorStore>),
+    replace?: boolean | undefined,
+  ) => void,
+) => {
+  console.log("pushModifyHistory");
+  console.log("cachedOldValues:", state.cachedOldValues);
   pushHistory(state, {
     id: uuidv4(),
     componentId: id || state.currentElement,
     type: "modify",
     data: { oldValue: state.cachedOldValues, newValue: value, key },
   });
-  state.cachedOldValues = null;
+  set({ cachedOldValues: null });
 };
 
 /** 防抖处理历史记录 */
 const pushHistoryDebounce = debounceChange(pushModifyHistory);
-
 /** 修改历史记录 */
-const modifyHistory = (state: EditorStore, history: HistoryProps, type: "undo" | "redo") => {
+const modifyHistory = (
+  state: EditorStore,
+  history: HistoryProps,
+  type: "undo" | "redo",
+): ComponentData[] => {
   const { componentId, data } = history;
   const { key, oldValue, newValue } = data;
   const newKey = key as keyof AllComponentProps | Array<keyof AllComponentProps>;
-  const updatedComponent = state.components.find((component) => component.id === componentId);
-
+  const cloneComponents = cloneDeep(state.components);
+  const updatedComponent = cloneComponents.find((component) => component.id === componentId);
   if (updatedComponent) {
-    // 检查key是否为数组
     if (Array.isArray(newKey)) {
       newKey.forEach((keyName, index) => {
         updatedComponent.props[keyName] = type === "undo" ? oldValue[index] : newValue[index];
@@ -258,6 +272,7 @@ const modifyHistory = (state: EditorStore, history: HistoryProps, type: "undo" |
       updatedComponent.props[newKey] = type === "undo" ? oldValue : newValue;
     }
   }
+  return cloneComponents;
 };
 
 /**
@@ -321,7 +336,9 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
           newComponents = insertAt(state.components, history.index as number, history.data);
           break;
         case "modify":
-          modifyHistory(state, history, "undo");
+          newComponents = modifyHistory(state, history, "undo");
+          break;
+        default:
           break;
       }
 
@@ -351,7 +368,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
           newComponents = newComponents.filter((c) => c.id !== history.componentId);
           break;
         case "modify":
-          modifyHistory(state, history, "redo");
+          newComponents = modifyHistory(state, history, "undo");
           break;
       }
 
@@ -432,18 +449,24 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
       if (isRoot) {
         (updatedComponent as any)[key as string] = value;
       } else {
+        const oldValue = Array.isArray(key)
+          ? key.map((key) => updatedComponent.props[key])
+          : updatedComponent.props[key];
+        if (!state.cachedOldValues) {
+          state.cachedOldValues = oldValue;
+        }
+        pushHistoryDebounce(state, { key, value, id });
         if (Array.isArray(key) && Array.isArray(value)) {
-          key.forEach((k, i) => {
-            updatedComponent.props[k] = value[i];
+          key.forEach((keyName, index) => {
+            updatedComponent.props[keyName] = value[index];
           });
-        } else if (typeof key === "string") {
-          updatedComponent.props[key as string] = value;
+        } else if (typeof key === "string" && typeof value === "string") {
+          updatedComponent.props[key] = value;
         }
       }
 
       // 添加历史记录
-      console.log("1123123123123");
-      pushHistoryDebounce(state, { key, value, id });
+      pushHistoryDebounce(state, { key, value, id }, set);
 
       return {
         components: state.components.map((c) =>

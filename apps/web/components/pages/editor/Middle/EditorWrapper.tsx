@@ -43,7 +43,7 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
   const elementRef = useRef<HTMLDivElement>(null);
 
   const [gap, setGap] = useState({ x: 0, y: 0 });
-  const [isMoving, setIsMoving] = useState(false);
+  const [isMoving, setIsMoving] = useState(true);
 
   /** 计算移动元素的位置 */
   const calculateMovePosition = (e: MouseEvent) => {
@@ -56,12 +56,26 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
     return { left, top };
   };
   /** 更新元素位置 */
-  const updatePosition = (data: { left: number; top: number; id: string }) => {
+  const updatePosition = (
+    data: { left: number; top: number; id: string },
+    resize?: {
+      keysArr: Array<keyof AllComponentProps>;
+      valuesArr: Array<string>;
+    },
+  ) => {
     const { id } = data;
     const updatedData = pickBy<number>(data, (v, k) => k !== "id");
     const keysArr = Object.keys(updatedData) as Array<keyof AllComponentProps>;
     const valuesArr = Object.values(updatedData).map((v) => v + "px");
-    updateComponent({ key: keysArr, value: valuesArr, id });
+    if (resize) {
+      updateComponent({
+        key: [...keysArr, ...resize.keysArr],
+        value: [...valuesArr, ...resize.valuesArr],
+        id,
+      });
+    } else {
+      updateComponent({ key: keysArr, value: valuesArr, id });
+    }
   };
   /** 处理拖拽移动 */
   const handleDragElement = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -172,6 +186,10 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
     e.stopPropagation();
     setActive(id);
     const { left, top, bottom, right } = elementRef.current!.getBoundingClientRect();
+    const updatedArr = {
+      keysArr: [] as Array<keyof AllComponentProps>,
+      valuesArr: [] as Array<string>,
+    };
     // 监听mousemove和mouseup事件
     const handleMouseMove = (moveEvent: MouseEvent) => {
       const size = calculateSize(direction, moveEvent, { left, top, bottom, right });
@@ -190,14 +208,22 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
         tempSize.height = Math.floor(size.height) - 4;
         tempSize.left = size.left ? size.left + 2 : initLeft + 2;
         tempSize.top = size.top ? size.top + 2 : initTop + 2;
+        updatedArr.keysArr.push("width");
+        updatedArr.keysArr.push("height");
+        updatedArr.valuesArr.push(size.width + "px");
+        updatedArr.valuesArr.push(size.height + "px");
       }
+      // TODO 添加到历史记录
     };
     const handleMouseUp = () => {
-      updatePosition({
-        left: tempSize.left,
-        top: tempSize.top,
-        id,
-      });
+      updatePosition(
+        {
+          left: tempSize.left,
+          top: tempSize.top,
+          id,
+        },
+        updatedArr,
+      );
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
