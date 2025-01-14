@@ -151,8 +151,6 @@ interface EditorStore {
   pasteComponent: () => void;
   /** 删除组件 */
   deleteComponent: (id: string) => void;
-  /** 移动组件 */
-  moveComponent: (data: { direction: MoveDirection; amount: number; id: string }) => void;
   /** 更新组件 */
   updateComponent: (data: {
     key: keyof AllComponentProps | Array<keyof AllComponentProps> | keyof ComponentData;
@@ -426,30 +424,6 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
       };
     }),
 
-  moveComponent: (data) => {
-    const { direction, amount, id } = data;
-    const component = get().components.find((c) => c.id === id);
-    if (!component) return;
-
-    const oldTop = parseInt(component.props.top || "0");
-    const oldLeft = parseInt(component.props.left || "0");
-
-    switch (direction) {
-      case "Up":
-        get().updateComponent({ key: "top", value: `${oldTop - amount}px`, id });
-        break;
-      case "Down":
-        get().updateComponent({ key: "top", value: `${oldTop + amount}px`, id });
-        break;
-      case "Left":
-        get().updateComponent({ key: "left", value: `${oldLeft - amount}px`, id });
-        break;
-      case "Right":
-        get().updateComponent({ key: "left", value: `${oldLeft + amount}px`, id });
-        break;
-    }
-  },
-
   updateComponent: ({ key, value, id, isRoot }) =>
     set((state) => {
       const updatedComponent = state.components.find((c) => c.id === (id || state.currentElement));
@@ -468,6 +442,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
       }
 
       // 添加历史记录
+      console.log("1123123123123");
       pushHistoryDebounce(state, { key, value, id });
 
       return {

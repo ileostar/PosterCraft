@@ -60,12 +60,16 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
 
   /** 侧边栏获取用户信息 */
   const getUserData = async (id: string) => {
-    const res = await getUserInfo(id);
-    setUserInfo(() => ({
-      avatar: res.data.data?.avatar || Info.avatar,
-      username: res.data.data?.username || Info.username,
-      nickname: res.data.data?.nickname || Info.nickname,
-    }));
+    try {
+      const res = await getUserInfo(id);
+      setUserInfo(() => ({
+        avatar: res.data.data?.avatar || Info.avatar,
+        username: res.data.data?.username || Info.username,
+        nickname: res.data.data?.nickname || Info.nickname,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   /** 切换语言 */

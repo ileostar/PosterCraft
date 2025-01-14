@@ -41,11 +41,14 @@ export default function Profile() {
   });
 
   const getUserData = async (id: string) => {
-    const res = await getUserInfo(id);
-    form.setValue("username", res.data.data?.username || "");
-    form.setValue("nickname", res.data.data?.nickname || "");
-    form.setValue("avatar", res.data.data?.avatar || "");
-    setAvatar(res.data.data?.avatar || "");
+    try {
+      const res = await getUserInfo(id);
+      form.setValue("username", res.data.data?.username || "");
+      form.setValue("nickname", res.data.data?.nickname || "");
+      form.setValue("avatar", res.data.data?.avatar || "");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

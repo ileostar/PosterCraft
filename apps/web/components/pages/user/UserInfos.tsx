@@ -28,14 +28,18 @@ const UserInfos: React.FC<UserInfosProps> = (params) => {
   const [userInfo, setUserInfo] = useState(Info);
 
   const getUserData = async (id: string) => {
-    const res = await getUserInfo(id);
-    setUserInfo(() => ({
-      avatar: res.data.data?.avatar || Info.avatar,
-      username: res.data.data?.username || Info.username,
-      nickname: res.data.data?.nickname || Info.nickname,
-      email: res.data.data?.email || Info.email,
-      phone: res.data.data?.phone || Info.phone,
-    }));
+    try {
+      const res = await getUserInfo(id);
+      setUserInfo(() => ({
+        avatar: res.data.data?.avatar || Info.avatar,
+        username: res.data.data?.username || Info.username,
+        nickname: res.data.data?.nickname || Info.nickname,
+        email: res.data.data?.email || Info.email,
+        phone: res.data.data?.phone || Info.phone,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     if (userId !== null) {
