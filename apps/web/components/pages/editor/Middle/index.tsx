@@ -104,7 +104,7 @@ function Middle(props: any) {
           position={"top"}
         >
           <Dialog>
-            <button className={`mx-1 text-3xl "hover:text-red-500 `}>
+            <button className={`mx-1 text-3xl text-gray-400 hover:text-red-500 `}>
               <span className="icon-[carbon--help]"></span>
             </button>
           </Dialog>
@@ -114,7 +114,7 @@ function Middle(props: any) {
           position={"top"}
         >
           <button
-            className={`mx-1 text-3xl ${!ifUndo && "hover:text-red-500"} ${ifUndo && "text-gray-400"}`}
+            className={`mx-1 text-3xl text-gray-400 ${!ifUndo && "hover:text-red-500"} ${!ifUndo && "text-gray-500"}`}
             disabled={ifUndo}
             onClick={() => undo()}
           >
@@ -126,7 +126,7 @@ function Middle(props: any) {
           position={"top"}
         >
           <button
-            className={`mx-1 text-3xl ${!ifRedo && "hover:text-red-500"} ${ifRedo && "text-gray-400"}`}
+            className={`mx-1 text-3xl text-gray-400 ${!ifRedo && "hover:text-red-500"} ${!ifRedo && "text-gray-500"}`}
             disabled={ifRedo}
             onClick={() => redo()}
           >

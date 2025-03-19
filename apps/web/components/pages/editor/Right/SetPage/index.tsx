@@ -30,7 +30,7 @@ function SetPage() {
     >
       <div
         style={childStyle}
-        className="overflow-x-hidden"
+        className="overflow-x-hidden text-black"
       >
         <div className="py-1 px-6 ">
           <div className="flex justify-between items-center my-4">

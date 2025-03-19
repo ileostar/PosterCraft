@@ -63,7 +63,7 @@ function SetLayer() {
     >
       <div
         style={childStyle}
-        className={`overflow-x-hidden border-t-0 border-b border-l border-r border-[#d2d4d7] hiddenScrollbar`}
+        className={`overflow-x-hidden border-t-0 border-b border-l border-r border-[#d2d4d7] hiddenScrollbar text-black`}
         onDrop={(e) => onDrop(e)}
         onDragOver={(e) => onDragOver(e)}
       >

@@ -38,6 +38,7 @@ function SetProps() {
         <Accordion
           type="single"
           collapsible
+          className="text-black"
         >
           <AccordionItem value="item-1">
             <AccordionTrigger>基本属性</AccordionTrigger>

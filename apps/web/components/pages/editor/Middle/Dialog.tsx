@@ -36,7 +36,7 @@ function MidDialog({
               className="flex items-center justify-between"
             >
               <div className="text-sm text-gray-500 text-left">{key}</div>
-              <div className="ml-2 font-semibold text-gray-900 text-right">{value}</div>
+              <div className="ml-2 font-semibold text-right">{value}</div>
             </div>
           ))}
         </div>
