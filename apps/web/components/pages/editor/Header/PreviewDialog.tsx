@@ -1,18 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { useToast } from "@/components/ui/use-toast";
 import { getWork, publishWorkToTemplate } from "@/http/work";
 import { useWorkStore } from "@/stores/work";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 
@@ -71,56 +63,46 @@ function DialogDemo({
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader>
-          <DialogTitle>作品预览</DialogTitle>
-        </DialogHeader>
-
-        <div className="flex flex-col items-center gap-6 p-6">
-          <div className="flex items-start gap-8">
-            <div className="flex flex-col items-center gap-4 p-4 bg-white rounded-lg shadow-md">
-              <QRCode
-                value={previewUrl}
-                size={200}
-                style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+    <Drawer direction="right">
+      <DrawerTrigger
+        asChild
+        className="overflow-visible"
+      >
+        {children}
+      </DrawerTrigger>
+      <DrawerContent className="h-[100vh] w-[650px]  dark:bg-[#1F2937] px-6 pb-6 ">
+        <div className="flex gap-5">
+          <div className=" mockup-phone border-primary mx-5!">
+            <div className="mockup-phone-camera"></div>
+            <div className="mockup-phone-display w-72">
+              <img
+                alt="wallpaper"
+                src="https://img.daisyui.com/images/stock/453966.webp"
               />
-              <p className="text-sm text-gray-500">扫码预览作品</p>
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <div className="space-y-2">
-                <h3 className="text-lg font-semibold">作品信息</h3>
-                <p className="text-gray-700">标题：{workInfo?.title}</p>
-                <p className="text-gray-700">简介：{workInfo?.desc}</p>
-              </div>
-
-              <div className="space-y-2">
-                <h3 className="text-lg font-semibold">预览链接</h3>
-                <p className="text-sm text-gray-500 break-all">{previewUrl}</p>
-              </div>
             </div>
           </div>
-
-          <DialogFooter className="w-full justify-end gap-2">
-            <DialogClose asChild>
-              <Button variant="outline">关闭</Button>
-            </DialogClose>
-            <DialogClose asChild>
-              <Button
-                type="button"
-                onClick={handleClick}
-                className="bg-[#3d7fff] text-white"
-                variant="secondary"
-              >
-                发布模板
-              </Button>
-            </DialogClose>
-          </DialogFooter>
+          <dl className="flex-1 flex flex-col gap-5">
+            <dt className="font-sans font-bold">设置面板</dt>
+            <dd className="flex gap-5">
+              <div className="w-20">扫码预览：</div>
+              <span>扫码预览：</span>
+            </dd>
+            <dd className="flex gap-5">
+              <div className="w-20">上传封面：</div>
+              <span>扫码预览：</span>
+            </dd>
+            <dd className="flex gap-5">
+              <div className="w-20">标题：</div>
+              <span>扫码预览：</span>
+            </dd>
+            <dd className="flex gap-5">
+              <div className="w-20">副标题：</div>
+              <span>扫码预览：</span>
+            </dd>
+          </dl>
         </div>
-      </DialogContent>
-    </Dialog>
+      </DrawerContent>
+    </Drawer>
   );
 }
 
