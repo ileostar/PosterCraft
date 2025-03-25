@@ -16,21 +16,26 @@ const BaseIntro: React.FC<BaseIntroProps> = () => {
   const router = useRouter();
 
   async function newWork() {
-    const res = await createWork({
-      title: "未命名海报",
-      desc: "",
-      coverImg: "",
-      content: {
-        Elements: undefined,
-        pageBackgroundStyle: undefined,
-      },
-      isTemplate: false,
-      isPublic: false,
-      status: 0,
-    });
-    console.log("res", res);
-    router.push(`/editor/${res.data.data.workId}`);
-    setWork(null);
+    try {
+      const res = await createWork({
+        title: "未命名海报",
+        desc: "",
+        coverImg: "",
+        content: {
+          Elements: undefined,
+          pageBackgroundStyle: undefined,
+        },
+        isTemplate: false,
+        isPublic: false,
+        status: 0,
+      });
+      console.log("res", res);
+      router.push(`/editor/${res.data.data.workId}`);
+      setWork(null);
+    } catch (error) {
+      // 创建作品失败
+      console.error("创建作品失败:", error);
+    }
   }
 
   return (
