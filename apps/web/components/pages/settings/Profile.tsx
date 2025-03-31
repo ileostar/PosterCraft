@@ -9,10 +9,13 @@ import { useToast } from "@/components/ui/use-toast";
 import { getUserInfo, updateUserInfo } from "@/http/user";
 import { useUserStore } from "@/stores/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Lottie from "lottie-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+import AuthAnimation from "./Animation-1743407808319.json";
 
 export default function Profile() {
   const t = useTranslations();
@@ -90,12 +93,8 @@ export default function Profile() {
   return (
     <div className="h-full flex flex-row justify-between">
       <div className="h-full flex flex-1 flex-col justify-between max-sm:gap-6">
-        <div className="flex justify-start items-center h-[10%] ">
-          <div className="text-[#f43f5e] dark:text-[#d048ef]  text-xl card-title">
-            {t("my-card")}
-          </div>
-        </div>
-        <div className="h-[85%] flex flex-col justify-around max-sm:gap-2 items-start">
+        <div className="text-[#f43f5e] dark:text-[#d048ef]  text-xl card-title">{t("my-card")}</div>
+        <div className="h-[85%] flex flex-col justify-around max-sm:gap-8 items-start gap-6">
           <UploadAvatar
             handleOssUrl={handleOssUrl}
             img={avatar}
@@ -104,7 +103,7 @@ export default function Profile() {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(updateUserInfos)}
-              className="mx-auto w-full flex flex-col items-start justify-between max-sm:gap-6"
+              className="mx-auto w-full flex flex-col items-start justify-between max-sm:gap-8 gap-6"
             >
               <CustomFormField
                 form={form}
@@ -118,7 +117,7 @@ export default function Profile() {
                 placeholder={"请输入昵称"}
                 label={"昵称"}
               />
-              <div className="w-full flex flex-start mt-5 mb-5">
+              <div className="w-full flex flex-start mt-5 mb-10">
                 <Button
                   className="btn w-[20%] max-sm:w-[60%] bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
                   type="submit"
@@ -131,7 +130,13 @@ export default function Profile() {
         </div>
       </div>
       {/* Lottie 动画占位 */}
-      <div className="h-full flex-1  bg-blue-500/30 rounded-lg "></div>
+      <div className="h-full flex-1 flex justify-center items-center bg-blue-500/10 rounded-lg">
+        <Lottie
+          className="w-[80%] my-3xl"
+          animationData={AuthAnimation}
+          loop={true}
+        />
+      </div>
     </div>
   );
 }

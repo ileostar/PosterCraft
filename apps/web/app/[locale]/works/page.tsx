@@ -9,10 +9,12 @@ import BaseList from "@/components/shared/ShowLists";
 import { CreateWorkResponse } from "@/http/types/work";
 import { getWorkList } from "@/http/work";
 import { useWorkStore } from "@/stores/work";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 function Main() {
+  const t = useTranslations();
   const { setWork } = useWorkStore();
   const [workList, setWorkList] = useState<CreateWorkResponse[]>([]);
   const [pageIndex, setPageIndex] = useState(1);
@@ -45,7 +47,11 @@ function Main() {
 
   return (
     <BaseLayout>
-      <Banner className="h-[30vh] bg-sky-500/20 rounded-lg text-center text-white font-bold text-4xl py-10" />
+      <Banner
+        src="/images/banner-02.jpg"
+        className="h-[45vh] bg-sky-500/20 rounded-lg text-center text-white font-bold text-4xl overflow-hidden"
+        title={t("works")}
+      />
       <BaseList
         title="All Works List ✨"
         onSearch={(e: any) => setTitle(e)}

@@ -8,11 +8,14 @@ import Header from "./common/Header";
 
 import "@/styles/pages/base.css";
 
+import { cn } from "@/lib/utils";
+
 interface BaseLayoutProps {
   children: React.ReactNode;
+  className?: string;
 }
 
-const BaseLayout: React.FC<BaseLayoutProps> = ({ children }) => {
+const BaseLayout: React.FC<BaseLayoutProps> = ({ children, className }) => {
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2, // 滑动持续时间
@@ -54,7 +57,12 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ children }) => {
   return (
     <div className="relative min-h-svh p-1.5 btn--animateGlowPink duration-300 ease-out">
       <Header scroll={true} />
-      <main className="scrollBox relative overflow-hidden mt-6 max-w-7xl mx-auto px-4 sm:px-8 md:px-12 xl:px-0">
+      <main
+        className={cn(
+          "scrollBox relative overflow-hidden mt-6 max-w-7xl mx-auto px-4 sm:px-8 md:px-12 xl:px-0",
+          className,
+        )}
+      >
         {children}
       </main>
       <Footer />

@@ -8,10 +8,12 @@ import BaseList from "@/components/shared/ShowLists";
 import { getTemplateList } from "@/http/template";
 import { CreateWorkResponse } from "@/http/types/work";
 import { useWorkStore } from "@/stores/work";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 function Main() {
+  const t = useTranslations();
   const { setWork } = useWorkStore();
   const [workList, setWorkList] = useState<CreateWorkResponse[]>([]);
   const [pageIndex, setPageIndex] = useState(1);
@@ -45,7 +47,11 @@ function Main() {
 
   return (
     <BaseLayout>
-      <Banner className="h-[30vh] bg-sky-500/20 rounded-lg text-center text-white font-bold text-4xl py-10" />
+      <Banner
+        src="/images/banner-01.jpg"
+        className="h-[45vh] bg-sky-500/20 rounded-lg text-center text-white font-bold text-4xl overflow-hidden"
+        title={t("templates")}
+      />
       <BaseList
         title="Template Market 🛒"
         onSearch={(e: any) => setTitle(e)}

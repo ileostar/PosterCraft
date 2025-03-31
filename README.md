@@ -62,3 +62,5 @@ pnpm dev:web
 ## 💖 贡献
 
 欢迎各位大佬提 `PR/ISSUE` 贡献，提`PR`前可以阅读[贡献指南](./CONTRIBUTING.md)
+
+Nest.js 是一个用于构建高效、可扩展的服务端应用程序的渐进式Node.js框架。它基于 TypeScript 开发，并结合了面向对象编程(OOP)、函数式编程(FP)和函数式反应编程(FRP)的理念。

@@ -10,10 +10,13 @@ import { updatePhone, verifyPhone } from "@/http/sms";
 import { getUserInfo } from "@/http/user";
 import { useUserStore } from "@/stores/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Lottie from "lottie-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+import AuthAnimation from "./Animation-1743407808319.json";
 
 export default function Account({ className }: Readonly<{ className?: string }>) {
   const t = useTranslations();
@@ -282,7 +285,7 @@ export default function Account({ className }: Readonly<{ className?: string }>)
             <Form {...phoneForm}>
               <form
                 onSubmit={phoneForm.handleSubmit(onSubmitPhone)}
-                className="sm:w-[40%] mx-auto flex flex-col gap-4"
+                className="sm:w-[40%] flex flex-col gap-4"
               >
                 <CustomFormField
                   form={phoneForm}
@@ -325,13 +328,13 @@ export default function Account({ className }: Readonly<{ className?: string }>)
             <Form {...emailForm}>
               <form
                 onSubmit={emailForm.handleSubmit(onSubmitEmail)}
-                className="sm:w-[40%] mx-auto flex flex-col gap-4"
+                className="sm:w-[40%] flex flex-col gap-4"
               >
                 <CustomFormField
                   form={emailForm}
                   name="email"
-                  placeholder={t("emailPlaceholder")}
-                  label={t("email")}
+                  placeholder={t("form.email.emailPlaceholder")}
+                  label={t("form.email.required")}
                   disabled={emailDisabled}
                 />
                 <CustomFormField
@@ -373,8 +376,10 @@ export default function Account({ className }: Readonly<{ className?: string }>)
               {t("close-account")}
             </div>
           </div>
-          <div className="w-[80%] mx-auto flex flex-col gap-4">
-            <div className="bg-gray-300 rounded-xl pl-2 pt-1 pb-1">{t("close-account-desc")}</div>
+          <div className="w-[80%] flex flex-col gap-4">
+            <div className="bg-gray-300 dark:bg-gray-300/30 text-xs rounded-xl pl-2 pt-1 pb-1">
+              {t("close-account-desc")}
+            </div>
             <Button
               onClick={() => window.location.reload()}
               className="sm:w-[30%] btn bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600 text-white"
@@ -385,7 +390,14 @@ export default function Account({ className }: Readonly<{ className?: string }>)
         </div>
       </div>
 
-      <div className="flex-1 h-full bg-blue-500/30 rounded-lg"></div>
+      {/* Lottie 动画占位 */}
+      <div className="h-full flex-1 flex justify-center items-center bg-blue-500/10 rounded-lg">
+        <Lottie
+          className="w-[80%] my-3xl"
+          animationData={AuthAnimation}
+          loop={true}
+        />
+      </div>
     </div>
   );
 }

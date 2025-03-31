@@ -42,7 +42,7 @@ const CustomPagination = ({
             </PaginationLink>
           </PaginationItem>
         )}
-        <PaginationItem className="bg-[#c8e0ef]">
+        <PaginationItem>
           <PaginationLink href="#">{pageIndex}</PaginationLink>
         </PaginationItem>
         {totalPage < pageIndex + 1 ? null : (

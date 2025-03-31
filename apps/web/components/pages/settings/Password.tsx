@@ -3,207 +3,123 @@
 import CustomFormField from "@/components/shared/CustomFormField";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
-import { bindEmail, updateEmail, verifyEmail } from "@/http/email";
-import { getUserInfo } from "@/http/user";
 import { useUserStore } from "@/stores/user";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Lottie from "lottie-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-export default function Account({ className }: Readonly<{ className?: string }>) {
+import AuthAnimation from "./Animation-1743407808319.json";
+
+export default function Password({ className }: Readonly<{ className?: string }>) {
   const t = useTranslations();
   const { toast } = useToast();
   const { userId } = useUserStore();
-  const [isBindEmail, setIsBindEmail] = useState<boolean>(false);
-  const [emailStep, setEmailStep] = useState<number>(0); //用于控制表单显示的步骤变化
-  const [emailDisabled, setEmailIsDisabled] = useState<boolean>(true);
-  const [countdownZero, setCountdownZero] = useState<boolean>(false); //用于控制验证码倒计时
-  const emailFormSchema = z.object({
-    email: z.string().email({
-      message: t("form.email.invalid"),
-    }),
-    otp: z
-      .string()
-      .length(6, {
-        message: t("form.code.length"),
-      })
-      .regex(/^\d+$/, {
-        message: t("form.code.length"),
-      }),
-  });
 
-  type emailFormSchemaType = z.infer<typeof emailFormSchema>;
-  const emailForm = useForm<emailFormSchemaType>({
-    resolver: zodResolver(emailFormSchema),
+  const passwordSchema = z
+    .object({
+      currentPassword: z.string().min(6, {
+        message: t("form.password.minLength"),
+      }),
+      newPassword: z.string().min(6, {
+        message: t("form.password.minLength"),
+      }),
+      confirmPassword: z.string().min(6, {
+        message: t("form.password.minLength"),
+      }),
+    })
+    .refine((data) => data.confirmPassword === data.newPassword, {
+      message: t("form.confirmPassword.notMatch"),
+      path: ["confirmPassword"],
+    });
+
+  type PasswordFormValues = z.infer<typeof passwordSchema>;
+  const passwordForm = useForm<PasswordFormValues>({
+    resolver: zodResolver(passwordSchema),
     defaultValues: {
-      email: "",
-      otp: "",
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
     },
   });
 
-  const getUserData = async (userId: string) => {
-    const res = await getUserInfo(userId);
-    emailForm.setValue("email", res.data.data?.email || "");
-    emailForm.setValue("otp", "000000"); //初始化验证码
-    if (!res.data.data?.email) {
-      setEmailStep(2);
-      setIsBindEmail(false);
-    } else {
-      setEmailStep(0);
-      setIsBindEmail(true);
-    }
-    setEmailIsDisabled(false);
+  const onSubmit = (data: PasswordFormValues) => {
+    toast({
+      title: t("toast.password.success"),
+      description: t("toast.password.your-password-has-been-updated"),
+    });
   };
-
-  useEffect(() => {
-    if (userId !== null) {
-      getUserData(userId);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const executeEmailStep = async (step: number) => {
-    switch (step) {
-      case 0:
-        setEmailIsDisabled(true);
-        break;
-      case 1:
-        setEmailIsDisabled(true);
-        emailForm.setValue("otp", ""); //初始化验证码
-        break;
-      case 2: {
-        const res = await verifyEmail({
-          email: emailForm.getValues("email"),
-          otp: emailForm.getValues("otp"),
-        });
-        if (res.data.code === 200) {
-          toast({
-            variant: "success",
-            title: "Success",
-            description: res.data.msg,
-          });
-        } else {
-          toast({
-            variant: "destructive",
-            title: "Error",
-            description: res.data.msg,
-            action: <ToastAction altText="Try again">Try again</ToastAction>,
-          });
-          setEmailStep(1);
-          return;
-        }
-
-        setEmailIsDisabled(false);
-        emailForm.reset();
-        emailForm.setValue("otp", "000000"); //初始化验证码
-        break;
-      }
-      case 3:
-        setEmailIsDisabled(true);
-        emailForm.setValue("otp", ""); //初始化验证码
-        setCountdownZero(true);
-        break;
-      case 4: {
-        emailForm.getValues("otp");
-        emailForm.getValues("email");
-        const resp = isBindEmail
-          ? await updateEmail({
-              email: emailForm.getValues("email"),
-              otp: emailForm.getValues("otp"),
-            })
-          : await bindEmail({
-              email: emailForm.getValues("email"),
-              otp: emailForm.getValues("otp"),
-            });
-        if (resp.data.code === 200) {
-          toast({
-            variant: "success",
-            title: "Success",
-            description: resp.data.msg,
-          });
-          setEmailStep(0);
-          setCountdownZero(false);
-        } else {
-          toast({
-            variant: "destructive",
-            title: "Error",
-            description: resp.data.msg,
-            action: <ToastAction altText="Try again">Try again</ToastAction>,
-          });
-          setEmailStep(3);
-        }
-        break;
-      }
-      default:
-        break;
-    }
-  };
-
-  async function onSubmitEmail(values: emailFormSchemaType) {
-    console.log(values);
-    setEmailStep(emailStep + 1);
-    executeEmailStep(emailStep + 1); //因为setPhoneSteps是异步的，所以还需要直接+1
-  }
 
   return (
     <div className={`h-full flex flex-row justify-between gap-10 ${className}`}>
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col gap-6">
         <div className="text-[#f43f5e] dark:text-[#d048ef] text-xl card-title">
-          {t("bind-account")}
+          {t("change-password")}
         </div>
-        <div className="h-[80%] flex flex-col justify-center">
-          <Form {...emailForm}>
+        <div className="flex flex-col justify-start gap-6">
+          <Form {...passwordForm}>
             <form
-              onSubmit={emailForm.handleSubmit(onSubmitEmail)}
-              className="sm:w-[40%] mx-auto flex flex-col gap-4 "
+              onSubmit={passwordForm.handleSubmit(onSubmit)}
+              className="sm:w-[40%] flex flex-col gap-4"
             >
               <CustomFormField
-                form={emailForm}
-                name={"email"}
-                placeholder={"请输入邮箱"}
-                label={"绑定邮箱"}
-                disabled={emailDisabled}
+                form={passwordForm}
+                name="currentPassword"
+                placeholder={t("form.confirmPassword.enter-old-password")}
+                label={t("form.confirmPassword.old-password")}
+                isPassword
               />
-              <CustomFormField
-                form={emailForm}
-                name={"otp"}
-                placeholder={"请输入验证码"}
-                label={"验证码"}
-                isShowLabel={false}
-                isVerify={true}
-                hidden={emailStep === 0 || emailStep === 2}
-                countdownZero={countdownZero}
-                isEmail={true}
-              />
+              {passwordForm.formState.errors.currentPassword && (
+                <p className="text-red-500 text-sm">
+                  {passwordForm.formState.errors.currentPassword.message}
+                </p>
+              )}
 
-              <div className="w-full flex gap-4">
-                <Button
-                  className=" btn  bg-[#f43f5e] dark:bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-red-600  text-white"
-                  type="submit"
-                >
-                  {emailStep === 0 ? t("change-email") : t("next-step")}
-                </Button>
-                {emailStep === 0 || !isBindEmail ? null : (
-                  <Button
-                    onClick={() => {
-                      window.location.reload();
-                    }}
-                    className=" btn  bg-[#ebedef] dark:bg-[#727477]  hover:bg-red-600  text-black dark:text-white"
-                  >
-                    {t("return")}
-                  </Button>
-                )}
-              </div>
+              <CustomFormField
+                form={passwordForm}
+                name="newPassword"
+                placeholder={t("form.confirmPassword.enter-new-password")}
+                label={t("form.confirmPassword.new-password")}
+                isPassword
+              />
+              {passwordForm.formState.errors.newPassword && (
+                <p className="text-red-500 text-sm">
+                  {passwordForm.formState.errors.newPassword.message}
+                </p>
+              )}
+
+              <CustomFormField
+                form={passwordForm}
+                name="confirmPassword"
+                placeholder={t("form.confirmPassword.confirm-new-password")}
+                label={t("form.confirmPassword.required")}
+                isPassword
+              />
+              {passwordForm.formState.errors.confirmPassword && (
+                <p className="text-red-500 text-sm">{t("form.confirmPassword.notMatch")}</p>
+              )}
+
+              <Button
+                type="submit"
+                className="w-full"
+              >
+                {t("save")}
+              </Button>
             </form>
           </Form>
         </div>
       </div>
 
-      <div className="flex-1 h-full bg-blue-500/30 rounded-lg"></div>
+      {/* Lottie 动画占位 */}
+      <div className="h-full flex-1 flex justify-center items-center bg-blue-500/10 rounded-lg">
+        <Lottie
+          className="w-[80%] my-3xl"
+          animationData={AuthAnimation}
+          loop={true}
+        />
+      </div>
     </div>
   );
 }

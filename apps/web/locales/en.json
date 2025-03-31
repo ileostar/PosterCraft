@@ -17,6 +17,7 @@
   "password": "Password",
   "phone": "Phone",
   "otp": "Verification Code",
+  "save": "Save",
   "registerLink": "Register now",
   "loginLink": "Have an account? Login now",
   "account-setting": "Account Settings",
@@ -24,6 +25,7 @@
   "change-email": "Change Email",
   "change-phone": "Change Phone",
   "close-account": "Delete Account",
+  "change-password": "Change Password",
   "close-account-desc": "After deletion, all account data will be destroyed and cannot be recovered. Please proceed with caution.",
   "desc": "Design and customize professional posters effortlessly in minutes with PosterCraft.",
   "develop-document": "Documentation",
@@ -62,7 +64,8 @@
     "required": "This field is required",
     "email": {
       "invalid": "Please enter a valid email address",
-      "required": "Please enter your email address"
+      "required": "Email is required",
+      "emailPlaceholder": "Enter your email address"
     },
     "password": {
       "required": "Please enter your password",
@@ -85,7 +88,12 @@
     },
     "confirmPassword": {
       "required": "Please confirm your password",
-      "notMatch": "The passwords entered twice do not match"
+      "enter-old-password": "Enter current password",
+      "old-password": "Current Password",
+      "enter-new-password": "Enter new password",
+      "new-password": "New Password",
+      "confirm-new-password": "Please confirm new password",
+      "notMatch": "Passwords do not match"
     }
   },
   "errors": {
@@ -101,6 +109,20 @@
       "tryAgain": "Something went wrong, please try again",
       "networkError": "Network error, please check your connection",
       "serverError": "Server error, please try again later"
+    }
+  },
+  "toast": {
+    "success": "Operation successful",
+    "error": "Operation failed",
+    "info": "Information prompt",
+    "warning": "Warning prompt",
+    "password": {
+      "success": "Password successfully changed",
+      "your-password-has-been-updated": "Your password has been successfully updated",
+      "your-password-has-been-updated-desc": "Please log in with your new password",
+      "old-password-error": "Current password is incorrect",
+      "old-password-error-desc": "Please check and try again",
+      "error": "Password change failed, please try again"
     }
   }
 }

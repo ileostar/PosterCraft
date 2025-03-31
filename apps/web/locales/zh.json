@@ -24,6 +24,7 @@
   "change-email": "更换邮箱",
   "change-phone": "更换手机号",
   "close-account": "注销账号",
+  "change-password": "修改密码",
   "close-account-desc": "注销后账号所有数据将被销毁并不可找回，请谨慎操作。",
   "desc": "要想在几分钟内毫不费力地设计和定制专业海报，就用PosterCraft。",
   "develop-document": "开发文档",
@@ -40,6 +41,7 @@
   "my-card": "我的信息",
   "new-features-added": "新增功能",
   "next-step": "下一步",
+  "save": "保存",
   "one-click-sharing": "一键分享",
   "one-click-sharing-desc": "轻松将您的作品分享到社交媒体或导出高质量图片！",
   "password-setting": "密码设置",
@@ -62,7 +64,8 @@
     "required": "此项为必填项",
     "email": {
       "invalid": "请输入有效的邮箱地址",
-      "required": "请输入邮箱地址"
+      "required": "邮箱",
+      "emailPlaceholder": "请输入邮箱地址"
     },
     "password": {
       "required": "请输入密码",
@@ -85,6 +88,11 @@
     },
     "confirmPassword": {
       "required": "请确认密码",
+      "enter-old-password": "输入当前密码",
+      "old-password": "当前密码",
+      "enter-new-password": "输入新密码",
+      "new-password": "新密码",
+      "confirm-new-password": "请确认新密码",
       "notMatch": "两次输入的密码不一致"
     }
   },
@@ -101,6 +109,20 @@
       "tryAgain": "出错了，请重试",
       "networkError": "网络错误，请检查网络连接",
       "serverError": "服务器错误，请稍后重试"
+    }
+  },
+  "toast": {
+    "success": "操作成功",
+    "error": "操作失败",
+    "info": "信息提示",
+    "warning": "警告提示",
+    "password": {
+      "success": "密码修改成功",
+      "your-password-has-been-updated": "您的密码已成功修改",
+      "your-password-has-been-updated-desc": "请使用新密码登录",
+      "old-password-error": "当前密码错误",
+      "old-password-error-desc": "请检查后重试",
+      "error": "密码修改失败，请重试"
     }
   }
 }

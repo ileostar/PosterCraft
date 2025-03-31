@@ -36,19 +36,19 @@ function Main() {
             </TabsTrigger>
           </TabsList>
           <TabsContent
-            className=" max-sm:h-[80vh] flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
+            className=" max-sm:h-[80vh] flex-1 p-8 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
             value="profile"
           >
             <Profile />
           </TabsContent>
           <TabsContent
-            className=" flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
+            className=" flex-1 p-8 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
             value="account"
           >
             <Account />
           </TabsContent>
           <TabsContent
-            className=" flex-1 p-5 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
+            className=" flex-1 p-8 mt-0 rounded-xl bg-white dark:bg-gray-200/10 overflow-hidden"
             value="password"
           >
             <Password />
