@@ -60,6 +60,7 @@
   "verification-code": "验证码",
   "works": "作品集",
   "works-list": "我的作品集",
+  "works.listTitle": "全部作品列表 ✨",
   "form": {
     "required": "此项为必填项",
     "email": {

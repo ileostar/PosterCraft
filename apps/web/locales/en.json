@@ -60,6 +60,7 @@
   "verification-code": "Verification Code",
   "works": "Works",
   "works-list": "My Works",
+  "works.listTitle": "All Works List ✨",
   "form": {
     "required": "This field is required",
     "email": {

@@ -1,11 +1,5 @@
 import { ApiProperty, OmitType, PickType } from '@nestjs/swagger';
-import { IsNumber } from 'class-validator';
 import { string } from 'zod';
-
-type ChannelProps = {
-  name: string;
-  id: string;
-};
 
 export class WorkDto {
   @ApiProperty({

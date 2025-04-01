@@ -2,7 +2,6 @@
 
 import BaseCard from "@/components/base/BaseCard";
 import BaseLayout from "@/components/layouts/BaseLayout";
-import AuthGuard from "@/components/shared/AuthGuard";
 import Banner from "@/components/shared/Banner";
 import CustomPagination from "@/components/shared/CustomPagination";
 import BaseList from "@/components/shared/ShowLists";
@@ -53,7 +52,7 @@ function Main() {
         title={t("works")}
       />
       <BaseList
-        title="All Works List ✨"
+        title={t("works.listTitle")}
         onSearch={(e: any) => setTitle(e)}
       >
         {workList.map((item) => (
