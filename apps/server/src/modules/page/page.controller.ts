@@ -39,6 +39,7 @@ export class PageController {
   async renderH5Page(@Param('pageId') pageId: string, @Res() res) {
     try {
       const query = this.splitIdAndUuid(pageId);
+      console.log('=============', query);
       const data = await this.pageService.renderToPageData(query);
       res.view('index.art', data);
       return {
@@ -67,7 +68,7 @@ export class PageController {
   async renderH5PagePreview(@Param('pageId') pageId: string, @Res() res) {
     try {
       const query = this.splitIdAndUuid(pageId);
-      const data = await this.pageService.renderToPageData(query);
+      const data = await this.pageService.renderToPageData(query, true);
       res.view('index.art', data);
       return {
         code: 200,

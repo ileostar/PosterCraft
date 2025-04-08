@@ -1,4 +1,4 @@
-import { UseElementStore } from "@/stores/element";
+import { useElementStore } from "@/stores/element";
 import { useEffect, useRef } from "react";
 
 export interface ActionItem {
@@ -7,7 +7,7 @@ export interface ActionItem {
   hotkey: string;
 }
 function ContextMenu({ item }: Readonly<{ item: ActionItem[] }>) {
-  const { currentElement } = UseElementStore();
+  const { currentElement } = useElementStore();
 
   const menuRef = useRef<HTMLDivElement>(null);
 

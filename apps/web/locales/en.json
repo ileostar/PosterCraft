@@ -1,4 +1,5 @@
 {
+  "create-posters-with": "Create posters with",
   "loginSuccess": "Login successful, redirecting to homepage...",
   "sendCode": "Send Code",
   "otherLoginWays": "Other Login Methods",
@@ -61,6 +62,9 @@
   "works": "Works",
   "works-list": "My Works",
   "works.listTitle": "All Works List ✨",
+  "work": {
+    "unnamed-title": "unnamed title"
+  },
   "form": {
     "required": "This field is required",
     "email": {

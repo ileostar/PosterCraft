@@ -1,10 +1,10 @@
-import { UseElementStore } from "@/stores/element";
+import { useElementStore } from "@/stores/element";
 import { useEffect, useState } from "react";
 
 function EventProps() {
   const [clickURL, setClickURL] = useState<string>("");
 
-  const { updateElement, currentElement, getElement } = UseElementStore();
+  const { updateElement, currentElement, getElement } = useElementStore();
 
   const reset = () => {
     setClickURL("");

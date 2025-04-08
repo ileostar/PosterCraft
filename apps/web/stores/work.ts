@@ -2,6 +2,8 @@ import { create } from "zustand";
 
 interface WorkState {
   currentWorkId: string | null;
+  currentWorkTitle: string;
+  setWorkTitle: (state: string) => void;
   setWork: (state: string | null) => void;
 }
 
@@ -16,9 +18,11 @@ export const useWorkStore = create<WorkState>((set) => {
   if (storage) {
     currentWorkId = storage.getItem("currentWorkId") || null;
   }
+  let currentWorkTitle: string = "";
 
   return {
     currentWorkId,
+    currentWorkTitle,
     setWork: (state: string | null) => {
       set(() => {
         if (storage) {
@@ -30,6 +34,9 @@ export const useWorkStore = create<WorkState>((set) => {
         }
         return { currentWorkId: state };
       });
+    },
+    setWorkTitle: (state: string) => {
+      set({ currentWorkTitle: state });
     },
   };
 });

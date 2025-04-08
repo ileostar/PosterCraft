@@ -1,12 +1,12 @@
 "use client";
 
 import ColorPicker from "@/components/shared/ColorPicker";
-import { UseElementStore } from "@/stores/element";
+import { useElementStore } from "@/stores/element";
 
 import useProps from "../../../../../hooks/useProps";
 
 function ShadowProps() {
-  const { updateElement, currentElement, getElement } = UseElementStore();
+  const { updateElement, currentElement, getElement } = useElementStore();
 
   const initialState = {
     hOffset: 0,

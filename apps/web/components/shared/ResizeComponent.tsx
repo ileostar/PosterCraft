@@ -1,4 +1,4 @@
-import { UseElementStore } from "@/stores/element";
+import { useElementStore } from "@/stores/element";
 import React, { useEffect, useRef } from "react";
 
 import "@/styles/base/resize-box.css";
@@ -12,7 +12,7 @@ function ResizeComponent({
 }: Readonly<{
   item: any;
 }>) {
-  const { setCurrentElement, setIsElement, updateElement, setCurrentSize } = UseElementStore();
+  const { setCurrentElement, setIsElement, updateElement, setCurrentSize } = useElementStore();
 
   // 原始的编辑框height，width，top，left, +4和-2是算上边框的2px宽度的border
   let initHeight = item.props.height

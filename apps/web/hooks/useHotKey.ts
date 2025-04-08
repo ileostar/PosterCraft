@@ -1,4 +1,4 @@
-import { UseElementStore } from "@/stores/element";
+import { useElementStore } from "@/stores/element";
 import hotkeys, { HotkeysEvent, KeyHandler } from "hotkeys-js";
 import { useEffect } from "react";
 
@@ -30,7 +30,7 @@ const useHotKey = () => {
     setMoveElement,
     undo,
     redo,
-  } = UseElementStore();
+  } = useElementStore();
 
   useBindHotKey("ctrl+c, command+c", () => {
     console.log(11);

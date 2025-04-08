@@ -2,6 +2,7 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToken } from "@/hooks/useToken";
+import { createWork } from "@/http/work";
 import { useWorkStore } from "@/stores/work";
 import { Link, usePathname, useRouter } from "@/utils/i18n/routing";
 import { useLocale } from "next-intl";
@@ -26,6 +27,29 @@ const Feature: React.FC<FeatureProps> = () => {
     router.push(pathname, { locale: locale === "en" ? "zh" : "en" });
   };
 
+  async function newWork() {
+    try {
+      const res = await createWork({
+        title: "未命名海报",
+        desc: "",
+        coverImg: "",
+        content: {
+          Elements: undefined,
+          pageBackgroundStyle: undefined,
+        },
+        isTemplate: false,
+        isPublic: false,
+        status: 0,
+      });
+      console.log("res", res);
+      router.push(`/editor/${res.data.data.workId}`);
+      setWork(res.data.data.workId);
+    } catch (error) {
+      // 创建作品失败
+      console.error("创建作品失败:", error);
+    }
+  }
+
   return (
     <div className="flex items-center gap-5 w-72 justify-end">
       <div className="relative hidden min-[845px]:flex bg-transparent rounded-lg  font-semibold transition-all duration-700 will-change-transform">
@@ -34,10 +58,7 @@ const Feature: React.FC<FeatureProps> = () => {
           position={"bottom"}
         >
           <span
-            onClick={() => {
-              setWork(null);
-              router.push("/editor");
-            }}
+            onClick={newWork}
             className="icon-[carbon--add-alt] text-gray-700 dark:text-white w-8 h-8 rounded-full cursor-pointer"
           ></span>
         </BaseTooltips>

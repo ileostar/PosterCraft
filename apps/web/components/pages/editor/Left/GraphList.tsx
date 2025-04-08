@@ -1,10 +1,10 @@
-import { UseElementStore } from "@/stores/element";
+import { useElementStore } from "@/stores/element";
 import { ElementDataType } from "@/types/element-type";
 import graphTemplate from "@/utils/template/graphTemplate";
 import { v4 as uuidv4 } from "uuid";
 
 function GraphList() {
-  const { setCurrentElement, addElement, setIsElement } = UseElementStore();
+  const { setCurrentElement, addElement, setIsElement } = useElementStore();
 
   const handleClick = (event: any) => {
     console.log(event.target.innerHTML);

@@ -5,8 +5,8 @@ export type CreateWorkBody = {
   desc: string;
   coverImg: string;
   content: {
-    Elements?: Array<ElementDataType>;
-    pageBackgroundStyle?: object;
+    components?: Array<ElementDataType>;
+    props?: object;
   };
   isTemplate: boolean;
   isPublic: boolean;
@@ -62,19 +62,17 @@ export type GetWorkResponse = CreateWorkBody & {
   workId: string;
 };
 
-export type UpdateWorkBody = CreateWorkBody;
-
 export type UpdateWorkResponse = {
   title: string;
-  desc: string;
-  coverImg: string;
+  desc?: string;
+  coverImg?: string;
   content: {
-    Elements?: Array<ElementDataType>;
-    pageBackgroundStyle?: object;
+    components?: Array<ElementDataType>;
+    props?: object;
   };
-  isTemplate: boolean;
-  isPublic: boolean;
-  status: number;
+  isTemplate?: boolean;
+  isPublic?: boolean;
+  status?: number;
 };
 
 export type WorkPreviewResponse = {

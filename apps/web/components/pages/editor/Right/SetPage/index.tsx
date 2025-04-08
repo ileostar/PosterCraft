@@ -2,7 +2,7 @@
 
 import ColorPicker from "@/components/shared/ColorPicker";
 import UploadBackground from "@/components/shared/UploadBackground";
-import { UseElementStore } from "@/stores/element";
+import { useElementStore } from "@/stores/element";
 import { useEffect, useRef, useState } from "react";
 
 function SetPage() {
@@ -16,7 +16,7 @@ function SetPage() {
     }
   }, []);
 
-  const { pageBackgroundStyle, setPageBackgroundStyle } = UseElementStore();
+  const { pageBackgroundStyle, setPageBackgroundStyle } = useElementStore();
 
   //上传图片的回调函数
   const handleOssUrl = (url: string) => {

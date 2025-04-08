@@ -46,14 +46,35 @@ export class PageService {
     return styleArr.join(';');
   }
 
-  async renderToPageData(query: { id: string; uuid: string }) {
+  async renderToPageData(
+    query: { id: string; uuid: string },
+    isPreview = false,
+  ) {
     const currentWork = await this.db.query.work.findFirst({
       where: eq(work.uuid, query.uuid),
     });
     if (!currentWork) throw '工作区不存在';
-    if (!currentWork.isPublic) throw '工作区未发布';
+    if (!currentWork.isPublic && !isPreview) throw '工作区未发布';
     const { title, desc, content } = currentWork;
-    const html = '';
+    // 将组件数据转换为px到vw
+    this.px2vw(content.components);
+
+    // 生成HTML字符串
+    const html = content.components
+      .map((element: any) => {
+        // 将props转换为style字符串
+        const style = this.propsToStyle(element.props);
+
+        // 根据组件类型生成对应的HTML
+        if (element.type === 'text') {
+          return `<div style="${style}">${element.text}</div>`;
+        }
+
+        return '';
+      })
+      .join('');
+
+    console.log('===============html=============', html);
     const result = {
       html,
       title,

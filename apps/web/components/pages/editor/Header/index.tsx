@@ -12,7 +12,10 @@ const EditorHeader: React.FC<EditorHeaderProps> = () => {
         size="small"
         title="logo"
       />
-      <EditorName name="未命名作品" />
+      <EditorName
+        className="-m-52 z-[1]"
+        name="未命名作品"
+      />
       <EditorFeature />
     </header>
   );

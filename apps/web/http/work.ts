@@ -8,7 +8,6 @@ import {
   GetWorkListBody,
   GetWorkListResponse,
   GetWorkResponse,
-  UpdateWorkBody,
   UpdateWorkResponse,
   WorkPreviewResponse,
 } from "./types/work";
@@ -34,7 +33,7 @@ export function getWork(workId: string) {
 }
 
 /** 更新单个工作区 */
-export function updateWork(workId: string, body: UpdateWorkBody) {
+export function updateWork(workId: string, body: UpdateWorkResponse) {
   return http.put<ResponseData<UpdateWorkResponse>>(`/work/${workId}`, body);
 }
 

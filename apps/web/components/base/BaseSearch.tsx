@@ -9,7 +9,7 @@ interface BaseSearchProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onClear?: () => void; // Added an optional onClear callback
 }
 
-const BaseSearch: React.FC<BaseSearchProps> = ({ className = "", onSearch, onClear, ...rest }) => {
+const BaseSearch: React.FC<BaseSearchProps> = ({ className = "", onSearch, ...rest }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +33,7 @@ const BaseSearch: React.FC<BaseSearchProps> = ({ className = "", onSearch, onCle
           className="bg-[#222630] px-4 py-3 outline-none w-[280px] text-white rounded-lg border-2 transition-colors duration-100 border-solid focus:border-[#596A95] border-[#2B3040]"
           value={inputValue}
           onChange={handleInputChange}
-          placeholder="Enter email or username"
+          placeholder="Enter Search Keyword"
           type="text"
           {...rest}
         />

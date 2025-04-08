@@ -2,6 +2,7 @@
 
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { useToast } from "@/components/ui/use-toast";
+import { GlobalEnvConfig, siteConfig } from "@/config";
 import { getWork, publishWorkToTemplate } from "@/http/work";
 import { useWorkStore } from "@/stores/work";
 import Image from "next/image";
@@ -72,12 +73,12 @@ function DialogDemo({
       </DrawerTrigger>
       <DrawerContent className="h-[100vh] w-[650px]  dark:bg-[#1F2937] px-6 pb-6 ">
         <div className="flex gap-5">
-          <div className=" mockup-phone border-primary mx-5!">
+          <div className="mockup-phone border-primary !mx-5">
             <div className="mockup-phone-camera"></div>
-            <div className="mockup-phone-display w-72">
-              <img
-                alt="wallpaper"
-                src="https://img.daisyui.com/images/stock/453966.webp"
+            <div className="mockup-phone-display w-80 flex justify-center items-center min-h-[568px]">
+              <iframe
+                className="h-full"
+                src={GlobalEnvConfig.SERVER_URL + "/page/preview/preview-" + currentWorkId}
               />
             </div>
           </div>

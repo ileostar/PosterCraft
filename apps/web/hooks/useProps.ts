@@ -1,4 +1,4 @@
-import { UseElementStore } from "@/stores/element";
+import { useElementStore } from "@/stores/element";
 import { useCallback, useEffect, useState } from "react";
 
 type StyleType =
@@ -10,7 +10,7 @@ type StyleType =
   | "sizeProps";
 
 const useProps = (initialState: any, styleType: StyleType) => {
-  const { updateElement, currentElement, getElement } = UseElementStore();
+  const { updateElement, currentElement, getElement } = useElementStore();
   const [elementStyle, setElementStyle] = useState(initialState);
 
   const reset = useCallback(() => {

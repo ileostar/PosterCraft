@@ -31,7 +31,7 @@ const BaseIntro: React.FC<BaseIntroProps> = () => {
       });
       console.log("res", res);
       router.push(`/editor/${res.data.data.workId}`);
-      setWork(null);
+      setWork(res.data.data.workId);
     } catch (error) {
       // 创建作品失败
       console.error("创建作品失败:", error);
@@ -64,7 +64,7 @@ const BaseIntro: React.FC<BaseIntroProps> = () => {
           </div>
         </div>
         <h1 className="mt-10 text-3xl sm:text-6xl lg:text-5xl font-semibold text-gray-700 dark:text-white xl:text-7xl tracking-tight leading-relaxed">
-          Create posters with{" "}
+          {t("create-posters-with")}{" "}
           <span className="text-rose-400 dark:text-[#FF33DE]">PosterCraft!</span>
         </h1>
         <BaseTyped strings={[t("desc")]} />

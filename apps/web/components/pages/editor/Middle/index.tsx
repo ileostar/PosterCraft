@@ -8,7 +8,7 @@ import ResizeComponent from "@/components/shared/ResizeComponent";
 import useGetScreenRatio from "@/hooks/useGetScreenRatio";
 import useHotKey from "@/hooks/useHotKey";
 import { getWork } from "@/http/work";
-import { UseElementStore } from "@/stores/element";
+import { useElementStore } from "@/stores/element";
 import { useWorkStore } from "@/stores/work";
 import { useEffect } from "react";
 
@@ -28,7 +28,7 @@ function Middle(props: any) {
     setCopyElement,
     ifRedo,
     ifUndo,
-  } = UseElementStore();
+  } = useElementStore();
   const { currentWorkId } = useWorkStore();
 
   useHotKey();

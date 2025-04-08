@@ -4,10 +4,10 @@ import SetLayer from "@/components/pages/editor/Right/setLayer";
 import SetPage from "@/components/pages/editor/Right/SetPage";
 import SetProps from "@/components/pages/editor/Right/setProps";
 import Tab from "@/components/shared/Tab";
-import { UseElementStore } from "@/stores/element";
+import { useElementStore } from "@/stores/element";
 
 function Right(props: any) {
-  const { isElement, isCurrentLocked } = UseElementStore();
+  const { isElement, isCurrentLocked } = useElementStore();
 
   const tabs = [
     { id: 0, label: "属性设置", content: isElement && !isCurrentLocked ? <SetProps /> : null },

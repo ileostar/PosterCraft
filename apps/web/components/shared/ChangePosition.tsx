@@ -1,4 +1,4 @@
-import { UseElementStore } from "@/stores/element";
+import { useElementStore } from "@/stores/element";
 import React, { useRef } from "react";
 
 //现在的位置=鼠标移动距离+原来的位置
@@ -8,7 +8,7 @@ function ChangePosition({
 }: Readonly<{
   item: any;
 }>) {
-  const { setCurrentElement, setIsElement, updateElement, setCurrentPosition } = UseElementStore();
+  const { setCurrentElement, setIsElement, updateElement, setCurrentPosition } = useElementStore();
 
   let top = item.props.top ? parseInt(item.props.top.replace(/(px|rem)/g, ""), 10) : 0;
   let left = item.props.left ? parseInt(item.props.left.replace(/(px|rem)/g, ""), 10) : 0;

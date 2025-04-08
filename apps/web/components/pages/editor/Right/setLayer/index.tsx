@@ -1,5 +1,5 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { UseElementStore } from "@/stores/element";
+import { useElementStore } from "@/stores/element";
 import { getParentElement } from "@/utils/others/getParentElement";
 import { arrayMove } from "@/utils/others/helper";
 import { useEffect, useRef, useState } from "react";
@@ -10,7 +10,7 @@ import InlineEdit from "./InlineEdit";
 
 function SetLayer() {
   const { Elements, updateElement, setIsCurrentLocked, setCurrentElement, setElements } =
-    UseElementStore();
+    useElementStore();
   const parentRef = useRef<HTMLDivElement | null>(null);
   const [childStyle, setChildStyle] = useState({});
 

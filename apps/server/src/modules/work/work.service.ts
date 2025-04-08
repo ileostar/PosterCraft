@@ -109,6 +109,7 @@ export class WorkService {
   }
 
   async updateWork(workId: string, dto: WorkDto) {
+    console.log('=====================', workId, dto);
     await this.db.update(work).set(dto).where(eq(work.uuid, workId));
     return {
       workId: workId,

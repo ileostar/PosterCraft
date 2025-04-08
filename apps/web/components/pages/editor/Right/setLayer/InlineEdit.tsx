@@ -1,6 +1,6 @@
 import useClickOutside from "@/hooks/useClickOutside";
 import useKeyPress from "@/hooks/useKeyPress";
-import { UseElementStore } from "@/stores/element";
+import { useElementStore } from "@/stores/element";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 function InlineEdit({
@@ -10,7 +10,7 @@ function InlineEdit({
   value?: string;
   id: string;
 }>) {
-  const { updateElement } = UseElementStore();
+  const { updateElement } = useElementStore();
 
   const [innerValue, setInnerValue] = useState(value);
   const [isEdited, setIsEdited] = useState(false);

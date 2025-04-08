@@ -89,7 +89,7 @@ interface ElementStore extends ElementStoreType {
 
 interface ElementData extends ElementDataType {}
 
-export const UseElementStore = create<ElementStore>((set, get) => ({
+export const useElementStore = create<ElementStore>((set, get) => ({
   Elements: [],
   //设置整个元素列表
   setElements: (elements: ElementData[]) => {
