@@ -1,7 +1,8 @@
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 
-import { useGoToLoginStore } from "@/stores/loginDialog";
 import axios from "axios";
+
+import eventBus, { EventTypes } from "../eventBus";
 
 const instance = axios.create({
   baseURL: "http://127.0.0.1:3001",
@@ -36,7 +37,6 @@ instance.interceptors.response.use(
     return response;
   },
   function (error: unknown) {
-    const { setIsOpen } = useGoToLoginStore();
     // 打印完整的错误对象，包含response信息
     console.log("完整错误信息:", {
       status: (error as any).response?.status,
@@ -44,9 +44,13 @@ instance.interceptors.response.use(
       data: (error as any).response?.data,
       error,
     });
-    if ((error as any).response?.data?.message === "Unauthorized") {
-      console.log("token过期");
-      setIsOpen(true);
+    if (
+      (error as any).response?.status === 401 ||
+      (error as any).response?.data?.message === "Unauthorized"
+    ) {
+      console.log("token过期或未授权");
+      // 使用事件总线触发未授权事件，而不是直接调用React Hook
+      eventBus.emit(EventTypes.AUTH_ERROR);
     }
     return Promise.reject(error);
   },

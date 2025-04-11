@@ -72,7 +72,7 @@ function SetPage() {
           <UploadBackground
             className="mt-8 flex justify-between gap-3 items-center my-4"
             handleOssUrl={handleOssUrl}
-            img={pageBackgroundStyle.backgroundImage.replace(/url\(|\)/g, "")}
+            img={pageBackgroundStyle.backgroundImage?.replace(/url\(|\)/g, "")}
           />
         </div>
       </div>

@@ -200,12 +200,12 @@ export const useElementStore = create<ElementStore>((set, get) => ({
   // 页面背景默认样式
   pageBackgroundStyle: {
     backgroundColor: "",
-    backgroundImage: ``,
+    backgroundImage: "",
     backgroundSize: "100% 100%",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
   },
-  setPageBackgroundStyle: (style: {}) => set((state) => ({ pageBackgroundStyle: style })),
+  setPageBackgroundStyle: (style: {}) => set(() => ({ pageBackgroundStyle: style })),
   //复制元素
   copiedElement: null,
   setCopyElement: (id: string) => {
