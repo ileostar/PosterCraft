@@ -22,8 +22,8 @@ const BaseIntro: React.FC<BaseIntroProps> = () => {
         desc: "",
         coverImg: "",
         content: {
-          Elements: undefined,
-          pageBackgroundStyle: undefined,
+          components: undefined,
+          props: undefined,
         },
         isTemplate: false,
         isPublic: false,

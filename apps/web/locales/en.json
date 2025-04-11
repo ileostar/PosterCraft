@@ -1,38 +1,71 @@
 {
-  "create-posters-with": "Create posters with",
-  "loginSuccess": "Login successful, redirecting to homepage...",
-  "sendCode": "Send Code",
-  "otherLoginWays": "Other Login Methods",
-  "register": "Register",
-  "login": "Login",
-  "signUp": "Sign Up",
-  "usernamePlaceholder": "Enter username",
-  "usernameOrEmail": "Username/Email",
-  "usernameOrEmailPlaceholder": "Enter username/email",
-  "loginByPhone": "Login with Phone",
-  "loginByUsernameOrEmail": "Login with Username/Email",
-  "passwordPlaceholder": "Enter password",
-  "phonePlaceholder": "Enter phone number",
-  "otpPlaceholder": "Enter verification code",
-  "username": "Username",
-  "password": "Password",
-  "phone": "Phone",
-  "otp": "Verification Code",
-  "save": "Save",
-  "registerLink": "Register now",
-  "loginLink": "Have an account? Login now",
   "account-setting": "Account Settings",
   "bind-account": "Bind Account",
   "change-email": "Change Email",
+  "change-password": "Change Password",
   "change-phone": "Change Phone",
   "close-account": "Delete Account",
-  "change-password": "Change Password",
   "close-account-desc": "After deletion, all account data will be destroyed and cannot be recovered. Please proceed with caution.",
+  "common": {
+    "relogin": "relogin"
+  },
+  "create-posters-with": "Create posters with",
   "desc": "Design and customize professional posters effortlessly in minutes with PosterCraft.",
   "develop-document": "Documentation",
   "discover-more": "Discover More",
   "editPersonalInformation": "Edit Profile",
+  "errors": {
+    "common": {
+      "networkError": "Network error, please check your connection",
+      "serverError": "Server error, please try again later",
+      "tryAgain": "Something went wrong, please try again"
+    },
+    "connection": {
+      "closed": "Connection closed, please check your network and try again",
+      "failed": "Connection failed, please check network settings",
+      "timeout": "Connection timeout, please try again later"
+    },
+    "database": {
+      "connectionClosed": "Database connection lost, please refresh and try again"
+    }
+  },
   "exploreTemplates": "Explore Templates",
+  "form": {
+    "code": {
+      "length": "Verification code must be 6 digits",
+      "required": "Please enter verification code"
+    },
+    "confirmPassword": {
+      "confirm-new-password": "Please confirm new password",
+      "enter-new-password": "Enter new password",
+      "enter-old-password": "Enter current password",
+      "new-password": "New Password",
+      "notMatch": "Passwords do not match",
+      "old-password": "Current Password",
+      "required": "Please confirm your password"
+    },
+    "email": {
+      "emailPlaceholder": "Enter your email address",
+      "invalid": "Please enter a valid email address",
+      "required": "Email is required"
+    },
+    "password": {
+      "maxLength": "Password cannot exceed 20 characters",
+      "minLength": "Password must be at least 6 characters",
+      "pattern": "Password must contain both letters and numbers",
+      "required": "Please enter your password"
+    },
+    "phone": {
+      "invalid": "Please enter a valid phone number",
+      "required": "Please enter your phone number"
+    },
+    "required": "This field is required",
+    "username": {
+      "maxLength": "Username cannot exceed 20 characters",
+      "minLength": "Username must be at least 2 characters",
+      "required": "Please enter your username"
+    }
+  },
   "high-compatibility": "High Compatibility",
   "high-compatibility-desc": "Supports dark/light mode switching and internationalization!",
   "home": "Home",
@@ -40,94 +73,64 @@
   "intuitive-page-desc": "Hundreds of carefully designed templates for various scenarios!",
   "language-switching": "Change Language",
   "log-out": "Log Out",
+  "login": "Login",
+  "loginByPhone": "Login with Phone",
+  "loginByUsernameOrEmail": "Login with Username/Email",
+  "loginLink": "Have an account? Login now",
+  "loginSuccess": "Login successful, redirecting to homepage...",
   "my-card": "My Info",
   "new-features-added": "New Features",
   "next-step": "Next",
   "one-click-sharing": "One-Click Share",
   "one-click-sharing-desc": "Easily share your work to social media or export high-quality images!",
+  "otherLoginWays": "Other Login Methods",
+  "otp": "Verification Code",
+  "otpPlaceholder": "Enter verification code",
+  "password": "Password",
   "password-setting": "Password Settings",
+  "passwordPlaceholder": "Enter password",
   "personal-center": "Personal Center",
+  "phone": "Phone",
+  "phonePlaceholder": "Enter phone number",
   "profile": "Profile",
   "project-address": "Project Repository",
+  "register": "Register",
+  "registerLink": "Register now",
   "return": "Back",
   "rich-templates": "Rich Templates",
   "rich-templates-desc": "Hundreds of carefully designed templates for various scenarios!",
+  "save": "Save",
+  "sendCode": "Send Code",
   "settings": "Settings",
   "share": "Share",
+  "signUp": "Sign Up",
   "start-designing": "Start Designing",
   "template-list": "Template Library",
   "templates": "Templates",
+  "toast": {
+    "error": "Operation failed",
+    "info": "Information prompt",
+    "password": {
+      "error": "Password change failed, please try again",
+      "old-password-error": "Current password is incorrect",
+      "old-password-error-desc": "Please check and try again",
+      "success": "Password successfully changed",
+      "your-password-has-been-updated": "Your password has been successfully updated",
+      "your-password-has-been-updated-desc": "Please log in with your new password"
+    },
+    "success": "Operation successful",
+    "warning": "Warning prompt"
+  },
   "topic-switching": "Theme Switch",
+  "username": "Username",
+  "usernameOrEmail": "Username/Email",
+  "usernameOrEmailPlaceholder": "Enter username/email",
+  "usernamePlaceholder": "Enter username",
   "verification-code": "Verification Code",
-  "works": "Works",
-  "works-list": "My Works",
-  "works.listTitle": "All Works List ✨",
   "work": {
     "unnamed-title": "unnamed title"
   },
-  "form": {
-    "required": "This field is required",
-    "email": {
-      "invalid": "Please enter a valid email address",
-      "required": "Email is required",
-      "emailPlaceholder": "Enter your email address"
-    },
-    "password": {
-      "required": "Please enter your password",
-      "minLength": "Password must be at least 6 characters",
-      "maxLength": "Password cannot exceed 20 characters",
-      "pattern": "Password must contain both letters and numbers"
-    },
-    "username": {
-      "required": "Please enter your username",
-      "minLength": "Username must be at least 2 characters",
-      "maxLength": "Username cannot exceed 20 characters"
-    },
-    "phone": {
-      "required": "Please enter your phone number",
-      "invalid": "Please enter a valid phone number"
-    },
-    "code": {
-      "required": "Please enter verification code",
-      "length": "Verification code must be 6 digits"
-    },
-    "confirmPassword": {
-      "required": "Please confirm your password",
-      "enter-old-password": "Enter current password",
-      "old-password": "Current Password",
-      "enter-new-password": "Enter new password",
-      "new-password": "New Password",
-      "confirm-new-password": "Please confirm new password",
-      "notMatch": "Passwords do not match"
-    }
-  },
-  "errors": {
-    "connection": {
-      "closed": "Connection closed, please check your network and try again",
-      "timeout": "Connection timeout, please try again later",
-      "failed": "Connection failed, please check network settings"
-    },
-    "database": {
-      "connectionClosed": "Database connection lost, please refresh and try again"
-    },
-    "common": {
-      "tryAgain": "Something went wrong, please try again",
-      "networkError": "Network error, please check your connection",
-      "serverError": "Server error, please try again later"
-    }
-  },
-  "toast": {
-    "success": "Operation successful",
-    "error": "Operation failed",
-    "info": "Information prompt",
-    "warning": "Warning prompt",
-    "password": {
-      "success": "Password successfully changed",
-      "your-password-has-been-updated": "Your password has been successfully updated",
-      "your-password-has-been-updated-desc": "Please log in with your new password",
-      "old-password-error": "Current password is incorrect",
-      "old-password-error-desc": "Please check and try again",
-      "error": "Password change failed, please try again"
-    }
-  }
+  "works": "Works",
+  "works-list": "My Works",
+  "works.listTitle": "All Works List ✨"
 }

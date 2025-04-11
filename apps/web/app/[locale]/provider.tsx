@@ -1,3 +1,4 @@
+import GoToLogin from "@/components/GoToLogin";
 import { Toaster } from "@/components/ui/toaster";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -21,6 +22,7 @@ const Providers = async (props: ProvidesProps) => {
         disableTransitionOnChange
       >
         {children}
+        <GoToLogin />
         <Toaster />
       </ThemeProvider>
     </NextIntlClientProvider>

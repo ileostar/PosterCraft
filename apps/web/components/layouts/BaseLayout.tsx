@@ -42,12 +42,6 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ children, className }) => {
 
     rafId = requestAnimationFrame(raf);
 
-    // 监听滚动事件
-    lenis.on("scroll", ({ scroll, velocity, direction }) => {
-      console.log(`Scroll: ${scroll}, Velocity: ${velocity}, Direction: ${direction}`);
-      // 你可以在这里添加自定义的滚动处理逻辑
-    });
-
     return () => {
       cancelAnimationFrame(rafId); // 取消动画帧请求
       lenis.destroy(); // 清理Lenis实例

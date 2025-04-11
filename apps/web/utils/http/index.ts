@@ -1,5 +1,6 @@
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 
+import { useGoToLoginStore } from "@/stores/loginDialog";
 import axios from "axios";
 
 const instance = axios.create({
@@ -17,6 +18,7 @@ instance.interceptors.request.use(
     return config;
   },
   function (error: unknown) {
+    console.log(error, "error");
     return Promise.reject(error);
   },
 );
@@ -24,9 +26,28 @@ instance.interceptors.request.use(
 // 响应拦截器
 instance.interceptors.response.use(
   function (response) {
+    // 打印响应数据
+    console.log("响应数据:", {
+      status: response.status,
+      statusText: response.statusText,
+      data: response.data,
+      headers: response.headers,
+    });
     return response;
   },
   function (error: unknown) {
+    const { setIsOpen } = useGoToLoginStore();
+    // 打印完整的错误对象，包含response信息
+    console.log("完整错误信息:", {
+      status: (error as any).response?.status,
+      statusText: (error as any).response?.statusText,
+      data: (error as any).response?.data,
+      error,
+    });
+    if ((error as any).response?.data?.message === "Unauthorized") {
+      console.log("token过期");
+      setIsOpen(true);
+    }
     return Promise.reject(error);
   },
 );
