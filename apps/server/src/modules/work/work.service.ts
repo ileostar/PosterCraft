@@ -78,9 +78,80 @@ export class WorkService {
     }
   }
 
-  async getWorksListInfos(userId: string, dto: GetMyWorksListDto) {
-    const result = await this.getPagingWorksList(userId, dto);
-    const count = await this.getPagingWorksList(userId, dto, false);
+  async getPagingList(
+    dto: GetMyWorksListDto,
+    isPaging = true,
+    isTemplate = false,
+  ) {
+    return this.db.query.work.findMany({
+      where: !isTemplate
+        ? (work, { like }) => {
+            const conditions = [eq(work.isPublic, true)];
+
+            if (dto.title) {
+              conditions.push(like(work.title, `%${dto.title}%`));
+            }
+
+            return conditions.length > 0 && and(...conditions);
+          }
+        : (work, { eq }) =>
+            and(eq(work.isPublic, true), eq(work.isTemplate, true)),
+      orderBy: (work, { asc }) => asc(work.createdAt),
+      ...(isPaging && { limit: Number(dto.pageSize) }),
+      ...(isPaging && { offset: (dto.pageIndex - 1) * dto.pageSize }),
+    });
+  }
+
+  async getPagingListByUserId(
+    userId: string,
+    dto: GetMyWorksListDto,
+    isPaging = true,
+    isTemplate = false,
+  ) {
+    return this.db.query.work.findMany({
+      where: !isTemplate
+        ? (work, { like, eq }) => {
+            // 构建查询条件数组
+            const conditions = [eq(work.userId, userId)];
+
+            // 如果有标题搜索，添加标题模糊匹配条件
+            if (dto.title) {
+              conditions.push(like(work.title, `%${dto.title}%`));
+            }
+
+            // 组合所有条件
+            return and(...conditions);
+          }
+        : (work, { eq }) => eq(work.isTemplate, true),
+      orderBy: (work, { asc }) => asc(work.createdAt),
+      ...(isPaging && { limit: Number(dto.pageSize) }),
+      ...(isPaging && { offset: (dto.pageIndex - 1) * dto.pageSize }),
+    });
+  }
+
+  async getWorksListInfos(dto: GetMyWorksListDto) {
+    const result = await this.getPagingList(dto);
+    const count = await this.getPagingList(dto, false);
+
+    return {
+      count: count.length,
+      pageIndex: dto.pageIndex,
+      pageSize: dto.pageSize,
+      list: result.map((i) => ({
+        ...i,
+        id: void 0,
+        uuid: void 0,
+        createdAt: void 0,
+        updatedAt: void 0,
+        workId: i.uuid,
+      })),
+    };
+  }
+
+  async getUserWorksList(userId: string, dto: GetMyWorksListDto) {
+    const result = await this.getPagingListByUserId(userId, dto);
+    const count = await this.getPagingListByUserId(userId, dto, false);
+
     return {
       count: count.length,
       pageIndex: dto.pageIndex,
@@ -109,7 +180,6 @@ export class WorkService {
   }
 
   async updateWork(workId: string, dto: WorkDto) {
-    console.log('=====================', workId, dto);
     await this.db.update(work).set(dto).where(eq(work.uuid, workId));
     return {
       workId: workId,
@@ -154,39 +224,5 @@ export class WorkService {
       url: `${url}/pages/preview/${workInfo.id}-${workInfo.uuid}`,
       pageId: `${workInfo.id}-${workInfo.uuid}`,
     };
-  }
-
-  async getPagingWorksList(
-    userId: string,
-    dto: GetMyWorksListDto,
-    isPaging = true,
-    isTemplateList = false,
-  ) {
-    return this.db.query.work.findMany({
-      where: !isTemplateList
-        ? (work, { like, eq }) =>
-            dto.title
-              ? dto.isTemplate
-                ? and(
-                    eq(work.userId, userId),
-                    like(work.title, `%${dto.title}%`),
-                    eq(work.isTemplate, dto.isTemplate),
-                  )
-                : and(
-                    eq(work.userId, userId),
-                    like(work.title, `%${dto.title}%`),
-                  )
-              : dto.isTemplate
-                ? and(
-                    eq(work.userId, userId),
-                    eq(work.isTemplate, dto.isTemplate),
-                  )
-                : eq(work.userId, userId)
-        : (work, { eq }) =>
-            and(eq(work.isPublic, true), eq(work.isTemplate, true)),
-      orderBy: (work, { asc }) => asc(work.createdAt),
-      ...(isPaging && { limit: Number(dto.pageSize) }),
-      ...(isPaging && { offset: (dto.pageIndex - 1) * dto.pageSize }),
-    });
   }
 }

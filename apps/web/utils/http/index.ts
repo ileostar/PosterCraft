@@ -19,7 +19,6 @@ instance.interceptors.request.use(
     return config;
   },
   function (error: unknown) {
-    console.log(error, "error");
     return Promise.reject(error);
   },
 );
@@ -37,19 +36,10 @@ instance.interceptors.response.use(
     return response;
   },
   function (error: unknown) {
-    // 打印完整的错误对象，包含response信息
-    console.log("完整错误信息:", {
-      status: (error as any).response?.status,
-      statusText: (error as any).response?.statusText,
-      data: (error as any).response?.data,
-      error,
-    });
     if (
       (error as any).response?.status === 401 ||
       (error as any).response?.data?.message === "Unauthorized"
     ) {
-      console.log("token过期或未授权");
-      // 使用事件总线触发未授权事件，而不是直接调用React Hook
       eventBus.emit(EventTypes.AUTH_ERROR);
     }
     return Promise.reject(error);

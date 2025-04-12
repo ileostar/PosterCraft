@@ -22,6 +22,11 @@ export function getWorkList(query?: GetWorkListBody) {
   return http.get<ResponseData<GetWorkListResponse>>(`/work/list`, query);
 }
 
+/** 获取用户的工作区列表 */
+export function getUserWorksList(query?: GetWorkListBody) {
+  return http.get<ResponseData<GetWorkListResponse>>(`/work/user/list`, query);
+}
+
 /** 复制工作区 */
 export function copyWork(workId: string) {
   return http.post<ResponseData<CopyWorkResponse>>(`/work/copy/${workId}`);

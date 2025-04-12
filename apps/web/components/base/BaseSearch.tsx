@@ -14,16 +14,11 @@ const BaseSearch: React.FC<BaseSearchProps> = ({ className = "", onSearch, ...re
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-    rest.onChange?.(e); // Optional chaining for cleaner code
+    rest.onChange?.(e);
   };
 
   const handleSearch = () => {
-    toast({
-      title: "Search",
-      description: `Searching for "${inputValue}"...`,
-      duration: 2000,
-    });
-    onSearch?.(inputValue); // Optional chaining for cleaner code
+    onSearch?.(inputValue);
   };
 
   return (

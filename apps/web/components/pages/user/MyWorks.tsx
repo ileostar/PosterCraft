@@ -5,9 +5,9 @@ import BaseCard from "@/components/base/BaseCard";
 import BaseGrid from "@/components/base/BaseGrid";
 import BaseSearch from "@/components/base/BaseSearch";
 import CustomPagination from "@/components/shared/CustomPagination";
-import { getTemplateList } from "@/http/template";
+import { getUserTemplateList } from "@/http/template";
 import { CreateWorkResponse } from "@/http/types/work";
-import { getWorkList } from "@/http/work";
+import { getUserWorksList } from "@/http/work";
 import { useWorkStore } from "@/stores/work";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -31,9 +31,10 @@ const MyWorks: React.FC<MyWorksProps> = (params) => {
     try {
       const res =
         mode == "work"
-          ? await getWorkList({ pageIndex, pageSize, title })
-          : await getTemplateList({ pageIndex, pageSize, title });
-      setRenderList(res.data.data?.list || []);
+          ? await getUserWorksList({ pageIndex, pageSize, title })
+          : await getUserTemplateList({ pageIndex, pageSize, title });
+      console.log("res.data", res.data);
+      setRenderList(res.data.data.list || []);
       setPageIndex(pageIndex);
       setPageSize(pageSize);
       setTotalPage(Math.ceil(res.data.data?.count / pageSize));
@@ -43,8 +44,7 @@ const MyWorks: React.FC<MyWorksProps> = (params) => {
   };
 
   useEffect(() => {
-    getList(1, pageSize, title);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getList(pageIndex, pageSize, title);
   }, [title, mode]);
 
   const renderPoster = (item: any) => {

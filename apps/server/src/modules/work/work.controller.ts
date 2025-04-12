@@ -88,12 +88,9 @@ export class WorkController {
     description: '获取工作区列表',
   })
   @APIResponse(ResponseWorksListDto)
-  async getWorksListInfos(
-    @Query() query: GetMyWorksListDto,
-    @CallbackUserData() userInfo: JwtPayloadDto,
-  ) {
+  async getWorksListInfos(@Query() query: GetMyWorksListDto) {
     try {
-      const data = await this.workService.getWorksListInfos(userInfo.userId, {
+      const data = await this.workService.getWorksListInfos({
         ...(query.title && { title: query.title }),
         pageIndex: query.pageIndex ?? 1,
         pageSize: query.pageSize ?? 10,
@@ -140,6 +137,34 @@ export class WorkController {
     } catch (error) {
       return {
         msg: '获取单个工作区失败' + error,
+      };
+    }
+  }
+
+  @Get('/user/list')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    summary: '获取用户工作区列表',
+    description: '获取用户工作区列表',
+  })
+  @APIResponse(ResponseWorksListDto)
+  async getUserWorksList(
+    @Query() query: GetMyWorksListDto,
+    @CallbackUserData() userInfo: JwtPayloadDto,
+  ) {
+    try {
+      const data = await this.workService.getUserWorksList(
+        userInfo.userId,
+        query,
+      );
+      return {
+        code: 200,
+        msg: '获取用户工作区列表成功',
+        data,
+      };
+    } catch (error) {
+      return {
+        msg: '获取用户工作区列表失败' + error,
       };
     }
   }

@@ -13,14 +13,32 @@ export class TemplateService {
   ) {}
 
   async getTemplatesList(dto: GetTemplateListDto) {
-    const result = await this.workService.getPagingWorksList(
-      null,
+    const result = await this.workService.getPagingList(dto, true, true);
+    const count = await this.workService.getPagingList(dto, false, true);
+    return {
+      count: count.length,
+      pageIndex: dto.pageIndex,
+      pageSize: dto.pageSize,
+      list: result.map((i) => ({
+        ...i,
+        id: void 0,
+        uuid: void 0,
+        createdAt: void 0,
+        updatedAt: void 0,
+        workId: i.uuid,
+      })),
+    };
+  }
+
+  async getUserTemplatesList(userId: string, dto: GetTemplateListDto) {
+    const result = await this.workService.getPagingListByUserId(
+      userId,
       dto,
       true,
       true,
     );
-    const count = await this.workService.getPagingWorksList(
-      null,
+    const count = await this.workService.getPagingListByUserId(
+      userId,
       dto,
       false,
       true,
