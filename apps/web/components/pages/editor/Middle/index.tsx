@@ -68,8 +68,8 @@ function Middle(props: any) {
   const getTheWork = async () => {
     if (currentWorkId) {
       const res = await getWork(currentWorkId);
-      setElements(res.data.data.content.Elements ?? []);
-      setPageBackgroundStyle({ ...res.data.data.content.pageBackgroundStyle });
+      setElements(res.data.data.content.components ?? []);
+      setPageBackgroundStyle({ ...res.data.data.content.props });
     } else {
       setElements([]);
       //设置默认背景样式

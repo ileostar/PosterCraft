@@ -5,6 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { GlobalEnvConfig, siteConfig } from "@/config";
 import { getWork, publishWorkToTemplate } from "@/http/work";
 import { useWorkStore } from "@/stores/work";
+import { takeScreenshot } from "@/utils/others/takeScreenshot";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
@@ -40,6 +41,18 @@ function DialogDemo({
     fetchWorkInfo();
   }, [currentWorkId]);
 
+  const [imgUrl, setImgUrl] = useState("");
+  const [coverImg, setCoverImg] = useState("");
+  const getTheWork = async () => {
+    const img = await takeScreenshot();
+    if (img) {
+      setImgUrl(img);
+    }
+    if (currentWorkId) {
+      const res = await getWork(currentWorkId);
+    }
+  };
+
   const handleClick = async () => {
     try {
       if (currentWorkId) {
@@ -62,9 +75,20 @@ function DialogDemo({
       console.log(error);
     }
   };
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    getTheWork();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
+  // 生成二维码
+  const qrCodeUrl = `${GlobalEnvConfig.SERVER_URL}/page/preview/demo-${currentWorkId}`;
   return (
-    <Drawer direction="right">
+    <Drawer
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      direction="right"
+    >
       <DrawerTrigger
         asChild
         className="overflow-visible"
@@ -72,25 +96,57 @@ function DialogDemo({
         {children}
       </DrawerTrigger>
       <DrawerContent className="h-[100vh] w-[650px]  dark:bg-[#1F2937] px-6 pb-6 ">
+        <dt className="mb-5 font-sans font-bold">设置面板</dt>
         <div className="flex gap-5">
-          <div className="mockup-phone border-primary !mx-5">
+          <div className="mockup-phone border-primary  !rounded-2xl !mx-5  !p-1 !py-2">
             <div className="mockup-phone-camera"></div>
-            <div className="mockup-phone-display w-80 flex justify-center items-center min-h-[568px]">
-              <iframe
-                className="h-full"
-                src={GlobalEnvConfig.SERVER_URL + "/page/preview/preview-" + currentWorkId}
+            <div className="mockup-phone-display w-80 rounded-2xl flex justify-center items-center">
+              <Image
+                className="w-full h-full rounded-xl object-cover"
+                src={imgUrl}
+                alt="封面"
+                width={300}
+                height={500}
               />
             </div>
           </div>
           <dl className="flex-1 flex flex-col gap-5">
-            <dt className="font-sans font-bold">设置面板</dt>
-            <dd className="flex gap-5">
+            <dd className="flex flex-col gap-5">
               <div className="w-20">扫码预览：</div>
-              <span>扫码预览：</span>
+              <QRCode
+                className="border border-white border-solid p-1 rounded-sm"
+                value={qrCodeUrl}
+                size={100}
+              />
             </dd>
-            <dd className="flex gap-5">
+            <dd className="flex flex-col gap-5 max-w-40">
               <div className="w-20">上传封面：</div>
-              <span>扫码预览：</span>
+              <div className="relative">
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="cursor-pointer w-full"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onload = (e) => {
+                        setCoverImg(e.target?.result as string);
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
+                {coverImg && (
+                  <div className="mt-2">
+                    <img
+                      src={coverImg}
+                      alt="预览图"
+                      className="w-32 object-cover rounded-md"
+                    />
+                  </div>
+                )}
+              </div>
             </dd>
             <dd className="flex gap-5">
               <div className="w-20">标题：</div>

@@ -60,8 +60,8 @@ function PublishDialog({
       desc: values.desc,
       coverImg: form.getValues("coverImg"),
       content: {
-        Elements,
-        pageBackgroundStyle,
+        components: Elements,
+        props: pageBackgroundStyle,
       },
       isTemplate: false,
       isPublic: false,
@@ -116,7 +116,7 @@ function PublishDialog({
           <DialogDescription>请输入或修改相关的作品信息</DialogDescription>
         </DialogHeader>
         <div className="flex flex-row justify-between">
-          <div className="w-[150px] h-[267px] border border-gray-500">
+          <div className="w-[150px] h-[267px] border border-gray-500 border-solid">
             <Image
               className="w-full h-full object-cover"
               src={imgUrl}

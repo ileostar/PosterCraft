@@ -1,10 +1,19 @@
 import { uploadFile } from "@/http/oss";
 import html2canvas from "html2canvas-pro";
 
+/**
+ * 截图
+ * @returns
+ */
 export async function takeScreenshot() {
   console.log("takeScreenshot");
   const ele = document.getElementById("mid-container") as HTMLElement;
-  const canvas = await html2canvas(ele, { width: 375, useCORS: true, scale: 1 });
+  const canvas = await html2canvas(ele, {
+    width: ele.clientWidth,
+    height: ele.clientHeight,
+    useCORS: true,
+    scale: 1,
+  });
   const canvasBlob = await getCanvasBlob(canvas);
   if (canvasBlob) {
     const data = await upload(canvasBlob);
