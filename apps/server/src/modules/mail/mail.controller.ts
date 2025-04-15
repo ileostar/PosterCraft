@@ -17,14 +17,13 @@ export class MailController {
   constructor(private mailService: MailService) {}
 
   @Post('sendCode')
-  @UseGuards(JwtAuthGuard)
   @ApiBody({ type: SendCodeByEmailDto })
   @ApiOperation({
     summary: '发送邮箱验证码',
     description: '发送邮箱验证码并返回',
   })
   @APIResponse()
-  async sendCodeByEmail(@Query() dto: SendCodeByEmailDto) {
+  async sendCodeByEmail(@Body() dto: SendCodeByEmailDto) {
     try {
       await this.mailService.sendCodeByMail(dto);
       return {

@@ -69,10 +69,17 @@ export class MailService {
   }
 
   async verifyEmail(dto: VerifyEmailDto) {
-    if (await this.userService.checkEmailExists(dto.email))
-      throw '用户邮箱不存在';
-    if (dto.otp === (await this.cacheService.getCache(dto.email)))
+    console.log(
+      '%c🤪 ~ file: mail.service.ts:71 [] -> dto : ',
+      'color: #1ef0',
+      dto,
+    );
+    const emailExist = await this.userService.checkEmailExists(dto.email);
+    if (!emailExist) throw '用户邮箱不存在';
+    console.log('用户邮箱存在');
+    if (dto.otp !== (await this.cacheService.getCache(dto.email)))
       throw '邮箱绑定失败：验证码错误';
+    console.log('验证码无误');
     await this.cacheService.delCache(dto.email);
   }
 }

@@ -1,6 +1,22 @@
 {
+  "account": {
+    "close": {
+      "confirm": "Sign OUT",
+      "description": "Are you sure you want to delete your account? This action cannot be undone.",
+      "sendCode": "Send",
+      "success": {
+        "description": "Account deleted successfully"
+      }
+    },
+    "setting": "account settings",
+    "settings": "account setting"
+  },
   "account-setting": "Account Settings",
   "bind-account": "Bind Account",
+  "cancel": "cancel",
+  "change": {
+    "email": "Change mailbox"
+  },
   "change-email": "Change Email",
   "change-password": "Change Password",
   "change-phone": "Change Phone",
@@ -9,11 +25,13 @@
   "common": {
     "relogin": "relogin"
   },
+  "confirm": "confirm",
   "create-posters-with": "Create posters with",
   "desc": "Design and customize professional posters effortlessly in minutes with PosterCraft.",
   "develop-document": "Documentation",
   "discover-more": "Discover More",
   "editPersonalInformation": "Edit Profile",
+  "email": "email",
   "errors": {
     "common": {
       "networkError": "Network error, please check your connection",
@@ -80,6 +98,9 @@
   "loginSuccess": "Login successful, redirecting to homepage...",
   "my-card": "My Info",
   "new-features-added": "New Features",
+  "next": {
+    "step": "Next step"
+  },
   "next-step": "Next",
   "one-click-sharing": "One-Click Share",
   "one-click-sharing-desc": "Easily share your work to social media or export high-quality images!",
@@ -122,10 +143,23 @@
     "warning": "Warning prompt"
   },
   "topic-switching": "Theme Switch",
+  "update": {
+    "failed": "update failed",
+    "success": "update success"
+  },
   "username": "Username",
   "usernameOrEmail": "Username/Email",
   "usernameOrEmailPlaceholder": "Enter username/email",
   "usernamePlaceholder": "Enter username",
+  "verification": {
+    "code": "Verification code",
+    "codeSent": "Send Code",
+    "codeVerified": "Check success",
+    "codeVerifiedDescription": "If the verification is successful, go to the next step",
+    "failed": "Verification failure",
+    "success": "Successful verification",
+    "title": "Mailbox verification"
+  },
   "verification-code": "Verification Code",
   "work": {
     "unnamed-title": "unnamed title"

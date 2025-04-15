@@ -27,6 +27,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "cimg.co",
       },
+      {
+        protocol: "https",
+        hostname: "img.leostar.top",
+      },
     ],
   },
 };

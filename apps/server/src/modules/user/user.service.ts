@@ -130,6 +130,12 @@ export class UserService {
 
   async checkEmailExists(email: string): Promise<boolean> {
     const user = await this.findUserByEmail(email);
+    console.log(
+      '%c🤪 ~ file: user.service.ts:132 [] -> user : ',
+      'color: #6e8ec6',
+      user,
+    );
+
     return !!user;
   }
 }

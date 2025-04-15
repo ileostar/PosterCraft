@@ -71,13 +71,13 @@ const UploadAvatar: React.FC<ChildProps> = ({ handleOssUrl, img }) => {
     <div>
       {imageUrl ? (
         <button
-          className="w-24 rounded-full"
+          className="w-24 rounded-full overflow-hidden"
           onClick={() => handleClickButton()}
         >
           <input
             ref={inputRef}
             type="file"
-            className="hidden"
+            className="hidden rounded-full"
             onChange={(e) => handleFileChange(e)}
             accept="image/jpeg, image/png"
           ></input>
@@ -86,8 +86,8 @@ const UploadAvatar: React.FC<ChildProps> = ({ handleOssUrl, img }) => {
             alt="avatar"
             width={0}
             height={0}
-            sizes="100vh"
-            className="w-full h-full"
+            sizes="10vw"
+            className="w-full h-full rounded-full"
           />
         </button>
       ) : (
@@ -95,7 +95,7 @@ const UploadAvatar: React.FC<ChildProps> = ({ handleOssUrl, img }) => {
           <input
             ref={inputRef}
             type="file"
-            className="hidden"
+            className="hidden rounded-full"
             onChange={(e) => handleFileChange(e)}
             accept="image/jpeg, image/png"
           ></input>
