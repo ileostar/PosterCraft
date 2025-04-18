@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "antfu.goto-alias",
+    "antfu.vite",
+    "antfu.unocss",
+    "dbaeumer.vscode-eslint",
+    "Vue.volar",
+    "Vue.vscode-typescript-vue-plugin",
+    "EditorConfig.EditorConfig"
+  ]
+}
