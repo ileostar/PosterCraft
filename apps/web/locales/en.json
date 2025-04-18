@@ -12,6 +12,9 @@
     "settings": "account setting"
   },
   "account-setting": "Account Settings",
+  "bind": {
+    "email": "bind mailbox"
+  },
   "bind-account": "Bind Account",
   "cancel": "cancel",
   "change": {
@@ -154,9 +157,11 @@
   "verification": {
     "code": "Verification code",
     "codeSent": "Send Code",
+    "codeSentDescription": "Captcha sent successfully, please operate in 60s ",
     "codeVerified": "Check success",
     "codeVerifiedDescription": "If the verification is successful, go to the next step",
     "failed": "Verification failure",
+    "newEmail": "new mailbox",
     "success": "Successful verification",
     "title": "Mailbox verification"
   },

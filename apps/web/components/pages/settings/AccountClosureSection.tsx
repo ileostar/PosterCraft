@@ -40,7 +40,6 @@ export default function AccountClosureSection() {
       </p>
       <Button
         variant="destructive"
-        className="w-1/3"
         onClick={handleAccountClosure}
       >
         {t("account.close.confirm")}

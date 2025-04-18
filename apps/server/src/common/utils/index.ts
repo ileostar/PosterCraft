@@ -4,7 +4,11 @@ import * as crypto from 'crypto';
 export function generateVerificationCode() {
   const randomBytes = crypto.randomBytes(3);
   const randomNumber = parseInt(randomBytes.toString('hex'), 16) % 1000000;
-  return randomNumber.toString().slice(0, 6);
+  let code = randomNumber.toString().slice(0, 6);
+  if (code.length < 6) {
+    code += code + '000000';
+  }
+  return code.slice(0, 6);
 }
 
 /** 生成随机用户名 */

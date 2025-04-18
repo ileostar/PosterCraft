@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { bindEmail, updateEmail, verifyEmail } from "@/http/email";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -46,8 +45,6 @@ interface VerificationFormProps {
   isLoading: boolean;
   /** 设置加载状态 */
   setIsLoading: (loading: boolean) => void;
-  /** 成功回调 */
-  onSuccess: () => void;
   /** 邮箱是否已绑定 */
   isEmailBound?: boolean;
 }
@@ -60,7 +57,6 @@ export default function VerificationForm({
   initialValue = "",
   isLoading,
   setIsLoading,
-  onSuccess,
   isEmailBound = false,
 }: VerificationFormProps) {
   const t = useTranslations();
@@ -97,10 +93,16 @@ export default function VerificationForm({
     form.reset({ value: form.getValues("value"), otp: "" });
   };
 
+  const onSuccess = (val: string) => {
+    setStep(VerificationStep.Initial);
+    form.reset({ value: form.getValues("value"), otp: "" });
+    initialValue = val;
+  };
+
   return (
     <Form {...form}>
       <form
-        className="space-y-4 w-2/3"
+        className="space-y-4 w-2/3 flex gap-3 items-end"
         onSubmit={(e) => e.preventDefault()}
       >
         {initialValue !== "" ? (
@@ -113,7 +115,7 @@ export default function VerificationForm({
                   <FormLabel>{t("email")}</FormLabel>
                   <FormControl>
                     <Input
-                      className="text-white"
+                      className="dark:text-white h-10 text-black"
                       value={initialValue}
                       disabled={true}
                     />
@@ -130,6 +132,7 @@ export default function VerificationForm({
               form={form}
               step={step}
               isLoading={isLoading}
+              onSuccess={onSuccess}
               handleVerification={handleVerification}
               handleDialogClose={handleDialogClose}
               triggerText={t("change.email")}
@@ -158,6 +161,7 @@ export default function VerificationForm({
               }}
               form={form}
               step={step}
+              onSuccess={onSuccess}
               isLoading={isLoading}
               handleVerification={handleVerification}
               handleDialogClose={handleDialogClose}

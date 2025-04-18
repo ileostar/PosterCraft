@@ -1,4 +1,4 @@
-import { Global, Injectable } from '@nestjs/common';
+import { Global, Inject, Injectable } from '@nestjs/common';
 import {
   SendCodeByEmailDto,
   BindEmailDto,
@@ -57,10 +57,8 @@ export class MailService {
   async updateEmail(id: string, dto: BindEmailDto) {
     if (await this.userService.checkEmailExists(dto.email))
       throw '邮箱已被绑定';
-    if (dto.otp === (await this.cacheService.getCache(dto.email)))
+    if (dto.otp !== (await this.cacheService.getCache(dto.email)))
       throw '邮箱绑定失败：验证码错误';
-    if (!(await this.userService.findUserByEmail(dto.email)))
-      throw '用户未绑定邮箱';
     await this.userService.updateUserInfos({
       ...dto,
       userId: id,

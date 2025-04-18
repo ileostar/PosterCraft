@@ -37,7 +37,6 @@ export default function Account({ className }: Readonly<{ className?: string }>)
           email: data.data.email || "",
         });
       }
-      console.log("============", data); // TODO: remove this log inf
     } catch (error) {
       toast({
         variant: "destructive",
@@ -62,7 +61,6 @@ export default function Account({ className }: Readonly<{ className?: string }>)
             initialValue={userData.email}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
-            onSuccess={fetchUserData}
             isEmailBound={!!userData.email}
           />
         </section>

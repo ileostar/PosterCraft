@@ -11,7 +11,7 @@ import {
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import { sendCodeByEmail, verifyEmail } from "@/http/email";
+import { sendCodeByEmail, updateEmail, verifyEmail } from "@/http/email";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
@@ -51,6 +51,8 @@ interface VerificationDialogProps {
   triggerText: string;
   /** 初始邮箱值 */
   emailVal?: string;
+  /** 成功 */
+  onSuccess: (val: string) => void;
 }
 
 /**
@@ -67,6 +69,7 @@ export default function VerificationDialog({
   handleDialogClose,
   triggerText,
   emailVal,
+  onSuccess,
 }: VerificationDialogProps) {
   const t = useTranslations();
   // 验证码倒计时状态
@@ -74,11 +77,11 @@ export default function VerificationDialog({
 
   /** 发送验证码 */
   const sendCode = async () => {
-    console.log("============", emailVal);
-    if (!emailVal) return;
+    const eVal = step === VerificationStep.SendCode ? emailVal : form.watch("value");
+    if (!eVal) return;
     try {
       const { data } = await sendCodeByEmail({
-        email: emailVal,
+        email: eVal,
       });
       if (data) {
         toast({
@@ -99,6 +102,7 @@ export default function VerificationDialog({
   /** 验证处理 */
   const verifyEmailByOpt = async () => {
     try {
+      if (step !== VerificationStep.SendCode) return;
       const res = await verifyEmail({
         email: emailVal || "",
         otp: form.watch("otp"),
@@ -109,6 +113,8 @@ export default function VerificationDialog({
           description: t("verification.codeVerifiedDescription"),
           variant: "success",
         });
+        // 清除验证码
+        clearOtp();
         return true;
       }
     } catch (error) {
@@ -121,6 +127,64 @@ export default function VerificationDialog({
     return false;
   };
 
+  /** 更换邮箱 */
+  const changeEmail = async () => {
+    try {
+      const res = await updateEmail({
+        email: form.watch("value"),
+        otp: form.watch("otp"),
+      });
+      if (res.data.code === 200) {
+        toast({
+          title: t("verification.codeVerified"),
+          description: t("verification.success"),
+          variant: "success",
+        });
+        // 清除验证码
+        clearOtp();
+        return true;
+      } else {
+        toast({
+          variant: "destructive",
+          title: t("errors.common.serverError"),
+          description: res.data.msg,
+        });
+      }
+    } catch (error) {
+      console.log("============", error);
+      toast({
+        variant: "destructive",
+        title: t("errors.common.serverError"),
+      });
+    }
+    return false;
+  };
+
+  /** 清除验证码 */
+  const clearOtp = () => {
+    form.setValue("otp", "");
+    setCountdown(0);
+  };
+
+  /** 处理每个阶段的点击事件 */
+  async function handleClick() {
+    // 验证逻辑实现
+    if (step === VerificationStep.SendCode) {
+      const vs = await verifyEmailByOpt();
+      if (vs) {
+        handleVerification(VerificationStep.Update);
+      }
+    }
+    // 更换邮箱
+    if (step === VerificationStep.Update) {
+      const vs = await changeEmail();
+      if (vs) {
+        onSuccess(form.watch("value"));
+        handleDialogClose();
+      }
+    }
+  }
+
   return (
     <Dialog
       open={isOpen}
@@ -129,8 +193,9 @@ export default function VerificationDialog({
       <DialogTrigger asChild>
         <Button
           type="button"
+          variant="destructive"
           disabled={isLoading}
-          className="text-white"
+          className="text-white  h-10"
           onClick={() => handleVerification(VerificationStep.SendCode)}
         >
           {triggerText}
@@ -153,7 +218,6 @@ export default function VerificationDialog({
                   <Input
                     {...field}
                     type="email"
-                    placeholder="example@email.com"
                   />
                 </FormControl>
                 <FormMessage />
@@ -168,35 +232,29 @@ export default function VerificationDialog({
             <FormItem>
               <FormLabel>{t("verification.code")}</FormLabel>
               <FormControl>
-                {step === VerificationStep.SendCode ? (
-                  <div className="flex items-center gap-1">
-                    <Input {...field} />
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      disabled={countdown > 0}
-                      onClick={() => {
-                        sendCode();
-                        setCountdown(30);
-                        const timer = setInterval(() => {
-                          setCountdown((prev) => {
-                            if (prev <= 1) {
-                              clearInterval(timer);
-                              return 0;
-                            }
-                            return prev - 1;
-                          });
-                        }, 1000);
-                      }}
-                    >
-                      {countdown > 0 ? `${countdown}s` : t("account.close.sendCode")}
-                    </Button>
-                  </div>
-                ) : (
-                  <div>
-                    <Input {...field} />
-                  </div>
-                )}
+                <div className="flex items-center gap-1">
+                  <Input {...field} />
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    disabled={countdown > 0}
+                    onClick={() => {
+                      sendCode();
+                      setCountdown(30);
+                      const timer = setInterval(() => {
+                        setCountdown((prev) => {
+                          if (prev <= 1) {
+                            clearInterval(timer);
+                            return 0;
+                          }
+                          return prev - 1;
+                        });
+                      }, 1000);
+                    }}
+                  >
+                    {countdown > 0 ? `${countdown}s` : t("account.close.sendCode")}
+                  </Button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -214,14 +272,7 @@ export default function VerificationDialog({
           <Button
             type="button"
             disabled={isLoading}
-            onClick={async () => {
-              if (step === VerificationStep.SendCode) {
-                const vs = await verifyEmailByOpt();
-                if (vs) {
-                  handleVerification(VerificationStep.Update);
-                }
-              }
-            }}
+            onClick={handleClick}
           >
             {t("confirm")}
           </Button>

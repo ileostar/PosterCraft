@@ -12,6 +12,9 @@
     "settings": "账户设置"
   },
   "account-setting": "账号设置",
+  "bind": {
+    "email": "绑定邮箱"
+  },
   "bind-account": "绑定账号",
   "cancel": "取消",
   "change": {
@@ -154,9 +157,11 @@
   "verification": {
     "code": "验证码",
     "codeSent": "发送",
+    "codeSentDescription": "验证码发送成功，请在60s内进行操作",
     "codeVerified": "校验成功",
     "codeVerifiedDescription": "校验成功,请继续进行下一步",
     "failed": "验证失败",
+    "newEmail": "新邮箱",
     "success": "验证成功",
     "title": "邮箱验证"
   },
