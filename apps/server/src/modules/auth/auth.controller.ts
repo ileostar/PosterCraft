@@ -99,4 +99,17 @@ export class AuthController {
       );
     }
   }
+
+  @Post('admin/login')
+  @ApiBody({ type: DefaultLoginDto })
+  @ApiOperation({ summary: '管理员登录', description: '管理员登录' })
+  async adminLogin(@Body() dto: DefaultLoginDto) {
+    try {
+      return await this.authService.adminLogin(dto);
+    } catch (error) {
+      return {
+        msg: '管理员登录失败' + error,
+      };
+    }
+  }
 }

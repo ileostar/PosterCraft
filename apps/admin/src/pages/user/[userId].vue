@@ -1,13 +1,13 @@
 <script setup lang="ts">
 defineOptions({
-  name: 'IndexPage',
+  name: 'UserPage',
 })
 
-// const { userInfos } = useStore('user')
+const params = useRoute('/user/[userId]').params
 </script>
 
 <template>
   <div>
-    dashboard
+    {{ params }}
   </div>
 </template>

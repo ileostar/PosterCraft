@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineOptions({
-  name: 'IndexPage',
+  name: 'UserPage',
 })
 
 // const { userInfos } = useStore('user')
@@ -8,6 +8,6 @@ defineOptions({
 
 <template>
   <div>
-    dashboard
+    poster
   </div>
 </template>

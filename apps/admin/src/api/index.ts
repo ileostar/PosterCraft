@@ -20,13 +20,13 @@ export const instance = createAlova({
         throw new Error(response.statusText)
 
       const json = await response.json()
-      if (response.status !== 200)
+      if (response.status > 400)
         throw new Error(json.message)
 
       if (json.code !== 200)
         throw new Error(json.message)
 
-      return json.data
+      return json
     },
     onError: (err, _method) => {
       // eslint-disable-next-line no-console

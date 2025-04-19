@@ -18,7 +18,7 @@
     "db:init:test:ci": "pnpm schema:build && pnpm -F @poster-craft/db run init:ci",
     "dev:web": "pnpm -F web dev",
     "dev:server": "pnpm -F server start",
-    "dev:admin": "pnpm -F web dev:admin",
+    "dev:admin": "pnpm -F admin dev",
     "lint": "turbo lint --no-daemon",
     "test": "turbo test --no-daemon",
     "format": "prettier --write --cache .",

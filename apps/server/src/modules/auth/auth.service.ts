@@ -96,4 +96,26 @@ export class AuthService {
       throw '手机号校验失败';
     await this.userService.createUser(dto);
   }
+
+  /** 管理员登录 */
+  async adminLogin(dto: DefaultLoginDto) {
+    console.log('dto============', dto);
+    const user = await this.userService.findUserByUsername(dto.identifier);
+    if (!user) throw '用户不存在';
+    if (user.role !== 'admin') throw '非管理员账号';
+    if (!(await argon2.verify(user.password, dto.password))) throw '密码错误';
+
+    const payload = {
+      userId: user.id,
+      username: user.username,
+      role: user.role,
+      email: user.email,
+    };
+
+    return ResponseData.ok(
+      payload,
+      '管理员登录成功',
+      this.jwtService.sign(payload),
+    );
+  }
 }
