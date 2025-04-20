@@ -71,6 +71,10 @@ export class UserService {
       .where(eq(user.id, userId));
   }
 
+  async findAllUsers() {
+    return this.db.query.user.findMany();
+  }
+
   async findUserByUsername(username: string): Promise<any> {
     return this.db.query.user.findFirst({
       where: eq(user.username, username),

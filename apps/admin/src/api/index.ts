@@ -12,10 +12,21 @@ export const instance = createAlova({
   timeout: 50000,
   beforeRequest(method) { // 这里设置请求拦截器
     // 请求头中添加Authorization认证信息
-    method.config.headers.Authorization = localStorage.getItem('Authorization') ?? ''
+    const curToken = localStorage.getItem('Authorization')
+    method.config.headers.Authorization = `Bearer ${curToken}`
   },
   responded: { // 这里设置响应拦截器
     onSuccess: async (response: { status: number, statusText: string | undefined, json: () => any }, _method: any) => {
+      if (response.status === 401) {
+        // 这里可以做一些操作，例如跳转到登录页
+
+        ElMessage.error('登录过期，请重新登录')
+        const router = useRouter()
+        setTimeout(() => {
+          localStorage.removeItem('Authorization')
+          router.push('/login')
+        }, 1000)
+      }
       if (response.status >= 400)
         throw new Error(response.statusText)
 

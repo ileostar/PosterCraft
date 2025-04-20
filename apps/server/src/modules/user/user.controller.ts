@@ -44,7 +44,7 @@ export class UserController {
     required: true,
   })
   @ApiOperation({
-    summary: '获取用户信息',
+    summary: '获取当前用户信息',
     description: '根据用户ID获取用户信息',
   })
   @APIResponse(OmitType(CreateUserDto, ['password']))
@@ -62,6 +62,28 @@ export class UserController {
           nickname: user.nickname,
           role: user.role,
         },
+      };
+    } catch (error) {
+      return {
+        msg: '用户查询失败:' + error,
+      };
+    }
+  }
+
+  @Get('all')
+  @ApiOperation({
+    summary: '获取所有用户信息',
+    description: '获取所有用户信息',
+  })
+  @UseGuards(JwtAuthGuard)
+  @APIResponse([OmitType(CreateUserDto, ['password'])])
+  async getUserInfos(@CallbackUserData() userInfos: JwtPayloadDto) {
+    try {
+      if (userInfos.role !== 'admin') throw '无权限';
+      const users = await this.userService.findAllUsers();
+      return {
+        code: 200,
+        data: users,
       };
     } catch (error) {
       return {

@@ -12,8 +12,16 @@ export default defineStore('user', () => {
     userInfos.value = payload
   }
 
+  const allUsers = ref<IUserInfo[]>([])
+
+  const updateAllUsers = (payload: IUserInfo[]) => {
+    allUsers.value = payload
+  }
+
   return {
     userInfos,
     updateUserInfos,
+    allUsers,
+    updateAllUsers,
   }
 })
