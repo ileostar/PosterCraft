@@ -122,3 +122,48 @@ export class AddPasswordDto {
   @Length(6, 20, { message: '密码长度为6-20位' })
   password: string;
 }
+
+export class QueryUserDto {
+  @ApiProperty({
+    example: 1,
+    required: false,
+    description: '当前页码',
+  })
+  @IsOptional()
+  page?: number;
+
+  @ApiProperty({
+    example: 10,
+    required: false,
+    description: '每页条数',
+  })
+  @IsOptional()
+  pageSize?: number;
+
+  @ApiProperty({
+    example: 'admin',
+    required: false,
+    description: '用户名',
+  })
+  @IsOptional()
+  @IsString({ message: '用户名必须是字符串类型' })
+  username?: string;
+
+  @ApiProperty({
+    example: 'admin',
+    required: false,
+    description: '用户角色',
+  })
+  @IsOptional()
+  @IsEnum(['admin', 'normal'], { message: '角色必须是admin或normal之一' })
+  role?: 'admin' | 'normal';
+
+  @ApiProperty({
+    example: '13800138000',
+    required: false,
+    description: '手机号码',
+  })
+  @IsOptional()
+  @IsString({ message: '手机号码必须是字符串类型' })
+  phone?: string;
+}

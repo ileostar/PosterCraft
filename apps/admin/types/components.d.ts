@@ -28,6 +28,7 @@ declare module 'vue' {
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElOption: typeof import('element-plus/es')['ElOption']
+    ElPagination: typeof import('element-plus/es')['ElPagination']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTable: typeof import('element-plus/es')['ElTable']
@@ -43,5 +44,11 @@ declare module 'vue' {
     TheFooter: typeof import('./../src/components/TheFooter.vue')['default']
     TheInput: typeof import('./../src/components/TheInput.vue')['default']
     TheStudy: typeof import('./../src/components/TheStudy.vue')['default']
+    UserForm: typeof import('./../src/components/UserForm.vue')['default']
+    UserSearch: typeof import('./../src/components/UserSearch.vue')['default']
+    UserTable: typeof import('./../src/components/UserTable.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

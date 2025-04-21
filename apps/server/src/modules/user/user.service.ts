@@ -1,12 +1,13 @@
 import { user } from '@poster-craft/schema';
 import { Inject, Injectable } from '@nestjs/common';
 import * as argon2 from 'argon2';
-import { eq } from 'drizzle-orm';
+import { and, eq, like } from 'drizzle-orm';
 import { DB, DbType } from 'src/modules/global/providers/db.provider';
 import {
   AddPasswordDto,
   ChangePasswordDto,
   CreateUserDto,
+  QueryUserDto,
   UpdateUserDto,
 } from './dto/user.dto';
 import { CacheService } from '../cache/cache.service';
@@ -71,8 +72,45 @@ export class UserService {
       .where(eq(user.id, userId));
   }
 
-  async findAllUsers() {
-    return this.db.query.user.findMany();
+  async findAllUsers(query?: QueryUserDto) {
+    const { page = 1, pageSize = 10, username, role, phone } = query || {};
+
+    function whereConditions(user, { eq }) {
+      const conditions = [];
+      if (username) {
+        conditions.push(like(user.username, username));
+      }
+      if (role) {
+        conditions.push(eq(user.role, role));
+      }
+      if (phone) {
+        conditions.push(like(user.phone, phone));
+      }
+      return conditions.length > 0 ? and(...conditions) : undefined;
+    }
+    // 查询总数
+    const total = (
+      await this.db.query.user.findMany({
+        where: whereConditions,
+      })
+    ).length;
+
+    // 查询数据
+    const users = await this.db.query.user.findMany({
+      where: whereConditions,
+      limit: Number(pageSize),
+      offset: (Number(page) - 1) * Number(pageSize),
+    });
+    console.log(
+      '%c🤪 ~ file: user.service.ts:100 [] -> users : ',
+      'color: #802a3f',
+      users,
+    );
+
+    return {
+      total,
+      users,
+    };
   }
 
   async findUserByUsername(username: string): Promise<any> {

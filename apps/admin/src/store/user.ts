@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 interface IUserInfo {
   userId: string
   username: string
@@ -6,16 +7,23 @@ interface IUserInfo {
 }
 
 export default defineStore('user', () => {
-  const userInfos = ref<IUserInfo>({} as IUserInfo)
+  const userInfos = ref<IUserInfo>(JSON.parse(localStorage.getItem('userInfos') || '{}'))
 
   const updateUserInfos = (payload: IUserInfo) => {
     userInfos.value = payload
+    localStorage.setItem('userInfos', JSON.stringify(payload))
   }
 
   const allUsers = ref<IUserInfo[]>([])
 
-  const updateAllUsers = (payload: IUserInfo[]) => {
-    allUsers.value = payload
+  const updateAllUsers = async () => {
+    try {
+      const res = await user.getAllUsers()
+      allUsers.value = res.data
+    }
+    catch (_e) {
+      ElMessage.error('获取所有用户失败')
+    }
   }
 
   return {

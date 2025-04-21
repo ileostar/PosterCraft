@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -14,6 +15,7 @@ import {
   ApiBody,
   ApiOperation,
   ApiParam,
+  ApiQuery,
   ApiTags,
   OmitType,
 } from '@nestjs/swagger';
@@ -21,6 +23,7 @@ import {
   AddPasswordDto,
   ChangePasswordDto,
   CreateUserDto,
+  QueryUserDto,
   UpdateUserDto,
 } from './dto/user.dto';
 import { number } from 'zod';
@@ -73,17 +76,22 @@ export class UserController {
   @Get('all')
   @ApiOperation({
     summary: '获取所有用户信息',
-    description: '获取所有用户信息',
+    description: '获取所有用户信息，支持分页和搜索',
   })
+  @ApiQuery({ type: QueryUserDto, required: false })
   @UseGuards(JwtAuthGuard)
   @APIResponse([OmitType(CreateUserDto, ['password'])])
-  async getUserInfos(@CallbackUserData() userInfos: JwtPayloadDto) {
+  async getUserInfos(
+    @CallbackUserData() userInfos: JwtPayloadDto,
+    @Query() query: QueryUserDto,
+  ) {
     try {
       if (userInfos.role !== 'admin') throw '无权限';
-      const users = await this.userService.findAllUsers();
+      const result = await this.userService.findAllUsers(query);
       return {
         code: 200,
-        data: users,
+        data: result.users,
+        total: result.total,
       };
     } catch (error) {
       return {
@@ -190,6 +198,33 @@ export class UserController {
     } catch (error) {
       return {
         msg: '密码修改失败：' + error,
+      };
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  @ApiBody({ type: CreateUserDto })
+  @ApiOperation({
+    summary: '创建用户',
+    description: '创建新用户',
+  })
+  @APIResponse(OmitType(CreateUserDto, ['password']))
+  async createUser(
+    @Body() dto: CreateUserDto,
+    @CallbackUserData() userInfos: JwtPayloadDto,
+  ) {
+    try {
+      if (userInfos.role !== 'admin') throw '无权限';
+      const user = await this.userService.createUser(dto);
+      return {
+        code: 200,
+        msg: '创建用户成功！',
+        data: user,
+      };
+    } catch (error) {
+      return {
+        msg: '创建用户失败:' + error,
       };
     }
   }

@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.11.0",
-    "alova": "^2.21.3",
+    "alova": "^3.2.10",
     "element-plus": "^2.9.8",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"

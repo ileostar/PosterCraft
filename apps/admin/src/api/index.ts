@@ -2,21 +2,22 @@
 import type { AlovaMethodCreateConfig, Method } from 'alova'
 import { createAlova } from 'alova'
 import VueHook from 'alova/vue'
-import GlobalFetch from 'alova/GlobalFetch'
+import adapterFetch from 'alova/fetch'
 
 // create alova instance
 export const instance = createAlova({
   baseURL: import.meta.env.VITE_ALOVA_BASE_URI,
   statesHook: VueHook,
-  requestAdapter: GlobalFetch(),
+  requestAdapter: adapterFetch(),
   timeout: 50000,
+  cacheFor: null,
   beforeRequest(method) { // 这里设置请求拦截器
     // 请求头中添加Authorization认证信息
     const curToken = localStorage.getItem('Authorization')
     method.config.headers.Authorization = `Bearer ${curToken}`
   },
   responded: { // 这里设置响应拦截器
-    onSuccess: async (response: { status: number, statusText: string | undefined, json: () => any }, _method: any) => {
+    onSuccess: async (response, _method) => {
       if (response.status === 401) {
         // 这里可以做一些操作，例如跳转到登录页
 
@@ -53,7 +54,7 @@ export const instance = createAlova({
 interface Data {
   [index: string]: unknown
 }
-type Config = AlovaMethodCreateConfig<unknown, unknown, RequestInit, Headers> | undefined
+type Config = AlovaMethodCreateConfig<any, Data, unknown> | undefined
 
 interface Http {
   get: (

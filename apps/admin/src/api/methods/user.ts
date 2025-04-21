@@ -2,8 +2,19 @@ import http from '..'
 
 export default {
   /** 获取用户信息 */
-  getAllUsers: () => {
-    return http.get(`/user/all`)
+  getAllUsers: (params?: {
+    page?: number
+    pageSize?: number
+    username?: string
+    role?: string
+    phone?: string
+  }) => {
+    return http.get(`/user/all`, params)
+  },
+
+  /** 创建用户 */
+  createUser: (body: any) => {
+    return http.post(`/user`, body)
   },
 
   /** 更新用户信息 */

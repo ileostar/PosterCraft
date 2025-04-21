@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {
   Menu as IconMenu,
-  Message as IconMessage,
   User as IconUser,
 } from '@element-plus/icons-vue'
 
@@ -43,18 +42,8 @@ function logout() {
     <el-icon class="mr-4 cursor-pointer text-xl" @click="toggleCollapse">
       <IconMenu />
     </el-icon>
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item v-for="item in breadcrumbs" :key="item">
-        {{ item }}
-      </el-breadcrumb-item>
-    </el-breadcrumb>
   </div>
   <div class="flex items-center">
-    <el-badge :value="3" class="mr-4">
-      <el-icon class="cursor-pointer text-xl">
-        <IconMessage />
-      </el-icon>
-    </el-badge>
     <el-dropdown>
       <span class="flex cursor-pointer items-center">
         <el-avatar size="small" class="mr-2">
@@ -62,7 +51,7 @@ function logout() {
             <IconUser />
           </el-icon>
         </el-avatar>
-        管理员
+        <span class="text-sm">{{ userInfos.username }}</span>
       </span>
       <template #dropdown>
         <el-dropdown-menu>

@@ -73,8 +73,8 @@ importers:
         specifier: ^10.11.0
         version: 10.11.1(vue@3.4.35(typescript@5.5.4))
       alova:
-        specifier: ^2.21.3
-        version: 2.21.5
+        specifier: ^3.2.10
+        version: 3.2.10
       element-plus:
         specifier: ^2.9.8
         version: 2.9.8(vue@3.4.35(typescript@5.5.4))
@@ -789,6 +789,9 @@ packages:
 
   '@alova/adapter-axios@1.2.6':
     resolution: {integrity: sha512-Sog6t54z2ltlFLVzxmSoEJ5A1LyiI9OUG8NK1vGUYszsuglED9DCtsSPvK+Q73jUbvH8WIBsSAiyCGPBi1vSCQ==}
+
+  '@alova/shared@1.1.2':
+    resolution: {integrity: sha512-8q/gMHFpzm7XYcaUlsyTCMDRRhFnewwheTeObMjPl1+bFdr+wZuBEHEPYIyd8tyzLwfrqpBeonaMN2tlngM8EA==}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -5019,9 +5022,9 @@ packages:
   alien-signals@1.0.13:
     resolution: {integrity: sha512-OGj9yyTnJEttvzhTUWuscOvtqxq5vrhF7vL9oS0xJ2mK0ItPYP1/y+vCFebfxoEyAz0++1AIwJ5CMr+Fk3nDmg==}
 
-  alova@2.21.5:
-    resolution: {integrity: sha512-7CqSpxvjMCCMznXkzum/drugXxPpD+C0peYbFT3LqUkxyQ0RDdhcboDUbnfrUResi0Y8Cla7f3R1KFw0ywivow==}
-    engines: {node: '>= 0.12.0'}
+  alova@3.2.10:
+    resolution: {integrity: sha512-OHMuSNUbIUEsAq6q5DabISNgFMIXqrC/DPBQv1QJEwxW3fWlYlaF6Vr8b4iqwZnUd2+0rCmFm9GnpKWk7vvx2w==}
+    engines: {node: '>= 18.0.0'}
 
   ansi-align@3.0.1:
     resolution: {integrity: sha512-IOfwwBF5iczOjp/WeY4YxyjqAFMQoZufdQWDd19SEExbVLNXqvpzSJ/M7Za4/sCPmQ0+GRquoA7bGcINcxew6w==}
@@ -10551,6 +10554,9 @@ packages:
   randombytes@2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
 
+  rate-limiter-flexible@5.0.5:
+    resolution: {integrity: sha512-+/dSQfo+3FYwYygUs/V2BBdwGa9nFtakDwKt4l0bnvNB53TNT++QSFewwHX9qXrZJuMe9j+TUaU21lm5ARgqdQ==}
+
   rc-util@5.43.0:
     resolution: {integrity: sha512-AzC7KKOXFqAdIBqdGWepL9Xn7cm3vnAmjlHqUnoQaTMZYhM4VlXGLkkHHxj/BZ7Td0+SOPKB4RGPboBVKT9htw==}
     peerDependencies:
@@ -12992,6 +12998,8 @@ snapshots:
   '@alloc/quick-lru@5.2.0': {}
 
   '@alova/adapter-axios@1.2.6': {}
+
+  '@alova/shared@1.1.2': {}
 
   '@ampproject/remapping@2.3.0':
     dependencies:
@@ -17650,7 +17658,10 @@ snapshots:
 
   alien-signals@1.0.13: {}
 
-  alova@2.21.5: {}
+  alova@3.2.10:
+    dependencies:
+      '@alova/shared': 1.1.2
+      rate-limiter-flexible: 5.0.5
 
   ansi-align@3.0.1:
     dependencies:
@@ -24411,6 +24422,8 @@ snapshots:
   randombytes@2.1.0:
     dependencies:
       safe-buffer: 5.2.1
+
+  rate-limiter-flexible@5.0.5: {}
 
   rc-util@5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
