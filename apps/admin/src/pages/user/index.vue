@@ -37,6 +37,8 @@ const pagination = reactive({
   total: 0,
 })
 
+const isSearch = ref(false)
+
 // 搜索参数
 const searchParams = ref<SearchParams>({})
 
@@ -54,6 +56,9 @@ async function getUserInfos() {
     if (res.code === 200) {
       updateAllUsers(res.data)
       pagination.total = res.total || res.data.length
+      if (isSearch.value && (searchParams.value.username || searchParams.value.phone || searchParams.value.role)) {
+        ElMessage.success('搜索成功')
+      }
     }
   }
   catch (error) {
@@ -69,6 +74,10 @@ async function getUserInfos() {
 function handleSearch(params: SearchParams) {
   searchParams.value = params
   pagination.currentPage = 1 // 搜索时重置到第一页
+  isSearch.value = true
+  setTimeout(() => {
+    isSearch.value = false
+  }, 3000)
   getUserInfos()
 }
 

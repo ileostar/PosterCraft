@@ -10,7 +10,12 @@ export const instance = createAlova({
   statesHook: VueHook,
   requestAdapter: adapterFetch(),
   timeout: 50000,
-  cacheFor: null,
+  cacheFor: {
+    GET: {
+      mode: 'restore',
+      expire: 1000,
+    },
+  },
   beforeRequest(method) { // 这里设置请求拦截器
     // 请求头中添加Authorization认证信息
     const curToken = localStorage.getItem('Authorization')

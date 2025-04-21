@@ -9,7 +9,7 @@ export default {
     role?: string
     phone?: string
   }) => {
-    return http.get(`/user/all`, params)
+    return http.get(`/user/all`, params).send(true)
   },
 
   /** 创建用户 */

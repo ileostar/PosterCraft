@@ -77,15 +77,10 @@ export class UserService {
 
     function whereConditions(user, { eq }) {
       const conditions = [];
-      if (username) {
-        conditions.push(like(user.username, username));
-      }
-      if (role) {
-        conditions.push(eq(user.role, role));
-      }
-      if (phone) {
-        conditions.push(like(user.phone, phone));
-      }
+      if (username) conditions.push(like(user.username, `%${username}%`));
+      if (role) conditions.push(eq(user.role, role));
+      if (phone) conditions.push(like(user.phone, `%${phone}%`));
+
       return conditions.length > 0 ? and(...conditions) : undefined;
     }
     // 查询总数

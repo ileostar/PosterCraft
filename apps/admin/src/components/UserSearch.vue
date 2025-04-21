@@ -54,3 +54,9 @@ function handleReset() {
     </el-form>
   </div>
 </template>
+
+<style scoped>
+.el-select {
+  width: 120px;
+}
+</style>
