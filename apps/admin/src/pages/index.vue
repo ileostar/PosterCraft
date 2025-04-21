@@ -7,7 +7,7 @@ defineOptions({
 </script>
 
 <template>
-  <div class="flex items-center justify-center p-4 text-xl font-bold text-gray-800">
-    dashboard
+  <div class="text-xl text-gray-800 font-bold">
+    <Dashboard />
   </div>
 </template>

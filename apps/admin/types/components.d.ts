@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BaseLayout: typeof import('./../src/components/BaseLayout.vue')['default']
+    Dashboard: typeof import('./../src/components/Dashboard.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBadge: typeof import('element-plus/es')['ElBadge']
@@ -31,6 +32,7 @@ declare module 'vue' {
     ElPagination: typeof import('element-plus/es')['ElPagination']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTag: typeof import('element-plus/es')['ElTag']
@@ -47,6 +49,9 @@ declare module 'vue' {
     UserForm: typeof import('./../src/components/UserForm.vue')['default']
     UserSearch: typeof import('./../src/components/UserSearch.vue')['default']
     UserTable: typeof import('./../src/components/UserTable.vue')['default']
+    WorkForm: typeof import('./../src/components/WorkForm.vue')['default']
+    WorkSearch: typeof import('./../src/components/WorkSearch.vue')['default']
+    WorkTable: typeof import('./../src/components/WorkTable.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

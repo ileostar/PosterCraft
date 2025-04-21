@@ -181,7 +181,7 @@ async function handlePublishTemplate(workId: string) {
     if (res.code === 200) {
       ElMessage.success('发布为模板成功')
       // 可以在这里处理返回的URL
-      console.log('模板URL:', res.data.url)
+      // console.log('模板URL:', res.data.url)
     }
   }
   catch (error: any) {
