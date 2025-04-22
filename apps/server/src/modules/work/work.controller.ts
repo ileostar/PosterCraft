@@ -108,6 +108,44 @@ export class WorkController {
     }
   }
 
+  @Get('admin/list')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    summary: '获取工作区列表（管理员）',
+    description: '获取工作区列表（管理员）',
+  })
+  @APIResponse(ResponseWorksListDto)
+  async getWorksListInfosAdmin(
+    @Query() query: GetMyWorksListDto & { isPublic?: boolean },
+    @CallbackUserData() userInfo: JwtPayloadDto,
+  ) {
+    try {
+      if (userInfo.role !== 'admin') {
+        return {
+          code: -1,
+          msg: '您没有权限查看工作区列表',
+        };
+      }
+      const data = await this.workService.getWorksListInfosAdmin({
+        ...(query.title && { title: query.title }),
+        pageIndex: query.pageIndex ?? 1,
+        pageSize: query.pageSize ?? 10,
+        ...(query.isTemplate && { isTemplate: Boolean(query.isTemplate) }),
+        ...(query.isPublic && { isPublic: Boolean(query.isPublic) }),
+      });
+
+      return {
+        code: 200,
+        msg: '获取工作区列表成功',
+        data,
+      };
+    } catch (error) {
+      return {
+        msg: '获取工作区列表失败' + error,
+      };
+    }
+  }
+
   @Get(':workId')
   @ApiParam({
     name: 'workId',

@@ -57,7 +57,7 @@ async function getWorkInfos() {
     const res: ApiResponse<any> = await work.getWorksList(params)
 
     if (res.code === 200) {
-      updateAllWorks(res.data.list || [])
+      updateAllWorks(res.data)
       pagination.total = res.data.count || 0
       if (isSearch.value && searchParams.value.title) {
         ElMessage.success('搜索成功')
@@ -159,36 +159,6 @@ async function handleDelete(workId: string) {
   }
 }
 
-// 发布工作区
-async function handlePublish(workId: string) {
-  try {
-    const res = await work.publishWork(workId)
-    if (res.code === 200) {
-      ElMessage.success('发布工作区成功')
-      // 可以在这里处理返回的URL
-      // console.log('发布URL:', res.data.url)
-    }
-  }
-  catch (error: any) {
-    ElMessage.error(`发布失败: ${error.message || '未知错误'}`)
-  }
-}
-
-// 发布为模板
-async function handlePublishTemplate(workId: string) {
-  try {
-    const res = await work.publishWorkTemplate(workId)
-    if (res.code === 200) {
-      ElMessage.success('发布为模板成功')
-      // 可以在这里处理返回的URL
-      // console.log('模板URL:', res.data.url)
-    }
-  }
-  catch (error: any) {
-    ElMessage.error(`发布为模板失败: ${error.message || '未知错误'}`)
-  }
-}
-
 // 预览工作区
 async function handlePreview(workId: string) {
   try {
@@ -233,8 +203,6 @@ onMounted(() => {
       :loading="loading"
       @edit="handleEdit"
       @delete="handleDelete"
-      @publish="handlePublish"
-      @publish-template="handlePublishTemplate"
       @preview="handlePreview"
     />
 

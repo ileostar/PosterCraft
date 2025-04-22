@@ -19,11 +19,9 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-  'edit': [work: Work]
-  'delete': [workId: string]
-  'publish': [workId: string]
-  'publish-template': [workId: string]
-  'preview': [workId: string]
+  edit: [work: Work]
+  delete: [workId: string]
+  preview: [workId: string]
 }>()
 
 function handleEdit(row: Work) {
@@ -32,14 +30,6 @@ function handleEdit(row: Work) {
 
 function handleDelete(row: Work) {
   emit('delete', row.workId)
-}
-
-function handlePublish(row: Work) {
-  emit('publish', row.workId)
-}
-
-function handlePublishTemplate(row: Work) {
-  emit('publish-template', row.workId)
 }
 
 function handlePreview(row: Work) {
@@ -89,16 +79,10 @@ function handlePreview(row: Work) {
           {{ row.author || '-' }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="280" fixed="right">
+      <el-table-column label="操作" width="195" fixed="right">
         <template #default="{ row }">
           <el-button type="primary" size="small" @click="handleEdit(row)">
             编辑
-          </el-button>
-          <el-button type="success" size="small" @click="handlePublish(row)">
-            发布
-          </el-button>
-          <el-button type="warning" size="small" @click="handlePublishTemplate(row)">
-            发布为模板
           </el-button>
           <el-button type="info" size="small" @click="handlePreview(row)">
             预览

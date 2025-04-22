@@ -12,7 +12,7 @@ export function copyWork(workId: string) {
 
 // 获取工作区列表
 export function getWorksList(params: any) {
-  return http.get('/work/list', { params })
+  return http.get('/work/admin/list', params)
 }
 
 // 获取单个工作区

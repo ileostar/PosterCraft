@@ -78,6 +78,68 @@ export class WorkService {
     }
   }
 
+  /** 管理员获取 */
+  async getWorksListInfosAdmin(
+    dto: GetMyWorksListDto & { isPublic?: boolean },
+  ) {
+    const result = this.db.query.work.findMany({
+      where: (work, { like, eq }) => {
+        const conditions = [];
+
+        // 处理 isPublic 参数
+        if (dto.isPublic !== undefined) {
+          conditions.push(eq(work.isPublic, dto.isPublic));
+        }
+
+        // 处理 isTemplate 参数
+        if (dto.isTemplate !== undefined) {
+          conditions.push(eq(work.isTemplate, dto.isTemplate));
+        }
+
+        // 处理标题模糊查询
+        if (dto.title) {
+          conditions.push(like(work.title, `%${dto.title}%`));
+        }
+
+        return conditions.length > 0 ? and(...conditions) : undefined;
+      },
+      orderBy: (work, { asc }) => asc(work.createdAt),
+      limit: Number(dto.pageSize),
+      offset: (dto.pageIndex - 1) * dto.pageSize,
+    });
+    const count = this.db.query.work.findMany({
+      where: (work, { like, eq }) => {
+        const conditions = [];
+        // 处理 isPublic 参数
+        if (dto.isPublic !== undefined) {
+          conditions.push(eq(work.isPublic, dto.isPublic));
+        }
+        // 处理 isTemplate 参数
+        if (dto.isTemplate !== undefined) {
+          conditions.push(eq(work.isTemplate, dto.isTemplate));
+        }
+        // 处理标题模糊查询
+        if (dto.title) {
+          conditions.push(like(work.title, `%${dto.title}%`));
+        }
+        return conditions.length > 0 ? and(...conditions) : undefined;
+      },
+    });
+    return {
+      count: (await count).length,
+      pageIndex: dto.pageIndex,
+      pageSize: dto.pageSize,
+      list: (await result).map((i) => ({
+        ...i,
+        id: void 0,
+        uuid: void 0,
+        createdAt: void 0,
+        updatedAt: void 0,
+        workId: i.uuid,
+      })),
+    };
+  }
+
   async getPagingList(
     dto: GetMyWorksListDto,
     isPaging = true,

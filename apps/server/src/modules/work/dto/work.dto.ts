@@ -129,6 +129,7 @@ export class GetMyWorksListDto extends PickType(WorkDto, ['isTemplate']) {
     description: '工作区标题（模糊查询）',
   })
   title?: string;
+
   @ApiProperty({
     type: Number,
     required: false,
@@ -142,6 +143,14 @@ export class GetMyWorksListDto extends PickType(WorkDto, ['isTemplate']) {
     description: '每页条数',
   })
   pageSize?: number;
+
+  @ApiProperty({
+    type: Boolean,
+    required: false,
+    description: '是否公开',
+    default: false,
+  })
+  isPublic?: boolean;
 }
 
 export class ResponseURLDto {
