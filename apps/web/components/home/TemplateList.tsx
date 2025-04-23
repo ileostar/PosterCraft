@@ -46,6 +46,7 @@ const TemplateList: React.FC<TemplateListProps> = () => {
       >
         {templateList.map((item) => (
           <BaseCard
+            workId={item.workId}
             key={item.workId}
             title={item.title}
             description={item.desc}

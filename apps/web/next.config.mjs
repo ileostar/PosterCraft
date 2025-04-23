@@ -29,6 +29,10 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "poster-craft.oss-cn-shenzhen.aliyuncs.com",
+      },
+      {
+        protocol: "https",
         hostname: "img.leostar.top",
       },
     ],

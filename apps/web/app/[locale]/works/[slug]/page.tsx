@@ -11,7 +11,6 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function WorkDetail() {
-  const t = useTranslations("work");
   const params = useParams();
   const router = useRouter();
   const { setWork } = useWorkStore();
@@ -24,13 +23,13 @@ export default function WorkDetail() {
       try {
         setLoading(true);
         // 从动态路由参数中获取工作区ID
-        const slug = params.slug as string[];
+        const slug = params.slug as string;
         if (!slug || slug.length === 0) {
           setError(t("invalid-id"));
           return;
         }
 
-        const workId = slug[0];
+        const workId = slug;
         const response = await getWork(workId);
 
         if (response.data.code === 200) {

@@ -78,12 +78,16 @@ const MyWorks: React.FC<MyWorksProps> = (params) => {
         <BaseSearch onSearch={(e: any) => setTitle(e)}></BaseSearch>
       </div>
       <BaseGrid>
-        {renderList.map((item) => (
+        {renderList.reverse().map((item) => (
           <BaseCard
+            workId={item.workId}
             key={item.workId}
             title={item.title}
             description={item.desc}
-            imgUrl="https://cimg.co/news/100430/248406/polina-kondrashova-fhrwah2hmnm-unsplash.jpg"
+            imgUrl={
+              item.coverImg ||
+              "https://cimg.co/news/100430/248406/polina-kondrashova-fhrwah2hmnm-unsplash.jpg"
+            }
             onClick={() => renderPoster(item)}
           />
         ))}

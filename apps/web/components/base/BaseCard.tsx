@@ -1,6 +1,10 @@
+"use client";
+
+import { useRouter } from "@/utils/i18n/routing";
 import Image from "next/image";
 
 interface BaseCardProps {
+  workId: string;
   title?: string;
   description?: string;
   imgUrl: string;
@@ -8,13 +12,21 @@ interface BaseCardProps {
 }
 
 const BaseCard: React.FC<BaseCardProps> = ({
+  workId,
   title = "暂无标题",
   imgUrl,
   description = "暂无描述",
   onClick,
 }) => {
+  const router = useRouter();
+  const goToWorkInfos = () => {
+    router.push(`/works/${workId}`);
+  };
   return (
-    <div className="relative col-span-1 flex items-end w-full h-[535px] rounded-2xl 2xl:rounded-3xl bg-center bg-cover bg-no-repeat hover:scale-95 overflow-hidden transition-transform duration-300">
+    <div
+      className="relative col-span-1 flex items-end w-full h-[535px] rounded-2xl 2xl:rounded-3xl bg-center bg-cover bg-no-repeat hover:scale-95 overflow-hidden transition-transform duration-300 cursor-pointer"
+      onClick={goToWorkInfos}
+    >
       <Image
         className="absolute top-0 left-0 w-full h-full object-cover"
         src={imgUrl}
