@@ -49,7 +49,10 @@ const TemplateList: React.FC<TemplateListProps> = () => {
             key={item.workId}
             title={item.title}
             description={item.desc}
-            imgUrl="https://cimg.co/news/100430/248406/polina-kondrashova-fhrwah2hmnm-unsplash.jpg"
+            imgUrl={
+              item.coverImg ||
+              "https://cimg.co/news/100430/248406/polina-kondrashova-fhrwah2hmnm-unsplash.jpg"
+            }
             onClick={() => renderPoster(item)}
           />
         ))}

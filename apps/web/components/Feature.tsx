@@ -8,9 +8,9 @@ import { Link, usePathname, useRouter } from "@/utils/i18n/routing";
 import { useLocale } from "next-intl";
 import { useTheme } from "next-themes";
 
-import BaseDrawer from "../layouts/common/GlobalDrawer";
 import BaseGoToLogin from "./base/BaseGoToLogin";
 import BaseTooltips from "./base/BaseTooltip";
+import BaseDrawer from "./layouts/common/GlobalDrawer";
 
 interface FeatureProps {}
 

@@ -1,9 +1,9 @@
 import BaseLogo from "@/components/base/BaseLogo";
 import BaseMenuImg from "@/components/base/BaseMenuImg";
 import Feature from "@/components/Feature";
+import SideMenu from "@/components/layouts/common/SideMenu";
 import BaseMenu from "@/components/Menu";
 import { useScroll } from "@/hooks/useScroll";
-import SideMenu from "@/layouts/common/SideMenu";
 import { cn } from "@/lib/utils";
 
 interface HeaderProps {

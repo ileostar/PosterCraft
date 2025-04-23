@@ -167,7 +167,17 @@
   },
   "verification-code": "验证码",
   "work": {
-    "unnamed-title": "未命名作品"
+    "unnamed-title": "未命名作品",
+    "details": "作品详情",
+    "id": "作品ID",
+    "is-template": "是否为模板",
+    "is-public": "是否公开",
+    "not-found": "未找到作品",
+    "invalid-id": "无效的作品ID",
+    "fetch-error": "获取作品详情时发生错误",
+    "back-to-works": "返回作品列表",
+    "edit-work": "编辑作品",
+    "no-preview-available": "暂无预览图"
   },
   "works": "作品集",
   "works-list": "我的作品集",

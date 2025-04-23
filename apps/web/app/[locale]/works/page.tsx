@@ -3,10 +3,10 @@
 import Banner from "@/components/Banner";
 import BaseCard from "@/components/base/BaseCard";
 import CustomPagination from "@/components/CustomPagination";
+import BaseLayout from "@/components/layouts/BaseLayout";
 import BaseList from "@/components/ShowLists";
 import { CreateWorkResponse } from "@/http/types/work";
 import { getWorkList } from "@/http/work";
-import BaseLayout from "@/layouts/BaseLayout";
 import { useWorkStore } from "@/stores/work";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";

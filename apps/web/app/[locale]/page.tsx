@@ -2,7 +2,7 @@ import Hero from "@/components/home/Hero";
 import Introduce from "@/components/home/Introduce";
 import TemplateList from "@/components/home/TemplateList";
 import WorksList from "@/components/home/WorksList";
-import BaseLayout from "@/layouts/BaseLayout";
+import BaseLayout from "@/components/layouts/BaseLayout";
 
 function Main() {
   return (

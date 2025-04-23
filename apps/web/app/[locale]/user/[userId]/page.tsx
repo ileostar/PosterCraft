@@ -1,9 +1,9 @@
 "use client";
 
 import BaseDivider from "@/components/base/BaseDivider";
+import BaseLayout from "@/components/layouts/BaseLayout";
 import MyWorks from "@/components/user/MyWorks";
 import UserInfos from "@/components/user/UserInfos";
-import BaseLayout from "@/layouts/BaseLayout";
 import { useUserStore } from "@/stores/user";
 import { useEffect, useState } from "react";
 

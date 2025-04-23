@@ -167,7 +167,17 @@
   },
   "verification-code": "Verification Code",
   "work": {
-    "unnamed-title": "unnamed title"
+    "unnamed-title": "unnamed title",
+    "details": "Work Details",
+    "id": "Work ID",
+    "is-template": "Is Template",
+    "is-public": "Is Public",
+    "not-found": "Work not found",
+    "invalid-id": "Invalid work ID",
+    "fetch-error": "Error fetching work details",
+    "back-to-works": "Back to Works",
+    "edit-work": "Edit Work",
+    "no-preview-available": "No preview available"
   },
   "works": "Works",
   "works-list": "My Works",

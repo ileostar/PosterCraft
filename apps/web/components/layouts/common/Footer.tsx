@@ -1,7 +1,6 @@
-import { FooterNavLinks, FooterSocialLinks } from "@/config/";
-
-import FooterNavLink from "../../components/FooterNavLink";
-import SocialLink from "../../components/SocialLink";
+import FooterNavLink from "@/components/FooterNavLink";
+import SocialLink from "@/components/SocialLink";
+import { FooterNavLinks, FooterSocialLinks } from "@/config";
 
 interface FooterProps {}
 

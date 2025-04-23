@@ -1,8 +1,8 @@
+import BaseLayout from "@/components/layouts/BaseLayout";
 import Account from "@/components/settings/Account";
 import Password from "@/components/settings/Password";
 import Profile from "@/components/settings/Profile";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import BaseLayout from "@/layouts/BaseLayout";
 import { useTranslations } from "next-intl";
 
 function Main() {

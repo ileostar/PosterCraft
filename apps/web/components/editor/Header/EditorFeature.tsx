@@ -1,8 +1,8 @@
 "use client";
 
+import GlobalDrawer from "@/components/layouts/common/GlobalDrawer";
 import { toast } from "@/components/ui/use-toast";
 import { updateWork } from "@/http/work";
-import GlobalDrawer from "@/layouts/common/GlobalDrawer";
 import { cn } from "@/lib/utils";
 import { useElementStore } from "@/stores/element";
 import { useWorkStore } from "@/stores/work";
