@@ -11,6 +11,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function WorkDetail() {
+  const t = useTranslations("work");
   const params = useParams();
   const router = useRouter();
   const { setWork } = useWorkStore();
