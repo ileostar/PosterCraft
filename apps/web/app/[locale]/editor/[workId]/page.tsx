@@ -1,7 +1,7 @@
-import EditorLayout from "@/components/layouts/EditorLayout";
-import Left from "@/components/pages/editor/Left/index";
+import Left from "@/components/editor/Left/index";
+import Right from "@/components/editor/Right";
 import Middle from "@/components/pages/editor/Middle/index";
-import Right from "@/components/pages/editor/Right";
+import EditorLayout from "@/layouts/EditorLayout";
 
 interface PageProps {
   params: {

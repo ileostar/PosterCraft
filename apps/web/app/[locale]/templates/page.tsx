@@ -1,12 +1,12 @@
 "use client";
 
-import BaseCard from "@/components/BaseCard";
-import BaseLayout from "@/components/layouts/BaseLayout";
-import Banner from "@/components/shared/Banner";
-import CustomPagination from "@/components/shared/CustomPagination";
-import BaseList from "@/components/shared/ShowLists";
+import Banner from "@/components/Banner";
+import BaseCard from "@/components/base/BaseCard";
+import CustomPagination from "@/components/CustomPagination";
+import BaseList from "@/components/ShowLists";
 import { getTemplateList } from "@/http/template";
 import { CreateWorkResponse } from "@/http/types/work";
+import BaseLayout from "@/layouts/BaseLayout";
 import { useWorkStore } from "@/stores/work";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";

@@ -1,4 +1,4 @@
-import BaseLayout from "@/components/layouts/BaseLayout";
+import BaseLayout from "@/layouts/BaseLayout";
 import Image from "next/image";
 
 interface DetailProps {
