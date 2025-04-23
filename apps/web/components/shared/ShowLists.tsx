@@ -1,5 +1,5 @@
-import BaseGrid from "../base/BaseGrid";
-import BaseSearch from "../base/BaseSearch";
+import BaseGrid from "../BaseGrid";
+import BaseSearch from "../BaseSearch";
 
 interface ShowListsProps {
   title: string;

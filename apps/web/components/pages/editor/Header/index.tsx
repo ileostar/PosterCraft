@@ -1,4 +1,4 @@
-import BaseLogo from "@/components/base/BaseLogo";
+import BaseLogo from "@/components/BaseLogo";
 
 import EditorFeature from "./EditorFeature";
 import EditorName from "./EditorName";

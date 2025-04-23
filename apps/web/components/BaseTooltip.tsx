@@ -2,7 +2,7 @@ import React from "react";
 
 interface BaseTooltipsProps {
   children: React.ReactNode;
-  tooltipText: string;
+  tooltipText: string | React.ReactNode;
   position: "top" | "left" | "right" | "bottom";
 }
 

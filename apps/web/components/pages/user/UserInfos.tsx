@@ -1,6 +1,6 @@
 "use client";
 
-import BaseButton from "@/components/base/BaseButton";
+import BaseButton from "@/components/BaseButton";
 import ProjectCard from "@/components/shared/ProjectCard";
 import { getUserInfo } from "@/http/user";
 import { useUserStore } from "@/stores/user";

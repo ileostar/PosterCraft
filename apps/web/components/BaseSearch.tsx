@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { toast } from "../ui/use-toast";
+import { toast } from "./ui/use-toast";
 
 interface BaseSearchProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onSearch?: (value: string) => void;

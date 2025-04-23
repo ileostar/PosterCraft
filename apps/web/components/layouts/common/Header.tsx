@@ -1,5 +1,5 @@
-import BaseLogo from "@/components/base/BaseLogo";
-import BaseMenuImg from "@/components/base/BaseMenuImg";
+import BaseLogo from "@/components/BaseLogo";
+import BaseMenuImg from "@/components/BaseMenuImg";
 import SideMenu from "@/components/layouts/common/SideMenu";
 import Feature from "@/components/shared/Feature";
 import BaseMenu from "@/components/shared/Menu";

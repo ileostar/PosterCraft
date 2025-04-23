@@ -1,4 +1,4 @@
-import BaseInfo from "@/components/base/BaseInfo";
+import BaseInfo from "@/components/BaseInfo";
 import { useTranslations } from "next-intl";
 
 interface IntroduceProps {}

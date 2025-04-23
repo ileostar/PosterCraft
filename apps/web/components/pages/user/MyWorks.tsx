@@ -1,9 +1,9 @@
 "use client";
 
-import BaseButton from "@/components/base/BaseButton";
-import BaseCard from "@/components/base/BaseCard";
-import BaseGrid from "@/components/base/BaseGrid";
-import BaseSearch from "@/components/base/BaseSearch";
+import BaseButton from "@/components/BaseButton";
+import BaseCard from "@/components/BaseCard";
+import BaseGrid from "@/components/BaseGrid";
+import BaseSearch from "@/components/BaseSearch";
 import CustomPagination from "@/components/shared/CustomPagination";
 import { getUserTemplateList } from "@/http/template";
 import { CreateWorkResponse } from "@/http/types/work";

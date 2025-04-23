@@ -1,6 +1,6 @@
 "use client";
 
-import BaseCard from "@/components/base/BaseCard";
+import BaseCard from "@/components/BaseCard";
 import MoreButton from "@/components/shared/MoreButton";
 import BaseList from "@/components/shared/ShowLists";
 import { useToken } from "@/hooks/useToken";

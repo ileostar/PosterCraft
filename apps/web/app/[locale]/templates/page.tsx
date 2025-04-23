@@ -1,6 +1,6 @@
 "use client";
 
-import BaseCard from "@/components/base/BaseCard";
+import BaseCard from "@/components/BaseCard";
 import BaseLayout from "@/components/layouts/BaseLayout";
 import Banner from "@/components/shared/Banner";
 import CustomPagination from "@/components/shared/CustomPagination";

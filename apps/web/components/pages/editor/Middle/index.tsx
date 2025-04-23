@@ -1,6 +1,6 @@
 "use client";
 
-import BaseTooltips from "@/components/base/BaseTooltip";
+import BaseTooltips from "@/components/BaseTooltip";
 import Dialog from "@/components/pages/editor/Middle/Dialog";
 import ChangePosition from "@/components/shared/ChangePosition";
 import ContextMenu from "@/components/shared/ContextMenu";

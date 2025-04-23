@@ -1,4 +1,4 @@
-import BaseIntro from "@/components/base/BaseIntro";
+import BaseIntro from "@/components/BaseIntro";
 import ModelContainer from "@/components/shared/ModelContainer";
 
 interface HeroProps {}

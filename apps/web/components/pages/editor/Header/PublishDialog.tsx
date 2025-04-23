@@ -75,8 +75,7 @@ function PublishDialog({
       if (res.data.code === 200) {
         toast({
           variant: "success",
-          title: "Success",
-          description: "作品保存成功",
+          title: "作品发布成功",
         });
       }
       setOpen(false);

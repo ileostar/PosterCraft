@@ -22,7 +22,9 @@ export async function takeScreenshot() {
 }
 
 export async function upload(file: Blob) {
-  const newFile = file instanceof File ? file : new File([file], "file");
+  // 生成带有.png后缀的文件名
+  const fileName = `screenshot_${Date.now()}.png`;
+  const newFile = file instanceof File ? file : new File([file], fileName, { type: "image/png" });
   const formData = new FormData();
   formData.append("file", newFile);
   try {
