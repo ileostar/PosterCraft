@@ -1,9 +1,9 @@
 "use client";
 
+import Dialog from "@/components/auth/Dialog";
+import Oauth2 from "@/components/auth/Oauth2";
+import renderSignIn from "@/components/auth/SignIn";
 import AuthLayout from "@/components/layouts/AuthLayout";
-import Dialog from "@/components/pages/auth/Dialog";
-import Oauth2 from "@/components/pages/auth/Oauth2";
-import renderSignIn from "@/components/pages/auth/SignIn";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";
@@ -22,7 +22,7 @@ import { z } from "zod";
 export default function Login() {
   const router = useRouter();
   const [_, setTokenHandler] = useToken();
-  const { setUserId } = useUserStore();
+  const { setUserId, setUserInfos } = useUserStore();
   const { toast } = useToast();
   const t = useTranslations();
   const loginFormSchema = z.object({
@@ -89,6 +89,7 @@ export default function Login() {
           setTokenHandler(res.data.token);
         }
         setUserId(res.data.data?.userId);
+        setUserInfos(res.data.data);
         router.push("/");
       } else {
         toast({

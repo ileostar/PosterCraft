@@ -1,8 +1,8 @@
 "use client";
 
+import Oauth2 from "@/components/auth/Oauth2";
 import CustomFormField from "@/components/CustomFormField";
 import AuthLayout from "@/components/layouts/AuthLayout";
-import Oauth2 from "@/components/pages/auth/Oauth2";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { ToastAction } from "@/components/ui/toast";

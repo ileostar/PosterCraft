@@ -26,10 +26,11 @@ const GlobalDrawer: React.FC<GlobalDrawerProps> = ({ className }) => {
   const { theme, setTheme } = useTheme();
   const { toast } = useToast();
   const [_, setToken] = useToken();
-  const { userId, setUserId } = useUserStore();
+  const { userId, setUserId, setUserInfos } = useUserStore();
   const logout = async () => {
     setToken(null);
     setUserId(null);
+    setUserInfos(null);
     toast({
       title: "登出成功",
       description: "自动跳转到登录页面",

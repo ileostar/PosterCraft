@@ -148,7 +148,10 @@ export class WorkService {
     return this.db.query.work.findMany({
       where: !isTemplate
         ? (work, { like }) => {
-            const conditions = [eq(work.isPublic, true)];
+            const conditions = [
+              eq(work.isPublic, true),
+              eq(work.isTemplate, false),
+            ];
 
             if (dto.title) {
               conditions.push(like(work.title, `%${dto.title}%`));

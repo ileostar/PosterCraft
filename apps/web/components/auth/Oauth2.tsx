@@ -7,7 +7,7 @@ import { githubSignIn } from "@/http/auth";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
-import { useGithubUsername, useOauth2Dialog } from "../../../stores/auth";
+import { useGithubUsername, useOauth2Dialog } from "../../stores/auth";
 
 function Oauth2() {
   const router = useRouter();

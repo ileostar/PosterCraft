@@ -1,5 +1,15 @@
+"use client";
+
 import BaseLayout from "@/components/layouts/BaseLayout";
+import { Button } from "@/components/ui/button";
+import { GetWorkResponse } from "@/http/types/work";
+import { getWork } from "@/http/work";
+import { useUserStore } from "@/stores/user";
+import { useWorkStore } from "@/stores/work";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface DetailProps {
   params: {
@@ -16,24 +26,106 @@ const deatilInfo = {
 };
 
 const Detail: React.FC<DetailProps> = ({ params }) => {
+  const t = useTranslations("work");
+  const router = useRouter();
+  const { setWork } = useWorkStore();
+  const [workDetail, setWorkDetail] = useState<GetWorkResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchWorkDetail = async () => {
+      try {
+        setLoading(true);
+        // 从动态路由参数中获取工作区ID
+        const slug = params.id as string;
+        if (!slug || slug.length === 0) {
+          setError(t("invalid-id"));
+          return;
+        }
+
+        const workId = slug;
+        const response = await getWork(workId);
+
+        if (response.data.code === 200) {
+          setWorkDetail(response.data.data);
+        } else {
+          setError(response.data.msg || t("fetch-error"));
+        }
+      } catch (err) {
+        console.error("获取工作区详情出错:", err);
+        setError(t("fetch-error"));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWorkDetail();
+  }, [params, t]);
+
+  const handleEditWork = () => {
+    router.push("/editor/" + workDetail?.workId);
+  };
+
+  const isVisible = () => {
+    const currentUserInfos = useUserStore((state) => state.userInfos);
+    return workDetail?.author == currentUserInfos.username;
+  };
   return (
     <BaseLayout>
-      <div className="h-[100vh] px-5 pt-5 flex gap-5">
-        <div className="bg-gray-500/20 flex-1 flex justify-center items-center rounded-2xl">
-          <span className="text-5xl font-bold text-gray-300/50">海报区域</span>
+      <div className="px-5">
+        <button
+          onClick={() => {
+            router.back();
+          }}
+          className="bg-slate-300/10 w-8 h-8 flex items-center justify-center rounded-full p-2"
+        >
+          <i className="icon-[carbon--arrow-left]" />
+        </button>
+      </div>
+      <div className="px-5 pt-5 flex gap-10">
+        <div className="bg-gray-500/20 min-w-[35%] max-w-[40%] flex justify-center items-center rounded-2xl">
+          <div className="text-5xl font-bold p-3 text-gray-300/50">
+            <Image
+              src={
+                workDetail?.coverImg ||
+                "https://cimg.co/news/100430/248406/polina-kondrashova-fhrwah2hmnm-unsplash.jpg"
+              }
+              className="w-full group-hover:scale-105 transition-transform duration-300"
+              alt={"avatar"}
+              width={500}
+              height={800}
+            />
+          </div>
         </div>
-        <div className=" flex-1">
-          <span>当前页面ID： {params.id}</span>
-          <span>当前页面标题</span>
-          <div className="relative overflow-visible">
+        <div className="flex flex-col gap-8 flex-1 pt-5">
+          <h2 className="font-bold text-3xl">{workDetail?.title}</h2>
+          {/* <span>{t("id")}： {workDetail?.workId}</span> */}
+          <div className="relative overflow-visible flex gap-5 items-center">
             <Image
               src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              className="rounded-full w-10 h-10 group-hover:scale-105 transition-transform duration-300"
+              className="rounded-full w-8 h-8 group-hover:scale-105 transition-transform duration-300"
               alt={"avatar"}
               width={100}
               height={100}
             />
+            <span>{workDetail?.author}</span>
           </div>
+          <div className="flex gap-3 flex-col">
+            描述：
+            <h3 className="w-full bg-gray-400/10 py-2 px-3 rounded-md">
+              {workDetail?.desc || "暂无"}
+            </h3>
+          </div>
+          <div className="flex gap-5">{workDetail?.copiedCount} 人使用</div>
+          {isVisible() && (
+            <Button
+              className="w-20"
+              onClick={handleEditWork}
+            >
+              {t("edit-work")}
+            </Button>
+          )}
         </div>
       </div>
     </BaseLayout>

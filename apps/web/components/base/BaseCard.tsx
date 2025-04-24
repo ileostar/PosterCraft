@@ -20,7 +20,7 @@ const BaseCard: React.FC<BaseCardProps> = ({
 }) => {
   const router = useRouter();
   const goToWorkInfos = () => {
-    router.push(`/works/${workId}`);
+    router.push(`/detail/${workId}`);
   };
   return (
     <div

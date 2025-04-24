@@ -64,7 +64,7 @@ function PublishDialog({
         props: pageBackgroundStyle,
       },
       isTemplate: false,
-      isPublic: false,
+      isPublic: true,
       status: 1,
     };
     console.log(params);

@@ -60,6 +60,7 @@ export type GetWorkResponse = CreateWorkBody & {
   author: string;
   userId: string;
   workId: string;
+  copiedCount: number;
 };
 
 export type UpdateWorkResponse = {
