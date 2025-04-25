@@ -41,7 +41,7 @@ export class AuthService {
       const randomName = generateRandomUsername();
       const userId = await this.userService.createUser({
         username: randomName,
-        phone: dto.phone,
+        email: dto.phone,
       });
       await this.userService.checkVerificationCode(dto);
 
@@ -91,7 +91,7 @@ export class AuthService {
 
   /** 默认注册 */
   async signup(dto: RegisterDto) {
-    if (await this.userService.findWithPhone(dto.phone)) throw '用户名已存在';
+    if (await this.userService.findUserByEmail(dto.email)) throw '用户名已存在';
     if (!(await this.userService.checkVerificationCode(dto)))
       throw '手机号校验失败';
     await this.userService.createUser(dto);

@@ -3,7 +3,7 @@
 import BaseLayout from "@/components/layouts/BaseLayout";
 import { Button } from "@/components/ui/button";
 import { GetWorkResponse } from "@/http/types/work";
-import { getWork } from "@/http/work";
+import { copyWork, getWork } from "@/http/work";
 import { useUserStore } from "@/stores/user";
 import { useWorkStore } from "@/stores/work";
 import { useTranslations } from "next-intl";
@@ -71,6 +71,30 @@ const Detail: React.FC<DetailProps> = ({ params }) => {
     const currentUserInfos = useUserStore((state) => state.userInfos);
     return workDetail?.author == currentUserInfos.username;
   };
+
+  const handleCopied = async () => {
+    try {
+      if (!workDetail?.workId) {
+        return;
+      }
+
+      const response = await copyWork(workDetail.workId);
+
+      if (response.data.code === 200) {
+        // 复制成功后，跳转到编辑页面
+        router.push(`/editor/${response.data.data.workId}`);
+        // 设置当前工作区
+        setWork(response.data.data.workId);
+        // 可以添加一个成功提示
+        console.log("工作区复制成功");
+      } else {
+        console.error("复制工作区失败:", response.data.msg);
+      }
+    } catch (error) {
+      console.error("复制工作区出错:", error);
+    }
+  };
+
   return (
     <BaseLayout>
       <div className="px-5">
@@ -126,6 +150,14 @@ const Detail: React.FC<DetailProps> = ({ params }) => {
               {t("edit-work")}
             </Button>
           )}
+          <div className="flex gap-5">
+            <Button
+              className="w-20"
+              onClick={handleCopied}
+            >
+              复制
+            </Button>
+          </div>
         </div>
       </div>
     </BaseLayout>

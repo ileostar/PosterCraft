@@ -29,7 +29,7 @@ export class PhoneOtpLoginDto extends VerifyPhoneDto {}
 /** 注册DTO */
 export class RegisterDto extends OmitType(CreateUserDto, [
   'avatar',
-  'email',
+  'phone',
   'nickname',
   'role',
 ]) {

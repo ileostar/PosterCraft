@@ -3,13 +3,13 @@ export const siteConfig = {
   description: "A platform for creating and sharing posters and other designs",
   favicon: "/favicon.png",
   github: {
-    repoLink: "https://github.com/ileostar/PosterCraft",
+    repoLink: "https://github.com/eonova/PosterCraft",
   },
   twitter: {
-    username: "@030LeoStar",
+    username: "@030Eonova",
     card: "summary",
     img: "/social/logo-twitter-leostar.png",
-    imgAlt: "The LeoStar Logo",
+    imgAlt: "The Eonova Logo",
     title: "summary",
   },
 };

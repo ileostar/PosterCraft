@@ -52,7 +52,7 @@ export default function Register() {
   const form = useForm<DefaultSignUpBody>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      phone: "",
+      email: "",
       password: "",
       otp: "",
       username: "",
@@ -114,10 +114,11 @@ export default function Register() {
                 form={form}
                 name={"phone"}
                 placeholder={t("phonePlaceholder")}
-                label={t("phone")}
+                label={t("email")}
               />
               <CustomFormField
                 form={form}
+                isEmail={true}
                 name={"otp"}
                 placeholder={t("otpPlaceholder")}
                 label={t("otp")}

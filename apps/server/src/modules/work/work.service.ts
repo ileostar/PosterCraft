@@ -51,6 +51,7 @@ export class WorkService {
         author: callback.username,
         title: `${copiedWork.title}-复制`,
         isTemplate: false,
+        isPublic: false,
       });
       await this.db
         .update(work)

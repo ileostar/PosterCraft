@@ -22,7 +22,7 @@ export class CreateUserDto {
     required: false,
     description: '电子邮件地址',
   })
-  email?: string;
+  email: string;
 
   @ApiProperty({
     example: '14709723891',
@@ -31,7 +31,7 @@ export class CreateUserDto {
   @IsNotEmpty({ message: '手机号码不能为空' })
   @IsString({ message: '手机号码必须是字符串类型' })
   @IsMobilePhone('zh-CN')
-  phone: string;
+  phone?: string;
 
   @ApiProperty({
     example: '123456',

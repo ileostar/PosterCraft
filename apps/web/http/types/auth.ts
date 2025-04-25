@@ -23,7 +23,7 @@ export type LoginBySmsResponse = DefaultSignInResponse;
 export type DefaultSignUpBody = {
   username: string;
   password: string | null;
-  phone: string;
+  email: string;
   otp: string;
 };
 
